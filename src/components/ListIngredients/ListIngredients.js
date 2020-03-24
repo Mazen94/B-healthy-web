@@ -71,8 +71,8 @@ export default function AddIngredient() {
   const [currentPage, setCurrentPage] = useState(1); //currentPage: to get the current page in the data
   const [lasPage, setLastPage] = useState(10); //to get the last page in the data
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
-  const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete patient (initial value is false)
-  const [deleteIngredientId, setDeleteIngredientId] = useState(''); //to retrieve the patient id to delete
+  const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete ingredient (initial value is false)
+  const [deleteIngredientId, setDeleteIngredientId] = useState(''); //to retrieve the ingredient id to delete
 
   /**
    *  Arrow function to go to the next page

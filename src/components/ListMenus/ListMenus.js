@@ -71,8 +71,8 @@ export default function AddIngredient() {
   const [currentPage, setCurrentPage] = useState(1); //currentPage: to get the current page in the data
   const [lasPage, setLastPage] = useState(10); //to get the last page in the data
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
-  const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete patient (initial value is false)
-  // const [deleteMenuId, setDeleteMenuId] = useState(''); //to retrieve the patient id to delete
+  const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete menu (initial value is false)
+  const [deleteMenuId, setDeleteMenuId] = useState(''); //to retrieve the menu id to delete
 
   /**
    *  Arrow function to go to the next page
@@ -85,12 +85,12 @@ export default function AddIngredient() {
     history.push(`/menus/${newPage}`);
   };
   /**
-   * hook useEffect there will be a get  the ingredients , the current page and the last page in the data
+   * hook useEffect there will be a get  the menu , the current page and the last page in the data
    * this hook executed when the value of currentPage changes
    */
   useEffect(() => {
     /**
-     * Arrow function to get the data (ingredients) using Async await
+     * Arrow function to get the data (menu) using Async await
      */
     const loadIngredient = async () => {
       const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
@@ -114,7 +114,7 @@ export default function AddIngredient() {
    * @param {int} id
    */
   const handleClickOpen = id => {
-    // setDeleteMenuId(id); // Set the id of the Ingredient inside the state
+    setDeleteMenuId(id); // Set the id of the Ingredient inside the state
     setOpen(true); // Open the dialogue
   };
   /**
@@ -126,10 +126,10 @@ export default function AddIngredient() {
   /**
    * arrow function to delete a ingredient
    */
-  /* const handleButtonDelete = async () => {
+  const handleButtonDelete = async () => {
     const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
     try {
-      const response = await healthy.delete(`ingredients/${deleteMenuId}`, {
+      const response = await healthy.delete(`mealStore/${deleteMenuId}`, {
         headers: { Authorization: AuthStr }
       });
       console.log(response.data);
@@ -140,7 +140,7 @@ export default function AddIngredient() {
 
     setOpen(false); //to close the dialogue
     setData(data.filter(item => item.id !== deleteMenuId)); //get the new data without the Ingredient deleted
-  };*/
+  };
   if (data.length === 0) {
     return (
       <div className={classes.skeleton}>
@@ -174,7 +174,7 @@ export default function AddIngredient() {
                     Type Menu
                   </Typography>
                 </TableCell>
-                <TableCell align="left  ">
+                <TableCell align="left">
                   <Typography
                     className={classes.typography}
                     variant="subtitle2"
@@ -261,7 +261,7 @@ export default function AddIngredient() {
             <Button onClick={handleClose} color="primary">
               Non
             </Button>
-            <Button color="primary" autoFocus>
+            <Button color="primary" onClick={handleButtonDelete} autoFocus>
               Oui
             </Button>
           </DialogActions>
