@@ -126,9 +126,9 @@ export default function SignIn() {
           <ValidatorForm onSubmit={onSubmitForm} className={classes.form}>
             <TextValidator
               label="Adresse e-mail"
-              onChange={handleEmail}
               name="email"
               autoFocus
+              onChange={handleEmail}
               value={email}
               validators={['required', 'isEmail']}
               errorMessages={[

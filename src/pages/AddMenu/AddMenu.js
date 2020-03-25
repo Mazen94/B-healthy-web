@@ -140,7 +140,9 @@ export default function AddIngredient() {
       const response = await healthy.post('/mealStore', menu, {
         headers: { Authorization: AuthStr }
       });
-      console.log('response', response.data);
+      console.log('response', response.data.MealStore.id);
+
+      history.push(`/menu/${response.data.MealStore.id}/ingredients`);
     } catch (error) {
       console.log(error.response.data);
       console.log('Error', error.message);
@@ -169,11 +171,7 @@ export default function AddIngredient() {
             {/* Component Menu */}
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <ValidatorForm
-                  onSubmit={onSubmitForm}
-                  className={classes.form}
-                  noValidate
-                >
+                <ValidatorForm onSubmit={onSubmitForm} noValidate>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                       <TextValidator

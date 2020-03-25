@@ -36,7 +36,8 @@ function App() {
         <PrivateRoute path="/editIngredient/:id" component={UpdateIngredient} />
         {/* Route Menu */}
         <PrivateRoute
-          path="/menu/:menuId/ingredients"
+          exact
+          path="/menu/:menuId/ingredients/"
           component={AddIngredientToMenu}
         />
         <PrivateRoute exact path="/menus/:page" component={Menus} />

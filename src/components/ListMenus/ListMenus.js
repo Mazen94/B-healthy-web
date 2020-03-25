@@ -92,6 +92,7 @@ export default function AddIngredient() {
     /**
      * Arrow function to get the data (menu) using Async await
      */
+
     const loadIngredient = async () => {
       const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       const response = await healthy.get(`/mealStore?page=` + currentPage, {
