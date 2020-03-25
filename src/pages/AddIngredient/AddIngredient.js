@@ -22,8 +22,9 @@ const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '150vh',
-    overflow: 'auto'
+    height: '100vh',
+
+    overflow: 'hidden'
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -36,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     height: 300
   },
-  fixedHeight: {},
+
   submit: {
     marginTop: 30
   },
