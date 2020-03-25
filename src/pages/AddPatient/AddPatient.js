@@ -168,9 +168,9 @@ export default function AddPatient() {
    */
   const addPatient = async patient => {
     try {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`;
+      const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.post('/patients', patient, {
-        headers: { Authorization: AuthStr }
+        headers: { Authorization: authStr }
       });
       console.log(response.data);
       setFlag(false);

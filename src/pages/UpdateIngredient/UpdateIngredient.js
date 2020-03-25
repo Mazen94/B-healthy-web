@@ -102,9 +102,9 @@ export default function UpdateIngredient(props) {
   useEffect(() => {
     const getIndredient = async id => {
       try {
-        const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
         const response = await healthy.get('/ingredients/' + id, {
-          headers: { Authorization: AuthStr }
+          headers: { Authorization: authStr }
         });
         console.log(response.data.ingredient);
         setName(response.data.ingredient.name);
@@ -138,12 +138,12 @@ export default function UpdateIngredient(props) {
    */
   const putIngredient = async ingredient => {
     try {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`;
+      const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.put(
         '/ingredients/' + props.match.params.id,
         ingredient,
         {
-          headers: { Authorization: AuthStr }
+          headers: { Authorization: authStr }
         }
       );
       console.log('response', response.data);

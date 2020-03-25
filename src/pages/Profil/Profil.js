@@ -101,9 +101,9 @@ export default function Profil() {
    *  Arrow function to  Get the data of user connected
    */
   const fetchData = async () => {
-    const AuthStr = `Bearer ${localStorage.getItem('token')}`;
+    const authStr = `Bearer ${localStorage.getItem('token')}`;
     const result = await healthy(`/`, {
-      headers: { Authorization: AuthStr }
+      headers: { Authorization: authStr }
     });
     setFirstName(result.data.nutritionist.firstName);
     setLastName(result.data.nutritionist.lastName);
@@ -135,12 +135,12 @@ export default function Profil() {
    */
   const putNutritionist = async nutritionist => {
     try {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       const response = await axios.put(
         `http://healthy.test/api/nutritionist`,
         nutritionist,
         {
-          headers: { Authorization: AuthStr }
+          headers: { Authorization: authStr }
         }
       );
       console.log(response);

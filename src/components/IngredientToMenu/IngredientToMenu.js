@@ -49,9 +49,9 @@ export default function IngredientToMenu() {
      * Arrow function to get the data (ingredients) using Async await
      */
     const loadIngredient = async () => {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       const response = await healthy.get(`/ingredients?page=1`, {
-        headers: { Authorization: AuthStr }
+        headers: { Authorization: authStr }
       });
       console.log(response.data.ingredients);
       setIngredients(response.data.ingredients.data); //add the received data to the state data
@@ -94,12 +94,12 @@ export default function IngredientToMenu() {
    */
   const postIngredientToMenu = async ingredient => {
     try {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`;
+      const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.post(
         '/mealStore/' + menuId + '/ingredients',
         ingredient,
         {
-          headers: { Authorization: AuthStr }
+          headers: { Authorization: authStr }
         }
       );
       console.log('response', response.data);
@@ -117,11 +117,11 @@ export default function IngredientToMenu() {
       setFlag(false);
     }
     try {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`;
+      const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.delete(
         `mealStore/${menuId}/ingredients/${id}`,
         {
-          headers: { Authorization: AuthStr }
+          headers: { Authorization: authStr }
         }
       );
       //get the new data without the Ingredient deleted

@@ -15,6 +15,7 @@ import UpdateIngredient from './pages/UpdateIngredient/UpdateIngredient';
 import Menus from './pages/Menus/Menus';
 import AddMenu from './pages/AddMenu/AddMenu';
 import AddIngredientToMenu from './pages/AddIngredientToMenu/AddIngredientToMenu';
+import UpdateMenu from './pages/UpdateMenu/UpdateMenu';
 
 function App() {
   return (
@@ -31,17 +32,24 @@ function App() {
         {/* Route Update Nutritionist */}
         <PrivateRoute path="/profil" component={Profil} />
         {/* Route Ingredient */}
-        <PrivateRoute path="/ingredients/:page" component={Ingredients} />
-        <PrivateRoute path="/ingredient" component={AddIngredient} />
-        <PrivateRoute path="/editIngredient/:id" component={UpdateIngredient} />
+        <PrivateRoute exact path="/ingredients/:page" component={Ingredients} />
+        <PrivateRoute exact path="/ingredient" component={AddIngredient} />
+        <PrivateRoute
+          exact
+          path="/ingredient/:id"
+          component={UpdateIngredient}
+        />
         {/* Route Menu */}
+        {/* Route to add ingredient to a Menu */}
         <PrivateRoute
           exact
           path="/menu/:menuId/ingredients/"
           component={AddIngredientToMenu}
         />
+        {/* Route to get all menus per page */}
         <PrivateRoute exact path="/menus/:page" component={Menus} />
         <PrivateRoute exact path="/menu" component={AddMenu} />
+        <PrivateRoute exact path="/menu/:id" component={UpdateMenu} />
       </BrowserRouter>
     </div>
   );

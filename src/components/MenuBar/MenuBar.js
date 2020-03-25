@@ -106,9 +106,9 @@ export default function MenuBar(props) {
    */
   const fetchData = async () => {
     try {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       const result = await healthy.get('/', {
-        headers: { Authorization: AuthStr }
+        headers: { Authorization: authStr }
       });
       setData(result.data.nutritionist);
     } catch (error) {

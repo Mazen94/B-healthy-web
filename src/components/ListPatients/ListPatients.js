@@ -94,9 +94,9 @@ export default function ListPatients() {
      * Arrow function to get the data (patients) using Async await
      */
     const loadPatient = async () => {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       const response = await healthy.get(`patients?page=` + currentPage, {
-        headers: { Authorization: AuthStr }
+        headers: { Authorization: authStr }
       });
       setData(response.data.patients.data); //add the received data to the state data
       setCurrentPage(response.data.patients.current_page); //add the received current_page  to the state currentPage
@@ -109,10 +109,10 @@ export default function ListPatients() {
    * arrow function to delete a patient
    */
   const handleButtonDelete = async () => {
-    const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+    const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
     try {
       const response = await healthy.delete(`patients/${deletePatientId}`, {
-        headers: { Authorization: AuthStr }
+        headers: { Authorization: authStr }
       });
       console.log(response.data);
       setCurrentPage(currentPage);

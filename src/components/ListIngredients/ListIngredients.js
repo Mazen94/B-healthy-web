@@ -94,9 +94,9 @@ export default function AddIngredient() {
      */
 
     const loadIngredient = async () => {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       const response = await healthy.get(`/ingredients?page=` + currentPage, {
-        headers: { Authorization: AuthStr }
+        headers: { Authorization: authStr }
       });
       console.log(response.data.ingredients);
       setData(response.data.ingredients.data); //add the received data to the state data
@@ -108,7 +108,7 @@ export default function AddIngredient() {
   }, [currentPage]);
   const handleClickIconButton = id => {
     console.log(id);
-    history.push(`/editIngredient/${id}`);
+    history.push(`/ingredient/${id}`);
   };
   /**
    * arrow function to open the dialogue when the nutritionit want to delete a Ingredient
@@ -128,12 +128,12 @@ export default function AddIngredient() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
-    const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+    const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
     try {
       const response = await healthy.delete(
         `ingredients/${deleteIngredientId}`,
         {
-          headers: { Authorization: AuthStr }
+          headers: { Authorization: authStr }
         }
       );
       console.log(response.data);

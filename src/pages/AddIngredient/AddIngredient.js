@@ -116,9 +116,9 @@ export default function AddIngredient() {
    */
   const addIngredient = async ingredient => {
     try {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`;
+      const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.post('/ingredients', ingredient, {
-        headers: { Authorization: AuthStr }
+        headers: { Authorization: authStr }
       });
       console.log('response', response.data);
       history.push('/ingredients/1');

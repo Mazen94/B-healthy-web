@@ -136,9 +136,9 @@ export default function AddIngredient() {
    */
   const addMenu = async menu => {
     try {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`;
+      const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.post('/mealStore', menu, {
-        headers: { Authorization: AuthStr }
+        headers: { Authorization: authStr }
       });
       console.log('response', response.data.MealStore.id);
 
