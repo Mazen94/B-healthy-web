@@ -1,9 +1,9 @@
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import React, { Fragment } from 'react';
 import belly from '../../assets/belly.png';
 import chest from '../../assets/chest.png';
@@ -12,7 +12,6 @@ import neck from '../../assets/neck.png';
 import tall from '../../assets/tall.png';
 import weight from '../../assets/weight.png';
 
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 const useStyles = makeStyles(theme => ({
   small: {
     width: 35,
@@ -28,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   textFiledMesure: {
     width: 120,
-    margin: '2%'
+    margin: '1%'
   },
   button: {
     marginTop: '2%'
@@ -159,16 +158,6 @@ export default function HistoricalMeasures() {
           }}
         />
       </Grid>
-
-      <Button
-        mx="auto"
-        size="small"
-        variant="contained"
-        className={classes.button}
-        color="primary"
-      >
-        Plus
-      </Button>
     </Fragment>
   );
 }
