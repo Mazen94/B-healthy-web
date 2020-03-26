@@ -84,6 +84,9 @@ const useStyles = makeStyles(theme => ({
   large: {
     width: theme.spacing(5),
     height: theme.spacing(5)
+  },
+  link: {
+    textDecoration: 'none'
   }
 }));
 /**
@@ -206,7 +209,7 @@ export default function MenuBar(props) {
                   />
                 </a>
               </Box>
-              <a href="/profil">
+              <a href="/profil" className={classes.link}>
                 <h5 className={classes.h5}>
                   {`Dr.${data.firstName} ${data.lastName}`}
                 </h5>

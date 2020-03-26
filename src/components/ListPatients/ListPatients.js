@@ -132,6 +132,13 @@ export default function ListPatients() {
     setOpen(true); // Open the dialogue
   };
   /**
+   * arrow function navigate to consultation component
+   * @param {int} id
+   */
+  const handleClickArrowForwardIcon = id => {
+    history.push(`/patient/${id}/consultation`);
+  };
+  /**
    * arrow function to close the dialogue
    */
   const handleClose = () => {
@@ -185,7 +192,11 @@ export default function ListPatients() {
                   <TableCell align="left">{row.profession}</TableCell>
                   <TableCell align="left">
                     {/* icon to consult */}
-                    <IconButton color="primary">
+                    <IconButton
+                      value={row.id}
+                      onClick={() => handleClickArrowForwardIcon(row.id)}
+                      color="primary"
+                    >
                       <ArrowForwardIcon />
                     </IconButton>
                     {/* icon to delete */}
