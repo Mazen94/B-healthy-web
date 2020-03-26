@@ -1,24 +1,23 @@
-import { makeStyles } from '@material-ui/core/styles';
-import React, { Fragment, useEffect, useState } from 'react';
-import people from '../../assets/people.png';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Skeleton from '@material-ui/lab/Skeleton';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
-import Skeleton from '@material-ui/lab/Skeleton';
-import Paper from '@material-ui/core/Paper';
+import people from '../../assets/people.png';
 
 const useStyles = makeStyles(theme => ({
   large: {
-    marginTop: 18,
+    marginTop: '9%',
     width: theme.spacing(20),
     height: theme.spacing(20)
   },
   typography: {
-    marginTop: '10%',
-    marginRight: '6%',
-    color: 'white',
-    margin: 'auto'
+    marginTop: '17%',
+    margin: 'auto',
+    color: 'white'
   },
   grid: {
     display: 'flex'
@@ -26,8 +25,8 @@ const useStyles = makeStyles(theme => ({
   patientPaper: {
     backgroundColor: 'rgb(63, 81, 181)',
     marginRight: 15,
-    height: '100%',
-    marginBottom: 45
+    height: 500,
+    marginBottom: 20
   },
   patientTypography: {
     paddingTop: 12,
@@ -57,7 +56,7 @@ export default function CardPatient() {
 
         setPatient(response.data.patient); //add the received data to the state data
       } catch (error) {
-        console.log(error.response.data);
+        console.log(error.response);
       }
     };
     //call function
@@ -66,7 +65,7 @@ export default function CardPatient() {
   if (patient.length === 0) {
     return (
       <Fragment>
-        <Skeleton variant="text" />
+        <Skeleton variant="text" width="99%" />
         <Skeleton
           variant="circle"
           mx="auto"
@@ -74,45 +73,47 @@ export default function CardPatient() {
           height={90}
           className={classes.skeleton}
         />
-        <Skeleton variant="rect" width="100%" height={300} />
+        <Skeleton variant="rect" width="99%" height="75%" />
       </Fragment>
     );
   }
   return (
     <Fragment>
-      <Paper className={classes.patientPaper}>
-        <Typography
-          variant="subtitle1"
-          gutterBottom
-          className={classes.patientTypography}
-        >
-          Patient
-        </Typography>
-        <img src={people} className={classes.large} alt="Logo" />
-        <Grid className={classes.grid}>
+      <Grid item sm={12} className={classes.gridFiche}>
+        <Paper className={classes.patientPaper}>
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
             gutterBottom
-            className={classes.typography}
+            className={classes.patientTypography}
           >
-            {patient.firstName} {patient.lastName}
+            Patient
           </Typography>
-          <Typography
-            variant="subtitle2"
-            gutterBottom
-            className={classes.typography}
-          >
-            {patient.email}
-          </Typography>
-          <Typography
-            variant="subtitle2"
-            gutterBottom
-            className={classes.typography}
-          >
-            {patient.numberPhone}
-          </Typography>
-        </Grid>
-      </Paper>
+          <img src={people} className={classes.large} alt="Logo" />
+          <Grid className={classes.grid}>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              className={classes.typography}
+            >
+              {patient.firstName} {patient.lastName}
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              className={classes.typography}
+            >
+              {patient.email}
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              className={classes.typography}
+            >
+              {patient.numberPhone}
+            </Typography>
+          </Grid>
+        </Paper>
+      </Grid>
     </Fragment>
   );
 }

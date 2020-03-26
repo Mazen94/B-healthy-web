@@ -16,6 +16,7 @@ import Menus from './pages/Menus/Menus';
 import AddMenu from './pages/AddMenu/AddMenu';
 import AddIngredientToMenu from './pages/AddIngredientToMenu/AddIngredientToMenu';
 import UpdateMenu from './pages/UpdateMenu/UpdateMenu';
+import Consultation from './pages/Consultation/Consultation';
 
 function App() {
   return (
@@ -25,12 +26,18 @@ function App() {
         <CheckConnection exact path="/" component={SignIn} />
         <CheckConnection path="/register" component={SignUp} />
         {/* Components PrivateRoute */}
-        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
         {/* Route Patient */}
-        <PrivateRoute path="/patients/:page" component={Patients} />
-        <PrivateRoute path="/patient/" component={AddPatient} />
+        <PrivateRoute exact path="/patients/:page" component={Patients} />
+        <PrivateRoute exact path="/patient/" component={AddPatient} />
+        <PrivateRoute
+          exact
+          path="/patient/:id/consultation"
+          component={Consultation}
+        />
+
         {/* Route Update Nutritionist */}
-        <PrivateRoute path="/profil" component={Profil} />
+        <PrivateRoute exact path="/profil" component={Profil} />
         {/* Route Ingredient */}
         <PrivateRoute exact path="/ingredients/:page" component={Ingredients} />
         <PrivateRoute exact path="/ingredient" component={AddIngredient} />
