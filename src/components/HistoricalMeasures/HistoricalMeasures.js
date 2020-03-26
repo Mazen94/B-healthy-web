@@ -11,6 +11,7 @@ import legs from '../../assets/legs.png';
 import neck from '../../assets/neck.png';
 import tall from '../../assets/tall.png';
 import weight from '../../assets/weight.png';
+import note from '../../assets/note.png';
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -35,6 +36,10 @@ const useStyles = makeStyles(theme => ({
   date: {
     marginTop: 20,
     width: '90%'
+  },
+  textArea: {
+    marginTop: '2%',
+    width: '34%'
   }
 }));
 
@@ -158,6 +163,22 @@ export default function HistoricalMeasures() {
           }}
         />
       </Grid>
+      <TextField
+        className={classes.textArea}
+        id="outlined-multiline-static"
+        label="Notes"
+        multiline
+        rows="4"
+        disabled
+        variant="outlined"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Avatar alt="Remy Sharp" src={note} />
+            </InputAdornment>
+          )
+        }}
+      />
     </Fragment>
   );
 }
