@@ -1,32 +1,30 @@
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
+import Typography from '@material-ui/core/Typography';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import belly from '../../assets/belly.png';
 import chest from '../../assets/chest.png';
 import legs from '../../assets/legs.png';
 import neck from '../../assets/neck.png';
+import note from '../../assets/note.png';
 import tall from '../../assets/tall.png';
 import weight from '../../assets/weight.png';
-import note from '../../assets/note.png';
-import { useParams } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
-import Skeleton from '@material-ui/lab/Skeleton';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
-  gridFiche: {
-    height: 520
-  },
   paperFiche: {
-    width: '97%',
-    height: 500,
-    marginTop: 30,
-    margin: 'auto'
+    display: 'grid',
+    margin: 'auto',
+    width: '98%',
+    paddingBottom: '2%'
   },
   typography: {
     paddingTop: 12,
@@ -44,7 +42,8 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(20)
   },
   gridMesure: {
-    marginTop: 10
+    marginTop: 10,
+    width: '100%'
   },
   textFiledMesure: {
     width: 120,
@@ -55,11 +54,14 @@ const useStyles = makeStyles(theme => ({
   },
   date: {
     marginTop: 20,
-    width: '90%'
+    width: '60%',
+
+    margin: 'auto'
   },
   textArea: {
     marginTop: '2%',
-    width: '34%'
+    margin: 'auto',
+    width: '45%'
   }
 }));
 
@@ -76,9 +78,12 @@ export default function HistoricalMeasures() {
     const loadVisit = async () => {
       try {
         const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get(`patients/${id}/visits`, {
-          headers: { Authorization: authStr }
-        });
+        const response = await healthy.get(
+          `patients/${id}/visits?page=1&orderBy=updated_at&orderDirection=desc`,
+          {
+            headers: { Authorization: authStr }
+          }
+        );
         console.log(response.data.visits.data);
         if (response.data.visits.data.length !== 0) {
           setVisit(response.data.visits.data[0]); //add the received data to the state data
@@ -101,22 +106,20 @@ export default function HistoricalMeasures() {
   } else {
     return (
       <Fragment>
-        <Paper className={classes.paperFiche}>
-          <Typography
-            variant="subtitle1"
-            gutterBottom
-            className={classes.typography}
-          >
-            Hisotrique des précédents mesures
-          </Typography>
-          <ValidatorForm noValidate>
-            <TextValidator
+        <Grid item sm={12}>
+          <Paper className={classes.paperFiche}>
+            <Typography
+              variant="subtitle1"
+              gutterBottom
+              className={classes.typography}
+            >
+              Hisotrique des précédents mesures
+            </Typography>
+            <TextField
               className={classes.date}
-              id="input-with-icon-TextValidator"
               label="Date"
               variant="outlined"
               disabled
-              defaultValue=""
               value={visit.updated_at || ''}
               fullWidth
               InputProps={{
@@ -127,145 +130,139 @@ export default function HistoricalMeasures() {
                 )
               }}
             />
-            <Grid className={classes.gridMesure}>
-              <TextValidator
-                className={classes.textFiledMesure}
-                id="input-with-icon-TextValidator"
-                label="Poids (kg)"
-                variant="outlined"
-                disabled
-                value={visit.weight || ''}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={weight}
-                        className={classes.small}
-                      />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <TextValidator
-                className={classes.textFiledMesure}
-                id="input-with-icon-TextValidator"
-                label="taille (cm)"
-                variant="outlined"
-                disabled
-                value={visit.weight || ''}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={tall}
-                        className={classes.small}
-                      />
-                    </InputAdornment>
-                  )
-                }}
-              />
+            <FormControl>
+              <Grid className={classes.gridMesure}>
+                <TextField
+                  className={classes.textFiledMesure}
+                  label="Poids (kg)"
+                  variant="outlined"
+                  disabled
+                  value={visit.weight || ''}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={weight}
+                          className={classes.small}
+                        />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                  className={classes.textFiledMesure}
+                  label="taille (cm)"
+                  variant="outlined"
+                  disabled
+                  value={visit.tall || ''}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={tall}
+                          className={classes.small}
+                        />
+                      </InputAdornment>
+                    )
+                  }}
+                />
 
-              <TextValidator
-                className={classes.textFiledMesure}
-                id="input-with-icon-TextValidator"
-                label="Poitrine (cm)"
-                variant="outlined"
+                <TextField
+                  className={classes.textFiledMesure}
+                  label="Poitrine (cm)"
+                  variant="outlined"
+                  disabled
+                  value={visit.chest || ''}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={chest}
+                          className={classes.small}
+                        />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+              <Grid className={classes.gridMesure}>
+                <TextField
+                  className={classes.textFiledMesure}
+                  label="Hanche (cm)"
+                  variant="outlined"
+                  disabled
+                  value={visit.belly || ''}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={belly}
+                          className={classes.small}
+                        />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                  className={classes.textFiledMesure}
+                  label="Cou (cm)"
+                  variant="outlined"
+                  disabled
+                  value={visit.neck || ''}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={neck}
+                          className={classes.small}
+                        />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                  className={classes.textFiledMesure}
+                  label="Cuisse (cm)"
+                  variant="outlined"
+                  disabled
+                  value={visit.legs || ''}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={legs}
+                          className={classes.small}
+                        />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+              <TextField
+                className={classes.textArea}
+                label="Notes"
+                multiline
+                rows="4"
                 disabled
-                value={visit.weight || ''}
+                value={visit.note || ''}
+                variant="outlined"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={chest}
-                        className={classes.small}
-                      />
+                      <Avatar alt="Remy Sharp" src={note} />
                     </InputAdornment>
                   )
                 }}
               />
-            </Grid>
-            <Grid className={classes.gridMesure}>
-              <TextValidator
-                className={classes.textFiledMesure}
-                id="input-with-icon-TextValidator"
-                label="Hanche (cm)"
-                variant="outlined"
-                disabled
-                value={visit.weight || ''}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={belly}
-                        className={classes.small}
-                      />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <TextValidator
-                className={classes.textFiledMesure}
-                id="input-with-icon-TextValidator"
-                label="Cou (cm)"
-                variant="outlined"
-                disabled
-                value={visit.weight || ''}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={neck}
-                        className={classes.small}
-                      />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <TextValidator
-                className={classes.textFiledMesure}
-                id="input-with-icon-TextValidator"
-                label="Cuisse (cm)"
-                variant="outlined"
-                disabled
-                value={visit.weight || ''}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={legs}
-                        className={classes.small}
-                      />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Grid>
-            <TextValidator
-              className={classes.textArea}
-              id="outlined-multiline-static"
-              label="Notes"
-              multiline
-              rows="4"
-              disabled
-              value={visit.note || ''}
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Avatar alt="Remy Sharp" src={note} />
-                  </InputAdornment>
-                )
-              }}
-            />
-            *
-          </ValidatorForm>
-        </Paper>
+            </FormControl>
+          </Paper>
+        </Grid>
       </Fragment>
     );
   }

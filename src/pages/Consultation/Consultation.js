@@ -1,8 +1,6 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import CardPatient from '../../components/CardPatient/CardPatient';
 import HistoricalMeasures from '../../components/HistoricalMeasures/HistoricalMeasures';
@@ -18,23 +16,11 @@ const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '120vh',
-    overflow: 'auto'
+    height: '180vh',
+    overflow: 'none'
   },
   gridContainer: {
-    marginTop: 30
-  },
-  paperNewMeasure: {
-    width: '100%',
-    height: 500,
-    marginLeft: 10
-  },
-
-  typography: {
-    paddingTop: 12,
-    color: 'rgb(63, 81, 181)',
-
-    'font-size': '16px'
+    marginTop: '2%'
   },
   small: {
     width: 35,
@@ -55,21 +41,12 @@ export default function Consulation() {
           <div className={classes.appBarSpacer} />
 
           <NavBar consultation="contained"></NavBar>
-          <Grid container spacing={5} className={classes.gridContainer}>
-            <Grid item sm={6}>
-              <Paper className={classes.paperNewMeasure}>
-                <Typography
-                  variant="subtitle1"
-                  gutterBottom
-                  className={classes.typography}
-                >
-                  Les nouvelles mesures
-                </Typography>
+          <Grid container spacing={4} className={classes.gridContainer}>
+            {/* Component NewMeasures */}
+            <NewMeasures />
 
-                <NewMeasures />
-              </Paper>
-            </Grid>
             <Grid item sm={6}>
+              {/* Component CardPatient */}
               <CardPatient />
               {/*<Paper className={classes.prochainRendezVous}>
                 <Typography
@@ -81,9 +58,9 @@ export default function Consulation() {
                 </Typography>
   </Paper>*/}
             </Grid>
+            {/* Component HistoricalMeasures */}
+            <HistoricalMeasures />
           </Grid>
-
-          <HistoricalMeasures />
         </main>
       </div>
     </div>

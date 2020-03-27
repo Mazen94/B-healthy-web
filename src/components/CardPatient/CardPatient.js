@@ -9,24 +9,30 @@ import healthy from '../../api/healthy'; //new instance of axios with a custom c
 import people from '../../assets/people.png';
 
 const useStyles = makeStyles(theme => ({
+  gridFiche: {
+    height: 'auto'
+  },
   large: {
-    marginTop: '9%',
+    marginTop: '3%',
     width: theme.spacing(20),
     height: theme.spacing(20)
   },
   typography: {
-    marginTop: '17%',
+    marginTop: '20%',
+    marginLeft: '4%',
     margin: 'auto',
     color: 'white'
   },
+
   grid: {
-    display: 'flex'
+    display: 'flex',
+    overflow: 'hidden'
   },
   patientPaper: {
     backgroundColor: 'rgb(63, 81, 181)',
     marginRight: 15,
-    height: 500,
-    marginBottom: 20
+    height: 'auto',
+    paddingBottom: '14%'
   },
   patientTypography: {
     paddingTop: 12,
@@ -65,7 +71,7 @@ export default function CardPatient() {
   if (patient.length === 0) {
     return (
       <Fragment>
-        <Skeleton variant="text" width="99%" />
+        <Skeleton variant="text" height="20%" width="99%" />
         <Skeleton
           variant="circle"
           mx="auto"
@@ -73,13 +79,13 @@ export default function CardPatient() {
           height={90}
           className={classes.skeleton}
         />
-        <Skeleton variant="rect" width="99%" height="75%" />
+        <Skeleton variant="rect" width="99%" height="60%" />
       </Fragment>
     );
   }
   return (
     <Fragment>
-      <Grid item sm={12} className={classes.gridFiche}>
+      <Grid className={classes.gridFiche}>
         <Paper className={classes.patientPaper}>
           <Typography
             variant="subtitle1"
