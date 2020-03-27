@@ -17,6 +17,9 @@ import AddMenu from './pages/AddMenu/AddMenu';
 import AddIngredientToMenu from './pages/AddIngredientToMenu/AddIngredientToMenu';
 import UpdateMenu from './pages/UpdateMenu/UpdateMenu';
 import Consultation from './pages/Consultation/Consultation';
+import Recommendation from './pages/Recommendation/Recommendation';
+import AddRecommendations from './pages/AddRecommendations/AddRecommendations';
+import AddMenuToRecommendations from './pages/AddMenuToRecommendations/AddMenuToRecommendations';
 
 function App() {
   return (
@@ -35,7 +38,21 @@ function App() {
           path="/patient/:id/consultation"
           component={Consultation}
         />
-
+        <PrivateRoute
+          exact
+          path="/patient/:id/recommendations"
+          component={Recommendation}
+        />
+        <PrivateRoute
+          exact
+          path="/patient/:id/recommendation"
+          component={AddRecommendations}
+        />
+        <PrivateRoute
+          exact
+          path="/patient/:id/recommendation/:idRecommendation"
+          component={AddMenuToRecommendations}
+        />
         {/* Route Update Nutritionist */}
         <PrivateRoute exact path="/profil" component={Profil} />
         {/* Route Ingredient */}

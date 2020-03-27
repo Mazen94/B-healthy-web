@@ -16,17 +16,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function getSteps() {
-  return ['Crée un menu', 'Ajouter des ingredients au menu'];
-}
-
 export default function StepperHorizontal(props) {
-  const { stepProps } = props;
+  const { stepProps, creation, add } = props;
 
   const classes = useStyles();
   const activeStep = stepProps;
-  const steps = getSteps();
 
+  function getSteps() {
+    return [creation, add];
+  }
+  const steps = getSteps();
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep}>

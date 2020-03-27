@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     height: 300
   },
-  fixedHeight: {},
+
   submit: {
     marginTop: 30,
     position: 'relative',
@@ -166,7 +166,11 @@ export default function AddIngredient() {
         </IconButton>
         <Container maxWidth="lg" className={classes.container}>
           {/* Component StepperHorizontal */}
-          <StepperHorizontal stepProps={step} />
+          <StepperHorizontal
+            creation="Crée un menu"
+            add="Ajouter des ingredients au menu"
+            stepProps={step}
+          />
           <Grid container spacing={1}>
             {/* Component Menu */}
             <Grid item xs={12}>

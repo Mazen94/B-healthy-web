@@ -100,7 +100,7 @@ export default function HistoricalMeasures() {
     return (
       <Fragment>
         <Skeleton variant="text" width="99%" height={100} />
-        <Skeleton variant="rect" width="99%" height="75%" />
+        <Skeleton variant="rect" width="99%" height={350} />
       </Fragment>
     );
   } else {
