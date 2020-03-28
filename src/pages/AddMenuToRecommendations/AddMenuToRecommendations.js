@@ -69,11 +69,13 @@ export default function AddMenuToRecommendations() {
           <NavBar recommendation="contained"></NavBar>
 
           <Grid container spacing={4} className={classes.gridContainer}>
+            {/* Component StepperHorizontal */}
             <StepperHorizontal
               creation="Crée une Recommendation"
               add="Ajouter des menus"
               stepProps={step}
             />
+            {/* Component TrasfertMenus */}
             <TrasfertMenus />
             <Paper className={classes.paperButton}>
               <Button
