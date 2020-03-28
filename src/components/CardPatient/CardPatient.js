@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   typography: {
     marginTop: '20%',
-    marginLeft: '4%',
+
     margin: 'auto',
     color: 'white'
   },
@@ -32,6 +32,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'rgb(63, 81, 181)',
     marginRight: 15,
     height: 'auto',
+
     paddingBottom: '14%'
   },
   patientTypography: {

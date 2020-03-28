@@ -29,7 +29,7 @@ import people from '../../assets/people.png';
  */
 const useStyles = makeStyles({
   skeleton: {
-    marginTop: '5%',
+    marginTop: '1%',
 
     marginBottom: '10% ',
     marginLeft: '10% ',
@@ -148,11 +148,9 @@ export default function ListPatients() {
   if (data.length === 0) {
     return (
       <div className={classes.skeleton}>
-        {/* Loading when the data is empty */}
-        <Skeleton />
-        <Skeleton animation={false} />
-        <Skeleton animation="wave" />
-        <Skeleton animation="wave" />
+        <Skeleton variant="text" height="70px" width="100%" />
+
+        <Skeleton variant="rect" width="100%" height="55vh" />
       </div>
     );
   } else
