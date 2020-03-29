@@ -75,7 +75,8 @@ export default function ListRecommendations() {
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete ingredient (initial value is false)
   const [deleteRecommendationId, setDeleteRecommendationId] = useState(''); //to retrieve the ingredient id to delete
-  const params = useParams();
+  const [flag, setFlag] = useState(true); //to display the load progress
+  const params = useParams(); //to get the params from url
 
   /**
    * hook useEffect there will be a get  the ingredients , the current page and the last page in the data
@@ -96,13 +97,17 @@ export default function ListRecommendations() {
       );
       console.log(response.data.recommendations);
       setData(response.data.recommendations); //add the received data to the state data
+      setFlag(false);
     };
     //call function
     loadRecommendation();
   }, [params.id]);
+  /**
+   *  navigate to the route edit recommendation
+   * @param {int} id
+   */
   const handleClickIconButton = id => {
-    console.log(id);
-    history.push(`/ingredient/${id}`);
+    history.push(`/patient/${params.id}/recommendations/${id}/`);
   };
   /**
    * arrow function to open the dialogue when the nutritionit want to delete a Ingredient
@@ -140,106 +145,158 @@ export default function ListRecommendations() {
     setOpen(false); //to close the dialogue
     setData(data.filter(item => item.id !== deleteRecommendationId)); //get the new data without the Ingredient deleted
   };
-  if (data.length === 0) {
-    return (
-      <div className={classes.skeleton}>
-        {/* Loading when the data is empty */}
-        <Skeleton />
-        <Skeleton animation={false} />
-        <Skeleton animation="wave" />
-        <Skeleton animation="wave" />
-      </div>
-    );
-  } else
-    return (
-      <Fragment>
-        <TableContainer className={classes.tableContainer} component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Typography
-                    className={classes.typography}
-                    variant="subtitle2"
-                  >
-                    Recommandations
-                  </Typography>
-                </TableCell>
-                <TableCell align="left">
-                  <Typography
-                    className={classes.typography}
-                    variant="subtitle2"
-                  >
-                    Date de creation
-                  </Typography>
-                </TableCell>
-                <TableCell align="right"></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((row, x) => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    <Box display="flex" flexDirection="row">
-                      <Box>
-                        <Avatar
-                          className={classes.avatar}
-                          src={recommendations}
-                        ></Avatar>
-                      </Box>
-                      <Box p={2}>
-                        <a className={classes.link} href="# ">
-                          {row.name}
-                        </a>
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left">{row.created_at}</TableCell>
+  /**
+   * Function to render
+   */
+  const Renderfunction = () => {
+    //Loading until the state get the data from db
+    if (flag) {
+      return (
+        <div className={classes.skeleton}>
+          {/* Loading when the data is empty */}
+          <Skeleton />
+          <Skeleton animation={false} />
+          <Skeleton animation="wave" />
+          <Skeleton animation="wave" />
+        </div>
+      );
+      // when the states get the data and if the data is not empty then display
+    } else {
+      if (data.length !== 0) {
+        return (
+          <Fragment>
+            <TableContainer
+              className={classes.tableContainer}
+              component={Paper}
+            >
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Typography
+                        className={classes.typography}
+                        variant="subtitle2"
+                      >
+                        Recommandations
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography
+                        className={classes.typography}
+                        variant="subtitle2"
+                      >
+                        Date de creation
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right"></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((row, x) => (
+                    <TableRow key={row.id}>
+                      <TableCell component="th" scope="row">
+                        <Box display="flex" flexDirection="row">
+                          <Box>
+                            <Avatar
+                              className={classes.avatar}
+                              src={recommendations}
+                            ></Avatar>
+                          </Box>
+                          <Box p={2}>
+                            <a className={classes.link} href="# ">
+                              {row.name}
+                            </a>
+                          </Box>
+                        </Box>
+                      </TableCell>
+                      <TableCell align="left">{row.created_at}</TableCell>
 
-                  <TableCell align="right">
-                    <IconButton
-                      value={row.id}
-                      onClick={() => handleClickIconButton(row.id)}
-                      color="primary"
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      value={row.id}
-                      onClick={() => handleClickOpen(row.id)}
-                      color="secondary"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        {/*---------------------------------------*/}
-        {/* Dialog when we want to delete Ingredient */}
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Vous voulez vraiment supprimer cette recommandation ?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Non
-            </Button>
-            <Button color="primary" onClick={handleButtonDelete} autoFocus>
-              Oui
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Fragment>
-    );
+                      <TableCell align="right">
+                        <IconButton
+                          value={row.id}
+                          onClick={() => handleClickIconButton(row.id)}
+                          color="primary"
+                        >
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          value={row.id}
+                          onClick={() => handleClickOpen(row.id)}
+                          color="secondary"
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            {/*---------------------------------------*/}
+            {/* Dialog when we want to delete Ingredient */}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Vous voulez vraiment supprimer cette recommandation ?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Non
+                </Button>
+                <Button color="primary" onClick={handleButtonDelete} autoFocus>
+                  Oui
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Fragment>
+        );
+      } else {
+        // Display an empty table
+        return (
+          <Fragment>
+            <TableContainer
+              className={classes.tableContainer}
+              component={Paper}
+            >
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Typography
+                        className={classes.typography}
+                        variant="subtitle2"
+                      >
+                        Recommandations
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography
+                        className={classes.typography}
+                        variant="subtitle2"
+                      >
+                        Date de creation
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right"></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody></TableBody>
+              </Table>
+            </TableContainer>
+          </Fragment>
+        );
+      }
+    }
+  };
+  /**
+   * Render Method
+   */
+  return <Renderfunction />;
 }
