@@ -59,7 +59,7 @@ export default function TrasfertMenus() {
       const response = await healthy.get(`/mealStore?page=1`, {
         headers: { Authorization: AuthStr }
       });
-      console.log(response.data.MealStore);
+      console.log('response.data.MealStore ==', response.data.MealStore);
       setLeft(response.data.MealStore.data); //add the received data to the state data
     };
     loadMenus();
@@ -73,8 +73,7 @@ export default function TrasfertMenus() {
 
     if (currentIndex === -1) {
       setMealId(value.id);
-
-      console.log(value.id);
+      console.log('value.id==', value.id);
       newChecked.push(value);
     } else {
       setMealId('');
@@ -86,7 +85,7 @@ export default function TrasfertMenus() {
   const numberOfChecked = items => intersection(checked, items).length;
 
   const handleCheckedRight = () => {
-    console.log(params);
+    console.log('params == ', params);
     PostMenuWithIngredientToRecommendation(mealId);
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
@@ -112,7 +111,7 @@ export default function TrasfertMenus() {
           headers: { Authorization: AuthStr }
         }
       );
-      console.log(result.data.menuId);
+      console.log('result ==', result.data);
     } catch (error) {
       console.log(error.result);
     }
@@ -144,16 +143,16 @@ export default function TrasfertMenus() {
               button
               onClick={handleToggle(value)}
             >
-              <ListItemIcon>
-                {flag && (
+              {flag && (
+                <ListItemIcon>
                   <Checkbox
                     checked={checked.indexOf(value) !== -1}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ 'aria-labelledby': labelId }}
                   />
-                )}
-              </ListItemIcon>
+                </ListItemIcon>
+              )}
               <ListItemText id={labelId} primary={value.name} />
             </ListItem>
           );

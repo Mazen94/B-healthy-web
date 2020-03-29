@@ -73,7 +73,11 @@ export default function AddIngredientToMenu() {
         </IconButton>
         <Container maxWidth="lg" className={classes.container}>
           {/* Component StepperHorizontal */}
-          <StepperHorizontal stepProps={step} />
+          <StepperHorizontal
+            creation="Crée une Recommendation"
+            add="Ajouter des menus"
+            stepProps={step}
+          />
           {/* Component ListIngredients */}
           <IngredientToMenu />
           <Paper elevation={0} className={classes.paper}>
