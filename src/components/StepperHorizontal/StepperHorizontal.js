@@ -18,8 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function StepperHorizontal(props) {
   const { stepProps, creation, add } = props;
-
-  const classes = useStyles();
+  const classes = useStyles(); //add styles to variable classes
   const activeStep = stepProps;
 
   function getSteps() {

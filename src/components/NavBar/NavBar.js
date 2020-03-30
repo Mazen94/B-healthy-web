@@ -28,7 +28,7 @@ export default function NavBar(props) {
   const classes = useStyles();
   const params = useParams();
   const history = useHistory();
-  const { consultation, recommendation, journalAlimentaire, analyse } = props;
+  const { consultation, recommendation, journalAlimentaire } = props;
   /**
    * when the user clicks on the button consultation
    */

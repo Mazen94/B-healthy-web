@@ -20,6 +20,7 @@ import Consultation from './pages/Consultation/Consultation';
 import Recommendation from './pages/Recommendation/Recommendation';
 import AddRecommendations from './pages/AddRecommendations/AddRecommendations';
 import AddMenuToRecommendations from './pages/AddMenuToRecommendations/AddMenuToRecommendations';
+import UpdateRecommendations from './pages/UpdateRecommendations/UpdateRecommendations';
 
 function App() {
   return (
@@ -38,20 +39,29 @@ function App() {
           path="/patient/:id/consultation"
           component={Consultation}
         />
+        {/* Route get  all  recommendation */}
         <PrivateRoute
           exact
           path="/patient/:id/recommendations"
           component={Recommendation}
         />
+        {/* Route add new  recommendation */}
         <PrivateRoute
           exact
           path="/patient/:id/recommendation"
           component={AddRecommendations}
         />
+        {/* Route add menu to a recommendation */}
         <PrivateRoute
           exact
           path="/patient/:id/recommendation/:idRecommendation"
           component={AddMenuToRecommendations}
+        />
+        {/* Route update recommendation */}
+        <PrivateRoute
+          exact
+          path="/patient/:id/recommendations/:idRecommendation"
+          component={UpdateRecommendations}
         />
         {/* Route Update Nutritionist */}
         <PrivateRoute exact path="/profil" component={Profil} />

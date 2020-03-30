@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: '2%'
   },
   submit: {
-    marginLeft: '90%'
+    marginLeft: '82%'
   },
   paperButton: {
     marginTop: '2%',
@@ -51,6 +51,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function AddMenuToRecommendations() {
   const classes = useStyles();
+
   const step = 1;
   const history = useHistory();
   const params = useParams();
@@ -70,11 +71,7 @@ export default function AddMenuToRecommendations() {
 
           <Grid container spacing={4} className={classes.gridContainer}>
             {/* Component StepperHorizontal */}
-            <StepperHorizontal
-              creation="Crée une Recommendation"
-              add="Ajouter des menus"
-              stepProps={step}
-            />
+            <StepperHorizontal add="Ajouter des menus" stepProps={step} />
             {/* Component TrasfertMenus */}
             <TrasfertMenus />
             <Paper className={classes.paperButton}>
