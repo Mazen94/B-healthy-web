@@ -43,7 +43,7 @@ function intersection(a, b) {
 }
 
 export default function TrasfertMenus() {
-  const classes = useStyles();
+  const classes = useStyles(); //add styles to variable classes
   const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
