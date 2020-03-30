@@ -83,10 +83,7 @@ export default function ListRecommendations() {
    * this hook executed when the value of currentPage changes
    */
   useEffect(() => {
-    /**
-     * Arrow function to get the data (ingredients) using Async await
-     */
-
+    //Arrow function to get the data (ingredients) using Async await
     const loadRecommendation = async () => {
       const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       const response = await healthy.get(
