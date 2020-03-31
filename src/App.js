@@ -21,6 +21,7 @@ import Recommendation from './pages/Recommendation/Recommendation';
 import AddRecommendations from './pages/AddRecommendations/AddRecommendations';
 import AddMenuToRecommendations from './pages/AddMenuToRecommendations/AddMenuToRecommendations';
 import UpdateRecommendations from './pages/UpdateRecommendations/UpdateRecommendations';
+import FoodJournal from './pages/FoodJournal/FoodJournal';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           path="/patient/:id/consultation"
           component={Consultation}
         />
+        <PrivateRoute path="/patient/:id/foodJournal" component={FoodJournal} />
         {/* Route get  all  recommendation */}
         <PrivateRoute
           exact

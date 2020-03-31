@@ -41,6 +41,13 @@ export default function NavBar(props) {
   const handleClickRecommendation = () => {
     history.push(`/patient/${params.id}/recommendations`);
   };
+  /**
+   * when the user clicks on the button Journal Alimentaire
+   */
+  const handleClickJournal = () => {
+    history.push(`/patient/${params.id}/foodJournal`);
+  };
+
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid className={classes.control}>
@@ -74,6 +81,7 @@ export default function NavBar(props) {
             href="#contained-buttons"
             color="primary"
             variant={journalAlimentaire}
+            onClick={handleClickJournal}
           >
             Journal Alimentaire
           </Button>
