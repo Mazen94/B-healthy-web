@@ -8,9 +8,9 @@ import clsx from 'clsx';
 import React from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import Chart from '../../components/Chart/Chart';
-import Deposits from '../../components/Deposits/Deposits';
+import BarComponent from '../../components/BarComponent/BarComponent';
 import Copyright from '../../components/Copyright/Copyright';
-import Orders from '../../components/Orders/Orders';
+import PatientStatistics from '../../components/PatientStatistics/PatientStatistics';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -54,21 +54,35 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
+            <Grid item xs={12} md={8} lg={6}>
               <Paper className={fixedHeightPaper}>
                 <Chart />
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
+            {/* BarComponent Ingredient */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <Deposits />
+                <BarComponent
+                  name="Ingredients"
+                  count="0"
+                  backgroundColor="rgba(120, 150, 230, 0.6)"
+                />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+            {/* BarComponent Menus */}
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <BarComponent
+                  name="Menus"
+                  count="0"
+                  backgroundColor="rgba(255, 206, 86, 0.6)"
+                />
+              </Paper>
+            </Grid>
+            {/* PatientStatistics */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                <PatientStatistics />
               </Paper>
             </Grid>
           </Grid>

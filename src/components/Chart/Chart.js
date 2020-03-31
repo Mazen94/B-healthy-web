@@ -1,68 +1,36 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
+import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Label,
-  ResponsiveContainer
-} from 'recharts';
+import { makeStyles } from '@material-ui/core/styles';
 
-// Generate Sales Data
-function createData(time, amount) {
-  return { time, amount };
-}
-
-const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined)
-];
-
+const data = {
+  labels: ['Femme', 'Homme'],
+  datasets: [
+    {
+      data: [20, 10],
+      backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)']
+    }
+  ]
+};
+const useStyles = makeStyles(theme => ({
+  typography: {
+    textAlign: 'center'
+  }
+}));
 export default function Chart() {
-  const theme = useTheme();
-
+  const classes = useStyles(); //add styles to variable classes
   return (
     <React.Fragment>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        Today
+      <Typography
+        className={classes.typography}
+        component="h2"
+        variant="h6"
+        color="primary"
+        gutterBottom
+      >
+        Répartition des patients par sexe
       </Typography>
-      <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24
-          }}
-        >
-          <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
-            <Label
-              angle={270}
-              position="left"
-              style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
-            >
-              Sales ($)
-            </Label>
-          </YAxis>
-          <Line
-            type="monotone"
-            dataKey="amount"
-            stroke={theme.palette.primary.main}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <Pie className={classes.pie} data={data} width={60} height={20} />
     </React.Fragment>
   );
 }
