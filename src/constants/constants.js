@@ -76,14 +76,31 @@ const CHART_BACKGROUNDCOLOR = [
   'rgba(54, 162, 235, 0.6)'
 ];
 /**
- * The title (Patient) of the MenuBar component
+ * The title  of the Patient component
  */
 const PATIENT_MENU_BAR_TITLE = 'Patient';
 /**
  * placeholder used in the patient component
  */
 const PATIENT_PLACEHOLDER = 'Chercher un patient';
+/**
+ * The title of the AddPatient component
+ */
+const ADD_PATIENT_TITLE = 'Creer un patient';
 
+/**
+ * Constant message : use when field is required
+ */
+const MESSAGE_VALIDATORS_REQUIRED = 'Ce champ est requis';
+/**
+ * Constant message : min length password
+ */
+const MESSAGE_VALIDATORS_PASSWORD =
+  'Le mot de passe doit contenir au moins 8 caractères.';
+/**
+ * Constant message : email validation
+ */
+const MESSAGE_VALIDATORS_EMAIL = "L'email n'est pas valide";
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
@@ -96,5 +113,9 @@ export {
   CHART_LABEL_FEMALE,
   CHART_BACKGROUNDCOLOR,
   PATIENT_MENU_BAR_TITLE,
-  PATIENT_PLACEHOLDER
+  PATIENT_PLACEHOLDER,
+  ADD_PATIENT_TITLE,
+  MESSAGE_VALIDATORS_PASSWORD,
+  MESSAGE_VALIDATORS_REQUIRED,
+  MESSAGE_VALIDATORS_EMAIL
 };

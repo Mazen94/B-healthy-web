@@ -16,6 +16,13 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {
+  ADD_PATIENT_TITLE,
+  MESSAGE_VALIDATORS_REQUIRED,
+  MESSAGE_VALIDATORS_PASSWORD,
+  MESSAGE_VALIDATORS_EMAIL
+} from '../../constants/constants';
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -56,26 +63,15 @@ const useStyles = makeStyles(theme => ({
 export default function AddPatient() {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate
-  /**
-   * The states used in this component
-   * email : to retrieve the email entered by the user (initial value empty string)
-   * password : to retrieve the password entered by the user (initial value empty string)
-   * firstName : to retrieve the firstName entered by the user (initial value empty string)
-   * lastName : to retrieve the lastName entered by the user (initial value empty string)
-   * numberPhone : to retrieve the numberPhone entered by the user (initial value empty string)
-   * gender : to retrieve the gender entered by the user (initial value empty string)
-   * flag : to display the loadings when the user validate the fields
-   * erreurValidation : when the user gives an email exists
-   */
-  const [email, setEmail] = useState('');
-  const [gender, setGender] = useState('femme');
-  const [flag, setFlag] = useState(false);
-  const [erreurValidation, setErreurValidation] = useState(false);
-  const [proffesion, setProffesion] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [numberPhone, setNumberPhone] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(''); //to retrieve the email entered by the user.
+  const [gender, setGender] = useState('femme'); // to retrieve the gender entered by the user.
+  const [flag, setFlag] = useState(false); //to display the loadings when the user validate the fields.
+  const [erreurValidation, setErreurValidation] = useState(false); // when the user gives an email exists.
+  const [proffesion, setProffesion] = useState(''); //to retrieve the proffesion entered by the user .
+  const [firstName, setFirstName] = useState(''); //to retrieve the firstName entered by the user .
+  const [numberPhone, setNumberPhone] = useState(''); //to retrieve the numberPhone entered by the user.
+  const [lastName, setLastName] = useState(''); //to retrieve the lastName entered by the user.
+  const [password, setPassword] = useState(''); //to retrieve the password entered by the user.
   /**
    * arrow function to return to the previous page
    */
@@ -186,7 +182,7 @@ export default function AddPatient() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component MenuBar */}
-      <MenuBar title="Creer un patient" />
+      <MenuBar title={ADD_PATIENT_TITLE} />
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -221,7 +217,7 @@ export default function AddPatient() {
                   label="Prénom"
                   autoFocus
                   validators={['required']}
-                  errorMessages={['Ce champ est requis']}
+                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -236,7 +232,7 @@ export default function AddPatient() {
                   name="lastName"
                   autoComplete="lname"
                   validators={['required']}
-                  errorMessages={['Ce champ est requis']}
+                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -252,8 +248,8 @@ export default function AddPatient() {
                   autoComplete="email"
                   validators={['required', 'isEmail']}
                   errorMessages={[
-                    'Ce champ est requis',
-                    "L'email n'est pas valide"
+                    MESSAGE_VALIDATORS_REQUIRED,
+                    MESSAGE_VALIDATORS_EMAIL
                   ]}
                 />
               </Grid>
@@ -269,7 +265,7 @@ export default function AddPatient() {
                   id="nmbrePhone"
                   label="Numero Telephone"
                   validators={['required']}
-                  errorMessages={['Ce champ est requis']}
+                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
 
@@ -284,7 +280,7 @@ export default function AddPatient() {
                   name="proffesion"
                   autoComplete="proffesion"
                   validators={['required']}
-                  errorMessages={['Ce champ est requis']}
+                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -301,8 +297,8 @@ export default function AddPatient() {
                   autoComplete="current-password"
                   validators={['lenghPassword', 'required']}
                   errorMessages={[
-                    'Le mot de passe doit contenir au moins 8 caractères.',
-                    'Ce champ est requis'
+                    MESSAGE_VALIDATORS_PASSWORD,
+                    MESSAGE_VALIDATORS_REQUIRED
                   ]}
                 />
               </Grid>
