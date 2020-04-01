@@ -202,11 +202,7 @@ export default function MenuBar(props) {
                 bgcolor="background.paper"
               >
                 <a href="/profil">
-                  <Avatar
-                    className={classes.large}
-                    alt="Remy Sharp"
-                    src={doctor}
-                  />
+                  <Avatar className={classes.large} src={doctor} />
                 </a>
               </Box>
               <a href="/profil" className={classes.link}>

@@ -3,7 +3,15 @@ import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import healthy from '../../api/healthy';
+import {
+  CHART_LABEL_MALE,
+  CHART_LABEL_FEMALE,
+  CHART_BACKGROUNDCOLOR
+} from '../../constants/constants'; // Get constants from  constants  file
 
+/**
+ * Hook API to generate and apply styles (its JSS object)
+ */
 const useStyles = makeStyles(theme => ({
   typography: {
     textAlign: 'center'
@@ -11,17 +19,22 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function Chart() {
   const classes = useStyles(); //add styles to variable classes
-  const [countMale, setCountMale] = useState(0);
-  const [countFemale, setCountFemale] = useState(0);
+  const [countMale, setCountMale] = useState(0); //state to recover the number of male
+  const [countFemale, setCountFemale] = useState(0); //state to recover the number of female
+
+  //Bring in data
   const data = {
-    labels: ['Femme', 'Homme'],
+    labels: [CHART_LABEL_FEMALE, CHART_LABEL_MALE],
     datasets: [
       {
         data: [countFemale, countMale],
-        backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)']
+        backgroundColor: CHART_BACKGROUNDCOLOR
       }
     ]
   };
+  /**
+   * Hook to get the patient by gender
+   */
   useEffect(() => {
     const patientByGender = async () => {
       const authStr = `Bearer ${localStorage.getItem('token')}`;
@@ -34,8 +47,10 @@ export default function Chart() {
     };
     patientByGender();
   }, []);
+
   return (
     <React.Fragment>
+      {/* Title of  Pie */}
       <Typography
         className={classes.typography}
         component="h2"
@@ -45,6 +60,7 @@ export default function Chart() {
       >
         Répartition des patients par sexe
       </Typography>
+      {/* Chart Pie */}
       <Pie className={classes.pie} data={data} width={60} height={20} />
     </React.Fragment>
   );

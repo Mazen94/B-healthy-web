@@ -57,7 +57,24 @@ const DASHBOARD_MENU_NAME = 'Menus';
  * The title of the MenuBar component
  */
 const DASHBOARD_MENU_BAR_TITLE = 'Dashboard';
-
+/**
+ * Contant used in the Chart component
+ * the label 'Homme' of the chart component
+ */
+const CHART_LABEL_MALE = 'Homme';
+/**
+ * Contant used in the Chart component
+ * the label 'Femme' of the chart component
+ */
+const CHART_LABEL_FEMALE = 'Femme';
+/**
+ * Contant used in the Chart component
+ * The background color of the chart ('Homme','Femme')
+ */
+const CHART_BACKGROUNDCOLOR = [
+  'rgba(255, 99, 132, 0.6)',
+  'rgba(54, 162, 235, 0.6)'
+];
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
@@ -65,5 +82,8 @@ export {
   DASHBOARD_INGREDIENT_NAME,
   DASHBOARD_MENU_BACKGROUNDCOLOR,
   DASHBOARD_MENU_NAME,
-  DASHBOARD_MENU_BAR_TITLE
+  DASHBOARD_MENU_BAR_TITLE,
+  CHART_LABEL_MALE,
+  CHART_LABEL_FEMALE,
+  CHART_BACKGROUNDCOLOR
 };
