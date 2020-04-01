@@ -21,7 +21,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import healthy from '../../api/healthy';
+import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import recommendations from '../../assets/recommendations.png';
 
 /**
@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ListRecommendations() {
-  const classes = useStyles();
+  const classes = useStyles(); //add styles to variable classes
   const [data, setData] = useState([]); // state to get the ingredients
   const [currentPage, setCurrentPage] = useState(1); //currentPage: to get the current page in the data
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.

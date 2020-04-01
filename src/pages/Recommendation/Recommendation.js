@@ -7,12 +7,15 @@ import NavBar from '../../components/NavBar/NavBar';
 import ListRecommendations from '../../components/ListRecommendations/ListRecommendations';
 import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
+import { PATIENT_MENU_BAR_TITLE } from '../../constants/constants';
 
+/**
+ * Hook API to generate and apply styles (its JSS object)
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
   },
-
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
@@ -31,9 +34,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Recommendations() {
-  const classes = useStyles();
-  const history = useHistory();
-  const params = useParams();
+  const classes = useStyles(); //add styles to variable classes
+  const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate
+  const params = useParams(); //get the params from url
+  /**
+   * arrow function to navigate the user to the addRecommendation page
+   */
   const handleClickAjouter = () => {
     history.push(`/patient/${params.id}/recommendation`);
   };
@@ -41,7 +47,7 @@ export default function Recommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title="Patient" />
+        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
