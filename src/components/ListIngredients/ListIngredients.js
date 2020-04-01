@@ -146,7 +146,7 @@ export default function AddIngredient() {
   /**
    *  function to render
    */
-  const RenderFunction = () => {
+  const renderFunction = () => {
     if (data.length === 0) {
       return (
         <div className={classes.skeleton}>
@@ -269,5 +269,5 @@ export default function AddIngredient() {
   /**
    * Render
    */
-  return <RenderFunction />;
+  return <div>{renderFunction()}</div>;
 }

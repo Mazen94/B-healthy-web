@@ -160,7 +160,7 @@ export default function UpdateIngredient(props) {
   /**
    * Function to render
    */
-  const RenderFunction = () => {
+  const renderFunction = () => {
     //Loading when the data is empty
     if (name === '') {
       return (
@@ -185,7 +185,6 @@ export default function UpdateIngredient(props) {
                       fullWidth
                       id="name"
                       label="Nom"
-                      autoFocus
                       onChange={handleName}
                       value={name}
                       validators={['required']}
@@ -275,7 +274,7 @@ export default function UpdateIngredient(props) {
         </IconButton>
         <Container maxWidth="lg" className={classes.container}>
           {/* Function to Render */}
-          <RenderFunction />
+          {renderFunction()}
         </Container>
       </main>
     </div>

@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import DoneIcon from '@material-ui/icons/Done';
-import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
@@ -20,7 +19,14 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
+import {
+  MENU_BAR_UPDATE_TITLE,
+  MESSAGE_VALIDATORS_REQUIRED
+} from '../../constants/constants';
 
+/**
+ * Hook API to generate and apply styles (its JSS object)
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -61,9 +67,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UpdateIngredient() {
-  const classes = useStyles();
-  const history = useHistory();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const classes = useStyles(); //add styles to variable classes
+  const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate
   const [maxAge, setMaxAge] = useState(''); // to retrieve the maximum age entered by the user (initial value empty string)
   const [minAge, setMinAge] = useState(''); // to retrieve the minimum age entered by the user (initial value empty string)
   const [typeMenu, setTypeMenu] = useState(''); // to retrieve the type menu entered by the user (initial value empty string)
@@ -85,8 +90,6 @@ export default function UpdateIngredient() {
         const response = await healthy.get('/mealStore/' + params.id, {
           headers: { Authorization: authStr }
         });
-
-        console.log(response.data.StoreMenu);
         setName(response.data.StoreMenu.name);
         setMaxAge(response.data.StoreMenu.max_age);
         setMinAge(response.data.StoreMenu.min_age);
@@ -191,188 +194,168 @@ export default function UpdateIngredient() {
       setFlag(false);
     }
   };
-  if (name === '') {
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        {/* Component AppBarre */}
-        <MenuBar title="Modifier" />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            {/* Loading when the data is empty */}
-            <div className={classes.skeleton}>
-              {/* Loading when the data is empty */}
-              <Skeleton />
-              <Skeleton animation={false} />
-              <Skeleton animation="wave" />
-              <Skeleton animation="wave" />
-            </div>
-          </Container>
-        </main>
-      </div>
-    );
-  } else
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        {/* Component AppBarre */}
-        <MenuBar title="Modifier" />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
-                <ValidatorForm onSubmit={onSubmitFrom} noValidate>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <TextValidator
-                        autoComplete="fname"
-                        name="name"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="name"
-                        label="Nom"
-                        value={name}
-                        onChange={handleChangeName}
-                        validators={['required']}
-                        errorMessages={['Ce champ est requis']}
-                        endadornment={
-                          <InputAdornment position="end">g</InputAdornment>
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Select
-                        variant="outlined"
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        value={typeMenu}
-                        onChange={handleTypeMenu}
-                        className={classes.select}
-                      >
-                        <MenuItem value={'Petit-Déjeuner'}>
-                          Petit-Déjeuner
-                        </MenuItem>
-                        <MenuItem value={'Collation 1'}>Collation 1</MenuItem>
-                        <MenuItem value={'Déjeuner'}>Déjeuner</MenuItem>
-                        <MenuItem value={'Collation 2'}>Collation 2</MenuItem>
-                        <MenuItem value={'Dîner'}>Dîner</MenuItem>
-                      </Select>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextValidator
-                        autoComplete="fname"
-                        name="name"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="name"
-                        label="Min Age"
-                        value={minAge}
-                        onChange={handleChangeMinAge}
-                        validators={['required']}
-                        errorMessages={['Ce champ est requis']}
-                        endadornment={
-                          <InputAdornment position="end">g</InputAdornment>
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextValidator
-                        autoComplete="fname"
-                        name="name"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="name"
-                        label="Max Age"
-                        value={maxAge}
-                        onChange={handleChangeMaxAge}
-                        validators={['required']}
-                        errorMessages={['Ce champ est requis']}
-                        endadornment={
-                          <InputAdornment position="end">g</InputAdornment>
-                        }
-                      />
-                    </Grid>
-
-                    <Grid
-                      item
-                      xs={12}
-                      sm={6}
-                      className={classes.handleIngredient}
-                    >
-                      {/* Component UpdateAmountIngredient Related to Menu*/}
-                      <Select
-                        variant="outlined"
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        className={classes.select}
-                        value={valueOfIngredient}
-                        onChange={handleIngredient}
-                      >
-                        }
-                        {ingredients.map(row => (
-                          <MenuItem key={row.id} value={row}>
-                            {row.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      <FormHelperText>
-                        Les ingredients de ce menu
-                      </FormHelperText>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      sm={5}
-                      className={classes.handleIngredient}
-                    >
-                      <TextValidator
-                        autoComplete="fname"
-                        name="name"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="name"
-                        label="Amount"
-                        disabled={isdisbaled}
-                        value={valueOfamount}
-                        onChange={handleChangeAmount}
-                        endadornment={
-                          <InputAdornment position="end">g</InputAdornment>
-                        }
-                      />
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      sm={1}
-                      className={classes.handleIngredient}
-                    >
-                      <IconButton color="primary" onClick={handleClickButton}>
-                        <DoneIcon />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
+  /**
+   * Function to render
+   */
+  const renderFunction = () => {
+    if (name === '') {
+      return (
+        <div className={classes.skeleton}>
+          {/* Loading when the data is empty */}
+          <Skeleton />
+          <Skeleton animation={false} />
+          <Skeleton animation="wave" />
+          <Skeleton animation="wave" />
+        </div>
+      );
+    } else
+      return (
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <ValidatorForm onSubmit={onSubmitFrom} noValidate>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextValidator
+                    autoComplete="fname"
+                    name="name"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Nom"
+                    value={name}
+                    onChange={handleChangeName}
+                    validators={['required']}
+                    errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                    endadornment={
+                      <InputAdornment position="end">g</InputAdornment>
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Select
+                    variant="outlined"
+                    labelId="demo-simple-select-filled-label"
+                    id="demo-simple-select-filled"
+                    value={typeMenu}
+                    onChange={handleTypeMenu}
+                    className={classes.select}
                   >
-                    Valider
-                  </Button>
-                </ValidatorForm>
-              </Paper>
-            </Grid>
-            <Backdrop className={classes.backdrop} open={flag}>
-              <CircularProgress color="inherit" />
-            </Backdrop>
-          </Container>
-        </main>
-      </div>
-    );
+                    <MenuItem value={'Petit-Déjeuner'}>Petit-Déjeuner</MenuItem>
+                    <MenuItem value={'Collation 1'}>Collation 1</MenuItem>
+                    <MenuItem value={'Déjeuner'}>Déjeuner</MenuItem>
+                    <MenuItem value={'Collation 2'}>Collation 2</MenuItem>
+                    <MenuItem value={'Dîner'}>Dîner</MenuItem>
+                  </Select>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextValidator
+                    autoComplete="fname"
+                    name="name"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Min Age"
+                    value={minAge}
+                    onChange={handleChangeMinAge}
+                    validators={['required']}
+                    errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                    endadornment={
+                      <InputAdornment position="end">g</InputAdornment>
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextValidator
+                    autoComplete="fname"
+                    name="name"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Max Age"
+                    value={maxAge}
+                    onChange={handleChangeMaxAge}
+                    validators={['required']}
+                    errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                    endadornment={
+                      <InputAdornment position="end">g</InputAdornment>
+                    }
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} className={classes.handleIngredient}>
+                  {/* Component UpdateAmountIngredient Related to Menu*/}
+                  <Select
+                    variant="outlined"
+                    labelId="demo-simple-select-filled-label"
+                    id="demo-simple-select-filled"
+                    className={classes.select}
+                    value={valueOfIngredient}
+                    onChange={handleIngredient}
+                  >
+                    }
+                    {ingredients.map(row => (
+                      <MenuItem key={row.id} value={row}>
+                        {row.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>Les ingredients de ce menu</FormHelperText>
+                </Grid>
+                <Grid item xs={12} sm={5} className={classes.handleIngredient}>
+                  <TextValidator
+                    autoComplete="fname"
+                    name="name"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Amount"
+                    disabled={isdisbaled}
+                    value={valueOfamount}
+                    onChange={handleChangeAmount}
+                    endadornment={
+                      <InputAdornment position="end">g</InputAdornment>
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} sm={1} className={classes.handleIngredient}>
+                  <IconButton color="primary" onClick={handleClickButton}>
+                    <DoneIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Valider
+              </Button>
+            </ValidatorForm>
+          </Paper>
+        </Grid>
+      );
+  };
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      {/* Component AppBarre */}
+      <MenuBar title={MENU_BAR_UPDATE_TITLE} />
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          {renderFunction()}
+          {/* Backdrop Component */}
+          <Backdrop className={classes.backdrop} open={flag}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </Container>
+      </main>
+    </div>
+  );
 }
