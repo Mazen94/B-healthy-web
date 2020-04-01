@@ -37,14 +37,19 @@ export default function Chart() {
    */
   useEffect(() => {
     const patientByGender = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.get(`/statistics/gender`, {
-        headers: { Authorization: authStr }
-      });
-      console.log(response.data.countGender);
-      setCountFemale(response.data.countGender.female);
-      setCountMale(response.data.countGender.male);
+      try {
+        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+        // API : get number of patient by gender
+        const response = await healthy.get(`/statistics/gender`, {
+          headers: { Authorization: authStr }
+        });
+        setCountFemale(response.data.countGender.female);
+        setCountMale(response.data.countGender.male);
+      } catch (error) {
+        console.log(error.reponse);
+      }
     };
+    //Call the method
     patientByGender();
   }, []);
 

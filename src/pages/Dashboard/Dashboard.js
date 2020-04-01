@@ -53,22 +53,36 @@ const useStyles = makeStyles(theme => ({
  */
 export default function Dashboard() {
   const classes = useStyles(); //add styles to variable classes
-  const [countIngredient, setCountIngredient] = useState();
-  const [countMenus, setCountMenus] = useState();
+  const [countIngredient, setCountIngredient] = useState(); //state to get the number of ingredient
+  const [countMenus, setCountMenus] = useState(); //state to get the number of ingredient
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); //clsx is a tiny utility for constructing className strings conditionally
+  /**
+   * Hook to get the number of menus and ingredients
+   */
   useEffect(() => {
     const MenusAndIngredients = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.get(`statistics/menus`, {
-        headers: { Authorization: authStr }
-      });
-      const resultat = await healthy.get(`statistics/ingredients`, {
-        headers: { Authorization: authStr }
-      });
-
-      setCountMenus(response.data.countOfMenus);
-      setCountIngredient(resultat.data.countOfIngredient);
+      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+      // API :get the number of menus
+      try {
+        const response = await healthy.get(`statistics/menus`, {
+          headers: { Authorization: authStr }
+        });
+        setCountMenus(response.data.countOfMenus);
+      } catch (error) {
+        console.log(error.response);
+      }
+      // API :get the number of ingredients
+      try {
+        const resultat = await healthy.get(`statistics/ingredients`, {
+          headers: { Authorization: authStr }
+        });
+        // Associate the results
+        setCountIngredient(resultat.data.countOfIngredient);
+      } catch (error) {
+        console.log(error.resultat);
+      }
     };
+    //Call the method
     MenusAndIngredients();
   }, []);
   return (
