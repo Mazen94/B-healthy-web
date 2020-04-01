@@ -8,10 +8,15 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import React, { Fragment } from 'react';
-import { useHistory } from 'react-router-dom'; //new instance of axios with a custom config
+import { useHistory } from 'react-router-dom';
 import Copyright from '../../components/Copyright/Copyright';
 import ListPatients from '../../components/ListPatients/ListPatients';
 import MenuBar from '../../components/MenuBar/MenuBar';
+import {
+  PATIENT_MENU_BAR_TITLE,
+  PATIENT_PLACEHOLDER
+} from '../../constants/constants';
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -56,7 +61,7 @@ export default function Patients() {
       <div className={classes.root}>
         <CssBaseline />
         {/* Component MenuBar */}
-        <MenuBar title="Patient" />
+        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg">
@@ -65,7 +70,7 @@ export default function Patients() {
               <Paper component="form" className={classes.paperSearch}>
                 <InputBase
                   className={classes.input}
-                  placeholder="Chercher un patient"
+                  placeholder={PATIENT_PLACEHOLDER}
                 />
                 <IconButton
                   type="submit"

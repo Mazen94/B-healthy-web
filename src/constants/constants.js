@@ -75,6 +75,15 @@ const CHART_BACKGROUNDCOLOR = [
   'rgba(255, 99, 132, 0.6)',
   'rgba(54, 162, 235, 0.6)'
 ];
+/**
+ * The title (Patient) of the MenuBar component
+ */
+const PATIENT_MENU_BAR_TITLE = 'Patient';
+/**
+ * placeholder used in the patient component
+ */
+const PATIENT_PLACEHOLDER = 'Chercher un patient';
+
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
@@ -85,5 +94,7 @@ export {
   DASHBOARD_MENU_BAR_TITLE,
   CHART_LABEL_MALE,
   CHART_LABEL_FEMALE,
-  CHART_BACKGROUNDCOLOR
+  CHART_BACKGROUNDCOLOR,
+  PATIENT_MENU_BAR_TITLE,
+  PATIENT_PLACEHOLDER
 };

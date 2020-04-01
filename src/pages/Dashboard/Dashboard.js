@@ -11,7 +11,7 @@ import Chart from '../../components/Chart/Chart';
 import BarComponent from '../../components/BarComponent/BarComponent';
 import Copyright from '../../components/Copyright/Copyright';
 import PatientStatistics from '../../components/PatientStatistics/PatientStatistics';
-import healthy from '../../api/healthy';
+import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import {
   DASHBOARD_MENU_BAR_TITLE,
   DASHBOARD_INGREDIENT_BACKGROUNDCOLOR,
