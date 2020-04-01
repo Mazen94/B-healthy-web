@@ -3,7 +3,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import { useHistory } from 'react-router-dom'; //new instance of axios with a custom config
+import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ListMenus from '../../components/ListMenus/ListMenus';
 const useStyles = makeStyles(theme => ({

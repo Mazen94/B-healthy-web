@@ -4,15 +4,19 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import React, { useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory, useParams } from 'react-router-dom';
-import healthy from '../../api/healthy';
+import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
-
+import {
+  PATIENT_MENU_BAR_TITLE,
+  MESSAGE_VALIDATORS_REQUIRED,
+  ADDRECOMMENDATION_STEPPER_CREATION,
+  RECOMMENDATION_STEPPER_ADD
+} from '../../constants/constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -49,13 +53,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function AddRecommendations() {
-  const classes = useStyles();
-  const history = useHistory();
-  const params = useParams();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const classes = useStyles(); //add styles to variable classes
+  const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
+  const params = useParams(); //get params from url
   const [name, setName] = useState(''); // to retrieve the name entered by the user (initial value empty string)
   const [avoid, setAvoid] = useState(''); // to retrieve the avoid entered by the user (initial value empty string)
-  const step = 0;
+  const step = 0; //const to specify in which stage we are ( in component StepperHorizontal)
   /**
    * arrow function to get the name entered by the user
    * @param {event} e
@@ -70,6 +73,12 @@ export default function AddRecommendations() {
   const handleAvoid = e => {
     setAvoid(e.target.value);
   };
+
+  /**
+   * arrow function to retrieve the final inputs
+   * and call the funtion addRecommendation to send the data to the DB
+   * @param {event} e
+   */
   const onSubmitForm = e => {
     e.preventDefault();
 
@@ -94,7 +103,6 @@ export default function AddRecommendations() {
           headers: { Authorization: authStr }
         }
       );
-      console.log('response', response.data.recommendation);
 
       history.push(
         `/patient/${params.id}/recommendation/${response.data.recommendation.id}`
@@ -108,7 +116,7 @@ export default function AddRecommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title="Patient" />
+        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -116,15 +124,16 @@ export default function AddRecommendations() {
           <NavBar recommendation="contained"></NavBar>
 
           <Grid container spacing={4} className={classes.gridContainer}>
+            {/* StepperHorizontal component */}
             <StepperHorizontal
-              creation="Crée une Recommendation"
-              add="Ajouter des menus"
+              creation={ADDRECOMMENDATION_STEPPER_CREATION}
+              add={RECOMMENDATION_STEPPER_ADD}
               stepProps={step}
             />
             <Grid container spacing={1}>
               {/* Component Menu */}
               <Grid item xs={12}>
-                <Paper className={fixedHeightPaper}>
+                <Paper className={classes.paper}>
                   <ValidatorForm
                     onSubmit={onSubmitForm}
                     className={classes.formValidator}
@@ -145,7 +154,7 @@ export default function AddRecommendations() {
                           label="Nom"
                           autoFocus
                           validators={['required']}
-                          errorMessages={['Ce champ est requis']}
+                          errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                           endadornment={
                             <InputAdornment position="end">g</InputAdornment>
                           }
@@ -165,7 +174,7 @@ export default function AddRecommendations() {
                           value={avoid}
                           label="Les aliments   a eviter"
                           validators={['required']}
-                          errorMessages={['Ce champ est requis']}
+                          errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                           endadornment={
                             <InputAdornment position="end">g</InputAdornment>
                           }

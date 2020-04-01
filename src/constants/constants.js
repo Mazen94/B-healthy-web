@@ -1,5 +1,5 @@
 /**
- * Contant used in the PatientStatistics component
+ * Constant used in the PatientStatistics component
  * the labels of the chart (bar)
  */
 const PATIENT_STATISTICS_LABELS = [
@@ -17,7 +17,7 @@ const PATIENT_STATISTICS_LABELS = [
   ''
 ];
 /**
- * Contant used in the PatientStatistics component
+ * Constant used in the PatientStatistics component
  * The background color of the chart (bar)
  */
 const PATIENT_STATISTICS_BACKGROUNDCOLOR = [
@@ -33,42 +33,42 @@ const PATIENT_STATISTICS_BACKGROUNDCOLOR = [
   'rgba(50, 10, 200, 0.6)'
 ];
 /**
- * Contant used in the Dashboard component
+ * Constant used in the Dashboard component
  * The background color of the chart (Ingredient)
  */
 const DASHBOARD_INGREDIENT_BACKGROUNDCOLOR = 'rgba(54, 162, 235, 0.6)';
 /**
- * Contant used in the Dashboard component
+ * Constant used in the Dashboard component
  * The name of the chart (Ingredient)
  */
 const DASHBOARD_INGREDIENT_NAME = 'Ingredients';
 /**
- * Contant used in the Dashboard component
+ * Constant used in the Dashboard component
  * The background color of the chart (Menu)
  */
 const DASHBOARD_MENU_BACKGROUNDCOLOR = 'rgba(255, 99, 132, 0.6)';
 /**
- * Contant used in the Dashboard component
+ * Constant used in the Dashboard component
  * The name of the chart (Menu)
  */
 const DASHBOARD_MENU_NAME = 'Menus';
 /**
- * Contant used in the Dashboard component
+ * Constant used in the Dashboard component
  * The title of the MenuBar component
  */
 const DASHBOARD_MENU_BAR_TITLE = 'Dashboard';
 /**
- * Contant used in the Chart component
+ * Constant used in the Chart component
  * the label 'Homme' of the chart component
  */
 const CHART_LABEL_MALE = 'Homme';
 /**
- * Contant used in the Chart component
+ * Constant used in the Chart component
  * the label 'Femme' of the chart component
  */
 const CHART_LABEL_FEMALE = 'Femme';
 /**
- * Contant used in the Chart component
+ * Constant used in the Chart component
  * The background color of the chart ('Homme','Femme')
  */
 const CHART_BACKGROUNDCOLOR = [
@@ -117,6 +117,21 @@ const MESSAGE_VALIDATORS_INTEGER = 'Ce champ doit être un nombre';
  * The title of the Update page
  */
 const MENU_BAR_UPDATE_TITLE = 'Modifier';
+/**
+ * Constant used in the AddRecommendation Page
+ * name of creation
+ */
+const ADDRECOMMENDATION_STEPPER_CREATION = 'Crée une Recommendation';
+/**
+ * Constant used in the AddRecommendation,UpdateRecommendation Page
+ *
+ */
+const RECOMMENDATION_STEPPER_ADD = 'Ajouter des menus';
+/**
+ * Constant used in the UpadateRecommendation Page
+ * name of creation
+ */
+const UPDATERECOMMENDATION_STEPPER_CREATION = 'Modifier Recommandation';
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
@@ -137,5 +152,8 @@ export {
   INGREDIENTS_MENU_BAR_TITLE,
   ADD_INGREDIENT_TITLE,
   MESSAGE_VALIDATORS_INTEGER,
-  MENU_BAR_UPDATE_TITLE
+  MENU_BAR_UPDATE_TITLE,
+  ADDRECOMMENDATION_STEPPER_CREATION,
+  RECOMMENDATION_STEPPER_ADD,
+  UPDATERECOMMENDATION_STEPPER_CREATION
 };

@@ -15,15 +15,19 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import meal from '../../assets/meal.png';
+
+/**
+ * Hook API to generate and apply styles (its JSS object) using Material ui
+ */
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: 'auto'
   }
 }));
 const MenusRealtedRecommendation = props => {
-  const menu = props.menus;
+  const menu = props.menus; //get the menu from the props
   const classes = useStyles(); //add styles to variable classes
-  const params = useParams();
+  const params = useParams(); //get the params from url
   const [deleteMenuId, setDeleteMenuId] = useState(''); //to retrieve the Menus id to delete
   const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete Menus (initial value is false)
   const [menus, setMenus] = useState([]);
@@ -55,7 +59,7 @@ const MenusRealtedRecommendation = props => {
           headers: { Authorization: authStr }
         }
       );
-      setMenus(menus.filter(item => item.id !== deleteMenuId)); //get the new data without the Ingredient deleted)
+      setMenus(menus.filter(item => item.id !== deleteMenuId)); //get the new data without the menu deleted)
       console.log('handleButtonDelete =', response);
     } catch (error) {
       console.log(error.response);

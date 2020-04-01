@@ -5,14 +5,21 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
-import healthy from '../../api/healthy';
+import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import ModificationRecommendation from '../../components/ModificationRecommendation/ModificationRecommendation';
 import MenusRealtedRecommendation from '../../components/MenusRelatedRecommendation/MenusRealtedRecommendation';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Button } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
-
+import {
+  PATIENT_MENU_BAR_TITLE,
+  UPDATERECOMMENDATION_STEPPER_CREATION,
+  RECOMMENDATION_STEPPER_ADD
+} from '../../constants/constants';
+/**
+ * Hook API to generate and apply styles (its JSS object) using Material ui
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -127,7 +134,7 @@ export default function UpdateRecommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title="Patient" />
+        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -137,8 +144,8 @@ export default function UpdateRecommendations() {
             {/*Component StepperHorizontal */}
             <StepperHorizontal
               setp={step}
-              creation="Modifier Recommandation"
-              add="Ajouter des menus"
+              creation={UPDATERECOMMENDATION_STEPPER_CREATION}
+              add={RECOMMENDATION_STEPPER_ADD}
             />
           </div>
           {/* Render Function */}

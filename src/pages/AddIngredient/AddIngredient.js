@@ -19,6 +19,10 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER
 } from '../../constants/constants';
+
+/**
+ * Hook API to generate and apply styles (its JSS object) using Material ui
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
