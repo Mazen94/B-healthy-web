@@ -12,6 +12,14 @@ import BarComponent from '../../components/BarComponent/BarComponent';
 import Copyright from '../../components/Copyright/Copyright';
 import PatientStatistics from '../../components/PatientStatistics/PatientStatistics';
 import healthy from '../../api/healthy';
+import {
+  DASHBOARD_MENU_BAR_TITLE,
+  DASHBOARD_INGREDIENT_BACKGROUNDCOLOR,
+  DASHBOARD_INGREDIENT_NAME,
+  DASHBOARD_MENU_BACKGROUNDCOLOR,
+  DASHBOARD_MENU_NAME
+} from '../../constants/constants'; // Get constants from  constants  file
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -66,7 +74,7 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <MenuBar title="Dashboard" />
+      <MenuBar title={DASHBOARD_MENU_BAR_TITLE} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -81,9 +89,9 @@ export default function Dashboard() {
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <BarComponent
-                  name="Ingredients"
+                  name={DASHBOARD_INGREDIENT_NAME}
                   count={countIngredient}
-                  backgroundColor="rgba(54, 162, 235, 0.6)"
+                  backgroundColor={DASHBOARD_INGREDIENT_BACKGROUNDCOLOR}
                 />
               </Paper>
             </Grid>
@@ -91,9 +99,9 @@ export default function Dashboard() {
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <BarComponent
-                  name="Menus"
+                  name={DASHBOARD_MENU_NAME}
                   count={countMenus}
-                  backgroundColor="rgba(255, 99, 132, 0.6)"
+                  backgroundColor={DASHBOARD_MENU_BACKGROUNDCOLOR}
                 />
               </Paper>
             </Grid>
