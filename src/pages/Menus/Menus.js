@@ -6,6 +6,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ListMenus from '../../components/ListMenus/ListMenus';
+import { MENUS_TITLE } from '../../constants/constants';
+
+/**
+ * Hook API to generate and apply styles (its JSS object)
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -39,7 +44,7 @@ export default function Menus() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title="Menus" />
+      <MenuBar title={MENUS_TITLE} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
