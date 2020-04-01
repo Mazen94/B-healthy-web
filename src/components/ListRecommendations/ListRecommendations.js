@@ -145,7 +145,7 @@ export default function ListRecommendations() {
   /**
    * Function to render
    */
-  const Renderfunction = () => {
+  const renderFunction = () => {
     //Loading until the state get the data from db
     if (flag) {
       return (
@@ -293,7 +293,7 @@ export default function ListRecommendations() {
     }
   };
   /**
-   * Render Method
+   * render Method
    */
-  return <Renderfunction />;
+  return <Fragment>{renderFunction()}</Fragment>;
 }

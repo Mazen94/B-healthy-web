@@ -94,7 +94,7 @@ export default function UpdateRecommendations() {
       `/patient/${params.id}/recommendation/${params.idRecommendation}`
     );
   };
-  const RenderFunction = () => {
+  const renderFunction = () => {
     //Skeleton component
     if (name === '') {
       return (
@@ -128,7 +128,7 @@ export default function UpdateRecommendations() {
   };
 
   /**
-   * The Render Method
+   * The render Method
    */
   return (
     <div>
@@ -148,8 +148,8 @@ export default function UpdateRecommendations() {
               add={RECOMMENDATION_STEPPER_ADD}
             />
           </div>
-          {/* Render Function */}
-          <RenderFunction />
+          {/* render Function */}
+          {renderFunction()}
           <Paper className={classes.paper}>
             <Button
               type="submit"

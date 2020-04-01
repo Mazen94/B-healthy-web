@@ -139,7 +139,7 @@ export default function ListPatients() {
   /**
    * function to render
    */
-  const RenderFunction = () => {
+  const renderFunction = () => {
     if (data.length === 0) {
       return (
         <div className={classes.skeleton}>
@@ -243,5 +243,5 @@ export default function ListPatients() {
   /**
    * render
    */
-  return <RenderFunction />;
+  return <Fragment>{renderFunction()}</Fragment>;
 }

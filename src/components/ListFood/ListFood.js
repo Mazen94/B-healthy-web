@@ -103,7 +103,7 @@ export default function ListFood(props) {
   /**
    * Arrow function to render
    */
-  const RenderFunction = () => {
+  const renderFunction = () => {
     if (flag) {
       return (
         <Fragment>
@@ -172,5 +172,5 @@ export default function ListFood(props) {
       );
     }
   };
-  return <RenderFunction />;
+  return <Fragment>{renderFunction()}</Fragment>;
 }

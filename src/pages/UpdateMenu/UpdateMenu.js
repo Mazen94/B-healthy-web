@@ -349,6 +349,7 @@ export default function UpdateIngredient() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+          {/* Function to render */}
           {renderFunction()}
           {/* Backdrop Component */}
           <Backdrop className={classes.backdrop} open={flag}>

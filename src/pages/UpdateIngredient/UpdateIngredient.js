@@ -255,7 +255,7 @@ export default function UpdateIngredient(props) {
       );
   };
   /**
-   * Render
+   * render method
    */
   return (
     <div className={classes.root}>
@@ -273,7 +273,7 @@ export default function UpdateIngredient(props) {
           <ArrowBackIcon />
         </IconButton>
         <Container maxWidth="lg" className={classes.container}>
-          {/* Function to Render */}
+          {/* Function to render */}
           {renderFunction()}
         </Container>
       </main>

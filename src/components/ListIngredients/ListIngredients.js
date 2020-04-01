@@ -267,7 +267,7 @@ export default function AddIngredient() {
   };
 
   /**
-   * Render
+   * render method
    */
   return <div>{renderFunction()}</div>;
 }
