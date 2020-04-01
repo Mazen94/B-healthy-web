@@ -10,14 +10,23 @@ import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy';
+import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import MenuBar from '../../components/MenuBar/MenuBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
+import {
+  ADD_MENU_TITLE,
+  MESSAGE_VALIDATORS_REQUIRED,
+  ADDMENU_STEPPER_CREATION,
+  ADDMENU_STEPPER_ADD,
+  MESSAGE_VALIDATORS_INTEGER
+} from '../../constants/constants';
 
+/**
+ * Hook API to generate and apply styles (its JSS object)
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -59,7 +68,6 @@ const useStyles = makeStyles(theme => ({
 export default function AddIngredient() {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [name, setName] = useState(''); // to retrieve the name entered by the user (initial value empty string)
   const [maxAge, setMaxAge] = useState(''); // to retrieve the maximum age entered by the user (initial value empty string)
   const [minAge, setMinAge] = useState(''); // to retrieve the minimum age entered by the user (initial value empty string)
@@ -114,7 +122,7 @@ export default function AddIngredient() {
   }, []);
   /**
    * arrow function to retrieve the final inputs
-   * and call the funtion addPatient to send the data to the DB
+   * and call the funtion addMenu to send the data to the DB
    */
   const onSubmitForm = e => {
     e.preventDefault();
@@ -126,7 +134,7 @@ export default function AddIngredient() {
       type_menu: typeMenu
     };
     console.log(menu);
-    setFlag(true);
+    setFlag(true); //to diplay the loading component
     addMenu(menu);
   };
 
@@ -153,7 +161,7 @@ export default function AddIngredient() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title="Ajouter un menu" />
+      <MenuBar title={ADD_MENU_TITLE} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {/* Icon to go back */}
@@ -167,14 +175,14 @@ export default function AddIngredient() {
         <Container maxWidth="lg" className={classes.container}>
           {/* Component StepperHorizontal */}
           <StepperHorizontal
-            creation="Crée un menu"
-            add="Ajouter des ingredients au menu"
+            creation={ADDMENU_STEPPER_CREATION}
+            add={ADDMENU_STEPPER_ADD}
             stepProps={step}
           />
           <Grid container spacing={1}>
             {/* Component Menu */}
             <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={classes.paper}>
                 <ValidatorForm onSubmit={onSubmitForm} noValidate>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -190,7 +198,7 @@ export default function AddIngredient() {
                         onChange={handleName}
                         value={name}
                         validators={['required']}
-                        errorMessages={['Ce champ est requis']}
+                        errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                         endadornment={
                           <InputAdornment position="end">g</InputAdornment>
                         }
@@ -220,13 +228,12 @@ export default function AddIngredient() {
                         id="MaxAge"
                         fullWidth
                         required
-                        className={clsx(classes.margin, classes.textField)}
                         onChange={handleMaxAge}
                         value={maxAge}
                         validators={['isInteger', 'required']}
                         errorMessages={[
-                          'Ce champ doit être un nombre',
-                          'Ce champ est requis'
+                          MESSAGE_VALIDATORS_INTEGER,
+                          MESSAGE_VALIDATORS_REQUIRED
                         ]}
                         InputProps={{
                           endAdornment: (
@@ -242,13 +249,12 @@ export default function AddIngredient() {
                         id="MinAge"
                         fullWidth
                         required
-                        className={clsx(classes.margin, classes.textField)}
                         onChange={handleMinAge}
                         value={minAge}
                         validators={['isInteger', 'required']}
                         errorMessages={[
-                          'Ce champ doit être un nombre',
-                          'Ce champ est requis'
+                          MESSAGE_VALIDATORS_INTEGER,
+                          MESSAGE_VALIDATORS_REQUIRED
                         ]}
                         InputProps={{
                           endAdornment: (

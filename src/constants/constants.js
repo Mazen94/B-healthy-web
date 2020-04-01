@@ -119,7 +119,7 @@ const MESSAGE_VALIDATORS_INTEGER = 'Ce champ doit être un nombre';
 const MENU_BAR_UPDATE_TITLE = 'Modifier';
 /**
  * Constant used in the AddRecommendation Page
- * name of creation
+ * name of the creation
  */
 const ADDRECOMMENDATION_STEPPER_CREATION = 'Crée une Recommendation';
 /**
@@ -129,13 +129,27 @@ const ADDRECOMMENDATION_STEPPER_CREATION = 'Crée une Recommendation';
 const RECOMMENDATION_STEPPER_ADD = 'Ajouter des menus';
 /**
  * Constant used in the UpadateRecommendation Page
- * name of creation
+ * name of the creation
  */
 const UPDATERECOMMENDATION_STEPPER_CREATION = 'Modifier Recommandation';
 /**
  * The title of the menus page
  */
 const MENUS_TITLE = 'Menus';
+/**
+ * The title of the AddMenu component
+ */
+const ADD_MENU_TITLE = 'Ajouter un menu';
+/**
+ * Constant used in the AddMenu Page
+ * name of creation
+ */
+const ADDMENU_STEPPER_CREATION = 'Crée un menu';
+/**
+ * Constant used in the AddMenu Page
+ *
+ */
+const ADDMENU_STEPPER_ADD = 'Ajouter des ingredients au menu';
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
@@ -160,5 +174,8 @@ export {
   ADDRECOMMENDATION_STEPPER_CREATION,
   RECOMMENDATION_STEPPER_ADD,
   UPDATERECOMMENDATION_STEPPER_CREATION,
-  MENUS_TITLE
+  MENUS_TITLE,
+  ADD_MENU_TITLE,
+  ADDMENU_STEPPER_CREATION,
+  ADDMENU_STEPPER_ADD
 };
