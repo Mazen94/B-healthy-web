@@ -113,6 +113,10 @@ const ADD_INGREDIENT_TITLE = 'Ajouter un ingredient';
  * Constant message : is integer validation
  */
 const MESSAGE_VALIDATORS_INTEGER = 'Ce champ doit être un nombre';
+/**
+ * The title of the Update page
+ */
+const MENU_BAR_UPDATE_TITLE = 'Modifier';
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
@@ -132,5 +136,6 @@ export {
   MESSAGE_VALIDATORS_EMAIL,
   INGREDIENTS_MENU_BAR_TITLE,
   ADD_INGREDIENT_TITLE,
-  MESSAGE_VALIDATORS_INTEGER
+  MESSAGE_VALIDATORS_INTEGER,
+  MENU_BAR_UPDATE_TITLE
 };

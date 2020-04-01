@@ -5,16 +5,23 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy';
+import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {
+  MENU_BAR_UPDATE_TITLE,
+  MESSAGE_VALIDATORS_REQUIRED,
+  MESSAGE_VALIDATORS_INTEGER
+} from '../../constants/constants';
 
+/**
+ * Hook API to generate and apply styles (its JSS object)
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -36,7 +43,6 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     height: 300
   },
-  fixedHeight: {},
   submit: {
     marginTop: 30
   },
@@ -52,7 +58,6 @@ const useStyles = makeStyles(theme => ({
 export default function UpdateIngredient(props) {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [name, setName] = useState(''); // to retrieve the name entered by the user (initial value empty string)
   const [amount, setAmount] = useState(''); // to retrieve the amount entered by the user (initial value empty string)
   const [calorie, setCalorie] = useState(''); // to retrieve the calorie entered by the user (initial value empty string)
@@ -106,7 +111,6 @@ export default function UpdateIngredient(props) {
         const response = await healthy.get('/ingredients/' + id, {
           headers: { Authorization: authStr }
         });
-        console.log(response.data.ingredient);
         setName(response.data.ingredient.name);
         setAmount(response.data.ingredient.amount);
         setCalorie(response.data.ingredient.calorie);
@@ -153,27 +157,112 @@ export default function UpdateIngredient(props) {
       console.log('Error', error.message);
     }
   };
-  if (name === '') {
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        {/* Component AppBarre */}
-        <MenuBar title="Modifier" />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            {/* Loading when the data is empty */}
-            <CircularProgress />
-          </Container>
-        </main>
-      </div>
-    );
-  }
+  /**
+   * Function to render
+   */
+  const RenderFunction = () => {
+    //Loading when the data is empty
+    if (name === '') {
+      return (
+        <div>
+          <CircularProgress />
+        </div>
+      );
+    } else
+      return (
+        //Form
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <ValidatorForm onSubmit={onSubmitForm} noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextValidator
+                      autoComplete="fname"
+                      name="name"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="name"
+                      label="Nom"
+                      autoFocus
+                      onChange={handleName}
+                      value={name}
+                      validators={['required']}
+                      errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                      endadornment={
+                        <InputAdornment position="end">g</InputAdornment>
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextValidator
+                      label="Quantite"
+                      id="amount"
+                      fullWidth
+                      required
+                      onChange={handleAmount}
+                      value={amount}
+                      validators={['isInteger', 'required']}
+                      errorMessages={[
+                        MESSAGE_VALIDATORS_INTEGER,
+                        MESSAGE_VALIDATORS_REQUIRED
+                      ]}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">Gramme</InputAdornment>
+                        )
+                      }}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextValidator
+                      label="Calories"
+                      id="calorie"
+                      fullWidth
+                      required
+                      onChange={handleCalorie}
+                      value={calorie}
+                      validators={['isInteger', 'required']}
+                      errorMessages={[
+                        MESSAGE_VALIDATORS_INTEGER,
+                        MESSAGE_VALIDATORS_REQUIRED
+                      ]}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">Kcal</InputAdornment>
+                        )
+                      }}
+                      variant="outlined"
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Valider
+                </Button>
+              </ValidatorForm>
+              {/* Spinner (Loading) when the user clicks on the validate button */}
+              {flagValidate && <CircularProgress className={classes.spinner} />}
+            </Paper>
+          </Grid>
+        </Grid>
+      );
+  };
+  /**
+   * Render
+   */
   return (
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title="Modifier" />
+      <MenuBar title={MENU_BAR_UPDATE_TITLE} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {/* Icon to go back */}
@@ -185,99 +274,8 @@ export default function UpdateIngredient(props) {
           <ArrowBackIcon />
         </IconButton>
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={1}>
-            {/* Component Ingredient */}
-            <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
-                <ValidatorForm
-                  onSubmit={onSubmitForm}
-                  className={classes.form}
-                  noValidate
-                >
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <TextValidator
-                        autoComplete="fname"
-                        name="name"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="name"
-                        label="Nom"
-                        autoFocus
-                        onChange={handleName}
-                        value={name}
-                        validators={['required']}
-                        errorMessages={['Ce champ est requis']}
-                        endadornment={
-                          <InputAdornment position="end">g</InputAdornment>
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextValidator
-                        label="Quantite"
-                        id="amount"
-                        fullWidth
-                        required
-                        className={clsx(classes.margin, classes.textField)}
-                        onChange={handleAmount}
-                        value={amount}
-                        validators={['isInteger', 'required']}
-                        errorMessages={[
-                          'Ce champ doit être un nombre',
-                          'Ce champ est requis'
-                        ]}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              Gramme
-                            </InputAdornment>
-                          )
-                        }}
-                        variant="outlined"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextValidator
-                        label="Calories"
-                        id="calorie"
-                        fullWidth
-                        required
-                        className={clsx(classes.margin, classes.textField)}
-                        onChange={handleCalorie}
-                        value={calorie}
-                        validators={['isInteger', 'required']}
-                        errorMessages={[
-                          'Ce champ doit être un nombre',
-                          'Ce champ est requis'
-                        ]}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">Kcal</InputAdornment>
-                          )
-                        }}
-                        variant="outlined"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Valider
-                  </Button>
-                </ValidatorForm>
-                {/* Spinner (Loading) when the user clicks on the validate button */}
-                {flagValidate && (
-                  <CircularProgress className={classes.spinner} />
-                )}
-              </Paper>
-            </Grid>
-          </Grid>
+          {/* Function to Render */}
+          <RenderFunction />
         </Container>
       </main>
     </div>
