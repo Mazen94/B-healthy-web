@@ -6,7 +6,7 @@ import React from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ListIngredients from '../../components/ListIngredients/ListIngredients';
 import { useHistory } from 'react-router-dom';
-
+import { INGREDIENTS_MENU_BAR_TITLE } from '../../constants/constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -40,7 +40,7 @@ export default function Ingredients() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title="Ingredients" />
+      <MenuBar title={INGREDIENTS_MENU_BAR_TITLE} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
