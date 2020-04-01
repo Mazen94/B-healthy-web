@@ -105,7 +105,14 @@ const MESSAGE_VALIDATORS_EMAIL = "L'email n'est pas valide";
  * The title of the Ingredient page
  */
 const INGREDIENTS_MENU_BAR_TITLE = 'Ingredients';
-
+/**
+ * The title of the AddIngredient component
+ */
+const ADD_INGREDIENT_TITLE = 'Ajouter un ingredient';
+/**
+ * Constant message : is integer validation
+ */
+const MESSAGE_VALIDATORS_INTEGER = 'Ce champ doit être un nombre';
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
@@ -123,5 +130,7 @@ export {
   MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_EMAIL,
-  INGREDIENTS_MENU_BAR_TITLE
+  INGREDIENTS_MENU_BAR_TITLE,
+  ADD_INGREDIENT_TITLE,
+  MESSAGE_VALIDATORS_INTEGER
 };

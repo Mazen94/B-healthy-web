@@ -12,9 +12,13 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy';
+import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import {
+  ADD_INGREDIENT_TITLE,
+  MESSAGE_VALIDATORS_REQUIRED,
+  MESSAGE_VALIDATORS_INTEGER
+} from '../../constants/constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -133,7 +137,7 @@ export default function AddIngredient() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title="Ajouter un ingredient" />
+      <MenuBar title={ADD_INGREDIENT_TITLE} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {/* Icon to go back */}
@@ -168,7 +172,7 @@ export default function AddIngredient() {
                         onChange={handleName}
                         value={name}
                         validators={['required']}
-                        errorMessages={['Ce champ est requis']}
+                        errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                         endadornment={
                           <InputAdornment position="end">g</InputAdornment>
                         }
@@ -185,8 +189,8 @@ export default function AddIngredient() {
                         value={amount}
                         validators={['isInteger', 'required']}
                         errorMessages={[
-                          'Ce champ doit être un nombre',
-                          'Ce champ est requis'
+                          MESSAGE_VALIDATORS_INTEGER,
+                          MESSAGE_VALIDATORS_REQUIRED
                         ]}
                         InputProps={{
                           endAdornment: (
@@ -209,8 +213,8 @@ export default function AddIngredient() {
                         value={calorie}
                         validators={['isInteger', 'required']}
                         errorMessages={[
-                          'Ce champ doit être un nombre',
-                          'Ce champ est requis'
+                          MESSAGE_VALIDATORS_INTEGER,
+                          MESSAGE_VALIDATORS_REQUIRED
                         ]}
                         InputProps={{
                           endAdornment: (
