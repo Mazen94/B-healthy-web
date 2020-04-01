@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function AddIngredient() {
-  const classes = useStyles();
+  const classes = useStyles(); //add styles to variable classes
   const [data, setData] = useState([]); // state to get the ingredients
   const [currentPage, setCurrentPage] = useState(1); //currentPage: to get the current page in the data
   const [lasPage, setLastPage] = useState(10); //to get the last page in the data
@@ -98,7 +98,6 @@ export default function AddIngredient() {
       const response = await healthy.get(`/ingredients?page=` + currentPage, {
         headers: { Authorization: authStr }
       });
-      console.log(response.data.ingredients);
       setData(response.data.ingredients.data); //add the received data to the state data
       setCurrentPage(response.data.ingredients.current_page); //add the received current_page to the state lastPage
       setLastPage(response.data.ingredients.last_page); //add the received last_page to the state lastPage
@@ -107,7 +106,6 @@ export default function AddIngredient() {
     loadIngredient();
   }, [currentPage]);
   const handleClickIconButton = id => {
-    console.log(id);
     history.push(`/ingredient/${id}`);
   };
   /**
@@ -145,121 +143,131 @@ export default function AddIngredient() {
     setOpen(false); //to close the dialogue
     setData(data.filter(item => item.id !== deleteIngredientId)); //get the new data without the Ingredient deleted
   };
-  if (data.length === 0) {
-    return (
-      <div className={classes.skeleton}>
-        {/* Loading when the data is empty */}
-        <Skeleton />
-        <Skeleton animation={false} />
-        <Skeleton animation="wave" />
-        <Skeleton animation="wave" />
-      </div>
-    );
-  } else
-    return (
-      <Fragment>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Typography
-                    className={classes.typography}
-                    variant="subtitle2"
-                  >
-                    Ingredients
-                  </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography
-                    className={classes.typography}
-                    variant="subtitle2"
-                  >
-                    Calories
-                  </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography
-                    className={classes.typography}
-                    variant="subtitle2"
-                  >
-                    Quantitie&nbsp;(g)
-                  </Typography>
-                </TableCell>
-                <TableCell align="right"></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    <Box display="flex" flexDirection="row">
-                      <Box>
-                        <Avatar
-                          className={classes.avatar}
-                          src={ingredient}
-                        ></Avatar>
-                      </Box>
-                      <Box p={2}>
-                        <a className={classes.link} href="# ">
-                          {row.name}
-                        </a>
-                      </Box>
-                    </Box>
+  /**
+   *  function to render
+   */
+  const RenderFunction = () => {
+    if (data.length === 0) {
+      return (
+        <div className={classes.skeleton}>
+          {/* Loading when the data is empty */}
+          <Skeleton />
+          <Skeleton animation={false} />
+          <Skeleton animation="wave" />
+          <Skeleton animation="wave" />
+        </div>
+      );
+    } else
+      return (
+        <Fragment>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Typography
+                      className={classes.typography}
+                      variant="subtitle2"
+                    >
+                      Ingredients
+                    </Typography>
                   </TableCell>
-                  <TableCell align="right">{row.calorie}</TableCell>
-                  <TableCell align="right">{row.amount}</TableCell>
                   <TableCell align="right">
-                    <IconButton
-                      value={row.id}
-                      onClick={() => handleClickIconButton(row.id)}
-                      color="primary"
+                    <Typography
+                      className={classes.typography}
+                      variant="subtitle2"
                     >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      value={row.id}
-                      onClick={() => handleClickOpen(row.id)}
-                      color="secondary"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                      Calories
+                    </Typography>
                   </TableCell>
+                  <TableCell align="right">
+                    <Typography
+                      className={classes.typography}
+                      variant="subtitle2"
+                    >
+                      Quantitie&nbsp;(g)
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right"></TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <Pagination
-            className={classes.pagination}
-            count={lasPage}
-            page={currentPage}
-            onChange={handleChange}
-            color="primary"
-          />
-        </TableContainer>
-        {/*---------------------------------------*/}
-        {/* Dialog when we want to delete Ingredient */}
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Vous voulez vraiment supprimer ce ingredient ?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Non
-            </Button>
-            <Button color="primary" onClick={handleButtonDelete} autoFocus>
-              Oui
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Fragment>
-    );
+              </TableHead>
+              <TableBody>
+                {data.map(row => (
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      <Box display="flex" flexDirection="row">
+                        <Box>
+                          <Avatar
+                            className={classes.avatar}
+                            src={ingredient}
+                          ></Avatar>
+                        </Box>
+                        <Box p={2}>
+                          <a className={classes.link} href="# ">
+                            {row.name}
+                          </a>
+                        </Box>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="right">{row.calorie}</TableCell>
+                    <TableCell align="right">{row.amount}</TableCell>
+                    <TableCell align="right">
+                      <IconButton
+                        value={row.id}
+                        onClick={() => handleClickIconButton(row.id)}
+                        color="primary"
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        value={row.id}
+                        onClick={() => handleClickOpen(row.id)}
+                        color="secondary"
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <Pagination
+              className={classes.pagination}
+              count={lasPage}
+              page={currentPage}
+              onChange={handleChange}
+              color="primary"
+            />
+          </TableContainer>
+          {/*---------------------------------------*/}
+          {/* Dialog when we want to delete Ingredient */}
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Vous voulez vraiment supprimer ce ingredient ?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Non
+              </Button>
+              <Button color="primary" onClick={handleButtonDelete} autoFocus>
+                Oui
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Fragment>
+      );
+  };
+
+  /**
+   * Render
+   */
+  return <RenderFunction />;
 }

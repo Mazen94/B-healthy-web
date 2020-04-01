@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ListIngredients from '../../components/ListIngredients/ListIngredients';
-import { useHistory } from 'react-router-dom'; //new instance of axios with a custom config
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
