@@ -5,12 +5,13 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import Chart from '../../components/Chart/Chart';
 import BarComponent from '../../components/BarComponent/BarComponent';
 import Copyright from '../../components/Copyright/Copyright';
 import PatientStatistics from '../../components/PatientStatistics/PatientStatistics';
+import healthy from '../../api/healthy';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -38,13 +39,30 @@ const useStyles = makeStyles(theme => ({
     height: 240
   }
 }));
+
 /**
  * Component for showing dashboard Page
  */
 export default function Dashboard() {
   const classes = useStyles(); //add styles to variable classes
+  const [countIngredient, setCountIngredient] = useState();
+  const [countMenus, setCountMenus] = useState();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); //clsx is a tiny utility for constructing className strings conditionally
+  useEffect(() => {
+    const MenusAndIngredients = async () => {
+      const authStr = `Bearer ${localStorage.getItem('token')}`;
+      const response = await healthy.get(`statistics/menus`, {
+        headers: { Authorization: authStr }
+      });
+      const resultat = await healthy.get(`statistics/ingredients`, {
+        headers: { Authorization: authStr }
+      });
 
+      setCountMenus(response.data.countOfMenus);
+      setCountIngredient(resultat.data.countOfIngredient);
+    };
+    MenusAndIngredients();
+  }, []);
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -64,8 +82,8 @@ export default function Dashboard() {
               <Paper className={fixedHeightPaper}>
                 <BarComponent
                   name="Ingredients"
-                  count="0"
-                  backgroundColor="rgba(120, 150, 230, 0.6)"
+                  count={countIngredient}
+                  backgroundColor="rgba(54, 162, 235, 0.6)"
                 />
               </Paper>
             </Grid>
@@ -74,8 +92,8 @@ export default function Dashboard() {
               <Paper className={fixedHeightPaper}>
                 <BarComponent
                   name="Menus"
-                  count="0"
-                  backgroundColor="rgba(255, 206, 86, 0.6)"
+                  count={countMenus}
+                  backgroundColor="rgba(255, 99, 132, 0.6)"
                 />
               </Paper>
             </Grid>

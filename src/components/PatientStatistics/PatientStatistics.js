@@ -41,33 +41,29 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto'
   },
   bar: {
-    marginLeft: '100%'
+    padding: 'auto'
   }
 }));
 export default function PatientStatistics() {
   const classes = useStyles(); //add styles to variable classes
   return (
     <React.Fragment>
-      <Typography
-        className={classes.typography}
-        component="h2"
-        variant="h6"
-        color="primary"
-        gutterBottom
-      >
+      <Typography component="h2" variant="h6" color="primary" gutterBottom>
         Répartition des patients par tranche d’âge
       </Typography>
-      <Bar
-        className={classes.bar}
-        data={data}
-        width={80}
-        height={20}
-        options={{
-          legend: {
-            display: false
-          }
-        }}
-      />
+
+      <div className={classes.bar}>
+        <Bar
+          data={data}
+          width={80}
+          height={20}
+          options={{
+            legend: {
+              display: false
+            }
+          }}
+        />
+      </div>
     </React.Fragment>
   );
 }

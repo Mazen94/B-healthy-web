@@ -316,12 +316,12 @@ export default function AddPatient() {
                     className={classes.radioGroup}
                   >
                     <FormControlLabel
-                      value="femme"
+                      value="female"
                       control={<Radio color="primary" />}
                       label="Femme"
                     />
                     <FormControlLabel
-                      value="homme"
+                      value="male"
                       control={<Radio color="primary" />}
                       label="Homme"
                     />
