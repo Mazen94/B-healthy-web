@@ -29,11 +29,7 @@ import people from '../../assets/people.png';
  */
 const useStyles = makeStyles({
   skeleton: {
-    marginTop: '1%',
-
-    marginBottom: '10% ',
-    marginLeft: '10% ',
-    width: '80%'
+    width: '100%'
   },
   table: {
     minWidth: 650

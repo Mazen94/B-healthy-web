@@ -11,12 +11,19 @@ import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import Alert from '@material-ui/lab/Alert';
 import healthy from '../../api/healthy';
+import Skeleton from '@material-ui/lab/Skeleton';
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
+  },
+  skeleton: {
+    margin: 'auto',
+    marginTop: '3%',
+    width: '85%'
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -162,7 +169,11 @@ export default function Profil() {
         <MenuBar title="Profil" />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <CircularProgress className={classes.circularProgress} />
+          <div className={classes.skeleton}>
+            {/* Loading when the data is empty */}
+
+            <Skeleton variant="rect" width="100%" height="55vh" />
+          </div>
         </main>
       </div>
     );

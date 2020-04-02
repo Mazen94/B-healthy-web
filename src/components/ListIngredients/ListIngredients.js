@@ -30,8 +30,7 @@ import ingredient from '../../assets/ingredient.png';
 const useStyles = makeStyles(theme => ({
   skeleton: {
     margin: 'auto',
-    marginTop: '10%',
-    width: '90%'
+    width: '100%'
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -147,10 +146,8 @@ export default function AddIngredient() {
       return (
         <div className={classes.skeleton}>
           {/* Loading when the data is empty */}
-          <Skeleton />
-          <Skeleton animation={false} />
-          <Skeleton animation="wave" />
-          <Skeleton animation="wave" />
+          <Skeleton variant="text" height="70px" width="100%" />
+          <Skeleton variant="rect" width="100%" height="55vh" />
         </div>
       );
     } else
