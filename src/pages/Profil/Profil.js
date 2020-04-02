@@ -12,6 +12,13 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import Alert from '@material-ui/lab/Alert';
 import healthy from '../../api/healthy';
 import Skeleton from '@material-ui/lab/Skeleton';
+import {
+  PROFIL_TITLE,
+  MESSAGE_VALIDATORS_REQUIRED,
+  MESSAGE_VALIDATORS_PASSWORD,
+  MESSAGE_VALIDATORS_EMAIL
+} from '../../constants/constants';
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -31,11 +38,8 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
     overflow: 'auto'
   },
-  iconButton: {
-    marginRight: '100%'
-  },
   form: {
-    width: '100%', // Fix IE 11 issue
+    width: '100%',
     padding: '5%'
   },
   submit: {
@@ -47,26 +51,22 @@ const useStyles = makeStyles(theme => ({
   },
   spinner: {
     marginBottom: 20
-  },
-  radioGroup: {
-    display: 'block'
-  },
-  circularProgress: {
-    marginTop: '15%'
   }
 }));
 /**
  * Component for showing profil of nutritionist
  */
 export default function Profil() {
-  const history = useHistory();
-  const classes = useStyles();
+  const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
+  const classes = useStyles(); //add styles to variable classes
   const [flag, setFlag] = useState(false); //to display the loadings when the user validate the fields
   const [email, setEmail] = useState(''); //to retrieve the email entered by the user
   const [firstName, setFirstName] = useState(''); //to retrieve the firstName entered by the user
   const [lastName, setLastName] = useState(''); //to retrieve the lastName entered by the user
   const [password, setPassword] = useState(''); //to retrieve the password entered by the user
   const [erreurValidation, setErreurValidation] = useState(false); //when the user gives an email exists
+  const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
+
   /**
    * arrow function to get the email entered by the user
    * @param {event} e
@@ -95,23 +95,40 @@ export default function Profil() {
   const handlePassword = e => {
     setPassword(e.target.value);
   };
-  /**
-   *  Arrow function to  Get the data of user connected
-   */
-  const fetchData = async () => {
-    const authStr = `Bearer ${localStorage.getItem('token')}`;
-    const result = await healthy(`/`, {
-      headers: { Authorization: authStr }
-    });
-    setFirstName(result.data.nutritionist.firstName);
-    setLastName(result.data.nutritionist.lastName);
-    setEmail(result.data.nutritionist.email);
-  };
+
   /**
    * Hook useEffect to call the method fetchData
    */
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
+    // Arrow function to  Get the data of user connected
+    const fetchData = async () => {
+      const authStr = `Bearer ${localStorage.getItem('token')}`;
+      const result = await healthy(
+        `/`,
+        {
+          headers: { Authorization: authStr }
+        },
+        {
+          cancelToken: source.token
+        }
+      );
+      if (mounted) {
+        setFirstName(result.data.nutritionist.firstName);
+        setLastName(result.data.nutritionist.lastName);
+        setEmail(result.data.nutritionist.email);
+        setOpenSkeleton(false);
+      }
+    };
     fetchData();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, []);
   /**
    * arrow function to retrieve the final inputs
@@ -162,108 +179,110 @@ export default function Profil() {
     });
   }, []);
 
-  if (firstName.length === 0) {
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <MenuBar title="Profil" />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <div className={classes.skeleton}>
-            {/* Loading when the data is empty */}
+  /**
+   *  function to render
+   */
+  const renderFunction = () => {
+    if (openSkeleton) {
+      return (
+        <div className={classes.skeleton}>
+          {/* Loading when the data is empty */}
 
-            <Skeleton variant="rect" width="100%" height="55vh" />
-          </div>
-        </main>
-      </div>
-    );
-  } else
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        {/* Component MenuBar */}
-        <MenuBar title="Profil" />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Grid item md={10} component={Paper} className={classes.paper}>
-            {/* Alert when the user gives email exist */}
-            {erreurValidation && <Alert severity="error">Email existe</Alert>}
-            {/* Form */}
-            <ValidatorForm
-              onSubmit={onSubmitForm}
-              className={classes.form}
-              noValidate
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextValidator
-                    name="firstName"
-                    variant="outlined"
-                    onChange={handleFirstName}
-                    value={firstName}
-                    fullWidth
-                    autoFocus
-                    validators={['required']}
-                    errorMessages={['Ce champ est requis']}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextValidator
-                    variant="outlined"
-                    onChange={handleLastName}
-                    value={lastName}
-                    fullWidth
-                    validators={['required']}
-                    errorMessages={['Ce champ est requis']}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextValidator
-                    variant="outlined"
-                    onChange={handleEmail}
-                    value={email}
-                    fullWidth
-                    autoComplete="email"
-                    validators={['required', 'isEmail']}
-                    errorMessages={[
-                      'Ce champ est requis',
-                      "L'email n'est pas valide"
-                    ]}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextValidator
-                    variant="outlined"
-                    onChange={handlePassword}
-                    value={password}
-                    fullWidth
-                    name="password"
-                    label="Mot de passe"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    validators={['lenghPassword']}
-                    errorMessages={[
-                      'Le mot de passe doit contenir au moins 8 caractères.'
-                    ]}
-                  />
-                </Grid>
+          <Skeleton variant="rect" width="100%" height="55vh" />
+        </div>
+      );
+    } else
+      return (
+        <Grid item md={10} component={Paper} className={classes.paper}>
+          {/* Alert when the user gives email exist */}
+          {erreurValidation && <Alert severity="error">Email existe</Alert>}
+          {/* Form */}
+          <ValidatorForm
+            onSubmit={onSubmitForm}
+            className={classes.form}
+            noValidate
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextValidator
+                  name="firstName"
+                  variant="outlined"
+                  onChange={handleFirstName}
+                  value={firstName}
+                  fullWidth
+                  autoFocus
+                  validators={['required']}
+                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                />
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Valider
-              </Button>
-            </ValidatorForm>
-            {/* Spinner (Loading) when the user clicks on the validate button */}
-            {flag && <CircularProgress className={classes.spinner} />}
-          </Grid>
-        </main>
-      </div>
-    );
+              <Grid item xs={12}>
+                <TextValidator
+                  variant="outlined"
+                  onChange={handleLastName}
+                  value={lastName}
+                  fullWidth
+                  validators={['required']}
+                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextValidator
+                  variant="outlined"
+                  onChange={handleEmail}
+                  value={email}
+                  fullWidth
+                  autoComplete="email"
+                  validators={['required', 'isEmail']}
+                  errorMessages={[
+                    MESSAGE_VALIDATORS_REQUIRED,
+                    MESSAGE_VALIDATORS_EMAIL
+                  ]}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextValidator
+                  variant="outlined"
+                  onChange={handlePassword}
+                  value={password}
+                  fullWidth
+                  name="password"
+                  label="Mot de passe"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  validators={['lenghPassword']}
+                  errorMessages={[MESSAGE_VALIDATORS_PASSWORD]}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Valider
+            </Button>
+          </ValidatorForm>
+          {/* Spinner (Loading) when the user clicks on the validate button */}
+          {flag && <CircularProgress className={classes.spinner} />}
+        </Grid>
+      );
+  };
+  /**
+   * Render method
+   */
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      {/* Component MenuBar */}
+      <MenuBar title={PROFIL_TITLE} />
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        {renderFunction()}
+      </main>
+    </div>
+  );
 }

@@ -150,6 +150,10 @@ const ADDMENU_STEPPER_CREATION = 'Crée un menu';
  *
  */
 const ADDMENU_STEPPER_ADD = 'Ajouter des ingredients au menu';
+/**
+ * The title of the Profil component
+ */
+const PROFIL_TITLE = 'Profil';
 
 export {
   PATIENT_STATISTICS_LABELS,
@@ -178,5 +182,6 @@ export {
   MENUS_TITLE,
   ADD_MENU_TITLE,
   ADDMENU_STEPPER_CREATION,
-  ADDMENU_STEPPER_ADD
+  ADDMENU_STEPPER_ADD,
+  PROFIL_TITLE
 };
