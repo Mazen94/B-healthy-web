@@ -54,21 +54,12 @@ const useStyles = makeStyles(theme => ({
 export default function Profil() {
   const history = useHistory();
   const classes = useStyles();
-  /**
-   * The states used in this component
-   * email : to retrieve the email entered by the user (initial value empty string)
-   * password : to retrieve the password entered by the user (initial value empty string)
-   * firstName : to retrieve the firstName entered by the user (initial value empty string)
-   * lastName : to retrieve the lastName entered by the user (initial value empty string)
-   * flag : to display the loadings when the user validate the fields
-   * erreurValidation : when the user gives an email exists
-   */
-  const [flag, setFlag] = useState(false);
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [erreurValidation, setErreurValidation] = useState(false);
+  const [flag, setFlag] = useState(false); //to display the loadings when the user validate the fields
+  const [email, setEmail] = useState(''); //to retrieve the email entered by the user
+  const [firstName, setFirstName] = useState(''); //to retrieve the firstName entered by the user
+  const [lastName, setLastName] = useState(''); //to retrieve the lastName entered by the user
+  const [password, setPassword] = useState(''); //to retrieve the password entered by the user
+  const [erreurValidation, setErreurValidation] = useState(false); //when the user gives an email exists
   /**
    * arrow function to get the email entered by the user
    * @param {event} e

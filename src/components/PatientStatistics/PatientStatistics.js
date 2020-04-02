@@ -29,7 +29,7 @@ export default function PatientStatistics() {
       setGroup(response.data.countGender);
     };
     getPatientByAgeRange();
-  });
+  }, []);
   const data = {
     labels: PATIENT_STATISTICS_LABELS,
     datasets: [

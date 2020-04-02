@@ -62,7 +62,7 @@ export default function UpdateIngredient(props) {
   const [amount, setAmount] = useState(''); // to retrieve the amount entered by the user (initial value empty string)
   const [calorie, setCalorie] = useState(''); // to retrieve the calorie entered by the user (initial value empty string)
   const [flagValidate, setFlagValidate] = useState(false); //to display the loadings when the user validate the fields
-
+  const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
   /**
    * arrow function to navigate the user to the addIngredient Component page
    */
@@ -114,6 +114,7 @@ export default function UpdateIngredient(props) {
         setName(response.data.ingredient.name);
         setAmount(response.data.ingredient.amount);
         setCalorie(response.data.ingredient.calorie);
+        setOpenSkeleton(false);
       } catch (error) {
         console.log(error.response.data);
       }
@@ -162,7 +163,7 @@ export default function UpdateIngredient(props) {
    */
   const renderFunction = () => {
     //Loading when the data is empty
-    if (name === '') {
+    if (openSkeleton) {
       return (
         <div>
           <CircularProgress />

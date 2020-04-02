@@ -77,7 +77,8 @@ export default function UpdateIngredient() {
   const [valueOfIngredient, setValueOfIngredient] = useState(''); // to get the ingredient selected
   const [valueOfamount, setValueOfAmount] = useState(''); // to get the amount entered by the user
   const [isdisbaled, setIsDisabled] = useState(true); //Check the textField (amounts)
-  const [flag, setFlag] = useState(false); //Check the textField (amounts)
+  const [flag, setFlag] = useState(false); //to open and close the CircularProgress
+  const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
   const params = useParams(); //to get params URL
 
   /**
@@ -95,6 +96,7 @@ export default function UpdateIngredient() {
         setMinAge(response.data.StoreMenu.min_age);
         setIngredients(response.data.StoreMenu.ingredients);
         setTypeMenu(response.data.StoreMenu.type_menu);
+        setOpenSkeleton(false);
       } catch (error) {
         console.log(error.response.data);
       }
@@ -198,7 +200,7 @@ export default function UpdateIngredient() {
    * Function to render
    */
   const renderFunction = () => {
-    if (name === '') {
+    if (openSkeleton) {
       return (
         <div className={classes.skeleton}>
           {/* Loading when the data is empty */}

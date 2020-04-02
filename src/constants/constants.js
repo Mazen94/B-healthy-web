@@ -150,6 +150,7 @@ const ADDMENU_STEPPER_CREATION = 'Crée un menu';
  *
  */
 const ADDMENU_STEPPER_ADD = 'Ajouter des ingredients au menu';
+
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
