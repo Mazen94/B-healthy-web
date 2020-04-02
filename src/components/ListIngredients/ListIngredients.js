@@ -23,6 +23,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import healthy from '../../api/healthy';
 import ingredient from '../../assets/ingredient.png';
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -84,21 +85,39 @@ export default function AddIngredient() {
    * this hook executed when the value of currentPage changes
    */
   useEffect(() => {
-    /**
-     * Arrow function to get the data (ingredients) using Async await
-     */
-
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
+    //Arrow function to get the data (ingredients) using Async await
     const loadIngredient = async () => {
       const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      const response = await healthy.get(`/ingredients?page=` + currentPage, {
-        headers: { Authorization: authStr }
-      });
-      setData(response.data.ingredients.data); //add the received data to the state data
-      setCurrentPage(response.data.ingredients.current_page); //add the received current_page to the state lastPage
-      setLastPage(response.data.ingredients.last_page); //add the received last_page to the state lastPage
+      try {
+        const response = await healthy.get(
+          `/ingredients?page=` + currentPage,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) {
+          setData(response.data.ingredients.data); //add the received data to the state data
+          setCurrentPage(response.data.ingredients.current_page); //add the received current_page to the state lastPage
+          setLastPage(response.data.ingredients.last_page); //add the received last_page to the state lastPage
+        }
+      } catch (error) {
+        console.log(error.response);
+      }
     };
     //call function
     loadIngredient();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, [currentPage]);
   const handleClickIconButton = id => {
     history.push(`/ingredient/${id}`);

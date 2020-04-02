@@ -23,6 +23,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import recommendations from '../../assets/recommendations.png';
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -83,21 +84,39 @@ export default function ListRecommendations() {
    * this hook executed when the value of currentPage changes
    */
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     //Arrow function to get the data (ingredients) using Async await
     const loadRecommendation = async () => {
       const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      const response = await healthy.get(
-        `/patients/${params.id}/recommendations/`,
-        {
-          headers: { Authorization: authStr }
+      try {
+        const response = await healthy.get(
+          `/patients/${params.id}/recommendations/`,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) {
+          console.log(response.data.recommendations);
+          setData(response.data.recommendations); //add the received data to the state data
+          setFlag(false);
         }
-      );
-      console.log(response.data.recommendations);
-      setData(response.data.recommendations); //add the received data to the state data
-      setFlag(false);
+      } catch (error) {
+        console.log(error.response);
+      }
     };
     //call function
     loadRecommendation();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, [params.id]);
   /**
    *  navigate to the route edit recommendation

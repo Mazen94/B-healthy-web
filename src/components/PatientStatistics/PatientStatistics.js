@@ -7,6 +7,7 @@ import {
   PATIENT_STATISTICS_BACKGROUNDCOLOR
 } from '../../constants/constants';
 import healthy from '../../api/healthy';
+import Axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   typography: {
@@ -20,15 +21,30 @@ export default function PatientStatistics() {
   const classes = useStyles(); //add styles to variable classes
   const [group, setGroup] = useState([]);
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     const getPatientByAgeRange = async () => {
       const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.get(`statistics/age`, {
-        headers: { Authorization: authStr }
-      });
+      const response = await healthy.get(
+        `statistics/age`,
+        {
+          headers: { Authorization: authStr }
+        },
+        {
+          cancelToken: source.token
+        }
+      );
 
-      setGroup(response.data.countGender);
+      if (mounted) setGroup(response.data.countGender);
     };
     getPatientByAgeRange();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, []);
   const data = {
     labels: PATIENT_STATISTICS_LABELS,

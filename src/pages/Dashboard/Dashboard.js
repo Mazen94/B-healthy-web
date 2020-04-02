@@ -19,6 +19,7 @@ import {
   DASHBOARD_MENU_BACKGROUNDCOLOR,
   DASHBOARD_MENU_NAME
 } from '../../constants/constants'; // Get constants from  constants  file
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -60,30 +61,51 @@ export default function Dashboard() {
    * Hook to get the number of menus and ingredients
    */
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     const MenusAndIngredients = async () => {
       const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       // API :get the number of menus
       try {
-        const response = await healthy.get(`statistics/menus`, {
-          headers: { Authorization: authStr }
-        });
-        setCountMenus(response.data.countOfMenus);
+        const response = await healthy.get(
+          `statistics/menus`,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) setCountMenus(response.data.countOfMenus);
       } catch (error) {
         console.log(error.response);
       }
       // API :get the number of ingredients
       try {
-        const resultat = await healthy.get(`statistics/ingredients`, {
-          headers: { Authorization: authStr }
-        });
+        const resultat = await healthy.get(
+          `statistics/ingredients`,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
         // Associate the results
-        setCountIngredient(resultat.data.countOfIngredient);
+        if (mounted) setCountIngredient(resultat.data.countOfIngredient);
       } catch (error) {
         console.log(error.resultat);
       }
     };
     //Call the method
     MenusAndIngredients();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, []);
   return (
     <div className={classes.root}>

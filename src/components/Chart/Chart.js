@@ -8,6 +8,7 @@ import {
   CHART_LABEL_FEMALE,
   CHART_BACKGROUNDCOLOR
 } from '../../constants/constants'; // Get constants from  constants  file
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -36,21 +37,38 @@ export default function Chart() {
    * Hook to get the patient by gender
    */
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     const patientByGender = async () => {
       try {
         const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
         // API : get number of patient by gender
-        const response = await healthy.get(`/statistics/gender`, {
-          headers: { Authorization: authStr }
-        });
-        setCountFemale(response.data.countGender.female);
-        setCountMale(response.data.countGender.male);
+        const response = await healthy.get(
+          `/statistics/gender`,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) {
+          setCountFemale(response.data.countGender.female);
+          setCountMale(response.data.countGender.male);
+        }
       } catch (error) {
         console.log(error.reponse);
       }
     };
     //Call the method
     patientByGender();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, []);
 
   return (

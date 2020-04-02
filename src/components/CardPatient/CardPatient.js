@@ -7,6 +7,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import people from '../../assets/people.png';
+import Axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   gridFiche: {
@@ -51,23 +52,39 @@ export default function CardPatient() {
   const [patient, setPatient] = useState([]);
   const { id } = useParams();
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     /**
      * Arrow function to get the data (patients) using Async await
      */
     const loadPatientById = async () => {
       try {
         const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get(`patients/` + id, {
-          headers: { Authorization: authStr }
-        });
-
-        setPatient(response.data.patient); //add the received data to the state data
+        const response = await healthy.get(
+          `patients/` + id,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) {
+          setPatient(response.data.patient); //add the received data to the state data
+        }
       } catch (error) {
         console.log(error.response);
       }
     };
     //call function
     loadPatientById();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, [id]);
   if (patient.length === 0) {
     return (

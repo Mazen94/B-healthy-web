@@ -23,6 +23,7 @@ import {
   MENU_BAR_UPDATE_TITLE,
   MESSAGE_VALIDATORS_REQUIRED
 } from '../../constants/constants';
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -85,23 +86,40 @@ export default function UpdateIngredient() {
    * hook useEffect there will be a get  the menu with ingredients by id ,
    */
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     const getMealStore = async id => {
       try {
         const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get('/mealStore/' + params.id, {
-          headers: { Authorization: authStr }
-        });
-        setName(response.data.StoreMenu.name);
-        setMaxAge(response.data.StoreMenu.max_age);
-        setMinAge(response.data.StoreMenu.min_age);
-        setIngredients(response.data.StoreMenu.ingredients);
-        setTypeMenu(response.data.StoreMenu.type_menu);
-        setOpenSkeleton(false);
+        const response = await healthy.get(
+          '/mealStore/' + params.id,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) {
+          setName(response.data.StoreMenu.name);
+          setMaxAge(response.data.StoreMenu.max_age);
+          setMinAge(response.data.StoreMenu.min_age);
+          setIngredients(response.data.StoreMenu.ingredients);
+          setTypeMenu(response.data.StoreMenu.type_menu);
+          setOpenSkeleton(false);
+        }
       } catch (error) {
         console.log(error.response.data);
       }
     };
     getMealStore(params.id);
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, [params.id]);
   /**
    * arrow function to get the name of menu entered by the user

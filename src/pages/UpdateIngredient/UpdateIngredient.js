@@ -18,6 +18,7 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER
 } from '../../constants/constants';
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -105,21 +106,38 @@ export default function UpdateIngredient(props) {
    * UseEffect to get the Ingredient by id
    */
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     const getIndredient = async id => {
       try {
         const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get('/ingredients/' + id, {
-          headers: { Authorization: authStr }
-        });
-        setName(response.data.ingredient.name);
-        setAmount(response.data.ingredient.amount);
-        setCalorie(response.data.ingredient.calorie);
-        setOpenSkeleton(false);
+        const response = await healthy.get(
+          '/ingredients/' + id,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) {
+          setName(response.data.ingredient.name);
+          setAmount(response.data.ingredient.amount);
+          setCalorie(response.data.ingredient.calorie);
+          setOpenSkeleton(false);
+        }
       } catch (error) {
         console.log(error.response.data);
       }
     };
     getIndredient(props.match.params.id);
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, [props.match.params.id]);
 
   /**

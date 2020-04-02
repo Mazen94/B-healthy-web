@@ -17,6 +17,7 @@ import {
   UPDATERECOMMENDATION_STEPPER_CREATION,
   RECOMMENDATION_STEPPER_ADD
 } from '../../constants/constants';
+import Axios from 'axios';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
@@ -67,6 +68,10 @@ export default function UpdateRecommendations() {
   const step = 1; //const to specify in which stage we are ( in component StepperHorizontal)
 
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     // Arrow function to get the recommendation by id
     const getRecommendationById = async () => {
       try {
@@ -75,16 +80,26 @@ export default function UpdateRecommendations() {
           `/patients/${params.id}/recommendations/${params.idRecommendation}`,
           {
             headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
           }
         );
-        setName(response.data.recommendation.name);
-        setAvoid(response.data.recommendation.avoid);
-        setMenus(response.data.recommendation.menus);
+        if (mounted) {
+          setName(response.data.recommendation.name);
+          setAvoid(response.data.recommendation.avoid);
+          setMenus(response.data.recommendation.menus);
+        }
       } catch (error) {
         console.log(error.response);
       }
     };
     getRecommendationById();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, [params]);
   /**
    * Arrow function to render

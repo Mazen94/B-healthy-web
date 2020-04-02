@@ -23,6 +23,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'; //new instance of axios with a custom config
 import healthy from '../../api/healthy';
 import people from '../../assets/people.png';
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
@@ -78,20 +79,39 @@ export default function ListPatients() {
    * this hook executed when the value of currentPage changes
    */
   useEffect(() => {
-    /**
-     * Arrow function to get the data (patients) using Async await
-     */
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
+    //Arrow function to get the data (patients) using Async await
     const loadPatient = async () => {
       const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      const response = await healthy.get(`patients?page=` + currentPage, {
-        headers: { Authorization: authStr }
-      });
-      setData(response.data.patients.data); //add the received data to the state data
-      setCurrentPage(response.data.patients.current_page); //add the received current_page  to the state currentPage
-      setLastPage(response.data.patients.last_page); //add the received last_page to the state lastPage
+      try {
+        const response = await healthy.get(
+          `patients?page=` + currentPage,
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) {
+          setData(response.data.patients.data); //add the received data to the state data
+          setCurrentPage(response.data.patients.current_page); //add the received current_page  to the state currentPage
+          setLastPage(response.data.patients.last_page); //add the received last_page to the state lastPage
+        }
+      } catch (error) {
+        console.log(error.response);
+      }
     };
     //call function
     loadPatient();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, [currentPage]);
   /**
    * arrow function to delete a patient

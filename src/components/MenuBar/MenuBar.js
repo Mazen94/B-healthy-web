@@ -18,6 +18,7 @@ import Avatar from '@material-ui/core/Avatar';
 import doctor from '../../assets/doctor.png';
 import Box from '@material-ui/core/Box';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
+import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -97,34 +98,48 @@ export default function MenuBar(props) {
   const { title } = props; //take the title of page
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const classes = useStyles(); //add styles to variable classes
-  /**
-   * The states used in this component
-   * open : to open and close the AppBar (initial value is True)
-   * data : to get the nutritionist connected (intial value is empty string)
-   */
-  const [open, setOpen] = useState(true);
-  const [data, setData] = useState('');
-  /**
-   * Arrow Function to get the nutritionist connected (using async await )
-   */
-  const fetchData = async () => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      const result = await healthy.get('/', {
-        headers: { Authorization: authStr }
-      });
-      setData(result.data.nutritionist);
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
-    }
-  };
+  const [open, setOpen] = useState(true); //to open and close the AppBar (initial value is True)
+  const [data, setData] = useState(''); //to get the nutritionist connected (intial value is empty string)
+
   /**
    * Hook useEffect in this case he plays the role of componentDidMount
    * in this hook there will be a call for the function fetchData
    */
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
+    /**
+     * Arrow Function to get the nutritionist connected (using async await )
+     */
+    const fetchData = async () => {
+      try {
+        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
+        const result = await healthy.get(
+          '/',
+          {
+            headers: { Authorization: authStr }
+          },
+          {
+            cancelToken: source.token
+          }
+        );
+        if (mounted) {
+          setData(result.data.nutritionist);
+        }
+      } catch (error) {
+        console.log(error.response.data);
+        console.log('Error', error.message);
+      }
+    };
+    //call the function
     fetchData();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, []);
   /**
    * Arrow function to disconnect the user when he clicks on the icon <ExitToAppIcon/>

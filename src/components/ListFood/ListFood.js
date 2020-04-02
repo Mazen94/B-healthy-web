@@ -17,6 +17,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Button from '@material-ui/core/Button';
 import { useTheme } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
+import Axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,20 +58,34 @@ export default function ListFood(props) {
    * Get All the menus posted by patient
    */
   useEffect(() => {
+    //Prepare cancel request
+    let mounted = true;
+    const CancelToken = Axios.CancelToken;
+    const source = CancelToken.source();
     const loadMenus = async () => {
       const AuthStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.get(
-        `/patients/${params.id}/recommendations/menus`,
+      try {
+        const response = await healthy.get(
+          `/patients/${params.id}/recommendations/menus`,
 
-        {
-          headers: { Authorization: AuthStr }
+          {
+            headers: { Authorization: AuthStr }
+          }
+        );
+        if (mounted) {
+          setData(response.data.menus);
+          setFlag(false);
         }
-      );
-
-      setData(response.data.menus);
-      setFlag(false);
+      } catch (error) {
+        console.log(error.response);
+      }
     };
     loadMenus();
+    return () => {
+      //cancel the request
+      mounted = false;
+      source.cancel();
+    };
   }, [params.id]);
 
   /**
