@@ -18,6 +18,11 @@ import Button from '@material-ui/core/Button';
 import { useTheme } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Axios from 'axios';
+import {
+  LIST_OF_MENU,
+  NUMBER_OF_CALORIES,
+  OK
+} from '../../shared/strings/strings';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -140,7 +145,7 @@ export default function ListFood(props) {
       return (
         <div className={classes.root}>
           <List component="nav" aria-label="main mailbox folders">
-            <ListSubheader>Liste des menus </ListSubheader>
+            <ListSubheader>{LIST_OF_MENU} </ListSubheader>
             {data.map((row, x) => (
               <ListItem
                 button
@@ -174,12 +179,12 @@ export default function ListFood(props) {
                 <br></br>
               </DialogContentText>
               <DialogContentText className={classes.numberCalorie}>
-                Nombre de calories pour ce menu : {menu.calorie}
+                {NUMBER_OF_CALORIES} {menu.calorie}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary" autoFocus>
-                Ok
+                {OK}
               </Button>
             </DialogActions>
           </Dialog>

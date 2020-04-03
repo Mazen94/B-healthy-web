@@ -61,3 +61,6 @@ export const EDIT = 'Modifier';
 export const YES = 'Oui';
 export const NO = 'Non';
 export const DIALOG_CONTEXT_TEXT = 'Vous voulez vraiment supprimer ce Menu ?';
+export const LIST_OF_MENU = 'Liste des menus';
+export const NUMBER_OF_CALORIES = ' Nombre de calories pour ce menu :';
+export const OK = 'Ok';
