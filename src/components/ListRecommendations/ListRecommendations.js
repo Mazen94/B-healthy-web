@@ -1,11 +1,5 @@
 import { Avatar } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,7 +18,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import recommendations from '../../assets/recommendations.png';
 import Axios from 'axios';
-
+import DialogComponent from '../DialogComponent/DialogComponent';
+import { DIALOG_RECOMMENDATION } from '../../constants/constants';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -248,29 +243,13 @@ export default function ListRecommendations() {
                 </TableBody>
               </Table>
             </TableContainer>
-            {/*---------------------------------------*/}
-            {/* Dialog when we want to delete Ingredient */}
-            <Dialog
+            {/* DialogComponent*/}
+            <DialogComponent
+              handleButtonDelete={handleButtonDelete}
               open={open}
-              onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  Vous voulez vraiment supprimer cette recommandation ?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                  Non
-                </Button>
-                <Button color="primary" onClick={handleButtonDelete} autoFocus>
-                  Oui
-                </Button>
-              </DialogActions>
-            </Dialog>
+              handleClose={handleClose}
+              message={DIALOG_RECOMMENDATION}
+            />
           </Fragment>
         );
       } else {

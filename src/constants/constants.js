@@ -155,6 +155,26 @@ const ADDMENU_STEPPER_ADD = 'Ajouter des ingredients au menu';
  */
 const PROFIL_TITLE = 'Profil';
 
+/**
+ * The message of the dialog component related to recommendation
+ */
+const DIALOG_RECOMMENDATION = 'cette recommandation';
+
+/**
+ * The message of the dialog component related to ingredients
+ */
+const DIALOG_INGREDIENT = 'ce ingredient';
+
+/**
+ * The message of the dialog component related to patient
+ */
+const DIALOG_PATIENT = 'ce patient';
+
+/**
+ * The message of the dialog component related to patient
+ */
+const DIALOG_MENU = 'ce menu';
+
 export {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
@@ -183,5 +203,9 @@ export {
   ADD_MENU_TITLE,
   ADDMENU_STEPPER_CREATION,
   ADDMENU_STEPPER_ADD,
-  PROFIL_TITLE
+  PROFIL_TITLE,
+  DIALOG_RECOMMENDATION,
+  DIALOG_INGREDIENT,
+  DIALOG_PATIENT,
+  DIALOG_MENU
 };

@@ -1,11 +1,5 @@
 import { Avatar } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,7 +18,8 @@ import { useHistory } from 'react-router-dom';
 import healthy from '../../api/healthy';
 import meal from '../../assets/meal.png';
 import Axios from 'axios';
-
+import { DIALOG_MENU } from '../../constants/constants';
+import DialogComponent from '../DialogComponent/DialogComponent';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -120,8 +115,8 @@ export default function AddIngredient() {
       source.cancel();
     };
   }, [currentPage]);
+
   const handleClickIconButton = id => {
-    console.log(id);
     history.push(`/menu/${id}`);
   };
   /**
@@ -142,6 +137,7 @@ export default function AddIngredient() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
+    console.log('wosledfsdt');
     const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
     try {
       const response = await healthy.delete(`mealStore/${deleteMenuId}`, {
@@ -154,7 +150,7 @@ export default function AddIngredient() {
     }
 
     setOpen(false); //to close the dialogue
-    setData(data.filter(item => item.id !== deleteMenuId)); //get the new data without the menu deleted
+    setData(data.filter(item => item.id !== deleteMenuId)); //get the new data without the menu deleted*/
   };
   /**
    * Function to render
@@ -236,29 +232,12 @@ export default function AddIngredient() {
               color="primary"
             />
           </TableContainer>
-          {/*---------------------------------------*/}
-          {/* Dialog when we want to delete Ingredient */}
-          <Dialog
+          <DialogComponent
+            handleButtonDelete={handleButtonDelete}
             open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Vous voulez vraiment supprimer ce ingredient ?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Non
-              </Button>
-              <Button color="primary" onClick={handleButtonDelete} autoFocus>
-                Oui
-              </Button>
-            </DialogActions>
-          </Dialog>
+            handleClose={handleClose}
+            message={DIALOG_MENU}
+          />
         </Fragment>
       );
   };

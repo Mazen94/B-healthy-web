@@ -1,11 +1,5 @@
 import { Avatar } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,6 +18,8 @@ import { useHistory } from 'react-router-dom'; //new instance of axios with a cu
 import healthy from '../../api/healthy';
 import people from '../../assets/people.png';
 import Axios from 'axios';
+import DialogComponent from '../DialogComponent/DialogComponent';
+import { DIALOG_PATIENT } from '../../constants/constants';
 
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
@@ -230,29 +226,12 @@ export default function ListPatients() {
               color="primary"
             />
           </TableContainer>
-          {/*---------------------------------------*/}
-          {/* Dialog when we want to delete patient */}
-          <Dialog
+          <DialogComponent
+            handleButtonDelete={handleButtonDelete}
             open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Vous voulez vraiment supprimer ce patient ?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Non
-              </Button>
-              <Button onClick={handleButtonDelete} color="primary" autoFocus>
-                Oui
-              </Button>
-            </DialogActions>
-          </Dialog>
+            handleClose={handleClose}
+            message={DIALOG_PATIENT}
+          />
         </Fragment>
       );
   };
