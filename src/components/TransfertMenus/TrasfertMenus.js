@@ -15,7 +15,7 @@ import { useParams } from 'react-router-dom';
 import healthy from '../../api/healthy';
 import meal from '../../assets/meal.png';
 import recommendations from '../../assets/recommendations.png';
-
+import { MENUS, RECOMMENDATIONS } from '../../shared/strings/strings';
 const useStyles = makeStyles(theme => ({
   root: {
     margin: 'auto'
@@ -170,7 +170,7 @@ export default function TrasfertMenus() {
       alignItems="center"
       className={classes.root}
     >
-      <Grid item>{customList('Menus', left, meal, true)}</Grid>
+      <Grid item>{customList(MENUS, left, meal, true)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -186,7 +186,7 @@ export default function TrasfertMenus() {
         </Grid>
       </Grid>
       <Grid item>
-        {customList('Recommendation', right, recommendations, false)}
+        {customList(RECOMMENDATIONS, right, recommendations, false)}
       </Grid>
     </Grid>
   );

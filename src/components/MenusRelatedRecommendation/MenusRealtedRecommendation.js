@@ -15,6 +15,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import meal from '../../assets/meal.png';
+import { CARD_HEADER_TITLE } from '../../shared/constants/constants';
+import { DIALOG_CONTEXT_TEXT, YES, NO } from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
@@ -75,7 +77,7 @@ const MenusRealtedRecommendation = props => {
     <Card>
       <CardHeader
         avatar={<Avatar aria-label="recipe" src={meal} />}
-        title="Les menus reliée a cette recommendation"
+        title={CARD_HEADER_TITLE}
       />
       <Divider />
       <List dense component="div" role="list">
@@ -103,15 +105,15 @@ const MenusRealtedRecommendation = props => {
         <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Vous voulez vraiment supprimer ce Menu ?
+            {DIALOG_CONTEXT_TEXT}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Non
+            {NO}
           </Button>
           <Button color="primary" onClick={handleButtonDelete} autoFocus>
-            Oui
+            {YES}
           </Button>
         </DialogActions>
       </Dialog>

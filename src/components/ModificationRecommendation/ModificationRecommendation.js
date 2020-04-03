@@ -9,7 +9,11 @@ import healthy from '../../api/healthy'; //new instance of axios with a custom c
 import { useParams } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-import { MESSAGE_VALIDATORS_REQUIRED } from '../../constants/constants';
+import {
+  MESSAGE_VALIDATORS_REQUIRED,
+  PRIMARY_COLOR
+} from '../../shared/constants/constants';
+import { EDIT, MODIFICATION_MADE } from '../../shared/strings/strings';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
@@ -106,7 +110,7 @@ const ModificationRecommendation = props => {
       {/* Alert  */}
       <Snackbar open={openSnackbar} autoHideDuration={2000}>
         <Alert onClose={handleCloseSnackbar} severity="success">
-          Modification effectuée
+          {MODIFICATION_MADE}
         </Alert>
       </Snackbar>
       {/* From */}
@@ -125,7 +129,6 @@ const ModificationRecommendation = props => {
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
                 onChange={handleName}
                 value={name}
                 autoFocus
@@ -153,10 +156,10 @@ const ModificationRecommendation = props => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
+            color={PRIMARY_COLOR}
             className={classes.submit}
           >
-            Modifier
+            {EDIT}
           </Button>
         </ValidatorForm>
       </Paper>

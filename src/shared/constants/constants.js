@@ -140,16 +140,7 @@ export const MENUS_TITLE = 'Menus';
  * The title of the AddMenu component
  */
 export const ADD_MENU_TITLE = 'Ajouter un menu';
-/**
- * Constant used in the AddMenu Page
- * name of creation
- */
-export const ADDMENU_STEPPER_CREATION = 'Crée un menu';
-/**
- * Constant used in the AddMenu Page
- *
- */
-export const ADDMENU_STEPPER_ADD = 'Ajouter des ingredients au menu';
+
 /**
  * The title of the Profil component
  */
@@ -192,3 +183,8 @@ export const MENU_STEPPER_CREATION = 'Crée un menu';
  *
  */
 export const MENU_STEPPER_ADD = 'Ajouter des ingredients au menu';
+/**
+ * Constant used in the AddMenu Page
+ *
+ */
+export const CARD_HEADER_TITLE = 'Les menus reliée a cette recommendation';

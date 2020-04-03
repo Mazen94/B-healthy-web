@@ -1,3 +1,6 @@
+/**
+ * File that contains all the strings used in this application
+ */
 export const LOGIN = 'Se connecter';
 export const FORGOT_PASSWORD = 'Mot de passe oublié?';
 export const DONT_HAVE_ACCOUNT = "Vous n'avez pas de compte? S'inscrire";
@@ -50,3 +53,11 @@ export const PATIENT = 'Patient';
 export const HISTORY_PERVIOUS_MEASUREMENTS =
   'Historique des précédents mesures';
 export const DATE = 'Date';
+export const RECOMMENDATIONS = 'Recommandations';
+export const CREATION_DATE = 'Creation date';
+export const AVOID = 'Les aliments a eviter';
+export const MODIFICATION_MADE = 'Modification effectuée';
+export const EDIT = 'Modifier';
+export const YES = 'Oui';
+export const NO = 'Non';
+export const DIALOG_CONTEXT_TEXT = 'Vous voulez vraiment supprimer ce Menu ?';
