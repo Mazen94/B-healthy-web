@@ -10,6 +10,12 @@ import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import IngredientToMenu from '../../components/IngredientToMenu/IngredientToMenu';
+import {
+  MENU_STEPPER_CREATION,
+  MENU_STEPPER_ADD,
+  PRIMARY_COLOR
+} from '../../shared/constants/constants';
+import { FOLLOWING } from '../../shared/strings/strings';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -60,22 +66,22 @@ export default function AddIngredientToMenu() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title="Ajouter des ingredients au menu" />
+      <MenuBar title={MENU_STEPPER_ADD} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {/* Icon to go back */}
         <IconButton
           className={classes.iconButton}
           onClick={handleArrowBack}
-          color="primary"
+          color={PRIMARY_COLOR}
         >
           <ArrowBackIcon />
         </IconButton>
         <Container maxWidth="lg" className={classes.container}>
           {/* Component StepperHorizontal */}
           <StepperHorizontal
-            creation="Crée une Recommendation"
-            add="Ajouter des menus"
+            creation={MENU_STEPPER_CREATION}
+            add={MENU_STEPPER_ADD}
             stepProps={step}
           />
           {/* Component ListIngredients */}
@@ -84,11 +90,11 @@ export default function AddIngredientToMenu() {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
+              color={PRIMARY_COLOR}
               className={classes.submit}
               onClick={handleClickButton}
             >
-              Suivant
+              {FOLLOWING}
             </Button>
           </Paper>
         </Container>
