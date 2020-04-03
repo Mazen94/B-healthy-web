@@ -17,7 +17,15 @@ import {
   MENU_BAR_UPDATE_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER
-} from '../../constants/constants';
+} from '../../shared/constants/constants';
+import {
+  NAME,
+  AMOUNT,
+  CALORIES,
+  GRAM,
+  VALIDATE,
+  KCLA
+} from '../../shared/strings/strings';
 import Axios from 'axios';
 
 /**
@@ -203,7 +211,7 @@ export default function UpdateIngredient(props) {
                       required
                       fullWidth
                       id="name"
-                      label="Nom"
+                      label={NAME}
                       onChange={handleName}
                       value={name}
                       validators={['required']}
@@ -215,7 +223,7 @@ export default function UpdateIngredient(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextValidator
-                      label="Quantite"
+                      label={AMOUNT}
                       id="amount"
                       fullWidth
                       required
@@ -228,7 +236,7 @@ export default function UpdateIngredient(props) {
                       ]}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">Gramme</InputAdornment>
+                          <InputAdornment position="end">{GRAM}</InputAdornment>
                         )
                       }}
                       variant="outlined"
@@ -236,7 +244,7 @@ export default function UpdateIngredient(props) {
                   </Grid>
                   <Grid item xs={12}>
                     <TextValidator
-                      label="Calories"
+                      label={CALORIES}
                       id="calorie"
                       fullWidth
                       required
@@ -249,7 +257,7 @@ export default function UpdateIngredient(props) {
                       ]}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">Kcal</InputAdornment>
+                          <InputAdornment position="end">{KCLA}</InputAdornment>
                         )
                       }}
                       variant="outlined"
@@ -263,7 +271,7 @@ export default function UpdateIngredient(props) {
                   color="primary"
                   className={classes.submit}
                 >
-                  Valider
+                  {VALIDATE}
                 </Button>
               </ValidatorForm>
               {/* Spinner (Loading) when the user clicks on the validate button */}

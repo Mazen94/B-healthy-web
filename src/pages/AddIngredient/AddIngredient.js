@@ -17,9 +17,16 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   ADD_INGREDIENT_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_INTEGER
-} from '../../constants/constants';
-
+  MESSAGE_VALIDATORS_INTEGER,
+  PRIMARY_COLOR
+} from '../../shared/constants/constants';
+import {
+  NAME,
+  AMOUNT,
+  CALORIES,
+  GRAM,
+  VALIDATE
+} from '../../shared/strings/strings';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
@@ -148,7 +155,7 @@ export default function AddIngredient() {
         <IconButton
           className={classes.iconButton}
           onClick={handleArrowBack}
-          color="primary"
+          color={PRIMARY_COLOR}
         >
           <ArrowBackIcon />
         </IconButton>
@@ -171,7 +178,7 @@ export default function AddIngredient() {
                         required
                         fullWidth
                         id="name"
-                        label="Nom"
+                        label={NAME}
                         autoFocus
                         onChange={handleName}
                         value={name}
@@ -184,7 +191,7 @@ export default function AddIngredient() {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextValidator
-                        label="Quantite"
+                        label={AMOUNT}
                         id="amount"
                         fullWidth
                         required
@@ -199,7 +206,7 @@ export default function AddIngredient() {
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">
-                              Gramme
+                              {GRAM}
                             </InputAdornment>
                           )
                         }}
@@ -208,7 +215,7 @@ export default function AddIngredient() {
                     </Grid>
                     <Grid item xs={12}>
                       <TextValidator
-                        label="Calories"
+                        label={CALORIES}
                         id="calorie"
                         fullWidth
                         required
@@ -233,10 +240,10 @@ export default function AddIngredient() {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
+                    color={PRIMARY_COLOR}
                     className={classes.submit}
                   >
-                    Valider
+                    {VALIDATE}
                   </Button>
                 </ValidatorForm>
                 {/* Spinner (Loading) when the user clicks on the validate button */}
