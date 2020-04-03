@@ -7,8 +7,9 @@ import {
   CHART_LABEL_MALE,
   CHART_LABEL_FEMALE,
   CHART_BACKGROUNDCOLOR
-} from '../../constants/constants'; // Get constants from  constants  file
+} from '../../shared/constants/constants'; // Get constants from  constants  file
 import Axios from 'axios';
+import { DISTRIBUTION_BY_GENDER } from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -81,7 +82,7 @@ export default function Chart() {
         color="primary"
         gutterBottom
       >
-        Répartition des patients par sexe
+        {DISTRIBUTION_BY_GENDER}
       </Typography>
       {/* Chart Pie */}
       <Pie className={classes.pie} data={data} width={60} height={20} />
