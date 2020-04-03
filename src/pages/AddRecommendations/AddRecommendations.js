@@ -12,11 +12,14 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import {
+  PRIMARY_COLOR,
   PATIENT_MENU_BAR_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   ADDRECOMMENDATION_STEPPER_CREATION,
   RECOMMENDATION_STEPPER_ADD
 } from '../../shared/constants/constants';
+import { NAME, AVOID, VALIDATE } from '../../shared/strings/strings';
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -151,7 +154,7 @@ export default function AddRecommendations() {
                           id="name"
                           onChange={handleName}
                           value={name}
-                          label="Nom"
+                          label={NAME}
                           autoFocus
                           validators={['required']}
                           errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
@@ -172,7 +175,7 @@ export default function AddRecommendations() {
                           rows="4"
                           onChange={handleAvoid}
                           value={avoid}
-                          label="Les aliments   a eviter"
+                          label={AVOID}
                           validators={['required']}
                           errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                           endadornment={
@@ -184,10 +187,10 @@ export default function AddRecommendations() {
                     <Button
                       type="submit"
                       variant="contained"
-                      color="primary"
+                      color={PRIMARY_COLOR}
                       className={classes.submit}
                     >
-                      suivant
+                      {VALIDATE}
                     </Button>
                   </ValidatorForm>
                 </Paper>

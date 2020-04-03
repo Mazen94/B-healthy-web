@@ -7,7 +7,11 @@ import NavBar from '../../components/NavBar/NavBar';
 import ListRecommendations from '../../components/ListRecommendations/ListRecommendations';
 import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
-import { PATIENT_MENU_BAR_TITLE } from '../../shared/constants/constants';
+import {
+  PATIENT_MENU_BAR_TITLE,
+  PRIMARY_COLOR
+} from '../../shared/constants/constants';
+import { ADD } from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -56,10 +60,10 @@ export default function Recommendations() {
           <Button
             className={classes.ButtonGroup}
             variant="contained"
-            color="primary"
+            color={PRIMARY_COLOR}
             onClick={handleClickAjouter}
           >
-            Ajouter
+            {ADD}
           </Button>
           <Grid container spacing={4} className={classes.gridContainer}>
             {/* Component ListRecommendation */}
