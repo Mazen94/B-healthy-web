@@ -21,7 +21,18 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_EMAIL
-} from '../../constants/constants';
+} from '../../shared/constants/constants';
+import {
+  VALIDATE,
+  FIRST_NAME,
+  LAST_NAME,
+  EMAIL,
+  PASSWORD,
+  PHONE,
+  PREFFESION,
+  FEMALE,
+  MALE
+} from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -183,7 +194,6 @@ export default function AddPatient() {
       <CssBaseline />
       {/* Component MenuBar */}
       <MenuBar title={ADD_PATIENT_TITLE} />
-
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {/* Icon to go back */}
@@ -214,7 +224,7 @@ export default function AddPatient() {
                   onChange={handleFirstName}
                   value={firstName}
                   id="firstName"
-                  label="Prénom"
+                  label={FIRST_NAME}
                   autoFocus
                   validators={['required']}
                   errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
@@ -228,7 +238,7 @@ export default function AddPatient() {
                   onChange={handleLastName}
                   value={lastName}
                   id="lastName"
-                  label="Nom de famille"
+                  label={LAST_NAME}
                   name="lastName"
                   autoComplete="lname"
                   validators={['required']}
@@ -243,7 +253,7 @@ export default function AddPatient() {
                   onChange={handleEmail}
                   value={email}
                   id="email"
-                  label="Adresse e-mail"
+                  label={EMAIL}
                   name="email"
                   autoComplete="email"
                   validators={['required', 'isEmail']}
@@ -263,7 +273,7 @@ export default function AddPatient() {
                   onChange={handleNumberPhone}
                   value={numberPhone}
                   id="nmbrePhone"
-                  label="Numero Telephone"
+                  label={PHONE}
                   validators={['required']}
                   errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                 />
@@ -276,7 +286,7 @@ export default function AddPatient() {
                   onChange={handleProffesion}
                   value={proffesion}
                   id="proffesion"
-                  label="Proffesion"
+                  label={PREFFESION}
                   name="proffesion"
                   autoComplete="proffesion"
                   validators={['required']}
@@ -289,7 +299,7 @@ export default function AddPatient() {
                   required
                   fullWidth
                   name="password"
-                  label="Mot de passe"
+                  label={PASSWORD}
                   type="password"
                   id="password"
                   onChange={handlePassword}
@@ -314,12 +324,12 @@ export default function AddPatient() {
                     <FormControlLabel
                       value="female"
                       control={<Radio color="primary" />}
-                      label="Femme"
+                      label={FEMALE}
                     />
                     <FormControlLabel
                       value="male"
                       control={<Radio color="primary" />}
-                      label="Homme"
+                      label={MALE}
                     />
                   </RadioGroup>
                 </FormControl>
@@ -332,7 +342,7 @@ export default function AddPatient() {
               color="primary"
               className={classes.submit}
             >
-              Valider
+              {VALIDATE}
             </Button>
           </ValidatorForm>
           {/* Spinner (Loading) when the user clicks on the validate button */}
