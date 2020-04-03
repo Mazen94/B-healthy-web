@@ -28,10 +28,11 @@ import {
   DINNER
 } from '../../shared/strings/strings';
 import {
+  PRIMARY_COLOR,
   ADD_MENU_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
-  ADDMENU_STEPPER_CREATION,
-  ADDMENU_STEPPER_ADD,
+  MENU_STEPPER_CREATION,
+  MENU_STEPPER_ADD,
   MESSAGE_VALIDATORS_INTEGER
 } from '../../shared/constants/constants';
 
@@ -179,15 +180,15 @@ export default function AddIngredient() {
         <IconButton
           className={classes.iconButton}
           onClick={handleArrowBack}
-          color="primary"
+          color={PRIMARY_COLOR}
         >
           <ArrowBackIcon />
         </IconButton>
         <Container maxWidth="lg" className={classes.container}>
           {/* Component StepperHorizontal */}
           <StepperHorizontal
-            creation={ADDMENU_STEPPER_CREATION}
-            add={ADDMENU_STEPPER_ADD}
+            creation={MENU_STEPPER_CREATION}
+            add={MENU_STEPPER_ADD}
             stepProps={step}
           />
           <Grid container spacing={1}>
@@ -218,8 +219,6 @@ export default function AddIngredient() {
                     <Grid item xs={12} sm={6}>
                       <Select
                         variant="outlined"
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
                         value={typeMenu}
                         className={classes.select}
                         onChange={handleTypeMenu}
@@ -277,7 +276,7 @@ export default function AddIngredient() {
                   <Button
                     type="submit"
                     variant="contained"
-                    color="primary"
+                    color={PRIMARY_COLOR}
                     className={classes.submit}
                   >
                     {FOLLOWING}
