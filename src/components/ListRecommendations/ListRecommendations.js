@@ -19,7 +19,7 @@ import healthy from '../../api/healthy'; //new instance of axios with a custom c
 import recommendations from '../../assets/recommendations.png';
 import Axios from 'axios';
 import DialogComponent from '../DialogComponent/DialogComponent';
-import { DIALOG_RECOMMENDATION } from '../../constants/constants';
+import { DIALOG_RECOMMENDATION } from '../../shared/constants/constants';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
