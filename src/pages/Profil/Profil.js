@@ -17,7 +17,8 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_EMAIL
-} from '../../constants/constants';
+} from '../../shared/constants/constants';
+import { EMAIL_EXISTS, PASSWORD, VALIDATE } from '../../shared/strings/strings';
 import Axios from 'axios';
 
 /**
@@ -195,7 +196,7 @@ export default function Profil() {
       return (
         <Grid item md={10} component={Paper} className={classes.paper}>
           {/* Alert when the user gives email exist */}
-          {erreurValidation && <Alert severity="error">Email existe</Alert>}
+          {erreurValidation && <Alert severity="error">{EMAIL_EXISTS}</Alert>}
           {/* Form */}
           <ValidatorForm
             onSubmit={onSubmitForm}
@@ -247,7 +248,7 @@ export default function Profil() {
                   value={password}
                   fullWidth
                   name="password"
-                  label="Mot de passe"
+                  label={PASSWORD}
                   type="password"
                   id="password"
                   autoComplete="current-password"
@@ -263,7 +264,7 @@ export default function Profil() {
               color="primary"
               className={classes.submit}
             >
-              Valider
+              {VALIDATE}
             </Button>
           </ValidatorForm>
           {/* Spinner (Loading) when the user clicks on the validate button */}
