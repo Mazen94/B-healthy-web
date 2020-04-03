@@ -14,6 +14,15 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import Copyright from '../../components/Copyright/Copyright';
+import {
+  LOGIN,
+  FORGOT_PASSWORD,
+  DONT_HAVE_ACCOUNT
+} from '../../shared/strings/strings';
+import {
+  MESSAGE_VALIDATORS_REQUIRED,
+  MESSAGE_VALIDATORS_EMAIL
+} from '../../shared/constants/constants';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -116,7 +125,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Se connecter
+            {LOGIN}
           </Typography>
           {/* Alert when the user gives false data  */}
           {flag && (
@@ -132,8 +141,8 @@ export default function SignIn() {
               value={email}
               validators={['required', 'isEmail']}
               errorMessages={[
-                'Ce champ est requis',
-                "L'email n'est pas valide"
+                MESSAGE_VALIDATORS_REQUIRED,
+                MESSAGE_VALIDATORS_EMAIL
               ]}
               fullWidth
               variant="outlined"
@@ -149,7 +158,7 @@ export default function SignIn() {
               onChange={handlePassword}
               value={password}
               validators={['required']}
-              errorMessages={['Ce champ est requis']}
+              errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
               fullWidth
             />
 
@@ -160,17 +169,17 @@ export default function SignIn() {
               color="primary"
               className={classes.submit}
             >
-              Se connecter
+              {LOGIN}
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Mot de passe oublié?
+                  {FORGOT_PASSWORD}
                 </Link>
               </Grid>
               <Grid item>
                 <Link href="/register" variant="body2">
-                  {"Vous n'avez pas de compte? S'inscrire"}
+                  {DONT_HAVE_ACCOUNT}
                 </Link>
               </Grid>
             </Grid>
