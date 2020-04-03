@@ -173,121 +173,81 @@ export default function ListRecommendations() {
       );
       // when the states get the data and if the data is not empty then display
     } else {
-      if (data.length !== 0) {
-        return (
-          <Fragment>
-            <TableContainer
-              className={classes.tableContainer}
-              component={Paper}
-            >
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>
-                      <Typography
-                        className={classes.typography}
-                        variant="subtitle2"
-                      >
-                        Recommandations
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Typography
-                        className={classes.typography}
-                        variant="subtitle2"
-                      >
-                        Date de creation
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right"></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {data.map((row, x) => (
-                    <TableRow key={row.id}>
-                      <TableCell component="th" scope="row">
-                        <Box display="flex" flexDirection="row">
-                          <Box>
-                            <Avatar
-                              className={classes.avatar}
-                              src={recommendations}
-                            ></Avatar>
-                          </Box>
-                          <Box p={2}>
-                            <a className={classes.link} href="# ">
-                              {row.name}
-                            </a>
-                          </Box>
+      return (
+        <Fragment>
+          <TableContainer className={classes.tableContainer} component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Typography
+                      className={classes.typography}
+                      variant="subtitle2"
+                    >
+                      Recommandations
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Typography
+                      className={classes.typography}
+                      variant="subtitle2"
+                    >
+                      Date de creation
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right"></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.map((row, x) => (
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      <Box display="flex" flexDirection="row">
+                        <Box>
+                          <Avatar
+                            className={classes.avatar}
+                            src={recommendations}
+                          ></Avatar>
                         </Box>
-                      </TableCell>
-                      <TableCell align="left">{row.created_at}</TableCell>
+                        <Box p={2}>
+                          <a className={classes.link} href="# ">
+                            {row.name}
+                          </a>
+                        </Box>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="left">{row.created_at}</TableCell>
 
-                      <TableCell align="right">
-                        <IconButton
-                          value={row.id}
-                          onClick={() => handleClickIconButton(row.id)}
-                          color="primary"
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          value={row.id}
-                          onClick={() => handleClickOpen(row.id)}
-                          color="secondary"
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            {/* DialogComponent*/}
-            <DialogComponent
-              handleButtonDelete={handleButtonDelete}
-              open={open}
-              handleClose={handleClose}
-              message={DIALOG_RECOMMENDATION}
-            />
-          </Fragment>
-        );
-      } else {
-        // Display an empty table
-        return (
-          <Fragment>
-            <TableContainer
-              className={classes.tableContainer}
-              component={Paper}
-            >
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>
-                      <Typography
-                        className={classes.typography}
-                        variant="subtitle2"
+                    <TableCell align="right">
+                      <IconButton
+                        value={row.id}
+                        onClick={() => handleClickIconButton(row.id)}
+                        color="primary"
                       >
-                        Recommandations
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Typography
-                        className={classes.typography}
-                        variant="subtitle2"
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        value={row.id}
+                        onClick={() => handleClickOpen(row.id)}
+                        color="secondary"
                       >
-                        Date de creation
-                      </Typography>
+                        <DeleteIcon />
+                      </IconButton>
                     </TableCell>
-                    <TableCell align="right"></TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody></TableBody>
-              </Table>
-            </TableContainer>
-          </Fragment>
-        );
-      }
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          {/* DialogComponent*/}
+          <DialogComponent
+            handleButtonDelete={handleButtonDelete}
+            open={open}
+            handleClose={handleClose}
+            message={DIALOG_RECOMMENDATION}
+          />
+        </Fragment>
+      );
     }
   };
   /**
