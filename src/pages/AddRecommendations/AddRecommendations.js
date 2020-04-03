@@ -16,7 +16,7 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   ADDRECOMMENDATION_STEPPER_CREATION,
   RECOMMENDATION_STEPPER_ADD
-} from '../../constants/constants';
+} from '../../shared/constants/constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'

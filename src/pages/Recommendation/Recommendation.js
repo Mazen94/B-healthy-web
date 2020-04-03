@@ -7,7 +7,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import ListRecommendations from '../../components/ListRecommendations/ListRecommendations';
 import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
-import { PATIENT_MENU_BAR_TITLE } from '../../constants/constants';
+import { PATIENT_MENU_BAR_TITLE } from '../../shared/constants/constants';
 
 /**
  * Hook API to generate and apply styles (its JSS object)

@@ -16,7 +16,7 @@ import {
   PATIENT_MENU_BAR_TITLE,
   UPDATERECOMMENDATION_STEPPER_CREATION,
   RECOMMENDATION_STEPPER_ADD
-} from '../../constants/constants';
+} from '../../shared/constants/constants';
 import Axios from 'axios';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
