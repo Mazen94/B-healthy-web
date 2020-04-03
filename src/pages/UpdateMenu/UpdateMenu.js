@@ -20,9 +20,22 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {
+  INGREDIENT_OF_MENU,
+  MIN_AGE,
+  MAX_AGE,
+  NAME,
+  FIRST_SNAKE,
+  SECOND_SNAKE,
+  BREAKFAST,
+  LUNCH,
+  DINNER,
+  VALIDATE
+} from '../../shared/strings/strings';
+import {
   MENU_BAR_UPDATE_TITLE,
-  MESSAGE_VALIDATORS_REQUIRED
-} from '../../constants/constants';
+  MESSAGE_VALIDATORS_REQUIRED,
+  PRIMARY_COLOR
+} from '../../shared/constants/constants';
 import Axios from 'axios';
 
 /**
@@ -242,7 +255,7 @@ export default function UpdateIngredient() {
                     required
                     fullWidth
                     id="name"
-                    label="Nom"
+                    label={NAME}
                     value={name}
                     onChange={handleChangeName}
                     validators={['required']}
@@ -261,11 +274,11 @@ export default function UpdateIngredient() {
                     onChange={handleTypeMenu}
                     className={classes.select}
                   >
-                    <MenuItem value={'Petit-Déjeuner'}>Petit-Déjeuner</MenuItem>
-                    <MenuItem value={'Collation 1'}>Collation 1</MenuItem>
-                    <MenuItem value={'Déjeuner'}>Déjeuner</MenuItem>
-                    <MenuItem value={'Collation 2'}>Collation 2</MenuItem>
-                    <MenuItem value={'Dîner'}>Dîner</MenuItem>
+                    <MenuItem value={BREAKFAST}>{BREAKFAST}</MenuItem>
+                    <MenuItem value={FIRST_SNAKE}>{FIRST_SNAKE}</MenuItem>
+                    <MenuItem value={LUNCH}>{LUNCH}</MenuItem>
+                    <MenuItem value={SECOND_SNAKE}>{SECOND_SNAKE}</MenuItem>
+                    <MenuItem value={DINNER}>{DINNER}</MenuItem>
                   </Select>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -276,7 +289,7 @@ export default function UpdateIngredient() {
                     required
                     fullWidth
                     id="name"
-                    label="Min Age"
+                    label={MIN_AGE}
                     value={minAge}
                     onChange={handleChangeMinAge}
                     validators={['required']}
@@ -288,13 +301,10 @@ export default function UpdateIngredient() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextValidator
-                    autoComplete="fname"
-                    name="name"
                     variant="outlined"
                     required
                     fullWidth
-                    id="name"
-                    label="Max Age"
+                    label={MAX_AGE}
                     value={maxAge}
                     onChange={handleChangeMaxAge}
                     validators={['required']}
@@ -309,8 +319,6 @@ export default function UpdateIngredient() {
                   {/* Component UpdateAmountIngredient Related to Menu*/}
                   <Select
                     variant="outlined"
-                    labelId="demo-simple-select-filled-label"
-                    id="demo-simple-select-filled"
                     className={classes.select}
                     value={valueOfIngredient}
                     onChange={handleIngredient}
@@ -322,7 +330,7 @@ export default function UpdateIngredient() {
                       </MenuItem>
                     ))}
                   </Select>
-                  <FormHelperText>Les ingredients de ce menu</FormHelperText>
+                  <FormHelperText>{INGREDIENT_OF_MENU}</FormHelperText>
                 </Grid>
                 <Grid item xs={12} sm={5} className={classes.handleIngredient}>
                   <TextValidator
@@ -342,7 +350,7 @@ export default function UpdateIngredient() {
                   />
                 </Grid>
                 <Grid item xs={12} sm={1} className={classes.handleIngredient}>
-                  <IconButton color="primary" onClick={handleClickButton}>
+                  <IconButton color={PRIMARY_COLOR} onClick={handleClickButton}>
                     <DoneIcon />
                   </IconButton>
                 </Grid>
@@ -350,10 +358,10 @@ export default function UpdateIngredient() {
               <Button
                 type="submit"
                 variant="contained"
-                color="primary"
+                color={PRIMARY_COLOR}
                 className={classes.submit}
               >
-                Valider
+                {VALIDATE}
               </Button>
             </ValidatorForm>
           </Paper>
