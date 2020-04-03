@@ -75,10 +75,7 @@ export const CHART_BACKGROUNDCOLOR = [
   'rgba(255, 99, 132, 0.6)',
   'rgba(54, 162, 235, 0.6)'
 ];
-/**
- * The title  of the Patient component
- */
-export const PATIENT_MENU_BAR_TITLE = 'Patient';
+
 /**
  * placeholder used in the patient component
  */

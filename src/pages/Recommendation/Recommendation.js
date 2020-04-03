@@ -7,11 +7,8 @@ import NavBar from '../../components/NavBar/NavBar';
 import ListRecommendations from '../../components/ListRecommendations/ListRecommendations';
 import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
-import {
-  PATIENT_MENU_BAR_TITLE,
-  PRIMARY_COLOR
-} from '../../shared/constants/constants';
-import { ADD } from '../../shared/strings/strings';
+import { PRIMARY_COLOR } from '../../shared/constants/constants';
+import { ADD, PATIENT } from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -51,7 +48,7 @@ export default function Recommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
+        <MenuBar title={PATIENT} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />

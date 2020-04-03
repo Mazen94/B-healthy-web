@@ -11,10 +11,9 @@ import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   RECOMMENDATION_STEPPER_ADD,
-  PATIENT_MENU_BAR_TITLE,
   PRIMARY_COLOR
 } from '../../shared/constants/constants';
-import { VALIDATE } from '../../shared/strings/strings';
+import { VALIDATE, PATIENT } from '../../shared/strings/strings';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,7 +67,7 @@ export default function AddMenuToRecommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
+        <MenuBar title={PATIENT} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />

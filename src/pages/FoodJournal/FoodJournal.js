@@ -6,7 +6,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import ListFood from '../../components/ListFood/ListFood';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { PATIENT_MENU_BAR_TITLE } from '../../shared/constants/constants';
+import { PATIENT } from '../../shared/strings/strings';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -45,7 +45,7 @@ const FoodJournal = () => {
       </Backdrop>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
+        <MenuBar title={PATIENT} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />

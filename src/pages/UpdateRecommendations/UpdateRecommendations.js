@@ -14,11 +14,10 @@ import { Button } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import {
   PRIMARY_COLOR,
-  PATIENT_MENU_BAR_TITLE,
   UPDATERECOMMENDATION_STEPPER_CREATION,
   RECOMMENDATION_STEPPER_ADD
 } from '../../shared/constants/constants';
-import { FOLLOWING } from '../../shared/strings/strings';
+import { FOLLOWING, PATIENT } from '../../shared/strings/strings';
 import Axios from 'axios';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
@@ -151,7 +150,7 @@ export default function UpdateRecommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
+        <MenuBar title={PATIENT} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />

@@ -13,12 +13,11 @@ import NavBar from '../../components/NavBar/NavBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import {
   PRIMARY_COLOR,
-  PATIENT_MENU_BAR_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   ADDRECOMMENDATION_STEPPER_CREATION,
   RECOMMENDATION_STEPPER_ADD
 } from '../../shared/constants/constants';
-import { NAME, AVOID, VALIDATE } from '../../shared/strings/strings';
+import { NAME, AVOID, VALIDATE, PATIENT } from '../../shared/strings/strings';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -119,7 +118,7 @@ export default function AddRecommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
+        <MenuBar title={PATIENT} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
