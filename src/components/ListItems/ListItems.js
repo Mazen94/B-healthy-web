@@ -11,6 +11,13 @@ import PeopleIcon from '@material-ui/icons/People';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import React, { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
+import {
+  MENUS,
+  INGREDIENTS,
+  PATIENTS,
+  DASHBOARD,
+  PROFIL
+} from '../../shared/strings/strings';
 /**
  * Component for showing the list of items in the MenuBar
  */
@@ -54,14 +61,14 @@ export default function ListItems() {
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary={DASHBOARD} />
       </ListItem>
       {/* Item Patient */}
       <ListItem button onClick={handleClickPatients}>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary="Patients" path="/typography" />
+        <ListItemText primary={PATIENTS} path="/typography" />
       </ListItem>
       {/* Item Ingredients */}
       <ListItem button onClick={handleClickIngredients}>
@@ -69,7 +76,7 @@ export default function ListItems() {
           <FastfoodIcon />
         </ListItemIcon>
         <ListItemLink>
-          <ListItemText primary="Ingredients" />
+          <ListItemText primary={INGREDIENTS} />
         </ListItemLink>
       </ListItem>
       {/* Item Menus */}
@@ -77,14 +84,14 @@ export default function ListItems() {
         <ListItemIcon>
           <RestaurantMenuIcon />
         </ListItemIcon>
-        <ListItemText primary="Menus" />
+        <ListItemText primary={MENUS} />
       </ListItem>
       {/* Item Profil */}
       <ListItem button onClick={handleClickProfil}>
         <ListItemIcon>
           <AccountBoxIcon />
         </ListItemIcon>
-        <ListItemText primary="Profil" />
+        <ListItemText primary={PROFIL} />
       </ListItem>
     </Fragment>
   );

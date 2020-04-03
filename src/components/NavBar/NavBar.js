@@ -4,7 +4,12 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-
+import {
+  RECOMMENDATIONS,
+  FOOD_JOURNAL,
+  CONSULTATION
+} from '../../shared/strings/strings';
+import { PRIMARY_COLOR } from '../../shared/constants/constants';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -54,11 +59,11 @@ export default function NavBar(props) {
         <Paper className={classes.paper}>
           <Button
             className={classes.button}
-            color="primary"
+            color={PRIMARY_COLOR}
             variant={consultation}
             onClick={handleClickConsultation}
           >
-            Consultation
+            {CONSULTATION}
           </Button>
         </Paper>
       </Grid>
@@ -67,10 +72,10 @@ export default function NavBar(props) {
           <Button
             className={classes.button}
             onClick={handleClickRecommendation}
-            color="primary"
+            color={PRIMARY_COLOR}
             variant={recommendation}
           >
-            Recommandation
+            {RECOMMENDATIONS}
           </Button>
         </Paper>
       </Grid>
@@ -78,12 +83,11 @@ export default function NavBar(props) {
         <Paper className={classes.paper}>
           <Button
             className={classes.button}
-            href="#contained-buttons"
-            color="primary"
+            color={PRIMARY_COLOR}
             variant={journalAlimentaire}
             onClick={handleClickJournal}
           >
-            Journal Alimentaire
+            {FOOD_JOURNAL}
           </Button>
         </Paper>
       </Grid>
