@@ -20,6 +20,12 @@ import recommendations from '../../assets/recommendations.png';
 import Axios from 'axios';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { DIALOG_RECOMMENDATION } from '../../shared/constants/constants';
+import { RECOMMENDATIONS, CREATION_DATE } from '../../shared/strings/strings';
+import {
+  PRIMARY_COLOR,
+  SECONDARY_COLOR
+} from '../../shared/constants/constants';
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -184,7 +190,7 @@ export default function ListRecommendations() {
                       className={classes.typography}
                       variant="subtitle2"
                     >
-                      Recommandations
+                      {RECOMMENDATIONS}
                     </Typography>
                   </TableCell>
                   <TableCell align="left">
@@ -192,7 +198,7 @@ export default function ListRecommendations() {
                       className={classes.typography}
                       variant="subtitle2"
                     >
-                      Date de creation
+                      {CREATION_DATE}
                     </Typography>
                   </TableCell>
                   <TableCell align="right"></TableCell>
@@ -222,14 +228,14 @@ export default function ListRecommendations() {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickIconButton(row.id)}
-                        color="primary"
+                        color={PRIMARY_COLOR}
                       >
                         <EditIcon />
                       </IconButton>
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickOpen(row.id)}
-                        color="secondary"
+                        color={SECONDARY_COLOR}
                       >
                         <DeleteIcon />
                       </IconButton>
