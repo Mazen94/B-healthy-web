@@ -6,8 +6,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ListMenus from '../../components/ListMenus/ListMenus';
-import { MENUS_TITLE } from '../../constants/constants';
-
+import { MENUS_TITLE } from '../../shared/constants/constants';
+import { ADD } from '../../shared/strings/strings';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -54,7 +54,7 @@ export default function Menus() {
             color="primary"
             onClick={handleClickAjouter}
           >
-            Ajouter
+            {ADD}
           </Button>
           {/* Component ListMenus */}
           <ListMenus />
