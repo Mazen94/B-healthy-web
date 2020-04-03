@@ -10,12 +10,12 @@ import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import IngredientToMenu from '../../components/IngredientToMenu/IngredientToMenu';
+import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
-  MENU_STEPPER_CREATION,
+  FOLLOWING,
   MENU_STEPPER_ADD,
-  PRIMARY_COLOR
-} from '../../shared/constants/constants';
-import { FOLLOWING } from '../../shared/strings/strings';
+  MENU_STEPPER_CREATION
+} from '../../shared/strings/strings';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'

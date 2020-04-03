@@ -3,13 +3,13 @@ import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import healthy from '../../api/healthy';
-import {
-  CHART_LABEL_MALE,
-  CHART_LABEL_FEMALE,
-  CHART_BACKGROUNDCOLOR
-} from '../../shared/constants/constants'; // Get constants from  constants  file
+import { CHART_BACKGROUNDCOLOR } from '../../shared/constants/constants'; // Get constants from  constants  file
 import Axios from 'axios';
-import { DISTRIBUTION_BY_GENDER } from '../../shared/strings/strings';
+import {
+  DISTRIBUTION_BY_GENDER,
+  CHART_LABEL_MALE,
+  CHART_LABEL_FEMALE
+} from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object)

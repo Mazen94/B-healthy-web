@@ -14,11 +14,11 @@ import { useHistory } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {
-  MENU_BAR_UPDATE_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER
 } from '../../shared/constants/constants';
 import {
+  EDIT,
   NAME,
   AMOUNT,
   CALORIES,
@@ -288,7 +288,7 @@ export default function UpdateIngredient(props) {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title={MENU_BAR_UPDATE_TITLE} />
+      <MenuBar title={EDIT} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {/* Icon to go back */}

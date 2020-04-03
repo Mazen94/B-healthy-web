@@ -13,12 +13,16 @@ import Alert from '@material-ui/lab/Alert';
 import healthy from '../../api/healthy';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {
-  PROFIL_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_EMAIL
 } from '../../shared/constants/constants';
-import { EMAIL_EXISTS, PASSWORD, VALIDATE } from '../../shared/strings/strings';
+import {
+  PROFIL,
+  EMAIL_EXISTS,
+  PASSWORD,
+  VALIDATE
+} from '../../shared/strings/strings';
 import Axios from 'axios';
 
 /**
@@ -279,7 +283,7 @@ export default function Profil() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component MenuBar */}
-      <MenuBar title={PROFIL_TITLE} />
+      <MenuBar title={PROFIL} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {renderFunction()}

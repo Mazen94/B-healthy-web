@@ -15,12 +15,12 @@ import { useHistory } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {
-  ADD_INGREDIENT_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER,
   PRIMARY_COLOR
 } from '../../shared/constants/constants';
 import {
+  ADD_INGREDIENT_TITLE,
   NAME,
   AMOUNT,
   CALORIES,

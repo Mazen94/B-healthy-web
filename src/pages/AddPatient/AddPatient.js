@@ -17,12 +17,12 @@ import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {
-  ADD_PATIENT_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_EMAIL
 } from '../../shared/constants/constants';
 import {
+  ADD_PATIENT_TITLE,
   VALIDATE,
   FIRST_NAME,
   LAST_NAME,

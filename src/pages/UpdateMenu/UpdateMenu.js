@@ -20,6 +20,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {
+  EDIT,
   INGREDIENT_OF_MENU,
   MIN_AGE,
   MAX_AGE,
@@ -32,7 +33,6 @@ import {
   VALIDATE
 } from '../../shared/strings/strings';
 import {
-  MENU_BAR_UPDATE_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   PRIMARY_COLOR
 } from '../../shared/constants/constants';
@@ -373,7 +373,7 @@ export default function UpdateIngredient() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title={MENU_BAR_UPDATE_TITLE} />
+      <MenuBar title={EDIT} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

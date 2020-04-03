@@ -37,36 +37,13 @@ export const PATIENT_STATISTICS_BACKGROUNDCOLOR = [
  * The background color of the chart (Ingredient)
  */
 export const DASHBOARD_INGREDIENT_BACKGROUNDCOLOR = 'rgba(54, 162, 235, 0.6)';
-/**
- * Constant used in the Dashboard component
- * The name of the chart (Ingredient)
- */
-export const DASHBOARD_INGREDIENT_NAME = 'Ingredients';
+
 /**
  * Constant used in the Dashboard component
  * The background color of the chart (Menu)
  */
 export const DASHBOARD_MENU_BACKGROUNDCOLOR = 'rgba(255, 99, 132, 0.6)';
-/**
- * Constant used in the Dashboard component
- * The name of the chart (Menu)
- */
-export const DASHBOARD_MENU_NAME = 'Menus';
-/**
- * Constant used in the Dashboard component
- * The title of the MenuBar component
- */
-export const DASHBOARD_MENU_BAR_TITLE = 'Dashboard';
-/**
- * Constant used in the Chart component
- * the label 'Homme' of the chart component
- */
-export const CHART_LABEL_MALE = 'Homme';
-/**
- * Constant used in the Chart component
- * the label 'Femme' of the chart component
- */
-export const CHART_LABEL_FEMALE = 'Femme';
+
 /**
  * Constant used in the Chart component
  * The background color of the chart ('Homme','Femme')
@@ -75,15 +52,6 @@ export const CHART_BACKGROUNDCOLOR = [
   'rgba(255, 99, 132, 0.6)',
   'rgba(54, 162, 235, 0.6)'
 ];
-
-/**
- * placeholder used in the patient component
- */
-export const PATIENT_PLACEHOLDER = 'Chercher un patient';
-/**
- * The title of the AddPatient component
- */
-export const ADD_PATIENT_TITLE = 'Creer un patient';
 
 /**
  * Constant message : use when field is required
@@ -98,50 +66,11 @@ export const MESSAGE_VALIDATORS_PASSWORD =
  * Constant message : email validation
  */
 export const MESSAGE_VALIDATORS_EMAIL = "L'email n'est pas valide";
-/**
- * The title of the Ingredient page
- */
-export const INGREDIENTS_MENU_BAR_TITLE = 'Ingredients';
-/**
- * The title of the AddIngredient component
- */
-export const ADD_INGREDIENT_TITLE = 'Ajouter un ingredient';
+
 /**
  * Constant message : is integer validation
  */
 export const MESSAGE_VALIDATORS_INTEGER = 'Ce champ doit être un nombre';
-/**
- * The title of the Update page
- */
-export const MENU_BAR_UPDATE_TITLE = 'Modifier';
-/**
- * Constant used in the AddRecommendation Page
- * name of the creation
- */
-export const ADDRECOMMENDATION_STEPPER_CREATION = 'Crée une Recommendation';
-/**
- * Constant used in the AddRecommendation,UpdateRecommendation Page
- *
- */
-export const RECOMMENDATION_STEPPER_ADD = 'Ajouter des menus';
-/**
- * Constant used in the UpadateRecommendation Page
- * name of the creation
- */
-export const UPDATERECOMMENDATION_STEPPER_CREATION = 'Modifier Recommandation';
-/**
- * The title of the menus page
- */
-export const MENUS_TITLE = 'Menus';
-/**
- * The title of the AddMenu component
- */
-export const ADD_MENU_TITLE = 'Ajouter un menu';
-
-/**
- * The title of the Profil component
- */
-export const PROFIL_TITLE = 'Profil';
 
 /**
  * The message of the dialog component related to recommendation
@@ -170,18 +99,3 @@ export const PRIMARY_COLOR = 'primary';
  * Secondary color
  */
 export const SECONDARY_COLOR = 'secondary';
-/**
- * Constant used in the AddMenu Page
- * name of the creation
- */
-export const MENU_STEPPER_CREATION = 'Crée un menu';
-/**
- * Constant used in the AddMenu Page
- *
- */
-export const MENU_STEPPER_ADD = 'Ajouter des ingredients au menu';
-/**
- * Constant used in the AddMenu Page
- *
- */
-export const CARD_HEADER_TITLE = 'Les menus reliée a cette recommendation';

@@ -15,8 +15,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import meal from '../../assets/meal.png';
-import { CARD_HEADER_TITLE } from '../../shared/constants/constants';
-import { DIALOG_CONTEXT_TEXT, YES, NO } from '../../shared/strings/strings';
+import {
+  CARD_HEADER_TITLE,
+  DIALOG_CONTEXT_TEXT,
+  YES,
+  NO
+} from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui

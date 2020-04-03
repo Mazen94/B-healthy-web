@@ -13,11 +13,16 @@ import NavBar from '../../components/NavBar/NavBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import {
   PRIMARY_COLOR,
-  MESSAGE_VALIDATORS_REQUIRED,
-  ADDRECOMMENDATION_STEPPER_CREATION,
-  RECOMMENDATION_STEPPER_ADD
+  MESSAGE_VALIDATORS_REQUIRED
 } from '../../shared/constants/constants';
-import { NAME, AVOID, VALIDATE, PATIENT } from '../../shared/strings/strings';
+import {
+  ADDRECOMMENDATION_STEPPER_CREATION,
+  RECOMMENDATION_STEPPER_ADD,
+  NAME,
+  AVOID,
+  VALIDATE,
+  PATIENT
+} from '../../shared/strings/strings';
 
 const useStyles = makeStyles(theme => ({
   root: {

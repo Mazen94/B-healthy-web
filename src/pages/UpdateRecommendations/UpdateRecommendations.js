@@ -12,12 +12,13 @@ import MenusRealtedRecommendation from '../../components/MenusRelatedRecommendat
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Button } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
+import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
-  PRIMARY_COLOR,
+  FOLLOWING,
   UPDATERECOMMENDATION_STEPPER_CREATION,
+  PATIENT,
   RECOMMENDATION_STEPPER_ADD
-} from '../../shared/constants/constants';
-import { FOLLOWING, PATIENT } from '../../shared/strings/strings';
+} from '../../shared/strings/strings';
 import Axios from 'axios';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui

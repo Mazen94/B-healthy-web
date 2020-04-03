@@ -9,11 +9,12 @@ import TrasfertMenus from '../../components/TransfertMenus/TrasfertMenus';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
+import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
-  RECOMMENDATION_STEPPER_ADD,
-  PRIMARY_COLOR
-} from '../../shared/constants/constants';
-import { VALIDATE, PATIENT } from '../../shared/strings/strings';
+  VALIDATE,
+  PATIENT,
+  RECOMMENDATION_STEPPER_ADD
+} from '../../shared/strings/strings';
 
 const useStyles = makeStyles(theme => ({
   root: {

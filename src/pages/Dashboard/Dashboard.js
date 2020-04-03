@@ -13,12 +13,10 @@ import Copyright from '../../components/Copyright/Copyright';
 import PatientStatistics from '../../components/PatientStatistics/PatientStatistics';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import {
-  DASHBOARD_MENU_BAR_TITLE,
   DASHBOARD_INGREDIENT_BACKGROUNDCOLOR,
-  DASHBOARD_INGREDIENT_NAME,
-  DASHBOARD_MENU_BACKGROUNDCOLOR,
-  DASHBOARD_MENU_NAME
+  DASHBOARD_MENU_BACKGROUNDCOLOR
 } from '../../shared/constants/constants'; // Get constants from  constants  file
+import { MENUS, DASHBOARD, INGREDIENTS } from '../../shared/strings/strings';
 import Axios from 'axios';
 
 /**
@@ -110,7 +108,7 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <MenuBar title={DASHBOARD_MENU_BAR_TITLE} />
+      <MenuBar title={DASHBOARD} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -125,7 +123,7 @@ export default function Dashboard() {
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <BarComponent
-                  name={DASHBOARD_INGREDIENT_NAME}
+                  name={INGREDIENTS}
                   count={countIngredient}
                   backgroundColor={DASHBOARD_INGREDIENT_BACKGROUNDCOLOR}
                 />
@@ -135,7 +133,7 @@ export default function Dashboard() {
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <BarComponent
-                  name={DASHBOARD_MENU_NAME}
+                  name={MENUS}
                   count={countMenus}
                   backgroundColor={DASHBOARD_MENU_BACKGROUNDCOLOR}
                 />

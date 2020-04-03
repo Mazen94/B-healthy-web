@@ -12,8 +12,11 @@ import { useHistory } from 'react-router-dom';
 import Copyright from '../../components/Copyright/Copyright';
 import ListPatients from '../../components/ListPatients/ListPatients';
 import MenuBar from '../../components/MenuBar/MenuBar';
-import { PATIENT_PLACEHOLDER } from '../../shared/constants/constants';
-import { ADD, PATIENT } from '../../shared/strings/strings';
+import {
+  ADD,
+  PATIENT,
+  PATIENT_PLACEHOLDER
+} from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object)

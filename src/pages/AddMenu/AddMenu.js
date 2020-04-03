@@ -25,14 +25,14 @@ import {
   SECOND_SNAKE,
   BREAKFAST,
   LUNCH,
-  DINNER
+  DINNER,
+  ADD_MENU_TITLE,
+  MENU_STEPPER_ADD,
+  MENU_STEPPER_CREATION
 } from '../../shared/strings/strings';
 import {
   PRIMARY_COLOR,
-  ADD_MENU_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
-  MENU_STEPPER_CREATION,
-  MENU_STEPPER_ADD,
   MESSAGE_VALIDATORS_INTEGER
 } from '../../shared/constants/constants';
 
