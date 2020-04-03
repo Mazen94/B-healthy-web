@@ -19,7 +19,12 @@ import healthy from '../../api/healthy';
 import ingredient from '../../assets/ingredient.png';
 import Axios from 'axios';
 import DialogComponent from '../DialogComponent/DialogComponent';
-import { DIALOG_RECOMMENDATION } from '../../constants/constants';
+import {
+  DIALOG_RECOMMENDATION,
+  PRIMARY_COLOR,
+  SECONDARY_COLOR
+} from '../../shared/constants/constants';
+import { INGREDIENTS, AMOUNT, CALORIES } from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -172,9 +177,9 @@ export default function AddIngredient() {
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Ingredients</TableCell>
-                  <TableCell align="right">Calories</TableCell>
-                  <TableCell align="right">Quantitie&nbsp;(g)</TableCell>
+                  <TableCell>{INGREDIENTS}</TableCell>
+                  <TableCell align="right">{CALORIES}</TableCell>
+                  <TableCell align="right">{AMOUNT}</TableCell>
                   <TableCell align="right"></TableCell>
                 </TableRow>
               </TableHead>
@@ -202,14 +207,14 @@ export default function AddIngredient() {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickIconButton(row.id)}
-                        color="primary"
+                        color={PRIMARY_COLOR}
                       >
                         <EditIcon />
                       </IconButton>
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickOpen(row.id)}
-                        color="secondary"
+                        color={SECONDARY_COLOR}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -223,7 +228,7 @@ export default function AddIngredient() {
               count={lasPage}
               page={currentPage}
               onChange={handleChange}
-              color="primary"
+              color={PRIMARY_COLOR}
             />
           </TableContainer>
           <DialogComponent
