@@ -5,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import React, { Fragment } from 'react';
+import { YES, NO, DIALOG_CONTEXT_TEXT } from '../../shared/strings/strings';
 
 export default function AddIngredient(props) {
   const { open, handleButtonDelete, handleClose, message } = props;
@@ -20,15 +21,15 @@ export default function AddIngredient(props) {
         <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Vous voulez vraiment supprimer {message} ?
+            {DIALOG_CONTEXT_TEXT} {message} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button color="primary" onClick={handleClose}>
-            Non
+            {NO}
           </Button>
           <Button color="primary" onClick={handleButtonDelete} autoFocus>
-            Oui
+            {YES}
           </Button>
         </DialogActions>
       </Dialog>
