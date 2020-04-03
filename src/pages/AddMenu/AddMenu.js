@@ -17,12 +17,23 @@ import healthy from '../../api/healthy'; //new instance of axios with a custom c
 import MenuBar from '../../components/MenuBar/MenuBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import {
+  FOLLOWING,
+  MIN_AGE,
+  MAX_AGE,
+  NAME,
+  FIRST_SNAKE,
+  SECOND_SNAKE,
+  BREAKFAST,
+  LUNCH,
+  DINNER
+} from '../../shared/strings/strings';
+import {
   ADD_MENU_TITLE,
   MESSAGE_VALIDATORS_REQUIRED,
   ADDMENU_STEPPER_CREATION,
   ADDMENU_STEPPER_ADD,
   MESSAGE_VALIDATORS_INTEGER
-} from '../../constants/constants';
+} from '../../shared/constants/constants';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -193,7 +204,7 @@ export default function AddIngredient() {
                         required
                         fullWidth
                         id="name"
-                        label="Nom"
+                        label={NAME}
                         autoFocus
                         onChange={handleName}
                         value={name}
@@ -213,18 +224,16 @@ export default function AddIngredient() {
                         className={classes.select}
                         onChange={handleTypeMenu}
                       >
-                        <MenuItem value={'Petit-Déjeuner'}>
-                          Petit-Déjeuner
-                        </MenuItem>
-                        <MenuItem value={'Collation 1'}>Collation 1</MenuItem>
-                        <MenuItem value={'Déjeuner'}>Déjeuner</MenuItem>
-                        <MenuItem value={'Collation 2'}>Collation 2</MenuItem>
-                        <MenuItem value={'Dîner'}>Dîner</MenuItem>
+                        <MenuItem value={BREAKFAST}>{BREAKFAST}</MenuItem>
+                        <MenuItem value={FIRST_SNAKE}>{FIRST_SNAKE}</MenuItem>
+                        <MenuItem value={LUNCH}>{LUNCH}</MenuItem>
+                        <MenuItem value={SECOND_SNAKE}>{SECOND_SNAKE}</MenuItem>
+                        <MenuItem value={DINNER}>{DINNER}</MenuItem>
                       </Select>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextValidator
-                        label="Max age"
+                        label={MAX_AGE}
                         id="MaxAge"
                         fullWidth
                         required
@@ -245,7 +254,7 @@ export default function AddIngredient() {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextValidator
-                        label="Min age"
+                        label={MIN_AGE}
                         id="MinAge"
                         fullWidth
                         required
@@ -271,7 +280,7 @@ export default function AddIngredient() {
                     color="primary"
                     className={classes.submit}
                   >
-                    suivant
+                    {FOLLOWING}
                   </Button>
                 </ValidatorForm>
                 {/* Spinner (Loading) when the user clicks on the validate button */}
