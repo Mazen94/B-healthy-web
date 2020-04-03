@@ -18,7 +18,7 @@ import {
   DASHBOARD_INGREDIENT_NAME,
   DASHBOARD_MENU_BACKGROUNDCOLOR,
   DASHBOARD_MENU_NAME
-} from '../../constants/constants'; // Get constants from  constants  file
+} from '../../shared/constants/constants'; // Get constants from  constants  file
 import Axios from 'axios';
 
 /**
