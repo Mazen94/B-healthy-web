@@ -18,7 +18,17 @@ import tall from '../../assets/tall.png';
 import weight from '../../assets/weight.png';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-
+import {
+  HISTORY_PERVIOUS_MEASUREMENTS,
+  DATE,
+  WEIGHT,
+  TALL,
+  CHEST,
+  BELLY,
+  NECK,
+  LEGS,
+  NOTE
+} from '../../shared/strings/strings';
 const useStyles = makeStyles(theme => ({
   paperFiche: {
     display: 'grid',
@@ -113,11 +123,11 @@ export default function HistoricalMeasures() {
               gutterBottom
               className={classes.typography}
             >
-              Hisotrique des précédents mesures
+              {HISTORY_PERVIOUS_MEASUREMENTS}
             </Typography>
             <TextField
               className={classes.date}
-              label="Date"
+              label={DATE}
               variant="outlined"
               disabled
               value={visit.updated_at || ''}
@@ -134,25 +144,21 @@ export default function HistoricalMeasures() {
               <Grid className={classes.gridMesure}>
                 <TextField
                   className={classes.textFiledMesure}
-                  label="Poids (kg)"
+                  label={WEIGHT}
                   variant="outlined"
                   disabled
                   value={visit.weight || ''}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={weight}
-                          className={classes.small}
-                        />
+                        <Avatar src={weight} className={classes.small} />
                       </InputAdornment>
                     )
                   }}
                 />
                 <TextField
                   className={classes.textFiledMesure}
-                  label="taille (cm)"
+                  label={TALL}
                   variant="outlined"
                   disabled
                   value={visit.tall || ''}
@@ -171,18 +177,14 @@ export default function HistoricalMeasures() {
 
                 <TextField
                   className={classes.textFiledMesure}
-                  label="Poitrine (cm)"
+                  label={CHEST}
                   variant="outlined"
                   disabled
                   value={visit.chest || ''}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={chest}
-                          className={classes.small}
-                        />
+                        <Avatar src={chest} className={classes.small} />
                       </InputAdornment>
                     )
                   }}
@@ -191,54 +193,42 @@ export default function HistoricalMeasures() {
               <Grid className={classes.gridMesure}>
                 <TextField
                   className={classes.textFiledMesure}
-                  label="Hanche (cm)"
+                  label={BELLY}
                   variant="outlined"
                   disabled
                   value={visit.belly || ''}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={belly}
-                          className={classes.small}
-                        />
+                        <Avatar src={belly} className={classes.small} />
                       </InputAdornment>
                     )
                   }}
                 />
                 <TextField
                   className={classes.textFiledMesure}
-                  label="Cou (cm)"
+                  label={NECK}
                   variant="outlined"
                   disabled
                   value={visit.neck || ''}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={neck}
-                          className={classes.small}
-                        />
+                        <Avatar src={neck} className={classes.small} />
                       </InputAdornment>
                     )
                   }}
                 />
                 <TextField
                   className={classes.textFiledMesure}
-                  label="Cuisse (cm)"
+                  label={LEGS}
                   variant="outlined"
                   disabled
                   value={visit.legs || ''}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={legs}
-                          className={classes.small}
-                        />
+                        <Avatar src={legs} className={classes.small} />
                       </InputAdornment>
                     )
                   }}
@@ -246,7 +236,7 @@ export default function HistoricalMeasures() {
               </Grid>
               <TextField
                 className={classes.textArea}
-                label="Notes"
+                label={NOTE}
                 multiline
                 rows="4"
                 disabled
@@ -255,7 +245,7 @@ export default function HistoricalMeasures() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Avatar alt="Remy Sharp" src={note} />
+                      <Avatar src={note} />
                     </InputAdornment>
                   )
                 }}

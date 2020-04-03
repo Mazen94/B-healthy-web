@@ -7,7 +7,7 @@ import HistoricalMeasures from '../../components/HistoricalMeasures/HistoricalMe
 import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
 import NewMeasures from '../../components/NewMeasures/NewMeasures';
-
+import { PATIENT_MENU_BAR_TITLE } from '../../shared/constants/constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -35,7 +35,7 @@ export default function Consulation() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title="Patient" />
+        <MenuBar title={PATIENT_MENU_BAR_TITLE} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />

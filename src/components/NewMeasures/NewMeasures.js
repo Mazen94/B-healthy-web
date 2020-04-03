@@ -20,7 +20,23 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import {
+  MESSAGE_VALIDATORS_REQUIRED,
+  MESSAGE_VALIDATORS_INTEGER,
+  PRIMARY_COLOR
+} from '../../shared/constants/constants';
+import {
+  ADDED_MEASURES,
+  NEW_MEASURES,
+  WEIGHT,
+  TALL,
+  CHEST,
+  BELLY,
+  NECK,
+  LEGS,
+  NOTE,
+  VALIDATE
+} from '../../shared/strings/strings';
 const useStyles = makeStyles(theme => ({
   paperNewMeasure: {
     marginLeft: 10
@@ -202,7 +218,7 @@ export default function NewMeasures() {
         onClose={handleCloseSnackbar}
       >
         <Alert onClose={handleCloseSnackbar} severity="success">
-          Mesures Ajoutées
+          {ADDED_MEASURES}
         </Alert>
       </Snackbar>
       <Paper className={classes.paperNewMeasure}>
@@ -211,65 +227,57 @@ export default function NewMeasures() {
           gutterBottom
           className={classes.typography}
         >
-          Les nouvelles mesures
+          {NEW_MEASURES}
         </Typography>
         <ValidatorForm onSubmit={onSubmitForm} noValidate>
           <Grid className={classes.gridMesure}>
             <TextValidator
               className={classes.textFiledMesure}
-              label="Poids (kg)"
+              label={WEIGHT}
               variant="outlined"
               onChange={handleWeight}
               value={weight}
               validators={['isInteger', 'required']}
               errorMessages={[
-                'Ce champ doit être un nombre',
-                'Ce champ est requis'
+                MESSAGE_VALIDATORS_INTEGER,
+                MESSAGE_VALIDATORS_REQUIRED
               ]}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={iconWeight}
-                      className={classes.small}
-                    />
+                    <Avatar src={iconWeight} className={classes.small} />
                   </InputAdornment>
                 )
               }}
             />
             <TextValidator
               className={classes.textFiledMesure}
-              label="taille (cm)"
+              label={TALL}
               variant="outlined"
               onChange={handleTall}
               value={tall}
               validators={['isInteger']}
-              errorMessages={['Ce champ doit être un nombre']}
+              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={iconTall}
-                      className={classes.small}
-                    />
+                    <Avatar src={iconTall} className={classes.small} />
                   </InputAdornment>
                 )
               }}
             />
             <TextValidator
               className={classes.textFiledMesure}
-              label="Poitrine (cm)"
+              label={CHEST}
               variant="outlined"
               validators={['isInteger']}
-              errorMessages={['Ce champ doit être un nombre']}
+              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
               onChange={handleChest}
               value={chest}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Avatar alt="Remy Sharp" src={iconChest} />
+                    <Avatar src={iconChest} />
                   </InputAdornment>
                 )
               }}
@@ -278,60 +286,48 @@ export default function NewMeasures() {
           <Grid className={classes.gridMesure}>
             <TextValidator
               className={classes.textFiledMesure}
-              label="Hanche (cm)"
+              label={BELLY}
               variant="outlined"
               validators={['isInteger']}
-              errorMessages={['Ce champ doit être un nombre']}
+              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
               onChange={handleBelly}
               value={belly}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={iconBelly}
-                      className={classes.small}
-                    />
+                    <Avatar src={iconBelly} className={classes.small} />
                   </InputAdornment>
                 )
               }}
             />
             <TextValidator
               className={classes.textFiledMesure}
-              label="Cou (cm)"
+              label={NECK}
               variant="outlined"
               validators={['isInteger']}
-              errorMessages={['Ce champ doit être un nombre']}
+              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
               onChange={handleNeck}
               value={neck}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={iconNeck}
-                      className={classes.small}
-                    />
+                    <Avatar src={iconNeck} className={classes.small} />
                   </InputAdornment>
                 )
               }}
             />
             <TextValidator
               className={classes.textFiledMesure}
-              label="Cuisse (cm)"
+              label={LEGS}
               variant="outlined"
               validators={['isInteger']}
-              errorMessages={['Ce champ doit être un nombre']}
+              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
               onChange={handleLegs}
               value={legs}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={iconLegs}
-                      className={classes.small}
-                    />
+                    <Avatar src={iconLegs} className={classes.small} />
                   </InputAdornment>
                 )
               }}
@@ -340,7 +336,7 @@ export default function NewMeasures() {
             <TextValidator
               className={classes.textArea}
               id="outlined-multiline-static"
-              label="Notes"
+              label={NOTE}
               onChange={handleNote}
               value={note}
               multiline
@@ -349,7 +345,7 @@ export default function NewMeasures() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Avatar alt="Remy Sharp" src={iconNote} />
+                    <Avatar src={iconNote} />
                   </InputAdornment>
                 )
               }}
@@ -361,10 +357,10 @@ export default function NewMeasures() {
             size="small"
             variant="contained"
             className={classes.button}
-            color="primary"
+            color={PRIMARY_COLOR}
             type="submit"
           >
-            Valider
+            {VALIDATE}
           </Button>
         </ValidatorForm>
 

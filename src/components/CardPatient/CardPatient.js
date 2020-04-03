@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import people from '../../assets/people.png';
 import Axios from 'axios';
-
+import { PATIENT } from '../../shared/strings/strings';
 const useStyles = makeStyles(theme => ({
   gridFiche: {
     height: 'auto'
@@ -110,7 +110,7 @@ export default function CardPatient() {
             gutterBottom
             className={classes.patientTypography}
           >
-            Patient
+            {PATIENT}
           </Typography>
           <img src={people} className={classes.large} alt="Logo" />
           <Grid className={classes.grid}>
