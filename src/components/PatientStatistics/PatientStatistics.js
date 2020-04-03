@@ -5,9 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR
-} from '../../constants/constants';
+} from '../../shared/constants/constants';
 import healthy from '../../api/healthy';
 import Axios from 'axios';
+import { DISTRIBUTION_BY_GENDER } from '../../shared/strings/strings';
 
 const useStyles = makeStyles(theme => ({
   typography: {
@@ -70,7 +71,7 @@ export default function PatientStatistics() {
   return (
     <React.Fragment>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        Répartition des patients par tranche d’âge
+        {DISTRIBUTION_BY_GENDER}
       </Typography>
 
       <div className={classes.bar}>
