@@ -13,7 +13,12 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import Copyright from '../../components/Copyright/Copyright';
-/**
+import { REGISTER, HAVE_AN_ACCOUNT } from '../../shared/strings/strings';
+import {
+  MESSAGE_VALIDATORS_REQUIRED,
+  MESSAGE_VALIDATORS_EMAIL
+} from '../../shared/constants/constants';
+/*
  * Hook API to generate and apply styles (its JSS object)
  */
 const useStyles = makeStyles(theme => ({
@@ -116,7 +121,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          S'inscrire
+          {REGISTER}
         </Typography>
         {/* Form */}
         <ValidatorForm
@@ -138,7 +143,7 @@ export default function SignUp() {
                 value={firstName}
                 onChange={handleFirstName}
                 validators={['required']}
-                errorMessages={['Ce champ est requis']}
+                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -153,7 +158,7 @@ export default function SignUp() {
                 value={lastName}
                 onChange={handleLastName}
                 validators={['required']}
-                errorMessages={['Ce champ est requis']}
+                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
               />
             </Grid>
             <Grid item xs={12}>
@@ -169,8 +174,8 @@ export default function SignUp() {
                 onChange={handleEmail}
                 validators={['required', 'isEmail']}
                 errorMessages={[
-                  'Ce champ est requis',
-                  "L'email n'est pas valide"
+                  MESSAGE_VALIDATORS_REQUIRED,
+                  MESSAGE_VALIDATORS_EMAIL
                 ]}
               />
             </Grid>
@@ -187,7 +192,7 @@ export default function SignUp() {
                 value={password}
                 onChange={handlePassword}
                 validators={['required']}
-                errorMessages={['Ce champ est requis']}
+                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
               />
             </Grid>
           </Grid>
@@ -198,12 +203,12 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
           >
-            S'inscrire
+            {REGISTER}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
-                Vous avez déjà un compte? se connecter
+                {HAVE_AN_ACCOUNT}
               </Link>
             </Grid>
           </Grid>
