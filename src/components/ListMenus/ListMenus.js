@@ -18,8 +18,18 @@ import { useHistory } from 'react-router-dom';
 import healthy from '../../api/healthy';
 import meal from '../../assets/meal.png';
 import Axios from 'axios';
-import { DIALOG_MENU } from '../../constants/constants';
+import { DIALOG_MENU } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
+import {
+  MENUS,
+  MENU_TYPE,
+  CALORIES,
+  AGE_RANGE
+} from '../../shared/strings/strings';
+import {
+  PRIMARY_COLOR,
+  SECONDARY_COLOR
+} from '../../shared/constants/constants';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -137,7 +147,6 @@ export default function AddIngredient() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
-    console.log('wosledfsdt');
     const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
     try {
       const response = await healthy.delete(`mealStore/${deleteMenuId}`, {
@@ -172,10 +181,10 @@ export default function AddIngredient() {
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Menus</TableCell>
-                  <TableCell align="left">Type Menu</TableCell>
-                  <TableCell align="left">Calories</TableCell>
-                  <TableCell align="left">Tranche d'age</TableCell>
+                  <TableCell>{MENUS}</TableCell>
+                  <TableCell align="left">{MENU_TYPE}</TableCell>
+                  <TableCell align="left">{CALORIES}</TableCell>
+                  <TableCell align="left">{AGE_RANGE}</TableCell>
                   <TableCell align="left"></TableCell>
                 </TableRow>
               </TableHead>
@@ -208,14 +217,14 @@ export default function AddIngredient() {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickIconButton(row.id)}
-                        color="primary"
+                        color={PRIMARY_COLOR}
                       >
                         <EditIcon />
                       </IconButton>
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickOpen(row.id)}
-                        color="secondary"
+                        color={SECONDARY_COLOR}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -229,7 +238,7 @@ export default function AddIngredient() {
               count={lasPage}
               page={currentPage}
               onChange={handleChange}
-              color="primary"
+              color={PRIMARY_COLOR}
             />
           </TableContainer>
           <DialogComponent

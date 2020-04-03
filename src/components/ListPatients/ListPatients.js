@@ -19,8 +19,15 @@ import healthy from '../../api/healthy';
 import people from '../../assets/people.png';
 import Axios from 'axios';
 import DialogComponent from '../DialogComponent/DialogComponent';
-import { DIALOG_PATIENT } from '../../constants/constants';
-
+import { DIALOG_PATIENT } from '../../shared/constants/constants';
+import {
+  FIRST_NAME,
+  LAST_NAME,
+  EMAIL,
+  PHONE,
+  PREFFESION,
+  ACTION
+} from '../../shared/strings/strings';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
@@ -167,11 +174,14 @@ export default function ListPatients() {
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Nom Prenom</TableCell>
-                  <TableCell align="left">Email</TableCell>
-                  <TableCell align="left">Telephone</TableCell>
-                  <TableCell align="left">Profession</TableCell>
-                  <TableCell align="left">Action</TableCell>
+                  <TableCell>
+                    {FIRST_NAME}
+                    {LAST_NAME}
+                  </TableCell>
+                  <TableCell align="left">{EMAIL}</TableCell>
+                  <TableCell align="left">{PHONE}</TableCell>
+                  <TableCell align="left">{PREFFESION}</TableCell>
+                  <TableCell align="left">{ACTION}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
