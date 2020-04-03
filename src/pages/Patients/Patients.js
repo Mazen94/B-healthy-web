@@ -15,7 +15,8 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import {
   PATIENT_MENU_BAR_TITLE,
   PATIENT_PLACEHOLDER
-} from '../../constants/constants';
+} from '../../shared/constants/constants';
+import { ADD } from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -80,14 +81,14 @@ export default function Patients() {
                   <SearchIcon />
                 </IconButton>
               </Paper>
-              {/* Button Ajouter */}
+              {/* Button add */}
               <Button
                 className={classes.ButtonGroup}
                 variant="contained"
                 color="primary"
                 onClick={handleClickAjouter}
               >
-                Ajouter
+                {ADD}
               </Button>
             </Box>
             {/* Component ListPatients */}
