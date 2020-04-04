@@ -7,27 +7,29 @@ import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ListMenus from '../../components/ListMenus/ListMenus';
 import { ADD, MENUS } from '../../shared/strings/strings';
+import { PATH_MENU } from '../../routes/path';
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   ButtonGroup: {
     marginBottom: 10,
-    marginLeft: '85%'
-  }
+    marginLeft: '85%',
+  },
 }));
 
 export default function Menus() {
@@ -37,7 +39,7 @@ export default function Menus() {
    * arrow function to navigate the user to the addPatient page
    */
   const handleClickAjouter = () => {
-    history.push('/menu');
+    history.push(PATH_MENU);
   };
   return (
     <div className={classes.root}>

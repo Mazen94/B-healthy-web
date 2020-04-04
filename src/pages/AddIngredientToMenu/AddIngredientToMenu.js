@@ -14,37 +14,39 @@ import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
   FOLLOWING,
   MENU_STEPPER_ADD,
-  MENU_STEPPER_CREATION
+  MENU_STEPPER_CREATION,
 } from '../../shared/strings/strings';
-const useStyles = makeStyles(theme => ({
+import { PATH_MENUS } from '../../routes/path';
+
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   submit: {
     marginTop: 9,
-    marginLeft: '90%'
+    marginLeft: '90%',
   },
   iconButton: {
-    marginRight: '95%'
+    marginRight: '95%',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   ButtonGroup: {
     marginBottom: 10,
-    marginLeft: '85%'
+    marginLeft: '85%',
   },
   paper: {
     marginTop: 20,
-    height: 55
-  }
+    height: 55,
+  },
 }));
 
 export default function AddIngredientToMenu() {
@@ -56,11 +58,11 @@ export default function AddIngredientToMenu() {
    * arrow function to navigate the user to the addIngredient Component page
    */
   const handleArrowBack = () => {
-    history.push('/menus/1');
+    history.push(`${PATH_MENUS}/1`);
   };
 
   const handleClickButton = () => {
-    history.push('/menus/1');
+    history.push(`${PATH_MENUS}/1`);
   };
   return (
     <div className={classes.root}>

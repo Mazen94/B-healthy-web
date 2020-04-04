@@ -24,47 +24,49 @@ import {
   MENUS,
   MENU_TYPE,
   CALORIES,
-  AGE_RANGE
+  AGE_RANGE,
 } from '../../shared/strings/strings';
 import {
   PRIMARY_COLOR,
-  SECONDARY_COLOR
+  SECONDARY_COLOR,
 } from '../../shared/constants/constants';
+import { PATH_MENU, PATH_MENUS } from '../../routes/path';
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   skeleton: {
     margin: 'auto',
 
-    width: '100%'
+    width: '100%',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240
+    height: 240,
   },
   ButtonGroup: {
     marginBottom: 10,
-    marginLeft: '85%'
+    marginLeft: '85%',
   },
   pagination: {
     display: 'flex',
     justifyContent: 'center',
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   link: {
-    color: 'rgb(39 , 39, 39)'
-  }
+    color: 'rgb(39 , 39, 39)',
+  },
 }));
 
 export default function AddIngredient() {
@@ -84,7 +86,7 @@ export default function AddIngredient() {
   const handleChange = (e, newPage) => {
     setCurrentPage(newPage);
     setData([]);
-    history.push(`/menus/${newPage}`);
+    history.push(`${PATH_MENUS}/${newPage}`);
   };
   /**
    * hook useEffect there will be a get  the menu , the current page and the last page in the data
@@ -102,10 +104,10 @@ export default function AddIngredient() {
         const response = await healthy.get(
           `/mealStore?page=` + currentPage,
           {
-            headers: { Authorization: authStr }
+            headers: { Authorization: authStr },
           },
           {
-            cancelToken: source.token
+            cancelToken: source.token,
           }
         );
         if (mounted) {
@@ -126,14 +128,14 @@ export default function AddIngredient() {
     };
   }, [currentPage]);
 
-  const handleClickIconButton = id => {
-    history.push(`/menu/${id}`);
+  const handleClickIconButton = (id) => {
+    history.push(`${PATH_MENU}/${id}`);
   };
   /**
    * arrow function to open the dialogue when the nutritionit want to delete a Ingredient
    * @param {int} id
    */
-  const handleClickOpen = id => {
+  const handleClickOpen = (id) => {
     setDeleteMenuId(id); // Set the id of the Ingredient inside the state
     setOpen(true); // Open the dialogue
   };
@@ -150,7 +152,7 @@ export default function AddIngredient() {
     const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
     try {
       const response = await healthy.delete(`mealStore/${deleteMenuId}`, {
-        headers: { Authorization: authStr }
+        headers: { Authorization: authStr },
       });
       console.log(response.data);
       setCurrentPage(currentPage);
@@ -159,7 +161,7 @@ export default function AddIngredient() {
     }
 
     setOpen(false); //to close the dialogue
-    setData(data.filter(item => item.id !== deleteMenuId)); //get the new data without the menu deleted*/
+    setData(data.filter((item) => item.id !== deleteMenuId)); //get the new data without the menu deleted*/
   };
   /**
    * Function to render
@@ -189,7 +191,7 @@ export default function AddIngredient() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map(row => (
+                {data.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
                       <Box display="flex" flexDirection="row">

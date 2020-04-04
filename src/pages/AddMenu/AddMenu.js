@@ -28,53 +28,54 @@ import {
   DINNER,
   ADD_MENU_TITLE,
   MENU_STEPPER_ADD,
-  MENU_STEPPER_CREATION
+  MENU_STEPPER_CREATION,
 } from '../../shared/strings/strings';
 import {
   PRIMARY_COLOR,
   MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_INTEGER
+  MESSAGE_VALIDATORS_INTEGER,
 } from '../../shared/constants/constants';
+import { PATH_MENU, PATH_MENUS, PATH_INGREDIENTS } from '../../routes/path';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    height: 300
+    height: 300,
   },
 
   submit: {
     marginTop: 30,
     position: 'relative',
-    left: '45%'
+    left: '45%',
   },
   iconButton: {
-    marginRight: '100%'
+    marginRight: '100%',
   },
   select: {
-    width: '100%'
+    width: '100%',
   },
   spinner: {
-    margin: 'auto   '
-  }
+    margin: 'auto   ',
+  },
 }));
 
 export default function AddIngredient() {
@@ -90,27 +91,27 @@ export default function AddIngredient() {
    * arrow function to navigate the user to the addIngredient Component page
    */
   const handleArrowBack = () => {
-    history.push('/menus/1');
+    history.push(`${PATH_MENUS}/1`);
   };
   /**
    * arrow function to get the MinAges entered by the user
    * @param {event} e
    */
-  const handleMinAge = e => {
+  const handleMinAge = (e) => {
     setMinAge(e.target.value);
   };
   /**
    * arrow function to get the name entered by the user
    * @param {event} e
    */
-  const handleName = e => {
+  const handleName = (e) => {
     setName(e.target.value);
   };
   /**
    * arrow function to get the type de menu entered by the user
    * @param {event} e
    */
-  const handleTypeMenu = e => {
+  const handleTypeMenu = (e) => {
     setTypeMenu(e.target.value);
   };
 
@@ -118,14 +119,14 @@ export default function AddIngredient() {
    * arrow function to get the MaxAge entered by the user
    * @param {event} e
    */
-  const handleMaxAge = e => {
+  const handleMaxAge = (e) => {
     setMaxAge(e.target.value);
   };
   /**
    * Validation : add custom rules (amout and MinAge must be number)
    */
   useEffect(() => {
-    ValidatorForm.addValidationRule('isInteger', value => {
+    ValidatorForm.addValidationRule('isInteger', (value) => {
       if (isNaN(value)) {
         return false;
       }
@@ -136,14 +137,14 @@ export default function AddIngredient() {
    * arrow function to retrieve the final inputs
    * and call the funtion addMenu to send the data to the DB
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
 
     const menu = {
       name: name,
       max_age: maxAge,
       min_age: minAge,
-      type_menu: typeMenu
+      type_menu: typeMenu,
     };
     console.log(menu);
     setFlag(true); //to diplay the loading component
@@ -154,15 +155,17 @@ export default function AddIngredient() {
    * Function to send the data to DB (using axios and async await)
    * @param {Object} menu
    */
-  const addMenu = async menu => {
+  const addMenu = async (menu) => {
     try {
       const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.post('/mealStore', menu, {
-        headers: { Authorization: authStr }
+        headers: { Authorization: authStr },
       });
       console.log('response', response.data.MealStore.id);
 
-      history.push(`/menu/${response.data.MealStore.id}/ingredients`);
+      history.push(
+        `${PATH_MENU}/${response.data.MealStore.id}${PATH_INGREDIENTS}`
+      );
     } catch (error) {
       console.log(error.response.data);
       console.log('Error', error.message);
@@ -241,12 +244,12 @@ export default function AddIngredient() {
                         validators={['isInteger', 'required']}
                         errorMessages={[
                           MESSAGE_VALIDATORS_INTEGER,
-                          MESSAGE_VALIDATORS_REQUIRED
+                          MESSAGE_VALIDATORS_REQUIRED,
                         ]}
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">Ans</InputAdornment>
-                          )
+                          ),
                         }}
                         variant="outlined"
                       />
@@ -262,12 +265,12 @@ export default function AddIngredient() {
                         validators={['isInteger', 'required']}
                         errorMessages={[
                           MESSAGE_VALIDATORS_INTEGER,
-                          MESSAGE_VALIDATORS_REQUIRED
+                          MESSAGE_VALIDATORS_REQUIRED,
                         ]}
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">Ans</InputAdornment>
-                          )
+                          ),
                         }}
                         variant="outlined"
                       />

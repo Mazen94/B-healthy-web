@@ -30,30 +30,31 @@ import {
   BREAKFAST,
   LUNCH,
   DINNER,
-  VALIDATE
+  VALIDATE,
 } from '../../shared/strings/strings';
 import {
   MESSAGE_VALIDATORS_REQUIRED,
-  PRIMARY_COLOR
+  PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import Axios from 'axios';
+import { PATH_MENUS } from '../../routes/path';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '150vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
@@ -61,23 +62,23 @@ const useStyles = makeStyles(theme => ({
     paddingTop: 35,
     overflow: 'auto',
     flexDirection: 'column',
-    height: 350
+    height: 350,
   },
   select: {
-    width: '100%'
+    width: '100%',
   },
   handleIngredient: {
-    marginTop: 20
+    marginTop: 20,
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: '#fff'
+    color: '#fff',
   },
   skeleton: {
     margin: 'auto',
     marginTop: '10%',
-    width: '90%'
-  }
+    width: '90%',
+  },
 }));
 
 export default function UpdateIngredient() {
@@ -103,16 +104,16 @@ export default function UpdateIngredient() {
     let mounted = true;
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
-    const getMealStore = async id => {
+    const getMealStore = async (id) => {
       try {
         const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
         const response = await healthy.get(
           '/mealStore/' + params.id,
           {
-            headers: { Authorization: authStr }
+            headers: { Authorization: authStr },
           },
           {
-            cancelToken: source.token
+            cancelToken: source.token,
           }
         );
         if (mounted) {
@@ -138,21 +139,21 @@ export default function UpdateIngredient() {
    * arrow function to get the name of menu entered by the user
    * @param {event} e
    */
-  const handleChangeName = e => {
+  const handleChangeName = (e) => {
     setName(e.target.value);
   };
   /**
    * arrow function to get the maxage of menu entered by the user
    * @param {event} e
    */
-  const handleChangeMaxAge = e => {
+  const handleChangeMaxAge = (e) => {
     setMaxAge(e.target.value);
   };
   /**
    * arrow function to get the minAge of menu entered by the user
    * @param {event} e
    */
-  const handleChangeMinAge = e => {
+  const handleChangeMinAge = (e) => {
     setMinAge(e.target.value);
   };
 
@@ -160,14 +161,14 @@ export default function UpdateIngredient() {
    * arrow function to get the type de menu entered by the user
    * @param {event} e
    */
-  const handleTypeMenu = e => {
+  const handleTypeMenu = (e) => {
     setTypeMenu(e.target.value);
   };
   /**
    * arrow function to get the ingredent entered by the user
    * @param {event} e
    */
-  const handleIngredient = e => {
+  const handleIngredient = (e) => {
     setIsDisabled(false);
     setValueOfIngredient(e.target.value);
     setValueOfAmount(e.target.value.pivot.amount);
@@ -176,7 +177,7 @@ export default function UpdateIngredient() {
    *
    * @param {event} e
    */
-  const handleChangeAmount = e => {
+  const handleChangeAmount = (e) => {
     setValueOfAmount(e.target.value);
   };
   /**
@@ -196,7 +197,7 @@ export default function UpdateIngredient() {
         `/mealStore/${params.id}/ingredients/${valueOfIngredient.id}`,
         { amount: valueOfamount },
         {
-          headers: { Authorization: authStr }
+          headers: { Authorization: authStr },
         }
       );
       console.log(response.data);
@@ -213,16 +214,16 @@ export default function UpdateIngredient() {
       name: name,
       max_age: maxAge,
       min_age: minAge,
-      type_menu: typeMenu
+      type_menu: typeMenu,
     };
     setFlag(true);
     try {
       const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.put(`/mealStore/${params.id}`, menu, {
-        headers: { Authorization: authStr }
+        headers: { Authorization: authStr },
       });
       console.log(response.data);
-      history.push('/menus/1');
+      history.push(`${PATH_MENUS}/1`);
     } catch (error) {
       setFlag(false);
     }
@@ -324,7 +325,7 @@ export default function UpdateIngredient() {
                     onChange={handleIngredient}
                   >
                     }
-                    {ingredients.map(row => (
+                    {ingredients.map((row) => (
                       <MenuItem key={row.id} value={row}>
                         {row.name}
                       </MenuItem>
