@@ -15,48 +15,49 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
-  MESSAGE_VALIDATORS_EMAIL
+  MESSAGE_VALIDATORS_EMAIL,
 } from '../../shared/constants/constants';
 import {
   PROFIL,
   EMAIL_EXISTS,
   PASSWORD,
-  VALIDATE
+  VALIDATE,
 } from '../../shared/strings/strings';
 import Axios from 'axios';
+import { PATH_DASHBOARD } from '../../routes/path';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   skeleton: {
     margin: 'auto',
     marginTop: '3%',
-    width: '85%'
+    width: '85%',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   form: {
     width: '100%',
-    padding: '5%'
+    padding: '5%',
   },
   submit: {
-    marginTop: 30
+    marginTop: 30,
   },
   paper: {
     marginTop: theme.spacing(4),
-    margin: 'auto'
+    margin: 'auto',
   },
   spinner: {
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 }));
 /**
  * Component for showing profil of nutritionist
@@ -76,28 +77,28 @@ export default function Profil() {
    * arrow function to get the email entered by the user
    * @param {event} e
    */
-  const handleEmail = e => {
+  const handleEmail = (e) => {
     setEmail(e.target.value);
   };
   /**
    * arrow function to get the FirstName entered by the user
    * @param {event} e
    */
-  const handleFirstName = e => {
+  const handleFirstName = (e) => {
     setFirstName(e.target.value);
   };
   /**
    * arrow function to get the lastName entered by the user
    * @param {event} e
    */
-  const handleLastName = e => {
+  const handleLastName = (e) => {
     setLastName(e.target.value);
   };
   /**
    * arrow function to get the password entered by the user
    * @param {event} e
    */
-  const handlePassword = e => {
+  const handlePassword = (e) => {
     setPassword(e.target.value);
   };
 
@@ -115,10 +116,10 @@ export default function Profil() {
       const result = await healthy(
         `/`,
         {
-          headers: { Authorization: authStr }
+          headers: { Authorization: authStr },
         },
         {
-          cancelToken: source.token
+          cancelToken: source.token,
         }
       );
       if (mounted) {
@@ -139,32 +140,32 @@ export default function Profil() {
    * arrow function to retrieve the final inputs
    * and call the funtion addPatient to send the data to the DB
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
     setFlag(true); //change the value of the state (flag) to true to display the spinner
     const nutritionist = {
       email: email,
       firstName: firstName,
       lastName: lastName,
-      password: password
+      password: password,
     };
     putNutritionist(nutritionist); //Call the method putNutritionist to send the data to dataBase
   };
   /**
    * Arrow function to send the data to db
    */
-  const putNutritionist = async nutritionist => {
+  const putNutritionist = async (nutritionist) => {
     try {
       const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
       const response = await axios.put(
         `http://healthy.test/api/nutritionist`,
         nutritionist,
         {
-          headers: { Authorization: authStr }
+          headers: { Authorization: authStr },
         }
       );
       console.log(response);
-      history.push('/dashboard'); //Redirect to the page dashboard
+      history.push(PATH_DASHBOARD); //Redirect to the page dashboard
     } catch (error) {
       console.log(error.response.data);
       console.log('Error', error.message);
@@ -176,7 +177,7 @@ export default function Profil() {
    * Validation : add custom rules (Password must contain at least 8 characters)
    */
   useEffect(() => {
-    ValidatorForm.addValidationRule('lenghPassword', value => {
+    ValidatorForm.addValidationRule('lenghPassword', (value) => {
       if (value.length && value.length < 8) {
         return false;
       }
@@ -240,7 +241,7 @@ export default function Profil() {
                   validators={['required', 'isEmail']}
                   errorMessages={[
                     MESSAGE_VALIDATORS_REQUIRED,
-                    MESSAGE_VALIDATORS_EMAIL
+                    MESSAGE_VALIDATORS_EMAIL,
                   ]}
                 />
               </Grid>
