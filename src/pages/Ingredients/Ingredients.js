@@ -8,24 +8,26 @@ import ListIngredients from '../../components/ListIngredients/ListIngredients';
 import { useHistory } from 'react-router-dom';
 import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import { ADD, INGREDIENTS } from '../../shared/strings/strings';
-const useStyles = makeStyles(theme => ({
+import { PATH_INGREDIENT } from '../../routes/path';
+
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   ButtonGroup: {
     marginBottom: 10,
-    marginLeft: '85%'
-  }
+    marginLeft: '85%',
+  },
 }));
 
 export default function Ingredients() {
@@ -35,7 +37,7 @@ export default function Ingredients() {
    * arrow function to navigate the user to the addPatient page
    */
   const handleClickAjouter = () => {
-    history.push('/ingredient');
+    history.push(PATH_INGREDIENT);
   };
   return (
     <div className={classes.root}>

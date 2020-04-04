@@ -15,7 +15,7 @@ import healthy from '../../api/healthy'; //new instance of axios with a custom c
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_INTEGER
+  MESSAGE_VALIDATORS_INTEGER,
 } from '../../shared/constants/constants';
 import {
   EDIT,
@@ -24,44 +24,45 @@ import {
   CALORIES,
   GRAM,
   VALIDATE,
-  KCLA
+  KCLA,
 } from '../../shared/strings/strings';
 import Axios from 'axios';
+import { PATH_INGREDIENTS } from '../../routes/path';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '150vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    height: 300
+    height: 300,
   },
   submit: {
-    marginTop: 30
+    marginTop: 30,
   },
   iconButton: {
-    marginRight: '100%'
+    marginRight: '100%',
   },
   spinner: {
     margin: 'auto   ',
-    marginTop: 20
-  }
+    marginTop: 20,
+  },
 }));
 
 export default function UpdateIngredient(props) {
@@ -76,34 +77,34 @@ export default function UpdateIngredient(props) {
    * arrow function to navigate the user to the addIngredient Component page
    */
   const handleArrowBack = () => {
-    history.push('/ingredients/1');
+    history.push(`${PATH_INGREDIENTS}/1`);
   };
   /**
    * arrow function to get the calories entered by the user
    * @param {event} e
    */
-  const handleCalorie = e => {
+  const handleCalorie = (e) => {
     setCalorie(e.target.value);
   };
   /**
    * arrow function to get the name entered by the user
    * @param {event} e
    */
-  const handleName = e => {
+  const handleName = (e) => {
     setName(e.target.value);
   };
   /**
    * arrow function to get the amount entered by the user
    * @param {event} e
    */
-  const handleAmount = e => {
+  const handleAmount = (e) => {
     setAmount(e.target.value);
   };
   /**
    * Validation : add custom rules (amout and calorie must be number)
    */
   useEffect(() => {
-    ValidatorForm.addValidationRule('isInteger', value => {
+    ValidatorForm.addValidationRule('isInteger', (value) => {
       if (isNaN(value)) {
         return false;
       }
@@ -118,16 +119,16 @@ export default function UpdateIngredient(props) {
     let mounted = true;
     const CancelToken = Axios.CancelToken;
     const source = CancelToken.source();
-    const getIndredient = async id => {
+    const getIndredient = async (id) => {
       try {
         const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
         const response = await healthy.get(
           '/ingredients/' + id,
           {
-            headers: { Authorization: authStr }
+            headers: { Authorization: authStr },
           },
           {
-            cancelToken: source.token
+            cancelToken: source.token,
           }
         );
         if (mounted) {
@@ -152,13 +153,13 @@ export default function UpdateIngredient(props) {
    * arrow function to retrieve the final inputs
    * and call the funtion addPatient to send the data to the DB
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
 
     const ingredient = {
       name: name,
       amount: amount,
-      calorie: calorie
+      calorie: calorie,
     };
     setFlagValidate(true);
     putIngredient(ingredient);
@@ -167,18 +168,18 @@ export default function UpdateIngredient(props) {
    * Function to send the data to DB (using axios and async await)
    * @param {Object} ingredient
    */
-  const putIngredient = async ingredient => {
+  const putIngredient = async (ingredient) => {
     try {
       const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.put(
         '/ingredients/' + props.match.params.id,
         ingredient,
         {
-          headers: { Authorization: authStr }
+          headers: { Authorization: authStr },
         }
       );
       console.log('response', response.data);
-      history.push('/ingredients/1');
+      history.push(`${PATH_INGREDIENTS}/1`);
     } catch (error) {
       console.log(error.response.data);
       console.log('Error', error.message);
@@ -232,12 +233,12 @@ export default function UpdateIngredient(props) {
                       validators={['isInteger', 'required']}
                       errorMessages={[
                         MESSAGE_VALIDATORS_INTEGER,
-                        MESSAGE_VALIDATORS_REQUIRED
+                        MESSAGE_VALIDATORS_REQUIRED,
                       ]}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">{GRAM}</InputAdornment>
-                        )
+                        ),
                       }}
                       variant="outlined"
                     />
@@ -253,12 +254,12 @@ export default function UpdateIngredient(props) {
                       validators={['isInteger', 'required']}
                       errorMessages={[
                         MESSAGE_VALIDATORS_INTEGER,
-                        MESSAGE_VALIDATORS_REQUIRED
+                        MESSAGE_VALIDATORS_REQUIRED,
                       ]}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">{KCLA}</InputAdornment>
-                        )
+                        ),
                       }}
                       variant="outlined"
                     />

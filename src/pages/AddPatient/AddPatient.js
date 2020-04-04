@@ -19,7 +19,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
-  MESSAGE_VALIDATORS_EMAIL
+  MESSAGE_VALIDATORS_EMAIL,
+  PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import {
   ADD_PATIENT_TITLE,
@@ -31,42 +32,43 @@ import {
   PHONE,
   PREFFESION,
   FEMALE,
-  MALE
+  MALE,
 } from '../../shared/strings/strings';
+import { PATH_PATIENTS } from '../../routes/path';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   iconButton: {
-    marginRight: '100%'
+    marginRight: '100%',
   },
   form: {
     width: '100%', // Fix IE 11 issue
-    padding: '5%'
+    padding: '5%',
   },
   submit: {
-    marginTop: 30
+    marginTop: 30,
   },
   paper: {
     marginTop: theme.spacing(4),
-    margin: 'auto'
+    margin: 'auto',
   },
   spinner: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   radioGroup: {
-    display: 'block'
-  }
+    display: 'block',
+  },
 }));
 /**
  * Component for showing addPatient Page
@@ -87,13 +89,13 @@ export default function AddPatient() {
    * arrow function to return to the previous page
    */
   const handleArrowBack = () => {
-    history.push('/patients/1');
+    history.push(`${PATH_PATIENTS}/1`);
   };
   /**
    * arrow function to get the email entered by the user
    * @param {event} e
    */
-  const handleEmail = e => {
+  const handleEmail = (e) => {
     setEmail(e.target.value);
     setErreurValidation(false);
   };
@@ -101,49 +103,49 @@ export default function AddPatient() {
    * arrow function to get the FirstName entered by the user
    * @param {event} e
    */
-  const handleFirstName = e => {
+  const handleFirstName = (e) => {
     setFirstName(e.target.value);
   };
   /**
    * arrow function to get the lastName entered by the user
    * @param {event} e
    */
-  const handleLastName = e => {
+  const handleLastName = (e) => {
     setLastName(e.target.value);
   };
   /**
    * arrow function to get the NumberPhone entered by the user
    * @param {event} e
    */
-  const handleNumberPhone = e => {
+  const handleNumberPhone = (e) => {
     setNumberPhone(e.target.value);
   };
   /**
    * arrow function to get the proffesion entered by the user
    * @param {event} e
    */
-  const handleProffesion = e => {
+  const handleProffesion = (e) => {
     setProffesion(e.target.value);
   };
   /**
    * arrow function to get the password entered by the user
    * @param {event} e
    */
-  const handlePassword = e => {
+  const handlePassword = (e) => {
     setPassword(e.target.value);
   };
   /**
    * arrow function to get the gender entered by the user
    * @param {event} e
    */
-  const handleGender = e => {
+  const handleGender = (e) => {
     setGender(e.target.value);
   };
   /**
    * Validation : add custom rules (Password must contain at least 8 characters)
    */
   useEffect(() => {
-    ValidatorForm.addValidationRule('lenghPassword', value => {
+    ValidatorForm.addValidationRule('lenghPassword', (value) => {
       if (value.length < 8) {
         return false;
       }
@@ -154,7 +156,7 @@ export default function AddPatient() {
    * arrow function to retrieve the final inputs
    * and call the funtion addPatient to send the data to the DB
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
     setFlag(true);
     const patient = {
@@ -164,7 +166,7 @@ export default function AddPatient() {
       gender: gender,
       numberPhone: numberPhone,
       password: password,
-      profession: proffesion
+      profession: proffesion,
     };
     console.log(patient);
     addPatient(patient);
@@ -173,15 +175,15 @@ export default function AddPatient() {
    * Function to send the data to DB (using axios and async await)
    * @param {Object} patient
    */
-  const addPatient = async patient => {
+  const addPatient = async (patient) => {
     try {
       const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.post('/patients', patient, {
-        headers: { Authorization: authStr }
+        headers: { Authorization: authStr },
       });
       console.log(response.data);
       setFlag(false);
-      history.push('/patients/1');
+      history.push(`${PATH_PATIENTS}/1`);
     } catch (error) {
       console.log(error.response.data);
       console.log('Error', error.message);
@@ -200,7 +202,7 @@ export default function AddPatient() {
         <IconButton
           className={classes.iconButton}
           onClick={handleArrowBack}
-          color="primary"
+          color={PRIMARY_COLOR}
         >
           <ArrowBackIcon />
         </IconButton>
@@ -259,7 +261,7 @@ export default function AddPatient() {
                   validators={['required', 'isEmail']}
                   errorMessages={[
                     MESSAGE_VALIDATORS_REQUIRED,
-                    MESSAGE_VALIDATORS_EMAIL
+                    MESSAGE_VALIDATORS_EMAIL,
                   ]}
                 />
               </Grid>
@@ -308,7 +310,7 @@ export default function AddPatient() {
                   validators={['lenghPassword', 'required']}
                   errorMessages={[
                     MESSAGE_VALIDATORS_PASSWORD,
-                    MESSAGE_VALIDATORS_REQUIRED
+                    MESSAGE_VALIDATORS_REQUIRED,
                   ]}
                 />
               </Grid>
@@ -323,12 +325,12 @@ export default function AddPatient() {
                   >
                     <FormControlLabel
                       value="female"
-                      control={<Radio color="primary" />}
+                      control={<Radio color={PRIMARY_COLOR} />}
                       label={FEMALE}
                     />
                     <FormControlLabel
                       value="male"
-                      control={<Radio color="primary" />}
+                      control={<Radio color={PRIMARY_COLOR} />}
                       label={MALE}
                     />
                   </RadioGroup>
@@ -339,7 +341,7 @@ export default function AddPatient() {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              color={PRIMARY_COLOR}
               className={classes.submit}
             >
               {VALIDATE}

@@ -22,44 +22,45 @@ import DialogComponent from '../DialogComponent/DialogComponent';
 import {
   DIALOG_RECOMMENDATION,
   PRIMARY_COLOR,
-  SECONDARY_COLOR
+  SECONDARY_COLOR,
 } from '../../shared/constants/constants';
 import { INGREDIENTS, AMOUNT, CALORIES } from '../../shared/strings/strings';
+import { PATH_INGREDIENT, PATH_INGREDIENTS } from '../../routes/path';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   skeleton: {
     margin: 'auto',
-    width: '100%'
+    width: '100%',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240
+    height: 240,
   },
   ButtonGroup: {
     marginBottom: 10,
-    marginLeft: '85%'
+    marginLeft: '85%',
   },
   pagination: {
     display: 'flex',
     justifyContent: 'center',
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   link: {
-    color: 'rgb(39 , 39, 39)'
-  }
+    color: 'rgb(39 , 39, 39)',
+  },
 }));
 
 export default function AddIngredient() {
@@ -79,7 +80,7 @@ export default function AddIngredient() {
   const handleChange = (e, newPage) => {
     setCurrentPage(newPage);
     setData([]);
-    history.push(`/ingredients/${newPage}`);
+    history.push(`${PATH_INGREDIENTS}/${newPage}`);
   };
   /**
    * hook useEffect there will be a get  the ingredients , the current page and the last page in the data
@@ -97,10 +98,10 @@ export default function AddIngredient() {
         const response = await healthy.get(
           `/ingredients?page=` + currentPage,
           {
-            headers: { Authorization: authStr }
+            headers: { Authorization: authStr },
           },
           {
-            cancelToken: source.token
+            cancelToken: source.token,
           }
         );
         if (mounted) {
@@ -120,14 +121,14 @@ export default function AddIngredient() {
       source.cancel();
     };
   }, [currentPage]);
-  const handleClickIconButton = id => {
-    history.push(`/ingredient/${id}`);
+  const handleClickIconButton = (id) => {
+    history.push(`${PATH_INGREDIENT}/${id}`);
   };
   /**
    * arrow function to open the dialogue when the nutritionit want to delete a Ingredient
    * @param {int} id
    */
-  const handleClickOpen = id => {
+  const handleClickOpen = (id) => {
     setDeleteIngredientId(id); // Set the id of the Ingredient inside the state
     setOpen(true); // Open the dialogue
   };
@@ -146,7 +147,7 @@ export default function AddIngredient() {
       const response = await healthy.delete(
         `ingredients/${deleteIngredientId}`,
         {
-          headers: { Authorization: authStr }
+          headers: { Authorization: authStr },
         }
       );
       console.log(response.data);
@@ -156,7 +157,7 @@ export default function AddIngredient() {
     }
 
     setOpen(false); //to close the dialogue
-    setData(data.filter(item => item.id !== deleteIngredientId)); //get the new data without the Ingredient deleted
+    setData(data.filter((item) => item.id !== deleteIngredientId)); //get the new data without the Ingredient deleted
   };
   /**
    *  function to render
@@ -184,7 +185,7 @@ export default function AddIngredient() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map(row => (
+                {data.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
                       <Box display="flex" flexDirection="row">
