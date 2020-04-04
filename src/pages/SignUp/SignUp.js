@@ -18,6 +18,8 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_EMAIL
 } from '../../shared/constants/constants';
+import { PATH_LOGIN, PATH_DASHBOARD } from '../../routes/path';
+
 /*
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -107,7 +109,7 @@ export default function SignUp() {
     try {
       const response = await healthy.post(`register`, user);
       localStorage.setItem('token', response.data.token);
-      history.push('/dashboard');
+      history.push(PATH_DASHBOARD);
     } catch (error) {
       console.log(error.response.data);
       console.log('Error', error.message);
@@ -207,7 +209,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link href={PATH_LOGIN} variant="body2">
                 {HAVE_AN_ACCOUNT}
               </Link>
             </Grid>
