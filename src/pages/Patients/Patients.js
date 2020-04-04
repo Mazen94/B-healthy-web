@@ -17,6 +17,8 @@ import {
   PATIENT,
   PATIENT_PLACEHOLDER
 } from '../../shared/strings/strings';
+import { PATH_PATIENT } from '../../routes/path';
+import { PRIMARY_COLOR } from '../../shared/constants/constants';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -55,7 +57,7 @@ export default function Patients() {
    * arrow function to navigate the user to the addPatient page
    */
   const handleClickAjouter = () => {
-    history.push('/patient');
+    history.push(PATH_PATIENT);
   };
   return (
     <Fragment>
@@ -85,7 +87,7 @@ export default function Patients() {
               <Button
                 className={classes.ButtonGroup}
                 variant="contained"
-                color="primary"
+                color={PRIMARY_COLOR}
                 onClick={handleClickAjouter}
               >
                 {ADD}

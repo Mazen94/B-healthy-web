@@ -19,7 +19,11 @@ import healthy from '../../api/healthy';
 import people from '../../assets/people.png';
 import Axios from 'axios';
 import DialogComponent from '../DialogComponent/DialogComponent';
-import { DIALOG_PATIENT } from '../../shared/constants/constants';
+import {
+  DIALOG_PATIENT,
+  PRIMARY_COLOR,
+  SECONDARY_COLOR
+} from '../../shared/constants/constants';
 import {
   FIRST_NAME,
   LAST_NAME,
@@ -28,6 +32,11 @@ import {
   PREFFESION,
   ACTION
 } from '../../shared/strings/strings';
+import {
+  PATH_PATIENTS,
+  PATH_PATIENT,
+  PATH_CONSULTATION
+} from '../../routes/path';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
@@ -74,7 +83,7 @@ export default function ListPatients() {
   const handleChange = (e, newPage) => {
     setCurrentPage(newPage);
     setData([]);
-    history.push(`/patients/${newPage}`);
+    history.push(`${PATH_PATIENTS}/${newPage}`);
   };
   /**
    * Hook useEffect in this case he plays the role of componentDidMount and componentDidUpdate
@@ -147,7 +156,7 @@ export default function ListPatients() {
    * @param {int} id
    */
   const handleClickArrowForwardIcon = id => {
-    history.push(`/patient/${id}/consultation`);
+    history.push(`${PATH_PATIENT}/${id}${PATH_CONSULTATION}`);
   };
   /**
    * arrow function to close the dialogue
@@ -210,7 +219,7 @@ export default function ListPatients() {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickArrowForwardIcon(row.id)}
-                        color="primary"
+                        color={PRIMARY_COLOR}
                       >
                         <ArrowForwardIcon />
                       </IconButton>
@@ -218,7 +227,7 @@ export default function ListPatients() {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickOpen(row.id)}
-                        color="secondary"
+                        color={SECONDARY_COLOR}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -233,7 +242,7 @@ export default function ListPatients() {
               count={lasPage}
               page={currentPage}
               onChange={handleChange}
-              color="primary"
+              color={PRIMARY_COLOR}
             />
           </TableContainer>
           <DialogComponent
