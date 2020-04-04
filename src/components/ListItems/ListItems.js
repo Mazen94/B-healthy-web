@@ -18,6 +18,13 @@ import {
   DASHBOARD,
   PROFIL
 } from '../../shared/strings/strings';
+import {
+  PATH_PATIENTS,
+  PATH_DASHBOARD,
+  PATH_PROFIL,
+  PATH_INGREDIENTS,
+  PATH_MENUS
+} from '../../routes/path';
 /**
  * Component for showing the list of items in the MenuBar
  */
@@ -27,31 +34,31 @@ export default function ListItems() {
    * arrow function to navigate to the patient page
    */
   const handleClickPatients = () => {
-    history.push('/patients/1');
+    history.push(`${PATH_PATIENTS}/1`);
   };
   /**
    * arrow function to navigate to the dashboard page
    */
   const handleClickDashboard = () => {
-    history.push('/dashboard');
+    history.push(PATH_DASHBOARD);
   };
   /**
    * arrow function to navigate to the profil page
    */
   const handleClickProfil = () => {
-    history.push('/profil');
+    history.push(PATH_PROFIL);
   };
   /**
    * arrow function to navigate to the ingredient page
    */
   const handleClickIngredients = () => {
-    history.push('/ingredients/1');
+    history.push(`${PATH_INGREDIENTS}/1`);
   };
   /**
    * arrow function to navigate to the menu page
    */
   const handleClickMenus = () => {
-    history.push('/menus/1');
+    history.push(`${PATH_MENUS}/1`);
   };
 
   return (

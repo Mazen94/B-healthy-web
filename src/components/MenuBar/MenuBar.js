@@ -19,7 +19,7 @@ import doctor from '../../assets/doctor.png';
 import Box from '@material-ui/core/Box';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import Axios from 'axios';
-
+import { PATH_LOGIN, PATH_PROFIL } from '../../routes/path';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -146,7 +146,7 @@ export default function MenuBar(props) {
    */
   const handleExitToAppIcon = () => {
     localStorage.removeItem('token');
-    history.push('/');
+    history.push(PATH_LOGIN);
   };
   /**
    * Arrow function to open the AppBar
@@ -216,11 +216,11 @@ export default function MenuBar(props) {
                 m={1}
                 bgcolor="background.paper"
               >
-                <a href="/profil">
+                <a href={PATH_PROFIL}>
                   <Avatar className={classes.large} src={doctor} />
                 </a>
               </Box>
-              <a href="/profil" className={classes.link}>
+              <a href={PATH_PROFIL} className={classes.link}>
                 <h5 className={classes.h5}>
                   {`Dr.${data.firstName} ${data.lastName}`}
                 </h5>
