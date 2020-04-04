@@ -13,7 +13,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import {
   PRIMARY_COLOR,
-  MESSAGE_VALIDATORS_REQUIRED
+  MESSAGE_VALIDATORS_REQUIRED,
 } from '../../shared/constants/constants';
 import {
   ADDRECOMMENDATION_STEPPER_CREATION,
@@ -21,12 +21,13 @@ import {
   NAME,
   AVOID,
   VALIDATE,
-  PATIENT
+  PATIENT,
 } from '../../shared/strings/strings';
+import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
 
   appBarSpacer: theme.mixins.toolbar,
@@ -35,28 +36,28 @@ const useStyles = makeStyles(theme => ({
     minHeight: '110vh',
     paddingBottom: '5%',
     height: '100%',
-    overflow: 'none'
+    overflow: 'none',
   },
   gridContainer: {
     marginTop: '4%',
     margin: 'auto',
-    width: '90%'
+    width: '90%',
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    height: 200
+    height: 200,
   },
   formValidator: {
-    marginTop: '2%'
+    marginTop: '2%',
   },
   submit: {
     marginTop: 30,
     position: 'relative',
-    left: '45%'
-  }
+    left: '45%',
+  },
 }));
 
 export default function AddRecommendations() {
@@ -70,14 +71,14 @@ export default function AddRecommendations() {
    * arrow function to get the name entered by the user
    * @param {event} e
    */
-  const handleName = e => {
+  const handleName = (e) => {
     setName(e.target.value);
   };
   /**
    * arrow function to get the name entered by the user
    * @param {event} e
    */
-  const handleAvoid = e => {
+  const handleAvoid = (e) => {
     setAvoid(e.target.value);
   };
 
@@ -86,12 +87,12 @@ export default function AddRecommendations() {
    * and call the funtion addRecommendation to send the data to the DB
    * @param {event} e
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
 
     const recommendation = {
       name: name,
-      avoid: avoid
+      avoid: avoid,
     };
     console.log(recommendation);
     addRecommendation(recommendation);
@@ -100,19 +101,19 @@ export default function AddRecommendations() {
    * Function to send the data to DB (using axios and async await)
    * @param {Object} recommendation
    */
-  const addRecommendation = async recommendation => {
+  const addRecommendation = async (recommendation) => {
     try {
       const authStr = `Bearer ${localStorage.getItem('token')}`;
       const response = await healthy.post(
         `/patients/${params.id}/recommendations/`,
         recommendation,
         {
-          headers: { Authorization: authStr }
+          headers: { Authorization: authStr },
         }
       );
 
       history.push(
-        `/patient/${params.id}/recommendation/${response.data.recommendation.id}`
+        `${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATION}/${response.data.recommendation.id}`
       );
     } catch (error) {
       console.log(error.response.data);

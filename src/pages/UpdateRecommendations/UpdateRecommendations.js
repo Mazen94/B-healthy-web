@@ -17,15 +17,16 @@ import {
   FOLLOWING,
   UPDATERECOMMENDATION_STEPPER_CREATION,
   PATIENT,
-  RECOMMENDATION_STEPPER_ADD
+  RECOMMENDATION_STEPPER_ADD,
 } from '../../shared/strings/strings';
+import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
 import Axios from 'axios';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
 
   appBarSpacer: theme.mixins.toolbar,
@@ -34,30 +35,30 @@ const useStyles = makeStyles(theme => ({
     minHeight: '110vh',
     paddingBottom: '5%',
     height: '100%',
-    overflow: 'none'
+    overflow: 'none',
   },
   grid: {
     display: 'flex',
-    margin: 10
+    margin: 10,
   },
   submit: {
     marginTop: 'auto',
-    marginLeft: '85%'
+    marginLeft: '85%',
   },
   paper: {
     padding: 10,
     marginTop: 30,
     margin: 'auto',
-    width: '99%'
+    width: '99%',
   },
   stepperHorizontal: {
     marginTop: '2%',
     margin: 'auto',
-    width: '99%'
+    width: '99%',
   },
   skeleton: {
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 }));
 
 export default function UpdateRecommendations() {
@@ -81,10 +82,10 @@ export default function UpdateRecommendations() {
         const response = await healthy.get(
           `/patients/${params.id}/recommendations/${params.idRecommendation}`,
           {
-            headers: { Authorization: authStr }
+            headers: { Authorization: authStr },
           },
           {
-            cancelToken: source.token
+            cancelToken: source.token,
           }
         );
         if (mounted) {
@@ -108,7 +109,7 @@ export default function UpdateRecommendations() {
    */
   const handleButtonOnClick = () => {
     history.push(
-      `/patient/${params.id}/recommendation/${params.idRecommendation}`
+      `${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATION}/${params.idRecommendation}`
     );
   };
   const renderFunction = () => {

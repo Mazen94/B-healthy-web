@@ -13,12 +13,12 @@ import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
   VALIDATE,
   PATIENT,
-  RECOMMENDATION_STEPPER_ADD
+  RECOMMENDATION_STEPPER_ADD,
 } from '../../shared/strings/strings';
-
-const useStyles = makeStyles(theme => ({
+import { PATH_PATIENT, PATH_RECOMMENDATIONS } from '../../routes/path';
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
 
   appBarSpacer: theme.mixins.toolbar,
@@ -27,32 +27,32 @@ const useStyles = makeStyles(theme => ({
     minHeight: '110vh',
     paddingBottom: '5%',
     height: '100%',
-    overflow: 'none'
+    overflow: 'none',
   },
   gridContainer: {
     marginTop: '4%',
     margin: 'auto',
-    width: '90%'
+    width: '90%',
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    height: 200
+    height: 200,
   },
   formValidator: {
-    marginTop: '2%'
+    marginTop: '2%',
   },
   submit: {
-    marginLeft: '82%'
+    marginLeft: '82%',
   },
   paperButton: {
     marginTop: '2%',
     width: '100%',
     paddingTop: 10,
-    paddingBottom: 10
-  }
+    paddingBottom: 10,
+  },
 }));
 
 export default function AddMenuToRecommendations() {
@@ -62,7 +62,7 @@ export default function AddMenuToRecommendations() {
   const history = useHistory();
   const params = useParams();
   const onClickButtomValider = () => {
-    history.push(`/patient/${params.id}/recommendations`);
+    history.push(`${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATIONS}`);
   };
   return (
     <div>

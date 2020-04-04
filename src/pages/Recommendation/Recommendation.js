@@ -9,13 +9,13 @@ import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import { ADD, PATIENT } from '../../shared/strings/strings';
-
+import { PATH_PATIENT, PATH_RECOMMENDATIONS } from '../../routes/path';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -23,15 +23,15 @@ const useStyles = makeStyles(theme => ({
     minHeight: '110vh',
     paddingBottom: '5%',
     height: '100%',
-    overflow: 'none'
+    overflow: 'none',
   },
   gridContainer: {
-    marginTop: '2%'
+    marginTop: '2%',
   },
   ButtonGroup: {
     marginTop: '2%',
-    marginLeft: '70%'
-  }
+    marginLeft: '70%',
+  },
 }));
 
 export default function Recommendations() {
@@ -42,7 +42,7 @@ export default function Recommendations() {
    * arrow function to navigate the user to the addRecommendation page
    */
   const handleClickAjouter = () => {
-    history.push(`/patient/${params.id}/recommendation`);
+    history.push(`${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATIONS}`);
   };
   return (
     <div>

@@ -23,51 +23,52 @@ import { DIALOG_RECOMMENDATION } from '../../shared/constants/constants';
 import { RECOMMENDATIONS, CREATION_DATE } from '../../shared/strings/strings';
 import {
   PRIMARY_COLOR,
-  SECONDARY_COLOR
+  SECONDARY_COLOR,
 } from '../../shared/constants/constants';
+import { PATH_PATIENT, PATH_RECOMMENDATIONS } from '../../routes/path';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   tableContainer: {
     width: '80%',
-    margin: 'auto'
+    margin: 'auto',
   },
   skeleton: {
     margin: 'auto',
     marginTop: '10%',
-    width: '90%'
+    width: '90%',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240
+    height: 240,
   },
   ButtonGroup: {
     marginBottom: 10,
-    marginLeft: '85%'
+    marginLeft: '85%',
   },
   pagination: {
     display: 'flex',
     justifyContent: 'center',
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   typography: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   link: {
-    color: 'rgb(39 , 39, 39)'
-  }
+    color: 'rgb(39 , 39, 39)',
+  },
 }));
 
 export default function ListRecommendations() {
@@ -96,10 +97,10 @@ export default function ListRecommendations() {
         const response = await healthy.get(
           `/patients/${params.id}/recommendations/`,
           {
-            headers: { Authorization: authStr }
+            headers: { Authorization: authStr },
           },
           {
-            cancelToken: source.token
+            cancelToken: source.token,
           }
         );
         if (mounted) {
@@ -123,14 +124,14 @@ export default function ListRecommendations() {
    *  navigate to the route edit recommendation
    * @param {int} id
    */
-  const handleClickIconButton = id => {
-    history.push(`/patient/${params.id}/recommendations/${id}/`);
+  const handleClickIconButton = (id) => {
+    history.push(`${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATIONS}/${id}/`);
   };
   /**
    * arrow function to open the dialogue when the nutritionit want to delete a Ingredient
    * @param {int} id
    */
-  const handleClickOpen = id => {
+  const handleClickOpen = (id) => {
     console.log(id);
     setDeleteRecommendationId(id); // Set the id of the Ingredient inside the state
     setOpen(true); // Open the dialogue
@@ -150,7 +151,7 @@ export default function ListRecommendations() {
       const response = await healthy.delete(
         `/patients/${params.id}/recommendations/${deleteRecommendationId}`,
         {
-          headers: { Authorization: authStr }
+          headers: { Authorization: authStr },
         }
       );
       console.log(response.data);
@@ -160,7 +161,7 @@ export default function ListRecommendations() {
     }
 
     setOpen(false); //to close the dialogue
-    setData(data.filter(item => item.id !== deleteRecommendationId)); //get the new data without the Ingredient deleted
+    setData(data.filter((item) => item.id !== deleteRecommendationId)); //get the new data without the Ingredient deleted
   };
   /**
    * Function to render
