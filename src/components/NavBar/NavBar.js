@@ -7,26 +7,33 @@ import { useHistory, useParams } from 'react-router-dom';
 import {
   RECOMMENDATIONS,
   FOOD_JOURNAL,
-  CONSULTATION
+  CONSULTATION,
 } from '../../shared/strings/strings';
 import { PRIMARY_COLOR } from '../../shared/constants/constants';
-const useStyles = makeStyles(theme => ({
+import {
+  PATH_PATIENT,
+  PATH_CONSULTATION,
+  PATH_RECOMMENDATIONS,
+  PATH_JOURNAL,
+} from '../../routes/path';
+
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     paddingTop: 20,
-    paddingLeft: 30
+    paddingLeft: 30,
   },
   paper: {
     height: 150,
-    width: 150
+    width: 150,
   },
   control: {
-    paddingRight: 50
+    paddingRight: 50,
   },
   button: {
     height: 150,
-    width: 150
-  }
+    width: 150,
+  },
 }));
 
 export default function NavBar(props) {
@@ -38,19 +45,19 @@ export default function NavBar(props) {
    * when the user clicks on the button consultation
    */
   const handleClickConsultation = () => {
-    history.push(`/patient/${params.id}/consultation`);
+    history.push(`${PATH_PATIENT}/${params.id}${PATH_CONSULTATION}`);
   };
   /**
    * when the user clicks on the button recommendation
    */
   const handleClickRecommendation = () => {
-    history.push(`/patient/${params.id}/recommendations`);
+    history.push(`${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATIONS}`);
   };
   /**
    * when the user clicks on the button Journal Alimentaire
    */
   const handleClickJournal = () => {
-    history.push(`/patient/${params.id}/foodJournal`);
+    history.push(`${PATH_PATIENT}/${params.id}${PATH_JOURNAL}`);
   };
 
   return (
