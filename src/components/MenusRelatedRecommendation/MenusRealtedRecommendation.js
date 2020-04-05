@@ -8,29 +8,20 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import healthy from '../../api/healthy';
 import { useParams } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import meal from '../../assets/meal.png';
-import {
-  CARD_HEADER_TITLE,
-  DIALOG_CONTEXT_TEXT,
-  YES,
-  NO
-} from '../../shared/strings/strings';
+import { DIALOG_MENU } from '../../shared/constants/constants';
+import DialogComponent from '../DialogComponent/DialogComponent';
+import { CARD_HEADER_TITLE } from '../../shared/strings/strings';
 
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   listItem: {
-    padding: 'auto'
-  }
+    padding: 'auto',
+  },
 }));
-const MenusRealtedRecommendation = props => {
+const MenusRealtedRecommendation = (props) => {
   const menu = props.menus; //get the menu from the props
   const classes = useStyles(); //add styles to variable classes
   const params = useParams(); //get the params from url
@@ -47,7 +38,7 @@ const MenusRealtedRecommendation = props => {
    * arrow function to open the dialogue when the nutritionit want to delete a Menus
    * @param {int} id
    */
-  const handleClickListItem = id => {
+  const handleClickListItem = (id) => {
     setDeleteMenuId(id); // Set the id of the Menus inside the state
     setOpen(true); // Open the dialogue
   };
@@ -62,10 +53,10 @@ const MenusRealtedRecommendation = props => {
       const response = await healthy.delete(
         `patients/${params.id}/recommendations/${params.idRecommendation}/menus/${deleteMenuId}`,
         {
-          headers: { Authorization: authStr }
+          headers: { Authorization: authStr },
         }
       );
-      setMenus(menus.filter(item => item.id !== deleteMenuId)); //get the new data without the menu deleted)
+      setMenus(menus.filter((item) => item.id !== deleteMenuId)); //get the new data without the menu deleted)
       console.log('handleButtonDelete =', response);
     } catch (error) {
       console.log(error.response);
@@ -85,7 +76,7 @@ const MenusRealtedRecommendation = props => {
       />
       <Divider />
       <List dense component="div" role="list">
-        {menus.map(value => {
+        {menus.map((value) => {
           return (
             <ListItem
               key={value.id}
@@ -100,27 +91,12 @@ const MenusRealtedRecommendation = props => {
         })}
       </List>
       {/* Dialog when we want to delete Menus */}
-      <Dialog
+      <DialogComponent
+        handleButtonDelete={handleButtonDelete}
         open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {DIALOG_CONTEXT_TEXT}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            {NO}
-          </Button>
-          <Button color="primary" onClick={handleButtonDelete} autoFocus>
-            {YES}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        handleClose={handleClose}
+        message={DIALOG_MENU}
+      />
     </Card>
   );
 };
