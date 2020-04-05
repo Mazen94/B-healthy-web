@@ -81,3 +81,5 @@ export const ADD_MENU_TITLE = 'Ajouter un menu';
 export const UPDATERECOMMENDATION_STEPPER_CREATION = 'Modifier Recommandation';
 export const CHART_LABEL_MALE = 'Homme';
 export const CHART_LABEL_FEMALE = 'Femme';
+export const AGE = 'Age';
+export const YEARS = 'Ans';

@@ -12,6 +12,7 @@ import Alert from '@material-ui/lab/Alert';
 import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import IconButton from '@material-ui/core/IconButton';
 import React, { useEffect, useState } from 'react';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
@@ -23,6 +24,8 @@ import {
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import {
+  AGE,
+  YEARS,
   ADD_PATIENT_TITLE,
   VALIDATE,
   FIRST_NAME,
@@ -85,6 +88,7 @@ export default function AddPatient() {
   const [numberPhone, setNumberPhone] = useState(''); //to retrieve the numberPhone entered by the user.
   const [lastName, setLastName] = useState(''); //to retrieve the lastName entered by the user.
   const [password, setPassword] = useState(''); //to retrieve the password entered by the user.
+  const [age, setAge] = useState(''); //to retrieve the password entered by the user.
   /**
    * arrow function to return to the previous page
    */
@@ -128,6 +132,13 @@ export default function AddPatient() {
     setProffesion(e.target.value);
   };
   /**
+   * arrow function to get the age entered by the user
+   * @param {event} e
+   */
+  const handleAge = (e) => {
+    setAge(e.target.value);
+  };
+  /**
    * arrow function to get the password entered by the user
    * @param {event} e
    */
@@ -167,6 +178,7 @@ export default function AddPatient() {
       numberPhone: numberPhone,
       password: password,
       profession: proffesion,
+      age: age,
     };
     console.log(patient);
     addPatient(patient);
@@ -295,7 +307,26 @@ export default function AddPatient() {
                   errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
+
               <Grid item xs={12} sm={6}>
+                <TextValidator
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleAge}
+                  value={age}
+                  label={AGE}
+                  name="age"
+                  autoComplete="age"
+                  validators={['required']}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">{YEARS}</InputAdornment>
+                    ),
+                  }}
+                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <TextValidator
                   variant="outlined"
                   required
