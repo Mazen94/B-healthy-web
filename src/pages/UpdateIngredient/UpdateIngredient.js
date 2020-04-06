@@ -11,9 +11,12 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { axiosService } from '../../shared/services/services';
+import { ENDPOINT_INGREDIENTS } from '../../shared/constants/endpoint';
 import {
+  PUT,
+  GET,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER,
 } from '../../shared/constants/constants';
@@ -26,7 +29,6 @@ import {
   VALIDATE,
   KCLA,
 } from '../../shared/strings/strings';
-import Axios from 'axios';
 import { PATH_INGREDIENTS } from '../../routes/path';
 
 /**
@@ -115,37 +117,19 @@ export default function UpdateIngredient(props) {
    * UseEffect to get the Ingredient by id
    */
   useEffect(() => {
-    //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
     const getIndredient = async (id) => {
-      try {
-        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get(
-          '/ingredients/' + id,
-          {
-            headers: { Authorization: authStr },
-          },
-          {
-            cancelToken: source.token,
-          }
-        );
-        if (mounted) {
-          setName(response.data.ingredient.name);
-          setAmount(response.data.ingredient.amount);
-          setCalorie(response.data.ingredient.calorie);
-          setOpenSkeleton(false);
-        }
-      } catch (error) {
-        console.log(error.response.data);
+      const res = await axiosService(`${ENDPOINT_INGREDIENTS}${id}`, GET);
+      if (mounted && res.status === 200) {
+        setName(res.data.ingredient.name);
+        setAmount(res.data.ingredient.amount);
+        setCalorie(res.data.ingredient.calorie);
+        setOpenSkeleton(false);
       }
     };
     getIndredient(props.match.params.id);
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, [props.match.params.id]);
 
@@ -169,21 +153,12 @@ export default function UpdateIngredient(props) {
    * @param {Object} ingredient
    */
   const putIngredient = async (ingredient) => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.put(
-        '/ingredients/' + props.match.params.id,
-        ingredient,
-        {
-          headers: { Authorization: authStr },
-        }
-      );
-      console.log('response', response.data);
-      history.push(`${PATH_INGREDIENTS}/1`);
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
-    }
+    const res = await axiosService(
+      `${ENDPOINT_INGREDIENTS}${props.match.params.id}`,
+      PUT,
+      ingredient
+    );
+    if (res.status === 200) history.push(`${PATH_INGREDIENTS}/1`);
   };
   /**
    * Function to render

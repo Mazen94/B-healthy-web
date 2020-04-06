@@ -12,9 +12,11 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { axiosService } from '../../shared/services/services';
+import { ENDPOINT_INGREDIENTS } from '../../shared/constants/endpoint';
 import {
+  POST,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER,
   PRIMARY_COLOR,
@@ -133,16 +135,9 @@ export default function AddIngredient() {
    * @param {Object} ingredient
    */
   const addIngredient = async (ingredient) => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.post('/ingredients', ingredient, {
-        headers: { Authorization: authStr },
-      });
-      console.log('response', response.data);
+    const res = await axiosService(ENDPOINT_INGREDIENTS, POST, ingredient);
+    if (res.status === 200) {
       history.push(`${PATH_INGREDIENTS}/1`);
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
     }
   };
 
