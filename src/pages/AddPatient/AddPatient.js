@@ -9,7 +9,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import IconButton from '@material-ui/core/IconButton';
 import React, { useEffect, useState } from 'react';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -17,7 +16,10 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { axiosService } from '../../shared/services/services';
+import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
 import {
+  POST,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_EMAIL,
@@ -180,7 +182,6 @@ export default function AddPatient() {
       profession: proffesion,
       age: age,
     };
-    console.log(patient);
     addPatient(patient);
   };
   /**
@@ -188,17 +189,12 @@ export default function AddPatient() {
    * @param {Object} patient
    */
   const addPatient = async (patient) => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.post('/patients', patient, {
-        headers: { Authorization: authStr },
-      });
-      console.log(response.data);
+    const res = await axiosService(ENDPOINT_PATIENTS, POST, patient);
+    if (res.status === 200) {
+      console.log(res.data);
       setFlag(false);
       history.push(`${PATH_PATIENTS}/1`);
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
+    } else {
       setFlag(false);
       setErreurValidation(true);
     }

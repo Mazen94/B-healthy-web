@@ -18,8 +18,8 @@ import { useHistory } from 'react-router-dom'; //new instance of axios with a cu
 import people from '../../assets/people.png';
 import { axiosService } from '../../shared/services/services';
 import {
+  ENDPOINT_LIST_PATIENTS,
   ENDPOINT_PATIENTS,
-  ENDPOINT_DELETE_PATIENT,
 } from '../../shared/constants/endpoint';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import {
@@ -100,7 +100,10 @@ export default function ListPatients() {
     let mounted = true;
     //Arrow function to get the data (patients) using Async await
     const loadPatient = async () => {
-      const res = await axiosService(`${ENDPOINT_PATIENTS}${currentPage}`, GET);
+      const res = await axiosService(
+        `${ENDPOINT_LIST_PATIENTS}${currentPage}`,
+        GET
+      );
       if (mounted && res.status === 200) {
         setData(res.data.patients.data); //add the received data to the state data
         setCurrentPage(res.data.patients.current_page); //add the received current_page  to the state currentPage
@@ -118,7 +121,7 @@ export default function ListPatients() {
    */
   const handleButtonDelete = async () => {
     const res = await axiosService(
-      `${ENDPOINT_DELETE_PATIENT}${deletePatientId}`,
+      `${ENDPOINT_PATIENTS}${deletePatientId}`,
       DELETE
     );
     if (res.status === 200) {
