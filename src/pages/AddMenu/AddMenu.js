@@ -13,7 +13,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
+import { axiosService } from '../../shared/services/services';
+import { ENDPOINT_MENUS } from '../../shared/constants/endpoint';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import {
@@ -31,6 +32,7 @@ import {
   MENU_STEPPER_CREATION,
 } from '../../shared/strings/strings';
 import {
+  POST,
   PRIMARY_COLOR,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER,
@@ -156,19 +158,9 @@ export default function AddIngredient() {
    * @param {Object} menu
    */
   const addMenu = async (menu) => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.post('/mealStore', menu, {
-        headers: { Authorization: authStr },
-      });
-      console.log('response', response.data.MealStore.id);
-
-      history.push(
-        `${PATH_MENU}/${response.data.MealStore.id}${PATH_INGREDIENTS}`
-      );
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
+    const res = await axiosService(ENDPOINT_MENUS, POST, menu);
+    if (res.status === 200) {
+      history.push(`${PATH_MENU}/${res.data.MealStore.id}${PATH_INGREDIENTS}`);
     }
   };
 

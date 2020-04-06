@@ -8,31 +8,42 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import healthy from '../../api/healthy';
 import { useParams } from 'react-router-dom';
-
-const useStyles = makeStyles(theme => ({
+import { axiosService } from '../../shared/services/services';
+import {
+  ENDPOINT_LIST_INGREDIENTS,
+  ENDPOINT_MENUS,
+  ENDPOINT_INGREDIENTS,
+} from '../../shared/constants/endpoint';
+import {
+  POST,
+  GET,
+  DELETE,
+  PRIMARY_COLOR,
+} from '../../shared/constants/constants';
+import { AMOUNT } from '../../shared/strings/strings';
+const useStyles = makeStyles((theme) => ({
   paper: {
     width: '100%',
     height: 80,
     margin: 'auto',
-    display: 'flex'
+    display: 'flex',
   },
   grid: {
     margin: 'auto',
-    marginLeft: '2%'
+    marginLeft: '2%',
   },
   submit: {
     margin: 'auto',
-    marginRight: '2%'
+    marginRight: '2%',
   },
   paperChip: {
     height: 200,
-    marginTop: 10
+    marginTop: 10,
   },
   chip: {
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 }));
 
 export default function IngredientToMenu() {
@@ -49,12 +60,10 @@ export default function IngredientToMenu() {
      * Arrow function to get the data (ingredients) using Async await
      */
     const loadIngredient = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      const response = await healthy.get(`/ingredients?page=1`, {
-        headers: { Authorization: authStr }
-      });
-      console.log(response.data.ingredients);
-      setIngredients(response.data.ingredients.data); //add the received data to the state data
+      const res = await axiosService(`${ENDPOINT_LIST_INGREDIENTS}1`, GET);
+      if (res.status === 200) {
+        setIngredients(res.data.ingredients.data);
+      }
     };
     //call function
     loadIngredient();
@@ -63,25 +72,25 @@ export default function IngredientToMenu() {
    * arrow function to get the type de menu entered by the user
    * @param {event} e
    */
-  const handleIngredientSelected = e => {
+  const handleIngredientSelected = (e) => {
     setIngredientSelected(e.target.value);
   };
   /**
    *
    * @param {event} e
    */
-  const handleAmountChange = e => {
+  const handleAmountChange = (e) => {
     setAmount(e.target.value);
   };
   /**
    * arrow function to retrieve the final inputs
    * and call the funtion addPatient to send the data to the DB
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
     const ingredient = {
       id: ingredientSelected.id,
-      amount: amount
+      amount: amount,
     };
     console.log(ingredient);
     setAddedIngredients([...addedIngredients, ingredientSelected]);
@@ -92,43 +101,25 @@ export default function IngredientToMenu() {
    * Function to send the data to DB (using axios and async await)
    * @param {Object} ingredient
    */
-  const postIngredientToMenu = async ingredient => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.post(
-        '/mealStore/' + menuId + '/ingredients',
-        ingredient,
-        {
-          headers: { Authorization: authStr }
-        }
-      );
-      console.log('response', response.data);
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
-    }
+  const postIngredientToMenu = async (ingredient) => {
+    await axiosService(
+      `${ENDPOINT_MENUS}${menuId}/${ENDPOINT_INGREDIENTS}`,
+      POST,
+      ingredient
+    );
   };
   /**
    * arrow function to remove an ingredient from the list of ingredients
    */
-  const handleDelete = async id => {
-    setAddedIngredients(addedIngredients.filter(item => item.id !== id));
+  const handleDelete = async (id) => {
+    setAddedIngredients(addedIngredients.filter((item) => item.id !== id));
     if (addedIngredients.length === 1) {
       setFlag(false);
     }
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.delete(
-        `mealStore/${menuId}/ingredients/${id}`,
-        {
-          headers: { Authorization: authStr }
-        }
-      );
-      //get the new data without the Ingredient deleted
-      console.log(response.data);
-    } catch (e) {
-      console.log(e);
-    }
+    await axiosService(
+      `${ENDPOINT_MENUS}${menuId}/${ENDPOINT_INGREDIENTS}${id}`,
+      DELETE
+    );
   };
 
   return (
@@ -146,7 +137,7 @@ export default function IngredientToMenu() {
               onChange={handleIngredientSelected}
               variant="outlined"
             >
-              {ingredients.map(ingredient => (
+              {ingredients.map((ingredient) => (
                 <MenuItem key={ingredient.id} value={ingredient}>
                   {ingredient.name}
                 </MenuItem>
@@ -155,7 +146,7 @@ export default function IngredientToMenu() {
           </Grid>
           <Grid item xs={12} sm={6} className={classes.grid}>
             <TextValidator
-              label="Quantite"
+              label={AMOUNT}
               id="amount"
               required
               onChange={handleAmountChange}
@@ -165,7 +156,7 @@ export default function IngredientToMenu() {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">Gramme</InputAdornment>
-                )
+                ),
               }}
               variant="outlined"
             />
@@ -173,7 +164,7 @@ export default function IngredientToMenu() {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
+            color={PRIMARY_COLOR}
             className={classes.submit}
           >
             Ajouter
@@ -182,7 +173,7 @@ export default function IngredientToMenu() {
       </ValidatorForm>
       {flag && (
         <Paper elevation={0} className={classes.paperChip}>
-          {addedIngredients.map(value => (
+          {addedIngredients.map((value) => (
             <Chip
               key={value.id}
               label={value.name}
