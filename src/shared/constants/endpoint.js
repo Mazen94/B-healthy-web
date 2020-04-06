@@ -6,5 +6,5 @@ export const ENDPOINT_LIST_PATIENTS = 'patients?page=';
 export const ENDPOINT_PATIENTS = 'patients/';
 export const ENDPOINT_LIST_INGREDIENTS = 'ingredients?page=';
 export const ENDPOINT_INGREDIENTS = 'ingredients/';
-export const ENDPOINT_LIST_MENUS = 'mealStore?page=';
-export const ENDPOINT_MENUS = 'mealStore/';
+export const ENDPOINT_LIST_MEALS = 'mealStore?page=';
+export const ENDPOINT_MEALS = 'mealStore/';

@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
 import {
   ENDPOINT_LIST_INGREDIENTS,
-  ENDPOINT_MENUS,
+  ENDPOINT_MEALS,
   ENDPOINT_INGREDIENTS,
 } from '../../shared/constants/endpoint';
 import {
@@ -103,7 +103,7 @@ export default function IngredientToMenu() {
    */
   const postIngredientToMenu = async (ingredient) => {
     await axiosService(
-      `${ENDPOINT_MENUS}${menuId}/${ENDPOINT_INGREDIENTS}`,
+      `${ENDPOINT_MEALS}${menuId}/${ENDPOINT_INGREDIENTS}`,
       POST,
       ingredient
     );
@@ -117,7 +117,7 @@ export default function IngredientToMenu() {
       setFlag(false);
     }
     await axiosService(
-      `${ENDPOINT_MENUS}${menuId}/${ENDPOINT_INGREDIENTS}${id}`,
+      `${ENDPOINT_MEALS}${menuId}/${ENDPOINT_INGREDIENTS}${id}`,
       DELETE
     );
   };

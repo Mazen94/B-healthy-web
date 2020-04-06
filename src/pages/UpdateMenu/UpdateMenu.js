@@ -12,13 +12,17 @@ import DoneIcon from '@material-ui/icons/Done';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
-import healthy from '../../api/healthy';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import Button from '@material-ui/core/Button';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { axiosService } from '../../shared/services/services';
+import {
+  ENDPOINT_MEALS,
+  ENDPOINT_INGREDIENTS,
+} from '../../shared/constants/endpoint';
 import {
   EDIT,
   INGREDIENT_OF_MENU,
@@ -33,10 +37,11 @@ import {
   VALIDATE,
 } from '../../shared/strings/strings';
 import {
+  GET,
+  PUT,
   MESSAGE_VALIDATORS_REQUIRED,
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
-import Axios from 'axios';
 import { PATH_MENUS } from '../../routes/path';
 
 /**
@@ -102,37 +107,20 @@ export default function UpdateIngredient() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
     const getMealStore = async (id) => {
-      try {
-        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get(
-          '/mealStore/' + params.id,
-          {
-            headers: { Authorization: authStr },
-          },
-          {
-            cancelToken: source.token,
-          }
-        );
-        if (mounted) {
-          setName(response.data.StoreMenu.name);
-          setMaxAge(response.data.StoreMenu.max_age);
-          setMinAge(response.data.StoreMenu.min_age);
-          setIngredients(response.data.StoreMenu.ingredients);
-          setTypeMenu(response.data.StoreMenu.type_menu);
-          setOpenSkeleton(false);
-        }
-      } catch (error) {
-        console.log(error.response.data);
+      const res = await axiosService(`${ENDPOINT_MEALS}${params.id}`, GET);
+      if (mounted && res.status === 200) {
+        setName(res.data.StoreMenu.name);
+        setMaxAge(res.data.StoreMenu.max_age);
+        setMinAge(res.data.StoreMenu.min_age);
+        setIngredients(res.data.StoreMenu.ingredients);
+        setTypeMenu(res.data.StoreMenu.type_menu);
+        setOpenSkeleton(false);
       }
     };
     getMealStore(params.id);
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, [params.id]);
   /**
@@ -189,22 +177,12 @@ export default function UpdateIngredient() {
     if (valueOfamount !== '') {
       setFlag(true);
     }
-    const authStr = `Bearer ${localStorage.getItem('token')}`;
-    console.log(valueOfIngredient.id);
-    console.log(valueOfamount);
-    try {
-      const response = await healthy.put(
-        `/mealStore/${params.id}/ingredients/${valueOfIngredient.id}`,
-        { amount: valueOfamount },
-        {
-          headers: { Authorization: authStr },
-        }
-      );
-      console.log(response.data);
-      setFlag(false);
-    } catch (e) {
-      setFlag(false);
-    }
+    await axiosService(
+      `${ENDPOINT_MEALS}${params.id}/${ENDPOINT_INGREDIENTS}${valueOfIngredient.id}`,
+      PUT,
+      { amount: valueOfamount }
+    );
+    setFlag(false);
   };
   /**
    * put the menu
@@ -217,16 +195,9 @@ export default function UpdateIngredient() {
       type_menu: typeMenu,
     };
     setFlag(true);
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.put(`/mealStore/${params.id}`, menu, {
-        headers: { Authorization: authStr },
-      });
-      console.log(response.data);
-      history.push(`${PATH_MENUS}/1`);
-    } catch (error) {
-      setFlag(false);
-    }
+    const res = await axiosService(`${ENDPOINT_MEALS}${params.id}`, PUT, menu);
+    if (res.status === 200) history.push(`${PATH_MENUS}/1`);
+    else setFlag(false);
   };
   /**
    * Function to render

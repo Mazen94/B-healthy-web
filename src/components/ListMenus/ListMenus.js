@@ -20,8 +20,8 @@ import { DIALOG_MENU } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { axiosService } from '../../shared/services/services';
 import {
-  ENDPOINT_LIST_MENUS,
-  ENDPOINT_MENUS,
+  ENDPOINT_LIST_MEALS,
+  ENDPOINT_MEALS,
 } from '../../shared/constants/endpoint';
 import {
   MENUS,
@@ -103,7 +103,7 @@ export default function AddIngredient() {
     // Arrow function to get the data (menu) using Async await
     const loadIngredient = async () => {
       const res = await axiosService(
-        `${ENDPOINT_LIST_MENUS}${currentPage}`,
+        `${ENDPOINT_LIST_MEALS}${currentPage}`,
         GET
       );
       if (mounted && res.status === 200) {
@@ -140,7 +140,7 @@ export default function AddIngredient() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
-    const res = await axiosService(`${ENDPOINT_MENUS}${deleteMenuId}`, DELETE);
+    const res = await axiosService(`${ENDPOINT_MEALS}${deleteMenuId}`, DELETE);
     if (res.status === 200) {
       setCurrentPage(currentPage);
       setOpen(false); //to close the dialogue

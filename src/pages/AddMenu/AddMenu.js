@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
-import { ENDPOINT_MENUS } from '../../shared/constants/endpoint';
+import { ENDPOINT_MEALS } from '../../shared/constants/endpoint';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import {
@@ -158,7 +158,7 @@ export default function AddIngredient() {
    * @param {Object} menu
    */
   const addMenu = async (menu) => {
-    const res = await axiosService(ENDPOINT_MENUS, POST, menu);
+    const res = await axiosService(ENDPOINT_MEALS, POST, menu);
     if (res.status === 200) {
       history.push(`${PATH_MENU}/${res.data.MealStore.id}${PATH_INGREDIENTS}`);
     }
