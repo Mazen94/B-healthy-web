@@ -7,7 +7,7 @@ import {
   PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
 } from '../../shared/constants/constants';
-import { DISTRIBUTION_BY_GENDER } from '../../shared/strings/strings';
+import { DISTRIBUTION_BY_AGE_GROUB } from '../../shared/strings/strings';
 import { axiosService } from '../../shared/services/services';
 import { STATISTICS_AGE } from '../../shared/constants/endpoint';
 
@@ -57,7 +57,7 @@ export default function PatientStatistics() {
   return (
     <React.Fragment>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        {DISTRIBUTION_BY_GENDER}
+        {DISTRIBUTION_BY_AGE_GROUB}
       </Typography>
 
       <div className={classes.bar}>

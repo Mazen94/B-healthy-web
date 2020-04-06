@@ -15,11 +15,14 @@ import Pagination from '@material-ui/lab/Pagination';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy';
 import meal from '../../assets/meal.png';
-import Axios from 'axios';
 import { DIALOG_MENU } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
+import { axiosService } from '../../shared/services/services';
+import {
+  ENDPOINT_LIST_MENUS,
+  ENDPOINT_MENUS,
+} from '../../shared/constants/endpoint';
 import {
   MENUS,
   MENU_TYPE,
@@ -27,6 +30,8 @@ import {
   AGE_RANGE,
 } from '../../shared/strings/strings';
 import {
+  GET,
+  DELETE,
   PRIMARY_COLOR,
   SECONDARY_COLOR,
 } from '../../shared/constants/constants';
@@ -95,36 +100,22 @@ export default function AddIngredient() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
     // Arrow function to get the data (menu) using Async await
     const loadIngredient = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      try {
-        const response = await healthy.get(
-          `/mealStore?page=` + currentPage,
-          {
-            headers: { Authorization: authStr },
-          },
-          {
-            cancelToken: source.token,
-          }
-        );
-        if (mounted) {
-          setData(response.data.MealStore.data); //add the received data to the state data
-          setCurrentPage(response.data.MealStore.current_page); //add the received current_page to the state lastPage
-          setLastPage(response.data.MealStore.last_page); //add the received last_page to the state lastPage
-        }
-      } catch (error) {
-        console.log(error.reponse);
+      const res = await axiosService(
+        `${ENDPOINT_LIST_MENUS}${currentPage}`,
+        GET
+      );
+      if (mounted && res.status === 200) {
+        setData(res.data.MealStore.data); //add the received data to the state data
+        setCurrentPage(res.data.MealStore.current_page); //add the received current_page to the state lastPage
+        setLastPage(res.data.MealStore.last_page); //add the received last_page to the state lastPage
       }
     };
     //call function
     loadIngredient();
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, [currentPage]);
 
@@ -149,19 +140,12 @@ export default function AddIngredient() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
-    const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-    try {
-      const response = await healthy.delete(`mealStore/${deleteMenuId}`, {
-        headers: { Authorization: authStr },
-      });
-      console.log(response.data);
+    const res = await axiosService(`${ENDPOINT_MENUS}${deleteMenuId}`, DELETE);
+    if (res.status === 200) {
       setCurrentPage(currentPage);
-    } catch (error) {
-      console.log(error.response.data);
+      setOpen(false); //to close the dialogue
+      setData(data.filter((item) => item.id !== deleteMenuId)); //get the new data without the menu deleted*/
     }
-
-    setOpen(false); //to close the dialogue
-    setData(data.filter((item) => item.id !== deleteMenuId)); //get the new data without the menu deleted*/
   };
   /**
    * Function to render
