@@ -15,14 +15,19 @@ import Pagination from '@material-ui/lab/Pagination';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'; //new instance of axios with a custom config
-import healthy from '../../api/healthy';
 import people from '../../assets/people.png';
-import Axios from 'axios';
+import { axiosService } from '../../shared/services/services';
+import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_DELETE_PATIENT,
+} from '../../shared/constants/endpoint';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import {
+  DELETE,
+  GET,
   DIALOG_PATIENT,
   PRIMARY_COLOR,
-  SECONDARY_COLOR
+  SECONDARY_COLOR,
 } from '../../shared/constants/constants';
 import {
   FIRST_NAME,
@@ -30,39 +35,39 @@ import {
   EMAIL,
   PHONE,
   PREFFESION,
-  ACTION
+  ACTION,
 } from '../../shared/strings/strings';
 import {
   PATH_PATIENTS,
   PATH_PATIENT,
-  PATH_CONSULTATION
+  PATH_CONSULTATION,
 } from '../../routes/path';
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
 const useStyles = makeStyles({
   skeleton: {
-    width: '100%'
+    width: '100%',
   },
   table: {
-    minWidth: 650
+    minWidth: 650,
   },
   avatar: {
     height: 50,
-    width: 50
+    width: 50,
   },
   pagination: {
     display: 'flex',
     justifyContent: 'center',
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   link: {
-    color: 'rgb(39 , 39, 39)'
+    color: 'rgb(39 , 39, 39)',
   },
   button: {
-    marginRight: 5
-  }
+    marginRight: 5,
+  },
 });
 /**
  * Component for showing the list of patient.
@@ -93,61 +98,41 @@ export default function ListPatients() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
     //Arrow function to get the data (patients) using Async await
     const loadPatient = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      try {
-        const response = await healthy.get(
-          `patients?page=` + currentPage,
-          {
-            headers: { Authorization: authStr }
-          },
-          {
-            cancelToken: source.token
-          }
-        );
-        if (mounted) {
-          setData(response.data.patients.data); //add the received data to the state data
-          setCurrentPage(response.data.patients.current_page); //add the received current_page  to the state currentPage
-          setLastPage(response.data.patients.last_page); //add the received last_page to the state lastPage
-        }
-      } catch (error) {
-        console.log(error.response);
+      const res = await axiosService(`${ENDPOINT_PATIENTS}${currentPage}`, GET);
+      if (mounted && res.status === 200) {
+        setData(res.data.patients.data); //add the received data to the state data
+        setCurrentPage(res.data.patients.current_page); //add the received current_page  to the state currentPage
+        setLastPage(res.data.patients.last_page); //add the received last_page to the state lastPage
       }
     };
     //call function
     loadPatient();
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, [currentPage]);
   /**
    * arrow function to delete a patient
    */
   const handleButtonDelete = async () => {
-    const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-    try {
-      const response = await healthy.delete(`patients/${deletePatientId}`, {
-        headers: { Authorization: authStr }
-      });
-      console.log(response.data);
+    const res = await axiosService(
+      `${ENDPOINT_DELETE_PATIENT}${deletePatientId}`,
+      DELETE
+    );
+    if (res.status === 200) {
+      console.log(res);
       setCurrentPage(currentPage);
-    } catch (error) {
-      console.log(error.response.data);
+      setOpen(false); //to close the dialogue
+      setData(data.filter((item) => item.id !== deletePatientId)); //get the new data without the patient deleted
     }
-
-    setOpen(false); //to close the dialogue
-    setData(data.filter(item => item.id !== deletePatientId)); //get the new data without the patient deleted
   };
   /**
    * arrow function to open the dialogue when the nutritionit want to delete a patient
    * @param {int} id
    */
-  const handleClickOpen = id => {
+  const handleClickOpen = (id) => {
     setDeletePatientId(id); // Set the id of the patient inside the state
     setOpen(true); // Open the dialogue
   };
@@ -155,7 +140,7 @@ export default function ListPatients() {
    * arrow function navigate to consultation component
    * @param {int} id
    */
-  const handleClickArrowForwardIcon = id => {
+  const handleClickArrowForwardIcon = (id) => {
     history.push(`${PATH_PATIENT}/${id}${PATH_CONSULTATION}`);
   };
   /**
@@ -194,7 +179,7 @@ export default function ListPatients() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map(row => (
+                {data.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
                       <Box display="flex" flexDirection="row">
