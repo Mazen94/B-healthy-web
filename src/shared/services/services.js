@@ -5,7 +5,7 @@ export async function axiosService(endPoint, method, headers, data) {
   const config = {
     method: method,
     url: `${URL_API}${endPoint}`,
-    data: data,
+    timeout: 20000,
   };
   if (data) config.data = data;
   if (headers) config.headers = { Authorization: headers };

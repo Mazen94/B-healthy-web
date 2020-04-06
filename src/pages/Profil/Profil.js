@@ -4,15 +4,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import Alert from '@material-ui/lab/Alert';
-import healthy from '../../api/healthy';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {
+  GET,
+  PUT,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_EMAIL,
@@ -23,9 +23,10 @@ import {
   PASSWORD,
   VALIDATE,
 } from '../../shared/strings/strings';
-import Axios from 'axios';
 import { PATH_DASHBOARD } from '../../routes/path';
-
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
+import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -108,32 +109,18 @@ export default function Profil() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
-    // Arrow function to  Get the data of user connected
     const fetchData = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const result = await healthy(
-        `/`,
-        {
-          headers: { Authorization: authStr },
-        },
-        {
-          cancelToken: source.token,
-        }
-      );
-      if (mounted) {
-        setFirstName(result.data.nutritionist.firstName);
-        setLastName(result.data.nutritionist.lastName);
-        setEmail(result.data.nutritionist.email);
+      const res = await axiosService(ENDPOINT_PROFIL, GET, headers);
+      if (mounted && res.status === 200) {
+        setFirstName(res.data.nutritionist.firstName);
+        setLastName(res.data.nutritionist.lastName);
+        setEmail(res.data.nutritionist.email);
         setOpenSkeleton(false);
       }
     };
     fetchData();
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, []);
   /**
@@ -155,20 +142,10 @@ export default function Profil() {
    * Arrow function to send the data to db
    */
   const putNutritionist = async (nutritionist) => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      const response = await axios.put(
-        `http://healthy.test/api/nutritionist`,
-        nutritionist,
-        {
-          headers: { Authorization: authStr },
-        }
-      );
-      console.log(response);
+    const res = await axiosService(ENDPOINT_PROFIL, PUT, headers, nutritionist);
+    if (res.status === 200) {
       history.push(PATH_DASHBOARD); //Redirect to the page dashboard
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
+    } else {
       setFlag(false); //change the value of the state (flag) to flase to hide the spinner
       setErreurValidation(true); //change the value of the state (erreurValidation) to true to display the message error
     }

@@ -8,3 +8,4 @@ export const ENDPOINT_LIST_INGREDIENTS = 'ingredients?page=';
 export const ENDPOINT_INGREDIENTS = 'ingredients/';
 export const ENDPOINT_LIST_MEALS = 'mealStore?page=';
 export const ENDPOINT_MEALS = 'mealStore/';
+export const ENDPOINT_PROFIL = '/';

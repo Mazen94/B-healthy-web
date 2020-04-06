@@ -161,6 +161,7 @@ export default function UpdateIngredient(props) {
     const res = await axiosService(
       `${ENDPOINT_INGREDIENTS}${props.match.params.id}`,
       PUT,
+      headers,
       ingredient
     );
     if (res.status === 200) history.push(`${PATH_INGREDIENTS}/1`);
