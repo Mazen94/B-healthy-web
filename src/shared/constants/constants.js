@@ -14,7 +14,7 @@ export const PATIENT_STATISTICS_LABELS = [
   '[46,50]',
   '[51,55]',
   '[56,60]',
-  ''
+  '',
 ];
 /**
  * Constant used in the PatientStatistics component
@@ -30,7 +30,7 @@ export const PATIENT_STATISTICS_BACKGROUNDCOLOR = [
   'rgba(255, 99, 132, 0.6)',
   'rgba(70, 215, 132, 0.6)',
   'rgba(100, 140, 64, 0.6)',
-  'rgba(50, 10, 200, 0.6)'
+  'rgba(50, 10, 200, 0.6)',
 ];
 /**
  * Constant used in the Dashboard component
@@ -50,7 +50,7 @@ export const DASHBOARD_MENU_BACKGROUNDCOLOR = 'rgba(255, 99, 132, 0.6)';
  */
 export const CHART_BACKGROUNDCOLOR = [
   'rgba(255, 99, 132, 0.6)',
-  'rgba(54, 162, 235, 0.6)'
+  'rgba(54, 162, 235, 0.6)',
 ];
 
 /**
@@ -99,3 +99,22 @@ export const PRIMARY_COLOR = 'primary';
  * Secondary color
  */
 export const SECONDARY_COLOR = 'secondary';
+/**
+ * Get
+ */
+export const GET = 'GET';
+/**
+ * POST
+ */
+export const POST = 'POST';
+/**
+ * PUT
+ */
+export const PUT = 'PUT';
+
+/**
+ * Delete
+ */
+export const DELETE = 'DELETE';
+
+export const URL_API = 'http://healthy.test/api/nutritionist/';
