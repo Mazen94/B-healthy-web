@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import healthy from '../../api/healthy';
 import { CHART_BACKGROUNDCOLOR } from '../../shared/constants/constants'; // Get constants from  constants  file
-import Axios from 'axios';
 import {
   DISTRIBUTION_BY_GENDER,
   CHART_LABEL_MALE,
-  CHART_LABEL_FEMALE
+  CHART_LABEL_FEMALE,
 } from '../../shared/strings/strings';
-
+import { STATISTICS_GENDER } from '../../shared/constants/endpoint';
+import { axiosService } from '../../shared/services/services';
+import { GET } from '../../shared/constants/constants';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   typography: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 }));
 export default function Chart() {
   const classes = useStyles(); //add styles to variable classes
@@ -30,45 +30,26 @@ export default function Chart() {
     datasets: [
       {
         data: [countFemale, countMale],
-        backgroundColor: CHART_BACKGROUNDCOLOR
-      }
-    ]
+        backgroundColor: CHART_BACKGROUNDCOLOR,
+      },
+    ],
   };
   /**
    * Hook to get the patient by gender
    */
   useEffect(() => {
-    //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
     const patientByGender = async () => {
-      try {
-        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        // API : get number of patient by gender
-        const response = await healthy.get(
-          `/statistics/gender`,
-          {
-            headers: { Authorization: authStr }
-          },
-          {
-            cancelToken: source.token
-          }
-        );
-        if (mounted) {
-          setCountFemale(response.data.countGender.female);
-          setCountMale(response.data.countGender.male);
-        }
-      } catch (error) {
-        console.log(error.reponse);
+      const response = await axiosService(STATISTICS_GENDER, GET);
+      if (mounted && response.status === 200) {
+        setCountFemale(response.data.countGender.female);
+        setCountMale(response.data.countGender.male);
       }
     };
     //Call the method
     patientByGender();
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, []);
 

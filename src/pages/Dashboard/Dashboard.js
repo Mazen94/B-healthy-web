@@ -11,40 +11,44 @@ import Chart from '../../components/Chart/Chart';
 import BarComponent from '../../components/BarComponent/BarComponent';
 import Copyright from '../../components/Copyright/Copyright';
 import PatientStatistics from '../../components/PatientStatistics/PatientStatistics';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
+import { axiosService } from '../../shared/services/services';
 import {
+  STATISTICS_MENUS,
+  STATISTICS_INGREDIENTS,
+} from '../../shared/constants/endpoint';
+import {
+  GET,
   DASHBOARD_INGREDIENT_BACKGROUNDCOLOR,
-  DASHBOARD_MENU_BACKGROUNDCOLOR
+  DASHBOARD_MENU_BACKGROUNDCOLOR,
 } from '../../shared/constants/constants'; // Get constants from  constants  file
 import { MENUS, DASHBOARD, INGREDIENTS } from '../../shared/strings/strings';
-import Axios from 'axios';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240
-  }
+    height: 240,
+  },
 }));
 
 /**
@@ -59,50 +63,20 @@ export default function Dashboard() {
    * Hook to get the number of menus and ingredients
    */
   useEffect(() => {
-    //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
     const MenusAndIngredients = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      // API :get the number of menus
-      try {
-        const response = await healthy.get(
-          `statistics/menus`,
-          {
-            headers: { Authorization: authStr }
-          },
-          {
-            cancelToken: source.token
-          }
-        );
-        if (mounted) setCountMenus(response.data.countOfMenus);
-      } catch (error) {
-        console.log(error.response);
-      }
-      // API :get the number of ingredients
-      try {
-        const resultat = await healthy.get(
-          `statistics/ingredients`,
-          {
-            headers: { Authorization: authStr }
-          },
-          {
-            cancelToken: source.token
-          }
-        );
-        // Associate the results
-        if (mounted) setCountIngredient(resultat.data.countOfIngredient);
-      } catch (error) {
-        console.log(error.resultat);
-      }
+      // get the number of menus
+      const res = await axiosService(STATISTICS_MENUS, GET);
+      if (mounted && res.status === 200) setCountMenus(res.data.countOfMenus);
+      // get the number of ingredients
+      const results = await axiosService(STATISTICS_INGREDIENTS, GET);
+      if (mounted && results.status === 200)
+        setCountIngredient(results.data.countOfIngredient);
     };
     //Call the method
     MenusAndIngredients();
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, []);
   return (

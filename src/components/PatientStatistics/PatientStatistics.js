@@ -3,48 +3,34 @@ import { Bar } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {
+  GET,
   PATIENT_STATISTICS_LABELS,
-  PATIENT_STATISTICS_BACKGROUNDCOLOR
+  PATIENT_STATISTICS_BACKGROUNDCOLOR,
 } from '../../shared/constants/constants';
-import healthy from '../../api/healthy';
-import Axios from 'axios';
 import { DISTRIBUTION_BY_GENDER } from '../../shared/strings/strings';
+import { axiosService } from '../../shared/services/services';
+import { STATISTICS_AGE } from '../../shared/constants/endpoint';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   typography: {
-    margin: 'auto'
+    margin: 'auto',
   },
   bar: {
-    padding: 'auto'
-  }
+    padding: 'auto',
+  },
 }));
 export default function PatientStatistics() {
   const classes = useStyles(); //add styles to variable classes
   const [group, setGroup] = useState([]);
   useEffect(() => {
-    //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
     const getPatientByAgeRange = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.get(
-        `statistics/age`,
-        {
-          headers: { Authorization: authStr }
-        },
-        {
-          cancelToken: source.token
-        }
-      );
-
-      if (mounted) setGroup(response.data.countGender);
+      const res = await axiosService(STATISTICS_AGE, GET);
+      if (mounted && res.status === 200) setGroup(res.data.countGender);
     };
     getPatientByAgeRange();
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, []);
   const data = {
@@ -62,11 +48,11 @@ export default function PatientStatistics() {
           group['[41-45]'],
           group['[46-50]'],
           group['[51-55]'],
-          group['[56-60]']
+          group['[56-60]'],
         ],
-        backgroundColor: PATIENT_STATISTICS_BACKGROUNDCOLOR
-      }
-    ]
+        backgroundColor: PATIENT_STATISTICS_BACKGROUNDCOLOR,
+      },
+    ],
   };
   return (
     <React.Fragment>
@@ -81,8 +67,8 @@ export default function PatientStatistics() {
           height={20}
           options={{
             legend: {
-              display: false
-            }
+              display: false,
+            },
           }}
         />
       </div>
