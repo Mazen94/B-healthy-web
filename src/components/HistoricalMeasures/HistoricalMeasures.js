@@ -8,7 +8,10 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
+import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_VISITS,
+} from '../../shared/constants/endpoint';
 import belly from '../../assets/belly.png';
 import chest from '../../assets/chest.png';
 import legs from '../../assets/legs.png';
@@ -18,6 +21,9 @@ import tall from '../../assets/tall.png';
 import weight from '../../assets/weight.png';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
+import { GET } from '../../shared/constants/constants';
 import {
   HISTORY_PERVIOUS_MEASUREMENTS,
   DATE,
@@ -27,52 +33,52 @@ import {
   BELLY,
   NECK,
   LEGS,
-  NOTE
+  NOTE,
 } from '../../shared/strings/strings';
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paperFiche: {
     display: 'grid',
     margin: 'auto',
     width: '98%',
-    paddingBottom: '2%'
+    paddingBottom: '2%',
   },
   typography: {
     paddingTop: 12,
     color: 'rgb(63, 81, 181)',
 
-    'font-size': '16px'
+    'font-size': '16px',
   },
   small: {
     width: 35,
-    height: 35
+    height: 35,
   },
   large: {
     marginTop: 18,
     width: theme.spacing(20),
-    height: theme.spacing(20)
+    height: theme.spacing(20),
   },
   gridMesure: {
     marginTop: 10,
-    width: '100%'
+    width: '100%',
   },
   textFiledMesure: {
     width: 120,
-    margin: '1%'
+    margin: '1%',
   },
   button: {
-    marginTop: '2%'
+    marginTop: '2%',
   },
   date: {
     marginTop: 20,
     width: '60%',
 
-    margin: 'auto'
+    margin: 'auto',
   },
   textArea: {
     marginTop: '2%',
     margin: 'auto',
-    width: '45%'
-  }
+    width: '45%',
+  },
 }));
 
 export default function HistoricalMeasures() {
@@ -82,29 +88,19 @@ export default function HistoricalMeasures() {
   const { id } = useParams();
 
   useEffect(() => {
-    /**
-     * Arrow function to get the data (Visits) using Async await
-     */
-    const loadVisit = async () => {
-      try {
-        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get(
-          `patients/${id}/visits?page=1&orderBy=updated_at&orderDirection=desc`,
-          {
-            headers: { Authorization: authStr }
-          }
-        );
-        console.log(response.data.visits.data);
-        if (response.data.visits.data.length !== 0) {
-          setVisit(response.data.visits.data[0]); //add the received data to the state data
-        }
-        setFlag(false);
-      } catch (error) {
-        console.log(error.response);
+    axiosService(
+      `${ENDPOINT_PATIENTS}${id}/${ENDPOINT_VISITS}?page=1&orderBy=updated_at&orderDirection=desc`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          if (response.data.visits.data.length !== 0)
+            setVisit(response.data.visits.data[0]); //add the received data to the state data
+          setFlag(false);
+        } else console.log('error to get data', error);
       }
-    };
-    //call function
-    loadVisit();
+    );
   }, [id]);
   if (flag) {
     return (
@@ -137,7 +133,7 @@ export default function HistoricalMeasures() {
                   <InputAdornment position="start">
                     <CalendarTodayIcon />
                   </InputAdornment>
-                )
+                ),
               }}
             />
             <FormControl>
@@ -153,7 +149,7 @@ export default function HistoricalMeasures() {
                       <InputAdornment position="start">
                         <Avatar src={weight} className={classes.small} />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
                 <TextField
@@ -171,7 +167,7 @@ export default function HistoricalMeasures() {
                           className={classes.small}
                         />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
 
@@ -186,7 +182,7 @@ export default function HistoricalMeasures() {
                       <InputAdornment position="start">
                         <Avatar src={chest} className={classes.small} />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
               </Grid>
@@ -202,7 +198,7 @@ export default function HistoricalMeasures() {
                       <InputAdornment position="start">
                         <Avatar src={belly} className={classes.small} />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
                 <TextField
@@ -216,7 +212,7 @@ export default function HistoricalMeasures() {
                       <InputAdornment position="start">
                         <Avatar src={neck} className={classes.small} />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
                 <TextField
@@ -230,7 +226,7 @@ export default function HistoricalMeasures() {
                       <InputAdornment position="start">
                         <Avatar src={legs} className={classes.small} />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
               </Grid>
@@ -247,7 +243,7 @@ export default function HistoricalMeasures() {
                     <InputAdornment position="start">
                       <Avatar src={note} />
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
             </FormControl>

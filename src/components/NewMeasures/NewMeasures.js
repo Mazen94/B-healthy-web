@@ -14,16 +14,18 @@ import iconNote from '../../assets/note.png';
 import iconTall from '../../assets/tall.png';
 import iconWeight from '../../assets/weight.png';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
 import { useParams } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {
+  POST,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER,
-  PRIMARY_COLOR
+  PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import {
   ADDED_MEASURES,
@@ -35,45 +37,49 @@ import {
   NECK,
   LEGS,
   NOTE,
-  VALIDATE
+  VALIDATE,
 } from '../../shared/strings/strings';
-const useStyles = makeStyles(theme => ({
+import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_VISITS,
+} from '../../shared/constants/endpoint';
+const useStyles = makeStyles((theme) => ({
   paperNewMeasure: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   typography: {
     paddingTop: 12,
     color: 'rgb(63, 81, 181)',
-    'font-size': '16px'
+    'font-size': '16px',
   },
   small: {
     width: 35,
-    height: 35
+    height: 35,
   },
   large: {
     marginTop: 18,
     width: theme.spacing(20),
-    height: theme.spacing(20)
+    height: theme.spacing(20),
   },
   gridMesure: {
-    marginTop: 10
+    marginTop: 10,
   },
   textFiledMesure: {
     width: 120,
-    margin: '2%'
+    margin: '2%',
   },
   button: {
     marginTop: '3%',
-    marginBottom: 50
+    marginBottom: 50,
   },
   textArea: {
     marginTop: '4%',
-    width: '85%'
+    width: '85%',
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 }));
 
 export default function NewMeasures() {
@@ -104,7 +110,7 @@ export default function NewMeasures() {
    * Validation : add custom rules (amout and MinAge must be number)
    */
   useEffect(() => {
-    ValidatorForm.addValidationRule('isInteger', value => {
+    ValidatorForm.addValidationRule('isInteger', (value) => {
       if (isNaN(value)) {
         return false;
       }
@@ -115,56 +121,56 @@ export default function NewMeasures() {
    * arrow function to get the belly entered by the user
    * @param {event} e
    */
-  const handleBelly = e => {
+  const handleBelly = (e) => {
     setBelly(e.target.value);
   };
   /**
    * arrow function to get the chest entered by the user
    * @param {event} e
    */
-  const handleChest = e => {
+  const handleChest = (e) => {
     setChest(e.target.value);
   };
   /**
    * arrow function to get the legs entered by the user
    * @param {event} e
    */
-  const handleLegs = e => {
+  const handleLegs = (e) => {
     setLegs(e.target.value);
   };
   /**
    * arrow function to get the Neck entered by the user
    * @param {event} e
    */
-  const handleNeck = e => {
+  const handleNeck = (e) => {
     setNeck(e.target.value);
   };
   /**
    * arrow function to get the Note entered by the user
    * @param {event} e
    */
-  const handleNote = e => {
+  const handleNote = (e) => {
     setNote(e.target.value);
   };
   /**
    * arrow function to get the tall entered by the user
    * @param {event} e
    */
-  const handleTall = e => {
+  const handleTall = (e) => {
     setTall(e.target.value);
   };
   /**
    * arrow function to get the Weight entered by the user
    * @param {event} e
    */
-  const handleWeight = e => {
+  const handleWeight = (e) => {
     setWeight(e.target.value);
   };
   /**
    * arrow function to retrieve the final inputs
    * and call the funtion addVisit to send the data to the DB
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
     setOpenBackdrop(!openBackdrop);
     const visit = {
@@ -174,7 +180,7 @@ export default function NewMeasures() {
       neck: neck,
       note: note,
       tall: tall,
-      weight: weight
+      weight: weight,
     };
     console.log(params.id);
     // setFlag(true);
@@ -184,30 +190,26 @@ export default function NewMeasures() {
    * Function to send the data to DB (using axios and async await)
    * @param {Object} visit
    */
-  const addVisit = async visit => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.post(
-        `patients/${params.id}/visits/`,
-        visit,
-        {
-          headers: { Authorization: authStr }
-        }
-      );
-      console.log('response', response.data.visits);
-      setBelly('');
-      setChest('');
-      setLegs('');
-      setNeck('');
-      setNote('');
-      setTall('');
-      setWeight('');
-      setOpenSnackbar(true);
-      setOpenBackdrop(false);
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
-    }
+  const addVisit = (visit) => {
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_VISITS}`,
+      POST,
+      headers,
+      visit,
+      (error, response) => {
+        if (response) {
+          setBelly('');
+          setChest('');
+          setLegs('');
+          setNeck('');
+          setNote('');
+          setTall('');
+          setWeight('');
+          setOpenSnackbar(true);
+          setOpenBackdrop(false);
+        } else console.log('error to add new visit', error);
+      }
+    );
   };
 
   return (
@@ -240,14 +242,14 @@ export default function NewMeasures() {
               validators={['isInteger', 'required']}
               errorMessages={[
                 MESSAGE_VALIDATORS_INTEGER,
-                MESSAGE_VALIDATORS_REQUIRED
+                MESSAGE_VALIDATORS_REQUIRED,
               ]}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
                     <Avatar src={iconWeight} className={classes.small} />
                   </InputAdornment>
-                )
+                ),
               }}
             />
             <TextValidator
@@ -263,7 +265,7 @@ export default function NewMeasures() {
                   <InputAdornment position="start">
                     <Avatar src={iconTall} className={classes.small} />
                   </InputAdornment>
-                )
+                ),
               }}
             />
             <TextValidator
@@ -279,7 +281,7 @@ export default function NewMeasures() {
                   <InputAdornment position="start">
                     <Avatar src={iconChest} />
                   </InputAdornment>
-                )
+                ),
               }}
             />
           </Grid>
@@ -297,7 +299,7 @@ export default function NewMeasures() {
                   <InputAdornment position="start">
                     <Avatar src={iconBelly} className={classes.small} />
                   </InputAdornment>
-                )
+                ),
               }}
             />
             <TextValidator
@@ -313,7 +315,7 @@ export default function NewMeasures() {
                   <InputAdornment position="start">
                     <Avatar src={iconNeck} className={classes.small} />
                   </InputAdornment>
-                )
+                ),
               }}
             />
             <TextValidator
@@ -329,7 +331,7 @@ export default function NewMeasures() {
                   <InputAdornment position="start">
                     <Avatar src={iconLegs} className={classes.small} />
                   </InputAdornment>
-                )
+                ),
               }}
             />
 
@@ -347,7 +349,7 @@ export default function NewMeasures() {
                   <InputAdornment position="start">
                     <Avatar src={iconNote} />
                   </InputAdornment>
-                )
+                ),
               }}
             />
           </Grid>
