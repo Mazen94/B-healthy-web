@@ -10,6 +10,7 @@ import {
 import { DISTRIBUTION_BY_AGE_GROUB } from '../../shared/strings/strings';
 import { axiosService } from '../../shared/services/services';
 import { STATISTICS_AGE } from '../../shared/constants/endpoint';
+import { headers } from '../../shared/constants/env';
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -25,7 +26,7 @@ export default function PatientStatistics() {
   useEffect(() => {
     let mounted = true;
     const getPatientByAgeRange = async () => {
-      const res = await axiosService(STATISTICS_AGE, GET);
+      const res = await axiosService(STATISTICS_AGE, GET, headers);
       if (mounted && res.status === 200) setGroup(res.data.countGender);
     };
     getPatientByAgeRange();

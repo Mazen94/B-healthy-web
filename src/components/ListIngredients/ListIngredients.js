@@ -17,6 +17,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ingredient from '../../assets/ingredient.png';
 import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
 import {
   ENDPOINT_LIST_INGREDIENTS,
   ENDPOINT_INGREDIENTS,
@@ -98,7 +99,8 @@ export default function AddIngredient() {
     const loadIngredient = async () => {
       const res = await axiosService(
         `${ENDPOINT_LIST_INGREDIENTS}${currentPage}`,
-        GET
+        GET,
+        headers
       );
       if (mounted && res.status === 200) {
         setData(res.data.ingredients.data); //add the received data to the state data
@@ -135,7 +137,8 @@ export default function AddIngredient() {
   const handleButtonDelete = async () => {
     const res = await axiosService(
       `${ENDPOINT_INGREDIENTS}${deleteIngredientId}`,
-      DELETE
+      DELETE,
+      headers
     );
     if (res.status === 200) {
       console.log(res);

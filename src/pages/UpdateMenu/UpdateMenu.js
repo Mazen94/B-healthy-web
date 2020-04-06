@@ -43,6 +43,7 @@ import {
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import { PATH_MENUS } from '../../routes/path';
+import { headers } from '../../shared/constants/env';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -108,7 +109,11 @@ export default function UpdateIngredient() {
     //Prepare cancel request
     let mounted = true;
     const getMealStore = async (id) => {
-      const res = await axiosService(`${ENDPOINT_MEALS}${params.id}`, GET);
+      const res = await axiosService(
+        `${ENDPOINT_MEALS}${params.id}`,
+        GET,
+        headers
+      );
       if (mounted && res.status === 200) {
         setName(res.data.StoreMenu.name);
         setMaxAge(res.data.StoreMenu.max_age);
@@ -180,6 +185,7 @@ export default function UpdateIngredient() {
     await axiosService(
       `${ENDPOINT_MEALS}${params.id}/${ENDPOINT_INGREDIENTS}${valueOfIngredient.id}`,
       PUT,
+      headers,
       { amount: valueOfamount }
     );
     setFlag(false);
@@ -195,7 +201,12 @@ export default function UpdateIngredient() {
       type_menu: typeMenu,
     };
     setFlag(true);
-    const res = await axiosService(`${ENDPOINT_MEALS}${params.id}`, PUT, menu);
+    const res = await axiosService(
+      `${ENDPOINT_MEALS}${params.id}`,
+      PUT,
+      headers,
+      menu
+    );
     if (res.status === 200) history.push(`${PATH_MENUS}/1`);
     else setFlag(false);
   };

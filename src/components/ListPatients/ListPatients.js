@@ -16,6 +16,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'; //new instance of axios with a custom config
 import people from '../../assets/people.png';
+import { headers } from '../../shared/constants/env';
 import { axiosService } from '../../shared/services/services';
 import {
   ENDPOINT_LIST_PATIENTS,
@@ -102,7 +103,8 @@ export default function ListPatients() {
     const loadPatient = async () => {
       const res = await axiosService(
         `${ENDPOINT_LIST_PATIENTS}${currentPage}`,
-        GET
+        GET,
+        headers
       );
       if (mounted && res.status === 200) {
         setData(res.data.patients.data); //add the received data to the state data
@@ -122,7 +124,8 @@ export default function ListPatients() {
   const handleButtonDelete = async () => {
     const res = await axiosService(
       `${ENDPOINT_PATIENTS}${deletePatientId}`,
-      DELETE
+      DELETE,
+      headers
     );
     if (res.status === 200) {
       console.log(res);

@@ -18,6 +18,7 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
+import { headers } from '../../shared/constants/env';
 import {
   POST,
   MESSAGE_VALIDATORS_REQUIRED,
@@ -189,7 +190,7 @@ export default function AddPatient() {
    * @param {Object} patient
    */
   const addPatient = async (patient) => {
-    const res = await axiosService(ENDPOINT_PATIENTS, POST, patient);
+    const res = await axiosService(ENDPOINT_PATIENTS, POST, headers, patient);
     if (res.status === 200) {
       console.log(res.data);
       setFlag(false);

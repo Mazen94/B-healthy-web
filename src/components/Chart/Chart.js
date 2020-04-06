@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { headers } from '../../shared/constants/env';
 import { CHART_BACKGROUNDCOLOR } from '../../shared/constants/constants'; // Get constants from  constants  file
 import {
   DISTRIBUTION_BY_GENDER,
@@ -40,7 +41,7 @@ export default function Chart() {
   useEffect(() => {
     let mounted = true;
     const patientByGender = async () => {
-      const response = await axiosService(STATISTICS_GENDER, GET);
+      const response = await axiosService(STATISTICS_GENDER, GET, headers);
       if (mounted && response.status === 200) {
         setCountFemale(response.data.countGender.female);
         setCountMale(response.data.countGender.male);

@@ -38,6 +38,7 @@ import {
   MESSAGE_VALIDATORS_INTEGER,
 } from '../../shared/constants/constants';
 import { PATH_MENU, PATH_MENUS, PATH_INGREDIENTS } from '../../routes/path';
+import { headers } from '../../shared/constants/env';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -158,7 +159,7 @@ export default function AddIngredient() {
    * @param {Object} menu
    */
   const addMenu = async (menu) => {
-    const res = await axiosService(ENDPOINT_MEALS, POST, menu);
+    const res = await axiosService(ENDPOINT_MEALS, POST, headers, menu);
     if (res.status === 200) {
       history.push(`${PATH_MENU}/${res.data.MealStore.id}${PATH_INGREDIENTS}`);
     }

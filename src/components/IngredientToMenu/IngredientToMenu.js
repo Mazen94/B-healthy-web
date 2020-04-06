@@ -22,6 +22,8 @@ import {
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import { AMOUNT } from '../../shared/strings/strings';
+import { headers } from '../../shared/constants/env';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: '100%',
@@ -60,7 +62,11 @@ export default function IngredientToMenu() {
      * Arrow function to get the data (ingredients) using Async await
      */
     const loadIngredient = async () => {
-      const res = await axiosService(`${ENDPOINT_LIST_INGREDIENTS}1`, GET);
+      const res = await axiosService(
+        `${ENDPOINT_LIST_INGREDIENTS}1`,
+        GET,
+        headers
+      );
       if (res.status === 200) {
         setIngredients(res.data.ingredients.data);
       }
@@ -105,6 +111,7 @@ export default function IngredientToMenu() {
     await axiosService(
       `${ENDPOINT_MEALS}${menuId}/${ENDPOINT_INGREDIENTS}`,
       POST,
+      headers,
       ingredient
     );
   };
@@ -118,7 +125,8 @@ export default function IngredientToMenu() {
     }
     await axiosService(
       `${ENDPOINT_MEALS}${menuId}/${ENDPOINT_INGREDIENTS}${id}`,
-      DELETE
+      DELETE,
+      headers
     );
   };
 

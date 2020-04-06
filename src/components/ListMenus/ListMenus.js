@@ -19,6 +19,7 @@ import meal from '../../assets/meal.png';
 import { DIALOG_MENU } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
 import {
   ENDPOINT_LIST_MEALS,
   ENDPOINT_MEALS,
@@ -104,7 +105,8 @@ export default function AddIngredient() {
     const loadIngredient = async () => {
       const res = await axiosService(
         `${ENDPOINT_LIST_MEALS}${currentPage}`,
-        GET
+        GET,
+        headers
       );
       if (mounted && res.status === 200) {
         setData(res.data.MealStore.data); //add the received data to the state data
@@ -140,7 +142,11 @@ export default function AddIngredient() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
-    const res = await axiosService(`${ENDPOINT_MEALS}${deleteMenuId}`, DELETE);
+    const res = await axiosService(
+      `${ENDPOINT_MEALS}${deleteMenuId}`,
+      DELETE,
+      headers
+    );
     if (res.status === 200) {
       setCurrentPage(currentPage);
       setOpen(false); //to close the dialogue

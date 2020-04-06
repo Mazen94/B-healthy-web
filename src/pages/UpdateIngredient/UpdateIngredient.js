@@ -30,6 +30,7 @@ import {
   KCLA,
 } from '../../shared/strings/strings';
 import { PATH_INGREDIENTS } from '../../routes/path';
+import { headers } from '../../shared/constants/env';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
@@ -119,7 +120,11 @@ export default function UpdateIngredient(props) {
   useEffect(() => {
     let mounted = true;
     const getIndredient = async (id) => {
-      const res = await axiosService(`${ENDPOINT_INGREDIENTS}${id}`, GET);
+      const res = await axiosService(
+        `${ENDPOINT_INGREDIENTS}${id}`,
+        GET,
+        headers
+      );
       if (mounted && res.status === 200) {
         setName(res.data.ingredient.name);
         setAmount(res.data.ingredient.amount);

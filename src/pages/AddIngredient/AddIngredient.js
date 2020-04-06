@@ -30,6 +30,7 @@ import {
   VALIDATE,
 } from '../../shared/strings/strings';
 import { PATH_INGREDIENTS } from '../../routes/path';
+import { headers } from '../../shared/constants/env';
 
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
@@ -135,7 +136,12 @@ export default function AddIngredient() {
    * @param {Object} ingredient
    */
   const addIngredient = async (ingredient) => {
-    const res = await axiosService(ENDPOINT_INGREDIENTS, POST, ingredient);
+    const res = await axiosService(
+      ENDPOINT_INGREDIENTS,
+      POST,
+      headers,
+      ingredient
+    );
     if (res.status === 200) {
       history.push(`${PATH_INGREDIENTS}/1`);
     }

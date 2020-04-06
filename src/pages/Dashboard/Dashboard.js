@@ -12,6 +12,7 @@ import BarComponent from '../../components/BarComponent/BarComponent';
 import Copyright from '../../components/Copyright/Copyright';
 import PatientStatistics from '../../components/PatientStatistics/PatientStatistics';
 import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
 import {
   STATISTICS_MENUS,
   STATISTICS_INGREDIENTS,
@@ -66,10 +67,10 @@ export default function Dashboard() {
     let mounted = true;
     const MenusAndIngredients = async () => {
       // get the number of menus
-      const res = await axiosService(STATISTICS_MENUS, GET);
+      const res = await axiosService(STATISTICS_MENUS, GET, headers);
       if (mounted && res.status === 200) setCountMenus(res.data.countOfMenus);
       // get the number of ingredients
-      const results = await axiosService(STATISTICS_INGREDIENTS, GET);
+      const results = await axiosService(STATISTICS_INGREDIENTS, GET, headers);
       if (mounted && results.status === 200)
         setCountIngredient(results.data.countOfIngredient);
     };
