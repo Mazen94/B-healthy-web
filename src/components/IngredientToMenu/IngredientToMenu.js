@@ -62,14 +62,16 @@ export default function IngredientToMenu() {
      * Arrow function to get the data (ingredients) using Async await
      */
     const loadIngredient = async () => {
-      const res = await axiosService(
+      axiosService(
         `${ENDPOINT_LIST_INGREDIENTS}1`,
         GET,
-        headers
+        headers,
+        null,
+        (error, response) => {
+          if (response) setIngredients(response.data.ingredients.data);
+          else console.log('error to get an ingredient', error);
+        }
       );
-      if (res.status === 200) {
-        setIngredients(res.data.ingredients.data);
-      }
     };
     //call function
     loadIngredient();
@@ -112,7 +114,11 @@ export default function IngredientToMenu() {
       `${ENDPOINT_MEALS}${menuId}/${ENDPOINT_INGREDIENTS}`,
       POST,
       headers,
-      ingredient
+      ingredient,
+      (error, response) => {
+        if (response) console.log('added ingredient to a storeMenu', response);
+        else console.log('error to add ingredient to a storeMenu', error);
+      }
     );
   };
   /**
@@ -123,10 +129,15 @@ export default function IngredientToMenu() {
     if (addedIngredients.length === 1) {
       setFlag(false);
     }
-    await axiosService(
+    axiosService(
       `${ENDPOINT_MEALS}${menuId}/${ENDPOINT_INGREDIENTS}${id}`,
       DELETE,
-      headers
+      headers,
+      null,
+      (error, response) => {
+        if (response) console.log('deleted ingredient', response);
+        else console.log('error to delete a ingredient', error);
+      }
     );
   };
 

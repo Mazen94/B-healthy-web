@@ -1,7 +1,7 @@
 import { URL_API } from '../constants/constants';
 import Axios from 'axios';
 
-export async function axiosService(endPoint, method, headers, data) {
+export async function axiosService(endPoint, method, headers, data, callback) {
   const config = {
     method: method,
     url: `${URL_API}${endPoint}`,
@@ -11,8 +11,8 @@ export async function axiosService(endPoint, method, headers, data) {
   if (headers) config.headers = { Authorization: headers };
   try {
     const response = await Axios(config);
-    return response;
+    callback(undefined, response);
   } catch (error) {
-    return error.response;
+    callback(error.response);
   }
 }

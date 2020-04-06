@@ -159,10 +159,13 @@ export default function AddIngredient() {
    * @param {Object} menu
    */
   const addMenu = async (menu) => {
-    const res = await axiosService(ENDPOINT_MEALS, POST, headers, menu);
-    if (res.status === 200) {
-      history.push(`${PATH_MENU}/${res.data.MealStore.id}${PATH_INGREDIENTS}`);
-    }
+    axiosService(ENDPOINT_MEALS, POST, headers, menu, (error, response) => {
+      if (response) {
+        history.push(
+          `${PATH_MENU}/${response.data.MealStore.id}${PATH_INGREDIENTS}`
+        );
+      }
+    });
   };
 
   return (

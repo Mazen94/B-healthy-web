@@ -26,8 +26,11 @@ export default function PatientStatistics() {
   useEffect(() => {
     let mounted = true;
     const getPatientByAgeRange = async () => {
-      const res = await axiosService(STATISTICS_AGE, GET, headers);
-      if (mounted && res.status === 200) setGroup(res.data.countGender);
+      axiosService(STATISTICS_AGE, GET, headers, null, (error, response) => {
+        if (response) {
+          if (mounted) setGroup(response.data.countGender);
+        } else console.log(error);
+      });
     };
     getPatientByAgeRange();
     return () => {

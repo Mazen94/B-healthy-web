@@ -67,12 +67,24 @@ export default function Dashboard() {
     let mounted = true;
     const MenusAndIngredients = async () => {
       // get the number of menus
-      const res = await axiosService(STATISTICS_MENUS, GET, headers);
-      if (mounted && res.status === 200) setCountMenus(res.data.countOfMenus);
+      axiosService(STATISTICS_MENUS, GET, headers, null, (error, response) => {
+        if (response) {
+          if (mounted) setCountMenus(response.data.countOfMenus);
+        } else console.log(error);
+      });
+
       // get the number of ingredients
-      const results = await axiosService(STATISTICS_INGREDIENTS, GET, headers);
-      if (mounted && results.status === 200)
-        setCountIngredient(results.data.countOfIngredient);
+      axiosService(
+        STATISTICS_INGREDIENTS,
+        GET,
+        headers,
+        null,
+        (error, response) => {
+          if (response) {
+            if (mounted) setCountIngredient(response.data.countOfIngredient);
+          } else console.log(error);
+        }
+      );
     };
     //Call the method
     MenusAndIngredients();

@@ -190,15 +190,22 @@ export default function AddPatient() {
    * @param {Object} patient
    */
   const addPatient = async (patient) => {
-    const res = await axiosService(ENDPOINT_PATIENTS, POST, headers, patient);
-    if (res.status === 200) {
-      console.log(res.data);
-      setFlag(false);
-      history.push(`${PATH_PATIENTS}/1`);
-    } else {
-      setFlag(false);
-      setErreurValidation(true);
-    }
+    axiosService(
+      ENDPOINT_PATIENTS,
+      POST,
+      headers,
+      patient,
+      (error, response) => {
+        if (response) {
+          console.log(response.data);
+          setFlag(false);
+          history.push(`${PATH_PATIENTS}/1`);
+        } else {
+          setFlag(false);
+          setErreurValidation(true);
+        }
+      }
+    );
   };
   return (
     <div className={classes.root}>

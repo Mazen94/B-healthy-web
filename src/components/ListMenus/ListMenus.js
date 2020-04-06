@@ -103,16 +103,21 @@ export default function AddIngredient() {
     let mounted = true;
     // Arrow function to get the data (menu) using Async await
     const loadIngredient = async () => {
-      const res = await axiosService(
+      axiosService(
         `${ENDPOINT_LIST_MEALS}${currentPage}`,
         GET,
-        headers
+        headers,
+        null,
+        (error, response) => {
+          if (response) {
+            if (mounted) {
+              setData(response.data.MealStore.data); //add the received data to the state data
+              setCurrentPage(response.data.MealStore.current_page); //add the received current_page to the state lastPage
+              setLastPage(response.data.MealStore.last_page); //add the received last_page to the state lastPage
+            }
+          } else console.log('error to get all the list of menus', error);
+        }
       );
-      if (mounted && res.status === 200) {
-        setData(res.data.MealStore.data); //add the received data to the state data
-        setCurrentPage(res.data.MealStore.current_page); //add the received current_page to the state lastPage
-        setLastPage(res.data.MealStore.last_page); //add the received last_page to the state lastPage
-      }
     };
     //call function
     loadIngredient();
@@ -142,16 +147,19 @@ export default function AddIngredient() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
-    const res = await axiosService(
+    axiosService(
       `${ENDPOINT_MEALS}${deleteMenuId}`,
       DELETE,
-      headers
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          setCurrentPage(currentPage);
+          setOpen(false); //to close the dialogue
+          setData(data.filter((item) => item.id !== deleteMenuId)); //get the new data without the menu deleted*/
+        } else console.log('error to delete a menus', error);
+      }
     );
-    if (res.status === 200) {
-      setCurrentPage(currentPage);
-      setOpen(false); //to close the dialogue
-      setData(data.filter((item) => item.id !== deleteMenuId)); //get the new data without the menu deleted*/
-    }
   };
   /**
    * Function to render

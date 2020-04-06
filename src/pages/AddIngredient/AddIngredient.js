@@ -136,15 +136,16 @@ export default function AddIngredient() {
    * @param {Object} ingredient
    */
   const addIngredient = async (ingredient) => {
-    const res = await axiosService(
+    axiosService(
       ENDPOINT_INGREDIENTS,
       POST,
       headers,
-      ingredient
+      ingredient,
+      (error, response) => {
+        if (response) history.push(`${PATH_INGREDIENTS}/1`);
+        else console.log('error to add ingredient', error);
+      }
     );
-    if (res.status === 200) {
-      history.push(`${PATH_INGREDIENTS}/1`);
-    }
   };
 
   return (

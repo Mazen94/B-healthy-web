@@ -108,20 +108,25 @@ export default function UpdateIngredient() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const getMealStore = async (id) => {
-      const res = await axiosService(
+    const getMealStore = async () => {
+      axiosService(
         `${ENDPOINT_MEALS}${params.id}`,
         GET,
-        headers
+        headers,
+        null,
+        (error, response) => {
+          if (response) {
+            if (mounted) {
+              setName(response.data.StoreMenu.name);
+              setMaxAge(response.data.StoreMenu.max_age);
+              setMinAge(response.data.StoreMenu.min_age);
+              setIngredients(response.data.StoreMenu.ingredients);
+              setTypeMenu(response.data.StoreMenu.type_menu);
+              setOpenSkeleton(false);
+            }
+          } else console.log('error to get a mealStore', error);
+        }
       );
-      if (mounted && res.status === 200) {
-        setName(res.data.StoreMenu.name);
-        setMaxAge(res.data.StoreMenu.max_age);
-        setMinAge(res.data.StoreMenu.min_age);
-        setIngredients(res.data.StoreMenu.ingredients);
-        setTypeMenu(res.data.StoreMenu.type_menu);
-        setOpenSkeleton(false);
-      }
     };
     getMealStore(params.id);
     return () => {
@@ -186,7 +191,11 @@ export default function UpdateIngredient() {
       `${ENDPOINT_MEALS}${params.id}/${ENDPOINT_INGREDIENTS}${valueOfIngredient.id}`,
       PUT,
       headers,
-      { amount: valueOfamount }
+      { amount: valueOfamount },
+      (error, response) => {
+        if (response) console.log('changed amount', response);
+        else console.log('error to change amount of ingredient', error);
+      }
     );
     setFlag(false);
   };
@@ -201,14 +210,16 @@ export default function UpdateIngredient() {
       type_menu: typeMenu,
     };
     setFlag(true);
-    const res = await axiosService(
+    axiosService(
       `${ENDPOINT_MEALS}${params.id}`,
       PUT,
       headers,
-      menu
+      menu,
+      (error, response) => {
+        if (response) history.push(`${PATH_MENUS}/1`);
+        else setFlag(false);
+      }
     );
-    if (res.status === 200) history.push(`${PATH_MENUS}/1`);
-    else setFlag(false);
   };
   /**
    * Function to render

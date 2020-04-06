@@ -41,11 +41,14 @@ export default function Chart() {
   useEffect(() => {
     let mounted = true;
     const patientByGender = async () => {
-      const response = await axiosService(STATISTICS_GENDER, GET, headers);
-      if (mounted && response.status === 200) {
-        setCountFemale(response.data.countGender.female);
-        setCountMale(response.data.countGender.male);
-      }
+      axiosService(STATISTICS_GENDER, GET, headers, null, (error, response) => {
+        if (response) {
+          if (mounted) {
+            setCountFemale(response.data.countGender.female);
+            setCountMale(response.data.countGender.male);
+          }
+        } else console.log(error);
+      });
     };
     //Call the method
     patientByGender();

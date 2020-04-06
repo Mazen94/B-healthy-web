@@ -97,16 +97,21 @@ export default function AddIngredient() {
     let mounted = true;
     //Arrow function to get the data (ingredients) using Async await
     const loadIngredient = async () => {
-      const res = await axiosService(
+      axiosService(
         `${ENDPOINT_LIST_INGREDIENTS}${currentPage}`,
         GET,
-        headers
+        headers,
+        null,
+        (error, response) => {
+          if (response) {
+            if (mounted) {
+              setData(response.data.ingredients.data); //add the received data to the state data
+              setCurrentPage(response.data.ingredients.current_page); //add the received current_page to the state lastPage
+              setLastPage(response.data.ingredients.last_page); //add the received last_page to the state lastPage
+            }
+          } else console.log('error to get the list of ingredients', error);
+        }
       );
-      if (mounted && res.status === 200) {
-        setData(res.data.ingredients.data); //add the received data to the state data
-        setCurrentPage(res.data.ingredients.current_page); //add the received current_page to the state lastPage
-        setLastPage(res.data.ingredients.last_page); //add the received last_page to the state lastPage
-      }
     };
     //call function
     loadIngredient();
@@ -135,17 +140,19 @@ export default function AddIngredient() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
-    const res = await axiosService(
+    await axiosService(
       `${ENDPOINT_INGREDIENTS}${deleteIngredientId}`,
       DELETE,
-      headers
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          setCurrentPage(currentPage);
+          setOpen(false); //to close the dialogue
+          setData(data.filter((item) => item.id !== deleteIngredientId)); //get the new data without the Ingredient deleted
+        } else console.log('error to delete ingredients', error);
+      }
     );
-    if (res.status === 200) {
-      console.log(res);
-      setCurrentPage(currentPage);
-      setOpen(false); //to close the dialogue
-      setData(data.filter((item) => item.id !== deleteIngredientId)); //get the new data without the Ingredient deleted
-    }
   };
   /**
    *  function to render

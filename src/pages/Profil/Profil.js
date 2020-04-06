@@ -110,13 +110,16 @@ export default function Profil() {
     //Prepare cancel request
     let mounted = true;
     const fetchData = async () => {
-      const res = await axiosService(ENDPOINT_PROFIL, GET, headers);
-      if (mounted && res.status === 200) {
-        setFirstName(res.data.nutritionist.firstName);
-        setLastName(res.data.nutritionist.lastName);
-        setEmail(res.data.nutritionist.email);
-        setOpenSkeleton(false);
-      }
+      axiosService(ENDPOINT_PROFIL, GET, headers, null, (error, response) => {
+        if (response) {
+          if (mounted) {
+            setFirstName(response.data.nutritionist.firstName);
+            setLastName(response.data.nutritionist.lastName);
+            setEmail(response.data.nutritionist.email);
+            setOpenSkeleton(false);
+          }
+        } else console.log('error to get connected nutritionnist', error);
+      });
     };
     fetchData();
     return () => {
@@ -142,13 +145,20 @@ export default function Profil() {
    * Arrow function to send the data to db
    */
   const putNutritionist = async (nutritionist) => {
-    const res = await axiosService(ENDPOINT_PROFIL, PUT, headers, nutritionist);
-    if (res.status === 200) {
-      history.push(PATH_DASHBOARD); //Redirect to the page dashboard
-    } else {
-      setFlag(false); //change the value of the state (flag) to flase to hide the spinner
-      setErreurValidation(true); //change the value of the state (erreurValidation) to true to display the message error
-    }
+    axiosService(
+      ENDPOINT_PROFIL,
+      PUT,
+      headers,
+      nutritionist,
+      (error, response) => {
+        //Redirect to the page dashboard
+        if (response) history.push(PATH_DASHBOARD);
+        else {
+          setFlag(false); //change the value of the state (flag) to flase to hide the spinner
+          setErreurValidation(true); //change the value of the state (erreurValidation) to true to display the message error
+        }
+      }
+    );
   };
   /**
    * Validation : add custom rules (Password must contain at least 8 characters)

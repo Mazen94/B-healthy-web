@@ -120,17 +120,22 @@ export default function UpdateIngredient(props) {
   useEffect(() => {
     let mounted = true;
     const getIndredient = async (id) => {
-      const res = await axiosService(
+      axiosService(
         `${ENDPOINT_INGREDIENTS}${id}`,
         GET,
-        headers
+        headers,
+        null,
+        (error, response) => {
+          if (response) {
+            if (mounted) {
+              setName(response.data.ingredient.name);
+              setAmount(response.data.ingredient.amount);
+              setCalorie(response.data.ingredient.calorie);
+              setOpenSkeleton(false);
+            }
+          } else console.log('error to get only one ingredient', error);
+        }
       );
-      if (mounted && res.status === 200) {
-        setName(res.data.ingredient.name);
-        setAmount(res.data.ingredient.amount);
-        setCalorie(res.data.ingredient.calorie);
-        setOpenSkeleton(false);
-      }
     };
     getIndredient(props.match.params.id);
     return () => {
@@ -158,13 +163,16 @@ export default function UpdateIngredient(props) {
    * @param {Object} ingredient
    */
   const putIngredient = async (ingredient) => {
-    const res = await axiosService(
+    axiosService(
       `${ENDPOINT_INGREDIENTS}${props.match.params.id}`,
       PUT,
       headers,
-      ingredient
+      ingredient,
+      (error, response) => {
+        if (response) history.push(`${PATH_INGREDIENTS}/1`);
+        else console.log('error to update ingredient', error);
+      }
     );
-    if (res.status === 200) history.push(`${PATH_INGREDIENTS}/1`);
   };
   /**
    * Function to render

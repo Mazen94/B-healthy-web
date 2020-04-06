@@ -101,16 +101,21 @@ export default function ListPatients() {
     let mounted = true;
     //Arrow function to get the data (patients) using Async await
     const loadPatient = async () => {
-      const res = await axiosService(
+      axiosService(
         `${ENDPOINT_LIST_PATIENTS}${currentPage}`,
         GET,
-        headers
+        headers,
+        null,
+        (error, response) => {
+          if (response) {
+            if (mounted) {
+              setData(response.data.patients.data); //add the received data to the state data
+              setCurrentPage(response.data.patients.current_page); //add the received current_page  to the state currentPage
+              setLastPage(response.data.patients.last_page); //add the received last_page to the state lastPage
+            }
+          } else console.log(error);
+        }
       );
-      if (mounted && res.status === 200) {
-        setData(res.data.patients.data); //add the received data to the state data
-        setCurrentPage(res.data.patients.current_page); //add the received current_page  to the state currentPage
-        setLastPage(res.data.patients.last_page); //add the received last_page to the state lastPage
-      }
     };
     //call function
     loadPatient();
@@ -122,17 +127,19 @@ export default function ListPatients() {
    * arrow function to delete a patient
    */
   const handleButtonDelete = async () => {
-    const res = await axiosService(
+    axiosService(
       `${ENDPOINT_PATIENTS}${deletePatientId}`,
       DELETE,
-      headers
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          setCurrentPage(currentPage);
+          setOpen(false); //to close the dialogue
+          setData(data.filter((item) => item.id !== deletePatientId)); //get the new data without the patient deleted
+        } else console.log(error);
+      }
     );
-    if (res.status === 200) {
-      console.log(res);
-      setCurrentPage(currentPage);
-      setOpen(false); //to close the dialogue
-      setData(data.filter((item) => item.id !== deletePatientId)); //get the new data without the patient deleted
-    }
   };
   /**
    * arrow function to open the dialogue when the nutritionit want to delete a patient

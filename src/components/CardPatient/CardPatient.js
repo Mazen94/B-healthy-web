@@ -5,46 +5,49 @@ import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import people from '../../assets/people.png';
-import Axios from 'axios';
+import { GET } from '../../shared/constants/constants';
+import { headers } from '../../shared/constants/env';
+import { axiosService } from '../../shared/services/services';
+import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
 import { PATIENT } from '../../shared/strings/strings';
-const useStyles = makeStyles(theme => ({
+
+const useStyles = makeStyles((theme) => ({
   gridFiche: {
-    height: 'auto'
+    height: 'auto',
   },
   large: {
     marginTop: '4%',
     width: theme.spacing(20),
-    height: theme.spacing(20)
+    height: theme.spacing(20),
   },
   typography: {
     marginTop: '20%',
 
     margin: 'auto',
-    color: 'white'
+    color: 'white',
   },
 
   grid: {
     display: 'flex',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   patientPaper: {
     backgroundColor: 'rgb(63, 81, 181)',
     marginRight: 15,
     height: 'auto',
 
-    paddingBottom: '14%'
+    paddingBottom: '14%',
   },
   patientTypography: {
     paddingTop: 12,
     color: 'white',
 
-    'font-size': '16px'
+    'font-size': '16px',
   },
   skeleton: {
-    margin: 'auto'
-  }
+    margin: 'auto',
+  },
 }));
 
 export default function CardPatient() {
@@ -54,36 +57,27 @@ export default function CardPatient() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
+
     /**
      * Arrow function to get the data (patients) using Async await
      */
     const loadPatientById = async () => {
-      try {
-        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get(
-          `patients/` + id,
-          {
-            headers: { Authorization: authStr }
-          },
-          {
-            cancelToken: source.token
-          }
-        );
-        if (mounted) {
-          setPatient(response.data.patient); //add the received data to the state data
+      axiosService(
+        `${ENDPOINT_PATIENTS}${id}`,
+        GET,
+        headers,
+        null,
+        (error, response) => {
+          if (response) {
+            if (mounted) setPatient(response.data.patient);
+          } else console.log(error);
         }
-      } catch (error) {
-        console.log(error.response);
-      }
+      );
     };
     //call function
     loadPatientById();
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, [id]);
   if (patient.length === 0) {
