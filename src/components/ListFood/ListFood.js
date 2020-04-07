@@ -6,7 +6,6 @@ import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import healthy from '../../api/healthy';
 import { useParams } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,36 +16,43 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Button from '@material-ui/core/Button';
 import { useTheme } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
-import Axios from 'axios';
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
+import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_RECOMMENDATIONS,
+  ENDPOINT_MENUS,
+} from '../../shared/constants/endpoint';
 import {
   LIST_OF_MENU,
   NUMBER_OF_CALORIES,
-  OK
+  OK,
 } from '../../shared/strings/strings';
+import { GET } from '../../shared/constants/constants';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '5%',
     margin: 'auto',
     width: '100%',
     maxWidth: '90%',
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   numberCalorie: {
     color: 'black',
-    'font-size': '14px'
+    'font-size': '14px',
   },
   ingredients: {
     marginLeft: '25%',
-    'font-size': '14px'
+    'font-size': '14px',
   },
   skeleton: {
     marginTop: '5%',
-    margin: 'auto'
+    margin: 'auto',
   },
   skeletonRec: {
-    margin: 'auto'
-  }
+    margin: 'auto',
+  },
 }));
 
 export default function ListFood(props) {
@@ -65,31 +71,22 @@ export default function ListFood(props) {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
-    const loadMenus = async () => {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`;
-      try {
-        const response = await healthy.get(
-          `/patients/${params.id}/recommendations/menus`,
-
-          {
-            headers: { Authorization: AuthStr }
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${ENDPOINT_MENUS}`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setData(response.data.menus);
+            setFlag(false);
           }
-        );
-        if (mounted) {
-          setData(response.data.menus);
-          setFlag(false);
-        }
-      } catch (error) {
-        console.log(error.response);
+        } else console.log('error to delete a menu', error);
       }
-    };
-    loadMenus();
+    );
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, [params.id]);
 
@@ -97,21 +94,21 @@ export default function ListFood(props) {
    * Arrow function to Get Menu By id
    * @param {Object} menu
    */
-  const handleClickButton = async menu => {
+  const handleClickButton = async (menu) => {
     handleToggle(true);
-    const AuthStr = `Bearer ${localStorage.getItem('token')}`;
-    const response = await healthy.get(
-      `/patients/${params.id}/recommendations/menus/${menu.id}`,
-
-      {
-        headers: { Authorization: AuthStr }
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${ENDPOINT_MENUS}${menu.id}`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          setMenu(response.data.menus);
+          handleToggle(false);
+          setOpen(true);
+        } else console.log('error to get a menu', error);
       }
     );
-
-    console.log(response.data.menus);
-    setMenu(response.data.menus);
-    handleToggle(false);
-    setOpen(true);
   };
   /**
    * to close the dialog
