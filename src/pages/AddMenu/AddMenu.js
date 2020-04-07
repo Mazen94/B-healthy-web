@@ -158,7 +158,7 @@ export default function AddIngredient() {
    * Function to send the data to DB (using axios and async await)
    * @param {Object} menu
    */
-  const addMenu = async (menu) => {
+  const addMenu = (menu) => {
     axiosService(ENDPOINT_MEALS, POST, headers, menu, (error, response) => {
       if (response) {
         history.push(

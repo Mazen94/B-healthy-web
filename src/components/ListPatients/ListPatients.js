@@ -73,7 +73,7 @@ const useStyles = makeStyles({
 /**
  * Component for showing the list of patient.
  */
-export default function ListPatients() {
+export default function ListPatients(props) {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete patient
@@ -81,6 +81,8 @@ export default function ListPatients() {
   const [lasPage, setLastPage] = useState(10); //to get the last page in the data
   const [data, setData] = useState([]); //to get the list of patients
   const [deletePatientId, setDeletePatientId] = useState(''); // to retrieve the patient id to delete
+  const [flag, setFlag] = useState(true);
+
   /**
    *  Arrow function to go to the next page
    * @param {event} e
@@ -97,32 +99,28 @@ export default function ListPatients() {
    * this hook executed when the value of currentPage changes
    */
   useEffect(() => {
-    //Prepare cancel request
     let mounted = true;
-    //Arrow function to get the data (patients) using Async await
-    const loadPatient = async () => {
-      axiosService(
-        `${ENDPOINT_LIST_PATIENTS}${currentPage}`,
-        GET,
-        headers,
-        null,
-        (error, response) => {
-          if (response) {
-            if (mounted) {
-              setData(response.data.patients.data); //add the received data to the state data
-              setCurrentPage(response.data.patients.current_page); //add the received current_page  to the state currentPage
-              setLastPage(response.data.patients.last_page); //add the received last_page to the state lastPage
-            }
-          } else console.log(error);
+    let url = '';
+    if (props.search !== '')
+      url = `${ENDPOINT_LIST_PATIENTS}${currentPage}&search=${props.search}`;
+    else url = `${ENDPOINT_LIST_PATIENTS}${currentPage}`;
+    setFlag(true);
+    //axiosService to get list of patients
+    axiosService(url, GET, headers, null, (error, response) => {
+      if (response) {
+        if (mounted) {
+          setData(response.data.patients.data); //add the received data to the state data
+          setCurrentPage(response.data.patients.current_page); //add the received current_page  to the state currentPage
+          setLastPage(response.data.patients.last_page); //add the received last_page to the state lastPage
+          setFlag(false);
         }
-      );
-    };
-    //call function
-    loadPatient();
+      } else console.log(error);
+    });
+
     return () => {
       mounted = false;
     };
-  }, [currentPage]);
+  }, [currentPage, props.search]);
   /**
    * arrow function to delete a patient
    */
@@ -166,7 +164,7 @@ export default function ListPatients() {
    * function to render
    */
   const renderFunction = () => {
-    if (data.length === 0) {
+    if (flag) {
       return (
         <div className={classes.skeleton}>
           <Skeleton variant="text" height="70px" width="100%" />
@@ -182,8 +180,8 @@ export default function ListPatients() {
               <TableHead>
                 <TableRow>
                   <TableCell>
+                    {LAST_NAME}&nbsp;
                     {FIRST_NAME}
-                    {LAST_NAME}
                   </TableCell>
                   <TableCell align="left">{EMAIL}</TableCell>
                   <TableCell align="left">{PHONE}</TableCell>
