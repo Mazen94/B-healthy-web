@@ -2,16 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Bar } from 'react-chartjs-2';
+import Paper from '@material-ui/core/Paper';
+import clsx from 'clsx';
+import Skeleton from '@material-ui/lab/Skeleton';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   depositContext: {
-    flex: 1
-  }
-});
+    flex: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  fixedHeight: {
+    height: 240,
+  },
+}));
 
 export default function BarComponent(props) {
   const classes = useStyles();
   const { name, count, backgroundColor } = props;
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); //clsx is a tiny utility for constructing className strings conditionally
   const [data, setData] = useState({});
   useEffect(() => {
     console.log(count);
@@ -20,29 +33,48 @@ export default function BarComponent(props) {
       datasets: [
         {
           data: [count],
-          backgroundColor: [backgroundColor]
-        }
-      ]
+          backgroundColor: [backgroundColor],
+        },
+      ],
     });
   }, [name, count, backgroundColor]);
-  return (
-    <React.Fragment>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        {name}
-      </Typography>
-      <Bar
-        className={classes.bar}
-        data={data}
-        width={100}
-        height={60}
-        options={{
-          legend: {
-            display: false
-          }
-        }}
-      />
-
-      <div></div>
-    </React.Fragment>
-  );
+  /**
+   * Function to render
+   */
+  const renderFunction = () => {
+    if (count === -1) {
+      return (
+        <div className={classes.skeleton}>
+          {/* Loading when the data is empty */}
+          <Skeleton variant="rect" width="100%" height="32vh" />
+        </div>
+      );
+    } else
+      return (
+        <React.Fragment>
+          <Paper className={fixedHeightPaper}>
+            <Typography
+              component="h2"
+              variant="h6"
+              color="primary"
+              gutterBottom
+            >
+              {name}
+            </Typography>
+            <Bar
+              className={classes.bar}
+              data={data}
+              width={100}
+              height={60}
+              options={{
+                legend: {
+                  display: false,
+                },
+              }}
+            />
+          </Paper>
+        </React.Fragment>
+      );
+  };
+  return <React.Fragment>{renderFunction()}</React.Fragment>;
 }

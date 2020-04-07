@@ -2,9 +2,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import Chart from '../../components/Chart/Chart';
@@ -41,15 +39,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 240,
-  },
 }));
 
 /**
@@ -57,9 +46,8 @@ const useStyles = makeStyles((theme) => ({
  */
 export default function Dashboard() {
   const classes = useStyles(); //add styles to variable classes
-  const [countIngredient, setCountIngredient] = useState(); //state to get the number of ingredient
-  const [countMenus, setCountMenus] = useState(); //state to get the number of ingredient
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); //clsx is a tiny utility for constructing className strings conditionally
+  const [countIngredient, setCountIngredient] = useState(-1); //state to get the number of ingredient
+  const [countMenus, setCountMenus] = useState(-1); //state to get the number of ingredient
   /**
    * Hook to get the number of menus and ingredients
    */
@@ -102,35 +90,27 @@ export default function Dashboard() {
           <Grid container spacing={3}>
             {/* Chart */}
             <Grid item xs={12} md={8} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
+              <Chart />
             </Grid>
             {/* BarComponent Ingredient */}
             <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <BarComponent
-                  name={INGREDIENTS}
-                  count={countIngredient}
-                  backgroundColor={DASHBOARD_INGREDIENT_BACKGROUNDCOLOR}
-                />
-              </Paper>
+              <BarComponent
+                name={INGREDIENTS}
+                count={countIngredient}
+                backgroundColor={DASHBOARD_INGREDIENT_BACKGROUNDCOLOR}
+              />
             </Grid>
             {/* BarComponent Menus */}
             <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <BarComponent
-                  name={MENUS}
-                  count={countMenus}
-                  backgroundColor={DASHBOARD_MENU_BACKGROUNDCOLOR}
-                />
-              </Paper>
+              <BarComponent
+                name={MENUS}
+                count={countMenus}
+                backgroundColor={DASHBOARD_MENU_BACKGROUNDCOLOR}
+              />
             </Grid>
             {/* PatientStatistics */}
             <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <PatientStatistics />
-              </Paper>
+              <PatientStatistics />
             </Grid>
           </Grid>
           <Box pt={4}>

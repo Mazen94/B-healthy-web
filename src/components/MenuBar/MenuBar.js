@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,14 +14,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItems from '../../components/ListItems/ListItems';
-import Avatar from '@material-ui/core/Avatar';
-import doctor from '../../assets/doctor.png';
-import Box from '@material-ui/core/Box';
-import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
-import { GET } from '../../shared/constants/constants';
-import { PATH_LOGIN, PATH_PROFIL } from '../../routes/path';
-import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
+import { PATH_LOGIN } from '../../routes/path';
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -101,24 +95,6 @@ export default function MenuBar(props) {
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const classes = useStyles(); //add styles to variable classes
   const [open, setOpen] = useState(true); //to open and close the AppBar (initial value is True)
-  const [data, setData] = useState(''); //to get the nutritionist connected (intial value is empty string)
-
-  /**
-   * Hook useEffect in this case he plays the role of componentDidMount
-   * in this hook there will be a call for the function fetchData
-   */
-  useEffect(() => {
-    //Prepare cancel request
-    let mounted = true;
-    axiosService(ENDPOINT_PROFIL, GET, headers, null, (error, response) => {
-      if (response) {
-        if (mounted) setData(response.data.nutritionist);
-      } else console.log(error);
-    });
-    return () => {
-      mounted = false;
-    };
-  }, [data]);
   /**
    * Arrow function to disconnect the user when he clicks on the icon <ExitToAppIcon/>
    */
@@ -184,28 +160,6 @@ export default function MenuBar(props) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          {/* Avatar and name of the user  */}
-          {data && (
-            <Fragment>
-              <Box
-                component="span"
-                display="block"
-                p={1}
-                m={1}
-                bgcolor="background.paper"
-              >
-                <a href={PATH_PROFIL}>
-                  <Avatar className={classes.large} src={doctor} />
-                </a>
-              </Box>
-              <a href={PATH_PROFIL} className={classes.link}>
-                <h5 className={classes.h5}>
-                  {`Dr.${data.firstName} ${data.lastName}`}
-                </h5>
-              </a>
-            </Fragment>
-          )}
-
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>

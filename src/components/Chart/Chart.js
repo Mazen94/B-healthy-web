@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +12,10 @@ import {
 import { STATISTICS_GENDER } from '../../shared/constants/endpoint';
 import { axiosService } from '../../shared/services/services';
 import { GET } from '../../shared/constants/constants';
+import Skeleton from '@material-ui/lab/Skeleton';
+import Paper from '@material-ui/core/Paper';
+import clsx from 'clsx';
+
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -19,12 +23,22 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     textAlign: 'center',
   },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  fixedHeight: {
+    height: 240,
+  },
 }));
 export default function Chart() {
   const classes = useStyles(); //add styles to variable classes
   const [countMale, setCountMale] = useState(0); //state to recover the number of male
   const [countFemale, setCountFemale] = useState(0); //state to recover the number of female
-
+  const [flag, setFlag] = useState(true);
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); //clsx is a tiny utility for constructing className strings conditionally
   //Bring in data
   const data = {
     labels: [CHART_LABEL_FEMALE, CHART_LABEL_MALE],
@@ -45,6 +59,7 @@ export default function Chart() {
         if (mounted) {
           setCountFemale(response.data.countGender.female);
           setCountMale(response.data.countGender.male);
+          setFlag(false);
         }
       } else console.log(error);
     });
@@ -52,21 +67,36 @@ export default function Chart() {
       mounted = false;
     };
   }, []);
-
-  return (
-    <React.Fragment>
-      {/* Title of  Pie */}
-      <Typography
-        className={classes.typography}
-        component="h2"
-        variant="h6"
-        color="primary"
-        gutterBottom
-      >
-        {DISTRIBUTION_BY_GENDER}
-      </Typography>
-      {/* Chart Pie */}
-      <Pie className={classes.pie} data={data} width={60} height={20} />
-    </React.Fragment>
-  );
+  /**
+   * Function to render
+   */
+  const renderFunction = () => {
+    if (flag) {
+      return (
+        <div className={classes.skeleton}>
+          {/* Loading when the data is empty */}
+          <Skeleton variant="rect" width="100%" height="32vh" />
+        </div>
+      );
+    } else
+      return (
+        <React.Fragment>
+          <Paper className={fixedHeightPaper}>
+            {/* Title of  Pie */}
+            <Typography
+              className={classes.typography}
+              component="h2"
+              variant="h6"
+              color="primary"
+              gutterBottom
+            >
+              {DISTRIBUTION_BY_GENDER}
+            </Typography>
+            {/* Chart Pie */}
+            <Pie className={classes.pie} data={data} width={60} height={20} />
+          </Paper>
+        </React.Fragment>
+      );
+  };
+  return <Fragment>{renderFunction()}</Fragment>;
 }
