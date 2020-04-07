@@ -101,26 +101,21 @@ export default function AddIngredient() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    // Arrow function to get the data (menu) using Async await
-    const loadIngredient = async () => {
-      axiosService(
-        `${ENDPOINT_LIST_MEALS}${currentPage}`,
-        GET,
-        headers,
-        null,
-        (error, response) => {
-          if (response) {
-            if (mounted) {
-              setData(response.data.MealStore.data); //add the received data to the state data
-              setCurrentPage(response.data.MealStore.current_page); //add the received current_page to the state lastPage
-              setLastPage(response.data.MealStore.last_page); //add the received last_page to the state lastPage
-            }
-          } else console.log('error to get all the list of menus', error);
-        }
-      );
-    };
-    //call function
-    loadIngredient();
+    axiosService(
+      `${ENDPOINT_LIST_MEALS}${currentPage}`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setData(response.data.MealStore.data); //add the received data to the state data
+            setCurrentPage(response.data.MealStore.current_page); //add the received current_page to the state lastPage
+            setLastPage(response.data.MealStore.last_page); //add the received last_page to the state lastPage
+          }
+        } else console.log('error to get all the list of menus', error);
+      }
+    );
     return () => {
       mounted = false;
     };

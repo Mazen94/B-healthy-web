@@ -10,3 +10,5 @@ export const ENDPOINT_LIST_MEALS = 'mealStore?page=';
 export const ENDPOINT_MEALS = 'mealStore/';
 export const ENDPOINT_PROFIL = '/';
 export const ENDPOINT_VISITS = 'visits/';
+export const ENDPOINT_RECOMMENDATIONS = 'recommendations/';
+export const ENDPOINT_MENUS = 'menus/';

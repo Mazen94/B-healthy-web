@@ -5,14 +5,19 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import ModificationRecommendation from '../../components/ModificationRecommendation/ModificationRecommendation';
 import MenusRealtedRecommendation from '../../components/MenusRelatedRecommendation/MenusRealtedRecommendation';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Button } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
-import { PRIMARY_COLOR } from '../../shared/constants/constants';
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
+import { PRIMARY_COLOR, GET } from '../../shared/constants/constants';
+import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_RECOMMENDATIONS,
+} from '../../shared/constants/endpoint';
 import {
   FOLLOWING,
   UPDATERECOMMENDATION_STEPPER_CREATION,
@@ -20,7 +25,7 @@ import {
   RECOMMENDATION_STEPPER_ADD,
 } from '../../shared/strings/strings';
 import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
-import Axios from 'axios';
+
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
@@ -73,35 +78,24 @@ export default function UpdateRecommendations() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
     // Arrow function to get the recommendation by id
-    const getRecommendationById = async () => {
-      try {
-        const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-        const response = await healthy.get(
-          `/patients/${params.id}/recommendations/${params.idRecommendation}`,
-          {
-            headers: { Authorization: authStr },
-          },
-          {
-            cancelToken: source.token,
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setName(response.data.recommendation.name);
+            setAvoid(response.data.recommendation.avoid);
+            setMenus(response.data.recommendation.menus);
           }
-        );
-        if (mounted) {
-          setName(response.data.recommendation.name);
-          setAvoid(response.data.recommendation.avoid);
-          setMenus(response.data.recommendation.menus);
-        }
-      } catch (error) {
-        console.log(error.response);
+        } else console.log('error to get a recommendation', error);
       }
-    };
-    getRecommendationById();
+    );
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, [params]);
   /**

@@ -6,12 +6,18 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import healthy from '../../api/healthy';
 import { useParams } from 'react-router-dom';
 import meal from '../../assets/meal.png';
-import { DIALOG_MENU } from '../../shared/constants/constants';
+import { DIALOG_MENU, DELETE } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { CARD_HEADER_TITLE } from '../../shared/strings/strings';
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
+import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_RECOMMENDATIONS,
+  ENDPOINT_MENUS,
+} from '../../shared/constants/endpoint';
 
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
@@ -48,19 +54,18 @@ const MenusRealtedRecommendation = (props) => {
    */
   const handleButtonDelete = async () => {
     setOpen(false);
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      const response = await healthy.delete(
-        `patients/${params.id}/recommendations/${params.idRecommendation}/menus/${deleteMenuId}`,
-        {
-          headers: { Authorization: authStr },
-        }
-      );
-      setMenus(menus.filter((item) => item.id !== deleteMenuId)); //get the new data without the menu deleted)
-      console.log('handleButtonDelete =', response);
-    } catch (error) {
-      console.log(error.response);
-    }
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${ENDPOINT_MENUS}${deleteMenuId}`,
+      DELETE,
+      headers,
+      null,
+      (error, response) => {
+        if (response)
+          setMenus(menus.filter((item) => item.id !== deleteMenuId));
+        //get the new data without the menu deleted)
+        else console.log('error to delete a menu', error);
+      }
+    );
   };
   /**
    * arrow function to close the dialogue

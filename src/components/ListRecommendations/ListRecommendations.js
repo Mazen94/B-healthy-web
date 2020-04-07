@@ -15,18 +15,23 @@ import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import recommendations from '../../assets/recommendations.png';
-import Axios from 'axios';
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { DIALOG_RECOMMENDATION } from '../../shared/constants/constants';
 import { RECOMMENDATIONS, CREATION_DATE } from '../../shared/strings/strings';
 import {
+  DELETE,
+  GET,
   PRIMARY_COLOR,
   SECONDARY_COLOR,
 } from '../../shared/constants/constants';
 import { PATH_PATIENT, PATH_RECOMMENDATIONS } from '../../routes/path';
-
+import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_RECOMMENDATIONS,
+} from '../../shared/constants/endpoint';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -88,36 +93,24 @@ export default function ListRecommendations() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const CancelToken = Axios.CancelToken;
-    const source = CancelToken.source();
-    //Arrow function to get the data (ingredients) using Async await
-    const loadRecommendation = async () => {
-      const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      try {
-        const response = await healthy.get(
-          `/patients/${params.id}/recommendations/`,
-          {
-            headers: { Authorization: authStr },
-          },
-          {
-            cancelToken: source.token,
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setData(response.data.recommendations); //add the received data to the state data
+            setFlag(false);
           }
-        );
-        if (mounted) {
-          console.log(response.data.recommendations);
-          setData(response.data.recommendations); //add the received data to the state data
-          setFlag(false);
-        }
-      } catch (error) {
-        console.log(error.response);
+        } else
+          console.log('error to get all the list of recommendations', error);
       }
-    };
-    //call function
-    loadRecommendation();
+    );
+
     return () => {
-      //cancel the request
       mounted = false;
-      source.cancel();
     };
   }, [params.id]);
   /**
@@ -146,20 +139,16 @@ export default function ListRecommendations() {
    * arrow function to delete a ingredient
    */
   const handleButtonDelete = async () => {
-    const authStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-    try {
-      const response = await healthy.delete(
-        `/patients/${params.id}/recommendations/${deleteRecommendationId}`,
-        {
-          headers: { Authorization: authStr },
-        }
-      );
-      console.log(response.data);
-      setCurrentPage(currentPage);
-    } catch (error) {
-      console.log(error.response.data);
-    }
-
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${deleteRecommendationId}`,
+      DELETE,
+      headers,
+      null,
+      (error, response) => {
+        if (response) setCurrentPage(currentPage);
+        else console.log('error to delete a recommendations', error);
+      }
+    );
     setOpen(false); //to close the dialogue
     setData(data.filter((item) => item.id !== deleteRecommendationId)); //get the new data without the Ingredient deleted
   };

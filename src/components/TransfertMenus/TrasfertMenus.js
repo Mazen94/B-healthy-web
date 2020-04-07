@@ -12,34 +12,43 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import healthy from '../../api/healthy';
 import meal from '../../assets/meal.png';
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
 import recommendations from '../../assets/recommendations.png';
+import {
+  ENDPOINT_LIST_MEALS,
+  ENDPOINT_MEALS,
+  ENDPOINT_PATIENTS,
+  ENDPOINT_RECOMMENDATIONS,
+  ENDPOINT_MENUS,
+} from '../../shared/constants/endpoint';
+import { GET, POST } from '../../shared/constants/constants';
 import { MENUS, RECOMMENDATIONS } from '../../shared/strings/strings';
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    margin: 'auto'
+    margin: 'auto',
   },
   cardHeader: {
-    padding: theme.spacing(1, 2)
+    padding: theme.spacing(1, 2),
   },
   list: {
     width: 300,
     height: 330,
     backgroundColor: theme.palette.background.paper,
-    overflow: 'auto'
+    overflow: 'auto',
   },
   button: {
-    margin: theme.spacing(0.5, 0)
-  }
+    margin: theme.spacing(0.5, 0),
+  },
 }));
 
 function not(a, b) {
-  return a.filter(value => b.indexOf(value) === -1);
+  return a.filter((value) => b.indexOf(value) === -1);
 }
 
 function intersection(a, b) {
-  return a.filter(value => b.indexOf(value) !== -1);
+  return a.filter((value) => b.indexOf(value) !== -1);
 }
 
 export default function TrasfertMenus() {
@@ -51,23 +60,27 @@ export default function TrasfertMenus() {
   const params = useParams();
 
   useEffect(() => {
-    /**
-     * Arrow function to get the data (ingredients) using Async await
-     */
-    const loadMenus = async () => {
-      const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-      const response = await healthy.get(`/mealStore?page=1`, {
-        headers: { Authorization: AuthStr }
-      });
-      console.log('response.data.MealStore ==', response.data.MealStore);
-      setLeft(response.data.MealStore.data); //add the received data to the state data
+    let mounted = true;
+    axiosService(
+      `${ENDPOINT_LIST_MEALS}1`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) setLeft(response.data.MealStore.data); //add the received data to the state d
+        } else
+          console.log('error to get all the list of recommendations', error);
+      }
+    );
+    return () => {
+      mounted = false;
     };
-    loadMenus();
   }, []);
 
   const leftChecked = intersection(checked, left);
 
-  const handleToggle = value => () => {
+  const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
 
@@ -82,7 +95,7 @@ export default function TrasfertMenus() {
     setChecked(newChecked);
   };
 
-  const numberOfChecked = items => intersection(checked, items).length;
+  const numberOfChecked = (items) => intersection(checked, items).length;
 
   const handleCheckedRight = () => {
     console.log('params == ', params);
@@ -95,26 +108,27 @@ export default function TrasfertMenus() {
    * function to get the post menu
    * @param {int} id
    */
-  async function PostMenuWithIngredientToRecommendation(id) {
-    const AuthStr = `Bearer ${localStorage.getItem('token')}`; //Prepare the authorization with the token
-    //Get menu with ingredients
-    const response = await healthy.get(`/mealStore/${id}`, {
-      headers: { Authorization: AuthStr }
-    });
-
-    // Add this menu to recommendation
-    try {
-      const result = await healthy.post(
-        `/patients/${params.id}/recommendations/${params.idRecommendation}/menus`,
-        response.data,
-        {
-          headers: { Authorization: AuthStr }
-        }
-      );
-      console.log('result ==', result.data);
-    } catch (error) {
-      console.log(error.result);
-    }
+  function PostMenuWithIngredientToRecommendation(id) {
+    axiosService(
+      `${ENDPOINT_MEALS}${id}`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          axiosService(
+            `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${ENDPOINT_MENUS}`,
+            POST,
+            headers,
+            response.data,
+            (err, result) => {
+              if (result) console.log('aded menu  ==', result.data);
+              else console.log('error to add this menu', err);
+            }
+          );
+        } else console.log('error to find this menu', error);
+      }
+    );
   }
 
   const customList = (title, items, iconAvatar, flag) => (
@@ -133,7 +147,7 @@ export default function TrasfertMenus() {
       />
       <Divider />
       <List className={classes.list} dense component="div" role="list">
-        {items.map(value => {
+        {items.map((value) => {
           const labelId = `transfer-list-all-item-${value.name}-label`;
 
           return (

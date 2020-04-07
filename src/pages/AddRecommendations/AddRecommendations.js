@@ -7,11 +7,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory, useParams } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
+import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_RECOMMENDATIONS,
+} from '../../shared/constants/endpoint';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import {
+  POST,
   PRIMARY_COLOR,
   MESSAGE_VALIDATORS_REQUIRED,
 } from '../../shared/constants/constants';
@@ -102,23 +108,19 @@ export default function AddRecommendations() {
    * @param {Object} recommendation
    */
   const addRecommendation = async (recommendation) => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.post(
-        `/patients/${params.id}/recommendations/`,
-        recommendation,
-        {
-          headers: { Authorization: authStr },
-        }
-      );
-
-      history.push(
-        `${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATION}/${response.data.recommendation.id}`
-      );
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
-    }
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}`,
+      POST,
+      headers,
+      recommendation,
+      (error, response) => {
+        if (response)
+          history.push(
+            `${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATION}/${response.data.recommendation.id}`
+          );
+        else console.log('error to add a recommendations', error);
+      }
+    );
   };
   return (
     <div>

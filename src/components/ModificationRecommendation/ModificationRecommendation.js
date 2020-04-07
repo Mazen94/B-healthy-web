@@ -5,19 +5,26 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import { useParams } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import { axiosService } from '../../shared/services/services';
+import { headers } from '../../shared/constants/env';
 import {
+  ENDPOINT_PATIENTS,
+  ENDPOINT_RECOMMENDATIONS,
+} from '../../shared/constants/endpoint';
+import {
+  PUT,
   MESSAGE_VALIDATORS_REQUIRED,
-  PRIMARY_COLOR
+  PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import { EDIT, MODIFICATION_MADE } from '../../shared/strings/strings';
+
 /**
  * Hook API to generate and apply styles (its JSS object) using Material ui
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(5),
     display: 'flex',
@@ -25,17 +32,17 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     marginLeft: 15,
     marginRight: 15,
-    height: 200
+    height: 200,
   },
   grid: {
     display: 'flex',
-    margin: 10
+    margin: 10,
   },
   submit: {
-    marginTop: 25
-  }
+    marginTop: 25,
+  },
 }));
-const ModificationRecommendation = props => {
+const ModificationRecommendation = (props) => {
   const classes = useStyles(); //add styles to variable classes
   const [name, setName] = useState(''); // to retrieve the name entered by the user (initial value empty string)
   const [avoid, setAvoid] = useState(''); // to retrieve the avoid entered by the user (initial value empty string)
@@ -60,14 +67,14 @@ const ModificationRecommendation = props => {
    * arrow function to get the name entered by the user
    * @param {event} e
    */
-  const handleName = e => {
+  const handleName = (e) => {
     setName(e.target.value);
   };
   /**
    * arrow function to get the name entered by the user
    * @param {event} e
    */
-  const handleAvoid = e => {
+  const handleAvoid = (e) => {
     setAvoid(e.target.value);
   };
   /**
@@ -75,12 +82,12 @@ const ModificationRecommendation = props => {
    * and call the funtion updateRecommendation to send the data to the DB
    * @param {event} e
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
 
     const recommendation = {
       name: name,
-      avoid: avoid
+      avoid: avoid,
     };
     updateRecommendation(recommendation);
   };
@@ -88,22 +95,17 @@ const ModificationRecommendation = props => {
    * Send data to db ( update method)
    * @param {object} recommendation
    */
-  const updateRecommendation = async recommendation => {
-    try {
-      const authStr = `Bearer ${localStorage.getItem('token')}`;
-      const response = await healthy.put(
-        `/patients/${params.id}/recommendations/${params.idRecommendation}`,
-        recommendation,
-        {
-          headers: { Authorization: authStr }
-        }
-      );
-      //open the SnackBar
-      setOpenSnackbar(true);
-      console.log(response);
-    } catch (error) {
-      console.log(error.response);
-    }
+  const updateRecommendation = (recommendation) => {
+    axiosService(
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}`,
+      PUT,
+      headers,
+      recommendation,
+      (error, response) => {
+        if (response) setOpenSnackbar(true);
+        else console.log('error to modifie a recommendation', error);
+      }
+    );
   };
   return (
     <div>

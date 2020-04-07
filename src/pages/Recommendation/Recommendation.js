@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import { ADD, PATIENT } from '../../shared/strings/strings';
-import { PATH_PATIENT, PATH_RECOMMENDATIONS } from '../../routes/path';
+import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
@@ -42,7 +42,7 @@ export default function Recommendations() {
    * arrow function to navigate the user to the addRecommendation page
    */
   const handleClickAjouter = () => {
-    history.push(`${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATIONS}`);
+    history.push(`${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATION}`);
   };
   return (
     <div>
