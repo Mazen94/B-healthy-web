@@ -11,36 +11,38 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React, { useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
+import { axiosService } from '../../shared/services/services';
+import { ENDPOINT_REGISTER } from '../../shared/constants/endpoint';
 import Copyright from '../../components/Copyright/Copyright';
 import { REGISTER, HAVE_AN_ACCOUNT } from '../../shared/strings/strings';
 import {
+  POST,
   MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_EMAIL
+  MESSAGE_VALIDATORS_EMAIL,
 } from '../../shared/constants/constants';
 import { PATH_LOGIN, PATH_DASHBOARD } from '../../routes/path';
 
 /*
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 /**
  * Component for showing register Page
@@ -63,58 +65,56 @@ export default function SignUp() {
    * arrow function to get the email entered by the user
    * @param {event} e
    */
-  const handleEmail = e => {
+  const handleEmail = (e) => {
     setEmail(e.target.value);
   };
   /**
    * arrow function to get the firstName entered by the user
    * @param {event} e
    */
-  const handleFirstName = e => {
+  const handleFirstName = (e) => {
     setFirstName(e.target.value);
   };
   /**
    * arrow function to get the lastName entered by the user
    * @param {event} e
    */
-  const handleLastName = e => {
+  const handleLastName = (e) => {
     setLastName(e.target.value);
   };
   /**
    * arrow function to get the password entered by the user
    * @param {event} e
    */
-  const handlePassword = e => {
+  const handlePassword = (e) => {
     setPassword(e.target.value);
   };
   /**
    * arrow function to retrieve the final inputs
    * and call the funtion postRegisterLogin to send the data to the DB
    */
-  const onSubmitValidatorForm = e => {
+  const onSubmitValidatorForm = (e) => {
     e.preventDefault();
     const userRegister = {
       email: email,
       password: password,
       firstName: firstName,
-      lastName: lastName
+      lastName: lastName,
     };
-    postRegisterLogin(userRegister);
+    axiosService(
+      ENDPOINT_REGISTER,
+      POST,
+      null,
+      userRegister,
+      (error, response) => {
+        if (response) {
+          localStorage.setItem('token', response.data.token);
+          history.push(PATH_DASHBOARD);
+        } else console.log(error.response.data);
+      }
+    );
   };
-  /**
-   * Function to send the data to DB (using axios and async await)
-   * @param {Object} user
-   */
-  async function postRegisterLogin(user) {
-    try {
-      const response = await healthy.post(`register`, user);
-      localStorage.setItem('token', response.data.token);
-      history.push(PATH_DASHBOARD);
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
-    }
-  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -177,7 +177,7 @@ export default function SignUp() {
                 validators={['required', 'isEmail']}
                 errorMessages={[
                   MESSAGE_VALIDATORS_REQUIRED,
-                  MESSAGE_VALIDATORS_EMAIL
+                  MESSAGE_VALIDATORS_EMAIL,
                 ]}
               />
             </Grid>

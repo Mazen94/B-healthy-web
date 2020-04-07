@@ -12,25 +12,27 @@ import Alert from '@material-ui/lab/Alert';
 import React, { useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
-import healthy from '../../api/healthy'; //new instance of axios with a custom config
 import Copyright from '../../components/Copyright/Copyright';
+import { axiosService } from '../../shared/services/services';
+import { ENDPOINT_LOGIN } from '../../shared/constants/endpoint';
 import {
   LOGIN,
   FORGOT_PASSWORD,
-  DONT_HAVE_ACCOUNT
+  DONT_HAVE_ACCOUNT,
 } from '../../shared/strings/strings';
 import {
+  POST,
   MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_EMAIL
+  MESSAGE_VALIDATORS_EMAIL,
 } from '../../shared/constants/constants';
 import { PATH_REGISTER, PATH_DASHBOARD } from '../../routes/path';
 
 /**
  * Hook API to generate and apply styles (its JSS object)
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh'
+    height: '100vh',
   },
   image: {
     backgroundImage: 'url(https://source.unsplash.com/1600x900/?healthy)',
@@ -40,25 +42,25 @@ const useStyles = makeStyles(theme => ({
         ? theme.palette.grey[900]
         : theme.palette.grey[50],
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
   },
   paper: {
     margin: theme.spacing(8, 4),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 /**
  * Component for showing Login Page
@@ -79,7 +81,7 @@ export default function SignIn() {
    * arrow function to get the email entered by the user
    * @param {event} e
    */
-  const handleEmail = e => {
+  const handleEmail = (e) => {
     setEmail(e.target.value);
     setFlag(false);
   };
@@ -87,7 +89,7 @@ export default function SignIn() {
    * arrow function to get the password entered by the user
    * @param {event} e
    */
-  const handlePassword = e => {
+  const handlePassword = (e) => {
     setPassword(e.target.value);
     setFlag(false);
   };
@@ -96,25 +98,15 @@ export default function SignIn() {
    * arrow function to retrieve the final inputs
    * and call the funtion postLogin to send the data to the DB
    */
-  const onSubmitForm = e => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
     const user = { email: email, password: password };
-    postLogin(user);
-  };
-  /**
-   * Function to send the data to DB (using axios and async await)
-   * @param {Object} user
-   */
-  const postLogin = async user => {
-    try {
-      const response = await healthy.post(`login`, user);
-      localStorage.setItem('token', response.data.token);
-      history.push(PATH_DASHBOARD);
-    } catch (error) {
-      console.log(error.response.data);
-      console.log('Error', error.message);
-      setFlag(true);
-    }
+    axiosService(ENDPOINT_LOGIN, POST, null, user, (error, response) => {
+      if (response) {
+        localStorage.setItem('token', response.data.token);
+        history.push(PATH_DASHBOARD);
+      } else setFlag(true);
+    });
   };
 
   return (
@@ -144,7 +136,7 @@ export default function SignIn() {
               validators={['required', 'isEmail']}
               errorMessages={[
                 MESSAGE_VALIDATORS_REQUIRED,
-                MESSAGE_VALIDATORS_EMAIL
+                MESSAGE_VALIDATORS_EMAIL,
               ]}
               fullWidth
               variant="outlined"
