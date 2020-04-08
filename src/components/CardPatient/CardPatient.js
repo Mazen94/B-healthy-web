@@ -1,6 +1,5 @@
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -11,44 +10,7 @@ import { headers } from '../../shared/constants/env';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
 import { PATIENT } from '../../shared/strings/strings';
-
-const useStyles = makeStyles((theme) => ({
-  gridFiche: {
-    height: 'auto',
-  },
-  large: {
-    marginTop: '4%',
-    width: theme.spacing(20),
-    height: theme.spacing(20),
-  },
-  typography: {
-    marginTop: '20%',
-
-    margin: 'auto',
-    color: 'white',
-  },
-
-  grid: {
-    display: 'flex',
-    overflow: 'hidden',
-  },
-  patientPaper: {
-    backgroundColor: 'rgb(63, 81, 181)',
-    marginRight: 15,
-    height: 'auto',
-
-    paddingBottom: '14%',
-  },
-  patientTypography: {
-    paddingTop: 12,
-    color: 'white',
-
-    'font-size': '16px',
-  },
-  skeleton: {
-    margin: 'auto',
-  },
-}));
+import { useStyles } from './styles';
 
 export default function CardPatient() {
   const classes = useStyles();
