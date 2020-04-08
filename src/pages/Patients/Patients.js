@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { Fragment, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Copyright from '../../components/Copyright/Copyright';
@@ -12,7 +11,7 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
-
+import { useStyles } from './styles';
 import {
   ADD,
   PATIENT,
@@ -21,39 +20,6 @@ import {
 import { PATH_PATIENT } from '../../routes/path';
 import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import TextField from '@material-ui/core/TextField';
-
-/**
- * Hook API to generate and apply styles (its JSS object)
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  paperSearch: {
-    width: 450,
-    marginLeft: '22%',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-
-  fixedHeight: {
-    height: 240,
-  },
-  ButtonGroup: {
-    marginBottom: 10,
-    marginLeft: '85%',
-  },
-  IconButton: {
-    width: '4%',
-  },
-  grid: {
-    display: 'flex',
-  },
-}));
 
 /**
  * Component for showing patient Page

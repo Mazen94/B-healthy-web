@@ -1,6 +1,5 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
@@ -25,46 +24,7 @@ import {
   RECOMMENDATION_STEPPER_ADD,
 } from '../../shared/strings/strings';
 import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
-
-/**
- * Hook API to generate and apply styles (its JSS object) using Material ui
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    minHeight: '110vh',
-    paddingBottom: '5%',
-    height: '100%',
-    overflow: 'none',
-  },
-  grid: {
-    display: 'flex',
-    margin: 10,
-  },
-  submit: {
-    marginTop: 'auto',
-    marginLeft: '85%',
-  },
-  paper: {
-    padding: 10,
-    marginTop: 30,
-    margin: 'auto',
-    width: '99%',
-  },
-  stepperHorizontal: {
-    marginTop: '2%',
-    margin: 'auto',
-    width: '99%',
-  },
-  skeleton: {
-    marginRight: 10,
-  },
-}));
+import { useStyles } from './styles';
 
 export default function UpdateRecommendations() {
   const classes = useStyles(); //add styles to variable classes

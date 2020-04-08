@@ -1,6 +1,5 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
@@ -10,29 +9,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import { ADD, PATIENT } from '../../shared/strings/strings';
 import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
-/**
- * Hook API to generate and apply styles (its JSS object)
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    minHeight: '110vh',
-    paddingBottom: '5%',
-    height: '100%',
-    overflow: 'none',
-  },
-  gridContainer: {
-    marginTop: '2%',
-  },
-  ButtonGroup: {
-    marginTop: '2%',
-    marginLeft: '70%',
-  },
-}));
+import { useStyles } from './styles';
 
 export default function Recommendations() {
   const classes = useStyles(); //add styles to variable classes

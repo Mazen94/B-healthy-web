@@ -7,7 +7,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
 import DoneIcon from '@material-ui/icons/Done';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
@@ -44,48 +43,7 @@ import {
 } from '../../shared/constants/constants';
 import { PATH_MENUS } from '../../routes/path';
 import { headers } from '../../shared/constants/env';
-
-/**
- * Hook API to generate and apply styles (its JSS object)
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '150vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    paddingTop: 35,
-    overflow: 'auto',
-    flexDirection: 'column',
-    height: 350,
-  },
-  select: {
-    width: '100%',
-  },
-  handleIngredient: {
-    marginTop: 20,
-  },
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
-  },
-  skeleton: {
-    margin: 'auto',
-    marginTop: '10%',
-    width: '90%',
-  },
-}));
+import { useStyles } from './styles';
 
 export default function UpdateIngredient() {
   const classes = useStyles(); //add styles to variable classes

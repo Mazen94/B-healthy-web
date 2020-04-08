@@ -3,7 +3,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
@@ -27,39 +26,8 @@ import { PATH_DASHBOARD } from '../../routes/path';
 import { axiosService } from '../../shared/services/services';
 import { headers } from '../../shared/constants/env';
 import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
-/**
- * Hook API to generate and apply styles (its JSS object)
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  skeleton: {
-    margin: 'auto',
-    marginTop: '3%',
-    width: '85%',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  form: {
-    width: '100%',
-    padding: '5%',
-  },
-  submit: {
-    marginTop: 30,
-  },
-  paper: {
-    marginTop: theme.spacing(4),
-    margin: 'auto',
-  },
-  spinner: {
-    marginBottom: 20,
-  },
-}));
+import { useStyles } from './styles';
+
 /**
  * Component for showing profil of nutritionist
  */

@@ -1,5 +1,4 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
@@ -7,26 +6,7 @@ import ListFood from '../../components/ListFood/ListFood';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { PATIENT } from '../../shared/strings/strings';
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex'
-  },
-
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '150vh',
-    overflow: 'auto'
-  },
-  listFood: {
-    marginTop: '2%',
-    marginLeft: '2%'
-  },
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff'
-  }
-}));
+import { useStyles } from './styles';
 
 const FoodJournal = () => {
   const classes = useStyles();
@@ -35,7 +15,7 @@ const FoodJournal = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleToggle = flag => {
+  const handleToggle = (flag) => {
     setOpen(flag);
   };
   return (
