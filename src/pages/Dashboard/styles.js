@@ -8,29 +8,10 @@ export const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-
-    overflow: 'hidden',
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-    height: 300,
-  },
-
-  submit: {
-    marginTop: 30,
-  },
-  iconButton: {
-    marginRight: '100%',
-  },
-  spinner: {
-    margin: 'auto   ',
-    marginTop: 20,
   },
 }));

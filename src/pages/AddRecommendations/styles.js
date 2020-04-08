@@ -4,33 +4,33 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
+
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
-
-    overflow: 'hidden',
+    minHeight: '110vh',
+    paddingBottom: '5%',
+    height: '100%',
+    overflow: 'none',
   },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+  gridContainer: {
+    marginTop: '4%',
+    margin: 'auto',
+    width: '90%',
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    height: 300,
+    height: 200,
   },
-
+  formValidator: {
+    marginTop: '2%',
+  },
   submit: {
     marginTop: 30,
-  },
-  iconButton: {
-    marginRight: '100%',
-  },
-  spinner: {
-    margin: 'auto   ',
-    marginTop: 20,
+    position: 'relative',
+    left: '45%',
   },
 }));

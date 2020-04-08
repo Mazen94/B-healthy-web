@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import React, { useEffect, useState } from 'react';
@@ -41,44 +40,8 @@ import {
   MALE,
 } from '../../shared/strings/strings';
 import { PATH_PATIENTS } from '../../routes/path';
+import { useStyles } from './styles';
 
-/**
- * Hook API to generate and apply styles (its JSS object)
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  iconButton: {
-    marginRight: '100%',
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue
-    padding: '5%',
-  },
-  submit: {
-    marginTop: 30,
-  },
-  paper: {
-    marginTop: theme.spacing(4),
-    margin: 'auto',
-  },
-  spinner: {
-    marginBottom: 20,
-  },
-  radioGroup: {
-    display: 'block',
-  },
-}));
-/**
- * Component for showing addPatient Page
- */
 export default function AddPatient() {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate

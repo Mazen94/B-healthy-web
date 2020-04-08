@@ -2,7 +2,6 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import Chart from '../../components/Chart/Chart';
@@ -21,25 +20,7 @@ import {
   DASHBOARD_MENU_BACKGROUNDCOLOR,
 } from '../../shared/constants/constants'; // Get constants from  constants  file
 import { MENUS, DASHBOARD, INGREDIENTS } from '../../shared/strings/strings';
-
-/**
- * Hook API to generate and apply styles (its JSS object)
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-}));
+import { useStyles } from './styles';
 
 /**
  * Component for showing dashboard Page

@@ -1,5 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+/**
+ * Hook API to generate and apply styles (its JSS object)
+ */
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -8,7 +11,6 @@ export const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-
     overflow: 'hidden',
   },
   container: {
@@ -25,12 +27,16 @@ export const useStyles = makeStyles((theme) => ({
 
   submit: {
     marginTop: 30,
+    position: 'relative',
+    left: '45%',
   },
   iconButton: {
     marginRight: '100%',
   },
+  select: {
+    width: '100%',
+  },
   spinner: {
     margin: 'auto   ',
-    marginTop: 20,
   },
 }));
