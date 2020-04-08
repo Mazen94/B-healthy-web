@@ -2,7 +2,6 @@ import { Avatar } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -43,36 +42,8 @@ import {
   PATH_PATIENT,
   PATH_CONSULTATION,
 } from '../../routes/path';
-/**
- * Hook API to generate and apply styles (its JSS object) using Material ui
- */
-const useStyles = makeStyles({
-  skeleton: {
-    width: '100%',
-  },
-  table: {
-    minWidth: 650,
-  },
-  avatar: {
-    height: 50,
-    width: 50,
-  },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-  link: {
-    color: 'rgb(39 , 39, 39)',
-  },
-  button: {
-    marginRight: 5,
-  },
-});
-/**
- * Component for showing the list of patient.
- */
+import { useStyles } from './styles';
+
 export default function ListPatients(props) {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
