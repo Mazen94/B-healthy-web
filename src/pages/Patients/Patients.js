@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '85%',
   },
   IconButton: {
-    width: '5%',
+    width: '4%',
   },
   grid: {
     display: 'flex',

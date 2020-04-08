@@ -1,25 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Bar } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
 import Skeleton from '@material-ui/lab/Skeleton';
-
-const useStyles = makeStyles((theme) => ({
-  depositContext: {
-    flex: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 240,
-  },
-}));
+import { useStyles } from './styles';
 
 export default function BarComponent(props) {
   const classes = useStyles();
