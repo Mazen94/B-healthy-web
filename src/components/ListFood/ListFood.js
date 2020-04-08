@@ -1,5 +1,4 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
@@ -29,31 +28,7 @@ import {
   OK,
 } from '../../shared/strings/strings';
 import { GET } from '../../shared/constants/constants';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: '5%',
-    margin: 'auto',
-    width: '100%',
-    maxWidth: '90%',
-    backgroundColor: theme.palette.background.paper,
-  },
-  numberCalorie: {
-    color: 'black',
-    'font-size': '14px',
-  },
-  ingredients: {
-    marginLeft: '25%',
-    'font-size': '14px',
-  },
-  skeleton: {
-    marginTop: '5%',
-    margin: 'auto',
-  },
-  skeletonRec: {
-    margin: 'auto',
-  },
-}));
+import { useStyles } from './styles';
 
 export default function ListFood(props) {
   const classes = useStyles();

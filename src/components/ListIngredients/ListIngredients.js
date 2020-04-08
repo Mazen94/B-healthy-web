@@ -2,7 +2,6 @@ import { Avatar } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -32,42 +31,7 @@ import {
 } from '../../shared/constants/constants';
 import { INGREDIENTS, AMOUNT, CALORIES } from '../../shared/strings/strings';
 import { PATH_INGREDIENT, PATH_INGREDIENTS } from '../../routes/path';
-
-/**
- * Hook API to generate and apply styles (its JSS object)
- */
-const useStyles = makeStyles((theme) => ({
-  skeleton: {
-    margin: 'auto',
-    width: '100%',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 240,
-  },
-  ButtonGroup: {
-    marginBottom: 10,
-    marginLeft: '85%',
-  },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-  link: {
-    color: 'rgb(39 , 39, 39)',
-  },
-}));
+import { useStyles } from './styles';
 
 export default function AddIngredient() {
   const classes = useStyles(); //add styles to variable classes
