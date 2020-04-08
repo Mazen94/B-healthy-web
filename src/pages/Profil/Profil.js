@@ -27,6 +27,7 @@ import { axiosService } from '../../shared/services/services';
 import { headers } from '../../shared/constants/env';
 import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
 import { useStyles } from './styles';
+import { lenghOfPassword } from '../../shared/services/services';
 
 /**
  * Component for showing profil of nutritionist
@@ -128,16 +129,10 @@ export default function Profil() {
       }
     );
   };
-  /**
-   * Validation : add custom rules (Password must contain at least 8 characters)
-   */
+
   useEffect(() => {
-    ValidatorForm.addValidationRule('lenghPassword', (value) => {
-      if (value.length && value.length < 8) {
-        return false;
-      }
-      return true;
-    });
+    //custom rules
+    lenghOfPassword();
   }, []);
 
   /**

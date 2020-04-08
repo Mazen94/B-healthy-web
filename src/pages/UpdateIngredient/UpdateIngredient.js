@@ -31,6 +31,7 @@ import {
 import { PATH_INGREDIENTS } from '../../routes/path';
 import { headers } from '../../shared/constants/env';
 import { useStyles } from './styles';
+import { isInteger } from '../../shared/services/services';
 
 export default function UpdateIngredient(props) {
   const classes = useStyles(); //add styles to variable classes
@@ -71,12 +72,7 @@ export default function UpdateIngredient(props) {
    * Validation : add custom rules (amout and calorie must be number)
    */
   useEffect(() => {
-    ValidatorForm.addValidationRule('isInteger', (value) => {
-      if (isNaN(value)) {
-        return false;
-      }
-      return true;
-    });
+    isInteger();
   }, []);
   /**
    * UseEffect to get the Ingredient by id

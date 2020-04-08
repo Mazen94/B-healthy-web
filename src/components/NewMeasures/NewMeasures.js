@@ -43,6 +43,7 @@ import {
   ENDPOINT_VISITS,
 } from '../../shared/constants/endpoint';
 import { useStyles } from './styles';
+import { isInteger } from '../../shared/services/services';
 
 export default function NewMeasures() {
   const classes = useStyles();
@@ -68,16 +69,9 @@ export default function NewMeasures() {
     setOpenSnackbar(false);
   };
 
-  /**
-   * Validation : add custom rules (amout and MinAge must be number)
-   */
   useEffect(() => {
-    ValidatorForm.addValidationRule('isInteger', (value) => {
-      if (isNaN(value)) {
-        return false;
-      }
-      return true;
-    });
+    //custom rules
+    isInteger();
   }, []);
   /**
    * arrow function to get the belly entered by the user

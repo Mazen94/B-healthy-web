@@ -47,33 +47,28 @@ export default function UpdateMenu() {
   const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
   const params = useParams(); //to get params URL
 
-  /**
-   * hook useEffect there will be a get  the menu with ingredients by id ,
-   */
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const getMealStore = async () => {
-      axiosService(
-        `${ENDPOINT_MEALS}${params.id}`,
-        GET,
-        headers,
-        null,
-        (error, response) => {
-          if (response) {
-            if (mounted) {
-              setName(response.data.StoreMenu.name);
-              setMaxAge(response.data.StoreMenu.max_age);
-              setMinAge(response.data.StoreMenu.min_age);
-              setIngredients(response.data.StoreMenu.ingredients);
-              setTypeMenu(response.data.StoreMenu.type_menu);
-              setOpenSkeleton(false);
-            }
-          } else console.log('error to get a mealStore', error);
-        }
-      );
-    };
-    getMealStore(params.id);
+    axiosService(
+      `${ENDPOINT_MEALS}${params.id}`,
+      GET,
+      headers,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setName(response.data.StoreMenu.name);
+            setMaxAge(response.data.StoreMenu.max_age);
+            setMinAge(response.data.StoreMenu.min_age);
+            setIngredients(response.data.StoreMenu.ingredients);
+            setTypeMenu(response.data.StoreMenu.type_menu);
+            setOpenSkeleton(false);
+          }
+        } else console.log('error to get a mealStore', error);
+      }
+    );
+
     return () => {
       mounted = false;
     };
@@ -108,9 +103,6 @@ export default function UpdateMenu() {
     setTypeMenu(e.target.value);
   };
 
-  /**
-   * put the menu
-   */
   const onSubmitFrom = async () => {
     const menu = {
       name: name,
@@ -134,10 +126,18 @@ export default function UpdateMenu() {
   function ChangeFalg(flagChange) {
     setFlag(flagChange);
   }
+  /**
+   * Function to render
+   */
 
   const renderFunction = () => {
     if (openSkeleton) {
-      return <Skeleton variant="rect" width="100%" height="55vh" />;
+      return (
+        <div className={classes.skeleton}>
+          {/* Loading when the data is empty */}
+          <Skeleton variant="rect" width="100%" height="55vh" />
+        </div>
+      );
     } else
       return (
         <Grid item xs={12}>
@@ -146,6 +146,8 @@ export default function UpdateMenu() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextValidator
+                    autoComplete="fname"
+                    name="name"
                     variant="outlined"
                     required
                     fullWidth
@@ -167,10 +169,8 @@ export default function UpdateMenu() {
                     onChange={handleTypeMenu}
                     className={classes.select}
                   >
-                    {SELECT_TYPE_MENU.map((row, index) => (
-                      <MenuItem key={index} value={row}>
-                        {row}
-                      </MenuItem>
+                    {SELECT_TYPE_MENU.map((row) => (
+                      <MenuItem value={row}>{row}</MenuItem>
                     ))}
                   </Select>
                 </Grid>
@@ -204,7 +204,7 @@ export default function UpdateMenu() {
                     }
                   />
                 </Grid>
-                {/* ModifyIngredientMenu component to update the amount of ingredient */}
+
                 <ModifyIngredientMenu
                   ingredients={ingredients}
                   ChangeFalg={ChangeFalg}

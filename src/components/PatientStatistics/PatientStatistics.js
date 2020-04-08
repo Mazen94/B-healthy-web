@@ -21,17 +21,15 @@ export default function PatientStatistics() {
 
   useEffect(() => {
     let mounted = true;
-    const getPatientByAgeRange = async () => {
-      axiosService(STATISTICS_AGE, GET, headers, null, (error, response) => {
-        if (response) {
-          if (mounted) {
-            setGroup(response.data.countGender);
-            setFlag(false);
-          }
-        } else console.log(error);
-      });
-    };
-    getPatientByAgeRange();
+    axiosService(STATISTICS_AGE, GET, headers, null, (error, response) => {
+      if (response) {
+        if (mounted) {
+          setGroup(response.data.countGender);
+          setFlag(false);
+        }
+      } else console.log(error);
+    });
+
     return () => {
       mounted = false;
     };
@@ -57,6 +55,7 @@ export default function PatientStatistics() {
       },
     ],
   };
+  console.log('aaaaaaaaa', data);
   /**
    * Function to render
    */

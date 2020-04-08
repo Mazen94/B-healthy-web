@@ -41,6 +41,7 @@ import {
 } from '../../shared/strings/strings';
 import { PATH_PATIENTS } from '../../routes/path';
 import { useStyles } from './styles';
+import { lenghOfPassword } from '../../shared/services/services';
 
 export default function AddPatient() {
   const classes = useStyles(); //add styles to variable classes
@@ -118,16 +119,10 @@ export default function AddPatient() {
   const handleGender = (e) => {
     setGender(e.target.value);
   };
-  /**
-   * Validation : add custom rules (Password must contain at least 8 characters)
-   */
+
   useEffect(() => {
-    ValidatorForm.addValidationRule('lenghPassword', (value) => {
-      if (value.length < 8) {
-        return false;
-      }
-      return true;
-    });
+    //custom rules
+    lenghOfPassword();
   }, []);
   /**
    * arrow function to retrieve the final inputs
