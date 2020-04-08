@@ -4,7 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
@@ -31,44 +30,7 @@ import {
 } from '../../shared/strings/strings';
 import { PATH_INGREDIENTS } from '../../routes/path';
 import { headers } from '../../shared/constants/env';
-
-/**
- * Hook API to generate and apply styles (its JSS object) using Material ui
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-
-    overflow: 'hidden',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-    height: 300,
-  },
-
-  submit: {
-    marginTop: 30,
-  },
-  iconButton: {
-    marginRight: '100%',
-  },
-  spinner: {
-    margin: 'auto   ',
-    marginTop: 20,
-  },
-}));
+import { useStyles } from './styles';
 
 export default function AddIngredient() {
   const classes = useStyles(); //add styles to variable classes
