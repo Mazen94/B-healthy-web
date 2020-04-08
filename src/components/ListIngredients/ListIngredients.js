@@ -6,7 +6,6 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -29,9 +28,10 @@ import {
   PRIMARY_COLOR,
   SECONDARY_COLOR,
 } from '../../shared/constants/constants';
-import { INGREDIENTS, AMOUNT, CALORIES } from '../../shared/strings/strings';
+import { TABLE_HEAD_INGREDIENTS } from '../../shared/strings/strings';
 import { PATH_INGREDIENT, PATH_INGREDIENTS } from '../../routes/path';
 import { useStyles } from './styles';
+import HeadersTable from '../HeadersTable/HeadersTable';
 
 export default function AddIngredient() {
   const classes = useStyles(); //add styles to variable classes
@@ -135,14 +135,8 @@ export default function AddIngredient() {
         <Fragment>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>{INGREDIENTS}</TableCell>
-                  <TableCell align="right">{CALORIES}</TableCell>
-                  <TableCell align="right">{AMOUNT}</TableCell>
-                  <TableCell align="right"></TableCell>
-                </TableRow>
-              </TableHead>
+              {/* HeadersTable Component */}
+              <HeadersTable headerData={TABLE_HEAD_INGREDIENTS} />
               <TableBody>
                 {data.map((row) => (
                   <TableRow key={row.id}>
@@ -161,8 +155,8 @@ export default function AddIngredient() {
                         </Box>
                       </Box>
                     </TableCell>
-                    <TableCell align="right">{row.calorie}</TableCell>
-                    <TableCell align="right">{row.amount}</TableCell>
+                    <TableCell align="left">{row.calorie}</TableCell>
+                    <TableCell align="left">{row.amount}</TableCell>
                     <TableCell align="right">
                       <IconButton
                         value={row.id}
