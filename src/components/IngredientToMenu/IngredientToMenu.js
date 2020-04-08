@@ -5,7 +5,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
@@ -23,30 +22,7 @@ import {
 } from '../../shared/constants/constants';
 import { AMOUNT } from '../../shared/strings/strings';
 import { headers } from '../../shared/constants/env';
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: '100%',
-    height: 80,
-    margin: 'auto',
-    display: 'flex',
-  },
-  grid: {
-    margin: 'auto',
-    marginLeft: '2%',
-  },
-  submit: {
-    margin: 'auto',
-    marginRight: '2%',
-  },
-  paperChip: {
-    height: 200,
-    marginTop: 10,
-  },
-  chip: {
-    marginTop: 10,
-  },
-}));
+import { useStyles } from './styles';
 
 export default function IngredientToMenu() {
   const classes = useStyles(); //add styles to variable classes

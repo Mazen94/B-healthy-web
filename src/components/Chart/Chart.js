@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import { headers } from '../../shared/constants/env';
 import { CHART_BACKGROUNDCOLOR } from '../../shared/constants/constants'; // Get constants from  constants  file
 import {
@@ -15,24 +14,8 @@ import { GET } from '../../shared/constants/constants';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
+import { useStyles } from './styles';
 
-/**
- * Hook API to generate and apply styles (its JSS object)
- */
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    textAlign: 'center',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 240,
-  },
-}));
 export default function Chart() {
   const classes = useStyles(); //add styles to variable classes
   const [countMale, setCountMale] = useState(0); //state to recover the number of male
