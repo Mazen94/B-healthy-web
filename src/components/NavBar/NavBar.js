@@ -1,7 +1,6 @@
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -16,25 +15,7 @@ import {
   PATH_RECOMMENDATIONS,
   PATH_JOURNAL,
 } from '../../routes/path';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    paddingTop: 20,
-    paddingLeft: 30,
-  },
-  paper: {
-    height: 150,
-    width: 150,
-  },
-  control: {
-    paddingRight: 50,
-  },
-  button: {
-    height: 150,
-    width: 150,
-  },
-}));
+import { useStyles } from './styles';
 
 export default function NavBar(props) {
   const classes = useStyles();

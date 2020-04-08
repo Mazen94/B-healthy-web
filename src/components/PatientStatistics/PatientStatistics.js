@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Bar } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   GET,
   PATIENT_STATISTICS_LABELS,
@@ -13,21 +12,8 @@ import { STATISTICS_AGE } from '../../shared/constants/endpoint';
 import { headers } from '../../shared/constants/env';
 import Paper from '@material-ui/core/Paper';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { useStyles } from './styles';
 
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    margin: 'auto',
-  },
-  bar: {
-    padding: 'auto',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-}));
 export default function PatientStatistics() {
   const classes = useStyles(); //add styles to variable classes
   const [group, setGroup] = useState([]);

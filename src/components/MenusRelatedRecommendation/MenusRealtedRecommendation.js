@@ -5,7 +5,6 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
 import meal from '../../assets/meal.png';
 import { DIALOG_MENU, DELETE } from '../../shared/constants/constants';
@@ -18,15 +17,8 @@ import {
   ENDPOINT_RECOMMENDATIONS,
   ENDPOINT_MENUS,
 } from '../../shared/constants/endpoint';
+import { useStyles } from './styles';
 
-/**
- * Hook API to generate and apply styles (its JSS object) using Material ui
- */
-const useStyles = makeStyles((theme) => ({
-  listItem: {
-    padding: 'auto',
-  },
-}));
 const MenusRealtedRecommendation = (props) => {
   const menu = props.menus; //get the menu from the props
   const classes = useStyles(); //add styles to variable classes

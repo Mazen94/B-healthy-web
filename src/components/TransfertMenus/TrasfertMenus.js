@@ -9,7 +9,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import meal from '../../assets/meal.png';
@@ -25,23 +24,7 @@ import {
 } from '../../shared/constants/endpoint';
 import { GET, POST } from '../../shared/constants/constants';
 import { MENUS, RECOMMENDATIONS } from '../../shared/strings/strings';
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: 'auto',
-  },
-  cardHeader: {
-    padding: theme.spacing(1, 2),
-  },
-  list: {
-    width: 300,
-    height: 330,
-    backgroundColor: theme.palette.background.paper,
-    overflow: 'auto',
-  },
-  button: {
-    margin: theme.spacing(0.5, 0),
-  },
-}));
+import { useStyles } from './styles';
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);

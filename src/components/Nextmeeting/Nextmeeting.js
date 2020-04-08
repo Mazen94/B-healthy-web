@@ -1,25 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles';
 import React, { Fragment } from 'react';
 import people from '../../assets/people.png';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-
-const useStyles = makeStyles(theme => ({
-  large: {
-    marginTop: 18,
-    width: theme.spacing(20),
-    height: theme.spacing(20)
-  },
-  typography: {
-    marginTop: '10%',
-    marginRight: '6%',
-    color: 'white',
-    margin: 'auto'
-  },
-  grid: {
-    display: 'flex'
-  }
-}));
+import { useStyles } from './styles';
 
 export default function CardPatient() {
   const classes = useStyles();

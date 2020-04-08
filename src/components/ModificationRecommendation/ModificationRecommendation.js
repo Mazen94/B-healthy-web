@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { Paper } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { useParams } from 'react-router-dom';
@@ -20,28 +19,8 @@ import {
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import { EDIT, MODIFICATION_MADE } from '../../shared/strings/strings';
+import { useStyles } from './styles';
 
-/**
- * Hook API to generate and apply styles (its JSS object) using Material ui
- */
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(5),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-    marginLeft: 15,
-    marginRight: 15,
-    height: 200,
-  },
-  grid: {
-    display: 'flex',
-    margin: 10,
-  },
-  submit: {
-    marginTop: 25,
-  },
-}));
 const ModificationRecommendation = (props) => {
   const classes = useStyles(); //add styles to variable classes
   const [name, setName] = useState(''); // to retrieve the name entered by the user (initial value empty string)

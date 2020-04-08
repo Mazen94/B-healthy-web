@@ -1,20 +1,8 @@
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
-import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    marginBottom: 20,
-  },
-
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
+import { useStyles } from './styles';
 
 export default function StepperHorizontal(props) {
   const { stepProps, creation, add } = props;
