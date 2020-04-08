@@ -1,5 +1,6 @@
 import { URL_API } from '../constants/constants';
 import Axios from 'axios';
+import { ValidatorForm } from 'react-material-ui-form-validator';
 
 export async function axiosService(endPoint, method, headers, data, callback) {
   const config = {
@@ -15,4 +16,23 @@ export async function axiosService(endPoint, method, headers, data, callback) {
   } catch (error) {
     callback(error.response);
   }
+}
+/**
+ * Validation : add custom rules (must be number).
+ */
+export function isInteger() {
+  ValidatorForm.addValidationRule('isInteger', (value) => {
+    if (isNaN(value)) {
+      return false;
+    }
+    return true;
+  });
+}
+export function lenghOfPassword() {
+  ValidatorForm.addValidationRule('lenghPassword', (value) => {
+    if (value.length < 8) {
+      return false;
+    }
+    return true;
+  });
 }
