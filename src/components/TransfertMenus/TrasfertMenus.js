@@ -16,7 +16,7 @@ import { axiosService } from '../../shared/services/services';
 import { headers } from '../../shared/constants/env';
 import recommendations from '../../assets/recommendations.png';
 import {
-  ENDPOINT_LIST_MEALS,
+  ENDPOINT_ALL_MEALSTORE,
   ENDPOINT_MEALS,
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
@@ -45,13 +45,13 @@ export default function TrasfertMenus() {
   useEffect(() => {
     let mounted = true;
     axiosService(
-      `${ENDPOINT_LIST_MEALS}1`,
+      ENDPOINT_ALL_MEALSTORE,
       GET,
       headers,
       null,
       (error, response) => {
         if (response) {
-          if (mounted) setLeft(response.data.MealStore.data); //add the received data to the state d
+          if (mounted) setLeft(response.data.mealStore); //add the received data to the state d
         } else
           console.log('error to get all the list of recommendations', error);
       }

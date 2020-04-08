@@ -14,3 +14,5 @@ export const ENDPOINT_RECOMMENDATIONS = 'recommendations/';
 export const ENDPOINT_MENUS = 'menus/';
 export const ENDPOINT_REGISTER = 'register/';
 export const ENDPOINT_LOGIN = 'login/';
+export const ENDPOINT_ALL_INGREDIENTS = 'ingredients/all';
+export const ENDPOINT_ALL_MEALSTORE = 'mealStore/all';
