@@ -6,9 +6,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -19,7 +17,7 @@ import { axiosService } from '../../shared/services/services';
 import { headers } from '../../shared/constants/env';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { DIALOG_RECOMMENDATION } from '../../shared/constants/constants';
-import { RECOMMENDATIONS, CREATION_DATE } from '../../shared/strings/strings';
+import { TABLE_HEAD_RECOMMENDATION } from '../../shared/strings/strings';
 import {
   DELETE,
   GET,
@@ -32,6 +30,7 @@ import {
   ENDPOINT_RECOMMENDATIONS,
 } from '../../shared/constants/endpoint';
 import { useStyles } from './styles';
+import HeadersTable from '../HeadersTable/HeadersTable';
 
 export default function ListRecommendations() {
   const classes = useStyles(); //add styles to variable classes
@@ -130,27 +129,7 @@ export default function ListRecommendations() {
         <Fragment>
           <TableContainer className={classes.tableContainer} component={Paper}>
             <Table className={classes.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Typography
-                      className={classes.typography}
-                      variant="subtitle2"
-                    >
-                      {RECOMMENDATIONS}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Typography
-                      className={classes.typography}
-                      variant="subtitle2"
-                    >
-                      {CREATION_DATE}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right"></TableCell>
-                </TableRow>
-              </TableHead>
+              <HeadersTable headerData={TABLE_HEAD_RECOMMENDATION} />
               <TableBody>
                 {data.map((row, x) => (
                   <TableRow key={row.id}>

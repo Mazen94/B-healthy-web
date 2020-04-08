@@ -83,3 +83,12 @@ export const CHART_LABEL_MALE = 'Homme';
 export const CHART_LABEL_FEMALE = 'Femme';
 export const AGE = 'Age';
 export const YEARS = 'Ans';
+export const TABLE_HEAD_MENUS = [MENUS, MENU_TYPE, CALORIES, AGE_RANGE];
+export const TABLE_HEAD_INGREDIENTS = [INGREDIENTS, CALORIES, AMOUNT];
+export const TABLE_HEAD_PATIENTS = [
+  `${LAST_NAME}  ${FIRST_NAME}`,
+  EMAIL,
+  PHONE,
+  PREFFESION,
+];
+export const TABLE_HEAD_RECOMMENDATION = [RECOMMENDATIONS, DATE];

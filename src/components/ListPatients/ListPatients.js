@@ -6,7 +6,6 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -29,14 +28,8 @@ import {
   PRIMARY_COLOR,
   SECONDARY_COLOR,
 } from '../../shared/constants/constants';
-import {
-  FIRST_NAME,
-  LAST_NAME,
-  EMAIL,
-  PHONE,
-  PREFFESION,
-  ACTION,
-} from '../../shared/strings/strings';
+import { TABLE_HEAD_PATIENTS } from '../../shared/strings/strings';
+import HeadersTable from '../HeadersTable/HeadersTable';
 import {
   PATH_PATIENTS,
   PATH_PATIENT,
@@ -148,18 +141,8 @@ export default function ListPatients(props) {
         <Fragment>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    {LAST_NAME}&nbsp;
-                    {FIRST_NAME}
-                  </TableCell>
-                  <TableCell align="left">{EMAIL}</TableCell>
-                  <TableCell align="left">{PHONE}</TableCell>
-                  <TableCell align="left">{PREFFESION}</TableCell>
-                  <TableCell align="left">{ACTION}</TableCell>
-                </TableRow>
-              </TableHead>
+              {/* HeadersTable Component */}
+              <HeadersTable headerData={TABLE_HEAD_PATIENTS} />
               <TableBody>
                 {data.map((row) => (
                   <TableRow key={row.id}>

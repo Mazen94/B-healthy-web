@@ -6,7 +6,6 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -19,16 +18,12 @@ import { DIALOG_MENU } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { axiosService } from '../../shared/services/services';
 import { headers } from '../../shared/constants/env';
+import HeadersTable from '../HeadersTable/HeadersTable';
 import {
   ENDPOINT_LIST_MEALS,
   ENDPOINT_MEALS,
 } from '../../shared/constants/endpoint';
-import {
-  MENUS,
-  MENU_TYPE,
-  CALORIES,
-  AGE_RANGE,
-} from '../../shared/strings/strings';
+import { TABLE_HEAD_MENUS } from '../../shared/strings/strings';
 import {
   GET,
   DELETE,
@@ -137,15 +132,8 @@ export default function AddIngredient() {
           {/* Table */}
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>{MENUS}</TableCell>
-                  <TableCell align="left">{MENU_TYPE}</TableCell>
-                  <TableCell align="left">{CALORIES}</TableCell>
-                  <TableCell align="left">{AGE_RANGE}</TableCell>
-                  <TableCell align="left"></TableCell>
-                </TableRow>
-              </TableHead>
+              {/* HeadersTable Component */}
+              <HeadersTable headerData={TABLE_HEAD_MENUS} />
               <TableBody>
                 {data.map((row) => (
                   <TableRow key={row.id}>
@@ -171,7 +159,7 @@ export default function AddIngredient() {
                       [{row.min_age},{row.max_age}]
                     </TableCell>
 
-                    <TableCell align="left">
+                    <TableCell align="right">
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickIconButton(row.id)}
