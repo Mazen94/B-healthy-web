@@ -1,13 +1,10 @@
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
-import DoneIcon from '@material-ui/icons/Done';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
@@ -18,21 +15,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { axiosService } from '../../shared/services/services';
-import {
-  ENDPOINT_MEALS,
-  ENDPOINT_INGREDIENTS,
-} from '../../shared/constants/endpoint';
+import { ENDPOINT_MEALS } from '../../shared/constants/endpoint';
 import {
   EDIT,
-  INGREDIENT_OF_MENU,
   MIN_AGE,
   MAX_AGE,
   NAME,
-  FIRST_SNAKE,
-  SECOND_SNAKE,
-  BREAKFAST,
-  LUNCH,
-  DINNER,
+  SELECT_TYPE_MENU,
   VALIDATE,
 } from '../../shared/strings/strings';
 import {
@@ -44,8 +33,9 @@ import {
 import { PATH_MENUS } from '../../routes/path';
 import { headers } from '../../shared/constants/env';
 import { useStyles } from './styles';
+import ModifyIngredientMenu from '../../components/ModifyIngredientMenu/ModifyIngredientMenu';
 
-export default function UpdateIngredient() {
+export default function UpdateMenu() {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate
   const [maxAge, setMaxAge] = useState(''); // to retrieve the maximum age entered by the user (initial value empty string)
@@ -53,9 +43,6 @@ export default function UpdateIngredient() {
   const [typeMenu, setTypeMenu] = useState(''); // to retrieve the type menu entered by the user (initial value empty string)
   const [name, setName] = useState(''); // to retrieve the name entered by the user (initial value empty string)
   const [ingredients, setIngredients] = useState([]); // to get the ingredient related to menu
-  const [valueOfIngredient, setValueOfIngredient] = useState(''); // to get the ingredient selected
-  const [valueOfamount, setValueOfAmount] = useState(''); // to get the amount entered by the user
-  const [isdisbaled, setIsDisabled] = useState(true); //Check the textField (amounts)
   const [flag, setFlag] = useState(false); //to open and close the CircularProgress
   const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
   const params = useParams(); //to get params URL
@@ -120,43 +107,7 @@ export default function UpdateIngredient() {
   const handleTypeMenu = (e) => {
     setTypeMenu(e.target.value);
   };
-  /**
-   * arrow function to get the ingredent entered by the user
-   * @param {event} e
-   */
-  const handleIngredient = (e) => {
-    setIsDisabled(false);
-    setValueOfIngredient(e.target.value);
-    setValueOfAmount(e.target.value.pivot.amount);
-  };
-  /**
-   *
-   * @param {event} e
-   */
-  const handleChangeAmount = (e) => {
-    setValueOfAmount(e.target.value);
-  };
-  /**
-   * Change the amount of ingredient related to menu
-   * @param {event} e
-   */
-  const handleClickButton = async () => {
-    //test before opening the backdrop component
-    if (valueOfamount !== '') {
-      setFlag(true);
-    }
-    await axiosService(
-      `${ENDPOINT_MEALS}${params.id}/${ENDPOINT_INGREDIENTS}${valueOfIngredient.id}`,
-      PUT,
-      headers,
-      { amount: valueOfamount },
-      (error, response) => {
-        if (response) console.log('changed amount', response);
-        else console.log('error to change amount of ingredient', error);
-      }
-    );
-    setFlag(false);
-  };
+
   /**
    * put the menu
    */
@@ -179,20 +130,14 @@ export default function UpdateIngredient() {
       }
     );
   };
-  /**
-   * Function to render
-   */
+  // function to change flag
+  function ChangeFalg(flagChange) {
+    setFlag(flagChange);
+  }
+
   const renderFunction = () => {
     if (openSkeleton) {
-      return (
-        <div className={classes.skeleton}>
-          {/* Loading when the data is empty */}
-          <Skeleton />
-          <Skeleton animation={false} />
-          <Skeleton animation="wave" />
-          <Skeleton animation="wave" />
-        </div>
-      );
+      return <Skeleton variant="rect" width="100%" height="55vh" />;
     } else
       return (
         <Grid item xs={12}>
@@ -201,8 +146,6 @@ export default function UpdateIngredient() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextValidator
-                    autoComplete="fname"
-                    name="name"
                     variant="outlined"
                     required
                     fullWidth
@@ -220,27 +163,22 @@ export default function UpdateIngredient() {
                 <Grid item xs={12} sm={6}>
                   <Select
                     variant="outlined"
-                    labelId="demo-simple-select-filled-label"
-                    id="demo-simple-select-filled"
                     value={typeMenu}
                     onChange={handleTypeMenu}
                     className={classes.select}
                   >
-                    <MenuItem value={BREAKFAST}>{BREAKFAST}</MenuItem>
-                    <MenuItem value={FIRST_SNAKE}>{FIRST_SNAKE}</MenuItem>
-                    <MenuItem value={LUNCH}>{LUNCH}</MenuItem>
-                    <MenuItem value={SECOND_SNAKE}>{SECOND_SNAKE}</MenuItem>
-                    <MenuItem value={DINNER}>{DINNER}</MenuItem>
+                    {SELECT_TYPE_MENU.map((row, index) => (
+                      <MenuItem key={index} value={row}>
+                        {row}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextValidator
-                    autoComplete="fname"
-                    name="name"
                     variant="outlined"
                     required
                     fullWidth
-                    id="name"
                     label={MIN_AGE}
                     value={minAge}
                     onChange={handleChangeMinAge}
@@ -266,46 +204,11 @@ export default function UpdateIngredient() {
                     }
                   />
                 </Grid>
-
-                <Grid item xs={12} sm={6} className={classes.handleIngredient}>
-                  {/* Component UpdateAmountIngredient Related to Menu*/}
-                  <Select
-                    variant="outlined"
-                    className={classes.select}
-                    value={valueOfIngredient}
-                    onChange={handleIngredient}
-                  >
-                    }
-                    {ingredients.map((row) => (
-                      <MenuItem key={row.id} value={row}>
-                        {row.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <FormHelperText>{INGREDIENT_OF_MENU}</FormHelperText>
-                </Grid>
-                <Grid item xs={12} sm={5} className={classes.handleIngredient}>
-                  <TextValidator
-                    autoComplete="fname"
-                    name="name"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Amount"
-                    disabled={isdisbaled}
-                    value={valueOfamount}
-                    onChange={handleChangeAmount}
-                    endadornment={
-                      <InputAdornment position="end">g</InputAdornment>
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12} sm={1} className={classes.handleIngredient}>
-                  <IconButton color={PRIMARY_COLOR} onClick={handleClickButton}>
-                    <DoneIcon />
-                  </IconButton>
-                </Grid>
+                {/* ModifyIngredientMenu component to update the amount of ingredient */}
+                <ModifyIngredientMenu
+                  ingredients={ingredients}
+                  ChangeFalg={ChangeFalg}
+                />
               </Grid>
               <Button
                 type="submit"

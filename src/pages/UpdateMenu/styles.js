@@ -25,16 +25,8 @@ export const useStyles = makeStyles((theme) => ({
   select: {
     width: '100%',
   },
-  handleIngredient: {
-    marginTop: 20,
-  },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
-  },
-  skeleton: {
-    margin: 'auto',
-    marginTop: '10%',
-    width: '90%',
   },
 }));
