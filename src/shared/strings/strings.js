@@ -99,3 +99,4 @@ export const SELECT_TYPE_MENU = [
   SECOND_SNAKE,
   DINNER,
 ];
+export const RADIOGROUP_PATIENT = [FEMALE,MALE]
