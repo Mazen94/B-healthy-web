@@ -9,7 +9,6 @@ import BarComponent from '../../components/BarComponent/BarComponent';
 import Copyright from '../../components/Copyright/Copyright';
 import PatientStatistics from '../../components/PatientStatistics/PatientStatistics';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import {
   STATISTICS_MENUS,
   STATISTICS_INGREDIENTS,
@@ -34,9 +33,9 @@ export default function Dashboard() {
    */
   useEffect(() => {
     let mounted = true;
-    const MenusAndIngredients = async () => {
+    const MenusAndIngredients = () => {
       // get the number of menus
-      axiosService(STATISTICS_MENUS, GET, headers, null, (error, response) => {
+      axiosService(STATISTICS_MENUS, GET, true, null, (error, response) => {
         if (response) {
           if (mounted) setCountMenus(response.data.countOfMenus);
         } else console.log(error);
@@ -46,7 +45,7 @@ export default function Dashboard() {
       axiosService(
         STATISTICS_INGREDIENTS,
         GET,
-        headers,
+        true,
         null,
         (error, response) => {
           if (response) {

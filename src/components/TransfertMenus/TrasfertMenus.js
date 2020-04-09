@@ -13,7 +13,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import meal from '../../assets/meal.png';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import recommendations from '../../assets/recommendations.png';
 import {
   ENDPOINT_ALL_MEALSTORE,
@@ -44,18 +43,11 @@ export default function TrasfertMenus() {
 
   useEffect(() => {
     let mounted = true;
-    axiosService(
-      ENDPOINT_ALL_MEALSTORE,
-      GET,
-      headers,
-      null,
-      (error, response) => {
-        if (response) {
-          if (mounted) setLeft(response.data.mealStore); //add the received data to the state d
-        } else
-          console.log('error to get all the list of recommendations', error);
-      }
-    );
+    axiosService(ENDPOINT_ALL_MEALSTORE, GET, true, null, (error, response) => {
+      if (response) {
+        if (mounted) setLeft(response.data.mealStore); //add the received data to the state d
+      } else console.log('error to get all the list of recommendations', error);
+    });
     return () => {
       mounted = false;
     };
@@ -95,14 +87,14 @@ export default function TrasfertMenus() {
     axiosService(
       `${ENDPOINT_MEALS}${id}`,
       GET,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {
           axiosService(
             `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${ENDPOINT_MENUS}`,
             POST,
-            headers,
+            true,
             response.data,
             (err, result) => {
               if (result) console.log('aded menu  ==', result.data);

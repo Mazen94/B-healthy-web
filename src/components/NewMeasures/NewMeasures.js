@@ -14,7 +14,6 @@ import iconTall from '../../assets/tall.png';
 import iconWeight from '../../assets/weight.png';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import { useParams } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
@@ -140,17 +139,10 @@ export default function NewMeasures() {
     };
     console.log(params.id);
     // setFlag(true);
-    addVisit(visit);
-  };
-  /**
-   * Function to send the data to DB (using axios and async await)
-   * @param {Object} visit
-   */
-  const addVisit = (visit) => {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_VISITS}`,
       POST,
-      headers,
+      true,
       visit,
       (error, response) => {
         if (response) {
