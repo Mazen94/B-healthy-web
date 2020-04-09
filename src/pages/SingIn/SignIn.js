@@ -63,7 +63,7 @@ export default function SignIn() {
   const onSubmitForm = (e) => {
     e.preventDefault();
     const user = { email: email, password: password };
-    axiosService(ENDPOINT_LOGIN, POST, null, user, (error, response) => {
+    axiosService(ENDPOINT_LOGIN, POST, false, user, (error, response) => {
       if (response) {
         localStorage.setItem('token', response.data.token);
         history.push(PATH_DASHBOARD);

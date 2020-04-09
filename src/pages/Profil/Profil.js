@@ -24,7 +24,6 @@ import {
 } from '../../shared/strings/strings';
 import { PATH_DASHBOARD } from '../../routes/path';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
 import { useStyles } from './styles';
 import { lenghOfPassword } from '../../shared/services/services';
@@ -78,19 +77,18 @@ export default function Profil() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    const fetchData = async () => {
-      axiosService(ENDPOINT_PROFIL, GET, headers, null, (error, response) => {
-        if (response) {
-          if (mounted) {
-            setFirstName(response.data.nutritionist.firstName);
-            setLastName(response.data.nutritionist.lastName);
-            setEmail(response.data.nutritionist.email);
-            setOpenSkeleton(false);
-          }
-        } else console.log('error to get connected nutritionnist', error);
-      });
-    };
-    fetchData();
+
+    axiosService(ENDPOINT_PROFIL, GET, true, null, (error, response) => {
+      if (response) {
+        if (mounted) {
+          setFirstName(response.data.nutritionist.firstName);
+          setLastName(response.data.nutritionist.lastName);
+          setEmail(response.data.nutritionist.email);
+          setOpenSkeleton(false);
+        }
+      } else console.log('error to get connected nutritionnist', error);
+    });
+
     return () => {
       mounted = false;
     };
@@ -108,16 +106,10 @@ export default function Profil() {
       lastName: lastName,
       password: password,
     };
-    putNutritionist(nutritionist); //Call the method putNutritionist to send the data to dataBase
-  };
-  /**
-   * Arrow function to send the data to db
-   */
-  const putNutritionist = async (nutritionist) => {
     axiosService(
       ENDPOINT_PROFIL,
       PUT,
-      headers,
+      true,
       nutritionist,
       (error, response) => {
         //Redirect to the page dashboard

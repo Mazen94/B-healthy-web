@@ -79,7 +79,7 @@ export default function SignUp() {
     axiosService(
       ENDPOINT_REGISTER,
       POST,
-      null,
+      false,
       userRegister,
       (error, response) => {
         if (response) {
