@@ -9,8 +9,12 @@ export async function axiosService(endPoint, method, headers, data, callback) {
     timeout: 20000,
   };
   if (data) config.data = data;
-  if (headers) config.headers = { Authorization: headers };
+  if (headers)
+    config.headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
   try {
+    console.log(config.headers);
     const response = await Axios(config);
     callback(undefined, response);
   } catch (error) {
