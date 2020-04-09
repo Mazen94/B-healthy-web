@@ -8,7 +8,6 @@ import { useParams } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
@@ -78,7 +77,7 @@ const ModificationRecommendation = (props) => {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}`,
       PUT,
-      headers,
+      true,
       recommendation,
       (error, response) => {
         if (response) setOpenSnackbar(true);

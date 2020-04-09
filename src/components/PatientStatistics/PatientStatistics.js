@@ -9,7 +9,6 @@ import {
 import { DISTRIBUTION_BY_AGE_GROUB } from '../../shared/strings/strings';
 import { axiosService } from '../../shared/services/services';
 import { STATISTICS_AGE } from '../../shared/constants/endpoint';
-import { headers } from '../../shared/constants/env';
 import Paper from '@material-ui/core/Paper';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useStyles } from './styles';
@@ -21,7 +20,7 @@ export default function PatientStatistics() {
 
   useEffect(() => {
     let mounted = true;
-    axiosService(STATISTICS_AGE, GET, headers, null, (error, response) => {
+    axiosService(STATISTICS_AGE, GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
           setGroup(response.data.countGender);
