@@ -21,7 +21,6 @@ import weight from '../../assets/weight.png';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import { GET } from '../../shared/constants/constants';
 import {
   HISTORY_PERVIOUS_MEASUREMENTS,
@@ -46,7 +45,7 @@ export default function HistoricalMeasures() {
     axiosService(
       `${ENDPOINT_PATIENTS}${id}/${ENDPOINT_VISITS}?page=1&orderBy=updated_at&orderDirection=desc`,
       GET,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {

@@ -21,7 +21,6 @@ import {
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import { AMOUNT } from '../../shared/strings/strings';
-import { headers } from '../../shared/constants/env';
 import { useStyles } from './styles';
 
 export default function IngredientToMenu() {
@@ -34,23 +33,16 @@ export default function IngredientToMenu() {
   const [amount, setAmount] = useState(''); // to retrieve the amount  by the user (initial value empty string)
 
   useEffect(() => {
-    /**
-     * Arrow function to get the data (ingredients) using Async await
-     */
-    const loadIngredient = async () => {
-      axiosService(
-        ENDPOINT_ALL_INGREDIENTS,
-        GET,
-        headers,
-        null,
-        (error, response) => {
-          if (response) setIngredients(response.data.ingredients);
-          else console.log('error to get an ingredient', error);
-        }
-      );
-    };
-    //call function
-    loadIngredient();
+    axiosService(
+      ENDPOINT_ALL_INGREDIENTS,
+      GET,
+      true,
+      null,
+      (error, response) => {
+        if (response) setIngredients(response.data.ingredients);
+        else console.log('error to get an ingredient', error);
+      }
+    );
   }, []);
   /**
    * arrow function to get the type de menu entered by the user
@@ -79,17 +71,10 @@ export default function IngredientToMenu() {
     console.log(ingredient);
     setAddedIngredients([...addedIngredients, ingredientSelected]);
     setFlag(true);
-    postIngredientToMenu(ingredient);
-  };
-  /**
-   * Function to send the data to DB (using axios and async await)
-   * @param {Object} ingredient
-   */
-  const postIngredientToMenu = async (ingredient) => {
-    await axiosService(
+    axiosService(
       `${ENDPOINT_MEALS}${menuId}/${ENDPOINT_INGREDIENTS}`,
       POST,
-      headers,
+      true,
       ingredient,
       (error, response) => {
         if (response) console.log('added ingredient to a storeMenu', response);
@@ -97,6 +82,7 @@ export default function IngredientToMenu() {
       }
     );
   };
+
   /**
    * arrow function to remove an ingredient from the list of ingredients
    */
@@ -108,7 +94,7 @@ export default function IngredientToMenu() {
     axiosService(
       `${ENDPOINT_MEALS}${menuId}/${ENDPOINT_INGREDIENTS}${id}`,
       DELETE,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) console.log('deleted ingredient', response);

@@ -16,7 +16,6 @@ import Button from '@material-ui/core/Button';
 import { useTheme } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
@@ -49,7 +48,7 @@ export default function ListFood(props) {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${ENDPOINT_MENUS}`,
       GET,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {
@@ -74,7 +73,7 @@ export default function ListFood(props) {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${ENDPOINT_MENUS}${menu.id}`,
       GET,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {

@@ -29,7 +29,6 @@ import {
   KCLA,
 } from '../../shared/strings/strings';
 import { PATH_INGREDIENTS } from '../../routes/path';
-import { headers } from '../../shared/constants/env';
 import { useStyles } from './styles';
 import { isInteger } from '../../shared/services/services';
 
@@ -79,25 +78,24 @@ export default function UpdateIngredient(props) {
    */
   useEffect(() => {
     let mounted = true;
-    const getIndredient = async (id) => {
-      axiosService(
-        `${ENDPOINT_INGREDIENTS}${id}`,
-        GET,
-        headers,
-        null,
-        (error, response) => {
-          if (response) {
-            if (mounted) {
-              setName(response.data.ingredient.name);
-              setAmount(response.data.ingredient.amount);
-              setCalorie(response.data.ingredient.calorie);
-              setOpenSkeleton(false);
-            }
-          } else console.log('error to get only one ingredient', error);
-        }
-      );
-    };
-    getIndredient(props.match.params.id);
+
+    axiosService(
+      `${ENDPOINT_INGREDIENTS}${props.match.params.id}`,
+      GET,
+      true,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setName(response.data.ingredient.name);
+            setAmount(response.data.ingredient.amount);
+            setCalorie(response.data.ingredient.calorie);
+            setOpenSkeleton(false);
+          }
+        } else console.log('error to get only one ingredient', error);
+      }
+    );
+
     return () => {
       mounted = false;
     };
@@ -116,17 +114,10 @@ export default function UpdateIngredient(props) {
       calorie: calorie,
     };
     setFlagValidate(true);
-    putIngredient(ingredient);
-  };
-  /**
-   * Function to send the data to DB (using axios and async await)
-   * @param {Object} ingredient
-   */
-  const putIngredient = async (ingredient) => {
     axiosService(
       `${ENDPOINT_INGREDIENTS}${props.match.params.id}`,
       PUT,
-      headers,
+      true,
       ingredient,
       (error, response) => {
         if (response) history.push(`${PATH_INGREDIENTS}/1`);

@@ -11,7 +11,6 @@ import { DIALOG_MENU, DELETE } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { CARD_HEADER_TITLE } from '../../shared/strings/strings';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
@@ -44,12 +43,12 @@ const MenusRealtedRecommendation = (props) => {
    * delete menu from recommendation
    *
    */
-  const handleButtonDelete = async () => {
+  const handleButtonDelete = () => {
     setOpen(false);
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${ENDPOINT_MENUS}${deleteMenuId}`,
       DELETE,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response)
