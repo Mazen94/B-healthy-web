@@ -17,7 +17,6 @@ import meal from '../../assets/meal.png';
 import { DIALOG_MENU } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import HeadersTable from '../HeadersTable/HeadersTable';
 import {
   ENDPOINT_LIST_MEALS,
@@ -62,7 +61,7 @@ export default function AddIngredient() {
     axiosService(
       `${ENDPOINT_LIST_MEALS}${currentPage}`,
       GET,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {
@@ -99,11 +98,11 @@ export default function AddIngredient() {
   /**
    * arrow function to delete a ingredient
    */
-  const handleButtonDelete = async () => {
+  const handleButtonDelete = () => {
     axiosService(
       `${ENDPOINT_MEALS}${deleteMenuId}`,
       DELETE,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {

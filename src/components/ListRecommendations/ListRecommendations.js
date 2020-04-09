@@ -14,7 +14,6 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import recommendations from '../../assets/recommendations.png';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import { DIALOG_RECOMMENDATION } from '../../shared/constants/constants';
 import { TABLE_HEAD_RECOMMENDATION } from '../../shared/strings/strings';
@@ -52,7 +51,7 @@ export default function ListRecommendations() {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}`,
       GET,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {
@@ -94,11 +93,11 @@ export default function ListRecommendations() {
   /**
    * arrow function to delete a ingredient
    */
-  const handleButtonDelete = async () => {
+  const handleButtonDelete = () => {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${deleteRecommendationId}`,
       DELETE,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) setCurrentPage(currentPage);
