@@ -121,10 +121,7 @@ export default function UpdateMenu() {
       }
     );
   };
-  // function to change flag
-  function ChangeFalg(flagChange) {
-    setFlag(flagChange);
-  }
+
   /**
    * Function to render
    */
@@ -145,12 +142,9 @@ export default function UpdateMenu() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextValidator
-                    autoComplete="fname"
-                    name="name"
                     variant="outlined"
                     required
                     fullWidth
-                    id="name"
                     label={NAME}
                     value={name}
                     onChange={handleChangeName}
@@ -169,7 +163,9 @@ export default function UpdateMenu() {
                     className={classes.select}
                   >
                     {SELECT_TYPE_MENU.map((row) => (
-                      <MenuItem value={row}>{row}</MenuItem>
+                      <MenuItem key={row} value={row}>
+                        {row}
+                      </MenuItem>
                     ))}
                   </Select>
                 </Grid>
@@ -204,10 +200,7 @@ export default function UpdateMenu() {
                   />
                 </Grid>
 
-                <ModifyIngredientMenu
-                  ingredients={ingredients}
-                  ChangeFalg={ChangeFalg}
-                />
+                <ModifyIngredientMenu ingredients={ingredients} />
               </Grid>
               <Button
                 type="submit"

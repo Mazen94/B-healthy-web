@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { Paper } from '@material-ui/core';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import React, { useEffect, useState } from 'react';
+import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
-import { axiosService } from '../../shared/services/services';
+import {
+  MESSAGE_VALIDATORS_REQUIRED,
+  PRIMARY_COLOR,
+  PUT,
+} from '../../shared/constants/constants';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
 } from '../../shared/constants/endpoint';
-import {
-  PUT,
-  MESSAGE_VALIDATORS_REQUIRED,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
-import { EDIT, MODIFICATION_MADE } from '../../shared/strings/strings';
+import { axiosService } from '../../shared/services/services';
+import { EDIT } from '../../shared/strings/strings';
+import AlertComponent from '../AlertComponent/AlertComponent';
 import { useStyles } from './styles';
 
 const ModificationRecommendation = (props) => {
@@ -26,6 +25,7 @@ const ModificationRecommendation = (props) => {
   const [avoid, setAvoid] = useState(''); // to retrieve the avoid entered by the user (initial value empty string)
   const params = useParams(); //to get params from the url
   const [openSnackbar, setOpenSnackbar] = useState(false); //state used to open and close the alert
+
   /**
    * To close the alert
    * @param {event} event
@@ -87,12 +87,10 @@ const ModificationRecommendation = (props) => {
   };
   return (
     <div>
-      {/* Alert  */}
-      <Snackbar open={openSnackbar} autoHideDuration={2000}>
-        <Alert onClose={handleCloseSnackbar} severity="success">
-          {MODIFICATION_MADE}
-        </Alert>
-      </Snackbar>
+      <AlertComponent
+        openSnackbar={openSnackbar}
+        handleCloseSnackbar={handleCloseSnackbar}
+      />
       {/* From */}
       <Paper className={classes.paper}>
         <ValidatorForm

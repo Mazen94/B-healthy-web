@@ -5,25 +5,30 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import DoneIcon from '@material-ui/icons/Done';
-import React, { useState, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { TextValidator } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
-import { axiosService } from '../../shared/services/services';
+import { PRIMARY_COLOR, PUT } from '../../shared/constants/constants';
 import {
-  ENDPOINT_MEALS,
   ENDPOINT_INGREDIENTS,
+  ENDPOINT_MEALS,
 } from '../../shared/constants/endpoint';
-import { INGREDIENT_OF_MENU } from '../../shared/strings/strings';
-import { PUT, PRIMARY_COLOR } from '../../shared/constants/constants';
+import { axiosService } from '../../shared/services/services';
+import { INGREDIENT_OF_MENU, AMOUNT } from '../../shared/strings/strings';
+import AlertComponent from '../AlertComponent/AlertComponent';
 import { useStyles } from './styles';
 
-export default function ModifyIngredientMenu({ ingredients, ChangeFalg }) {
+export default function ModifyIngredientMenu({ ingredients }) {
   const classes = useStyles(); //add styles to variable classes
   const [valueOfIngredient, setValueOfIngredient] = useState(''); // to get the ingredient selected
   const [valueOfamount, setValueOfAmount] = useState(''); // to get the amount entered by the user
   const [isdisbaled, setIsDisabled] = useState(true); //Check the textField (amounts)
   const params = useParams(); //to get params URL
+  const [openSnackbar, setOpenSnackbar] = useState(false); //state used to open and close the alert
 
+  const handleCloseSnackbar = (event, reason) => {
+    setOpenSnackbar(false);
+  };
   /**
    * arrow function to get the ingredent entered by the user
    * @param {event} e
@@ -45,25 +50,24 @@ export default function ModifyIngredientMenu({ ingredients, ChangeFalg }) {
    * @param {event} e
    */
   const handleClickButton = () => {
-    //test before opening the backdrop component
-    if (valueOfamount !== '') {
-      ChangeFalg(true);
-    }
     axiosService(
       `${ENDPOINT_MEALS}${params.id}/${ENDPOINT_INGREDIENTS}${valueOfIngredient.id}`,
       PUT,
       true,
       { amount: valueOfamount },
       (error, response) => {
-        if (response) console.log('changed amount', response);
+        if (response) setOpenSnackbar(true);
         else console.log('error to change amount of ingredient', error);
       }
     );
-    ChangeFalg(false);
   };
 
   return (
     <Fragment>
+      <AlertComponent
+        openSnackbar={openSnackbar}
+        handleCloseSnackbar={handleCloseSnackbar}
+      />
       <Grid item xs={12} sm={6} className={classes.handleIngredient}>
         {/* Component UpdateAmountIngredient Related to Menu*/}
         <Select
@@ -83,13 +87,10 @@ export default function ModifyIngredientMenu({ ingredients, ChangeFalg }) {
       </Grid>
       <Grid item xs={12} sm={5} className={classes.handleIngredient}>
         <TextValidator
-          autoComplete="fname"
-          name="name"
           variant="outlined"
           required
           fullWidth
-          id="name"
-          label="Amount"
+          label={AMOUNT}
           disabled={isdisbaled}
           value={valueOfamount}
           onChange={handleChangeAmount}
