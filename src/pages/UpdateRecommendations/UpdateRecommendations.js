@@ -5,13 +5,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
-import ModificationRecommendation from '../../components/ModificationRecommendation/ModificationRecommendation';
+import RecommendationForm from '../../components/RecommendationForm/RecommendationForm';
 import MenusRealtedRecommendation from '../../components/MenusRelatedRecommendation/MenusRealtedRecommendation';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Button } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { axiosService } from '../../shared/services/services';
-import { PRIMARY_COLOR, GET } from '../../shared/constants/constants';
+import { PRIMARY_COLOR, GET, PUT } from '../../shared/constants/constants';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
@@ -24,15 +24,16 @@ import {
 } from '../../shared/strings/strings';
 import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
 import { useStyles } from './styles';
+import { MODIFICATION_MADE } from '../../shared/strings/strings';
 
 export default function UpdateRecommendations() {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate
   const params = useParams(); //get params from the url
-  const [name, setName] = useState(''); // to retrieve the name entered by the user (initial value empty string)
-  const [avoid, setAvoid] = useState(''); // to retrieve the avoid entered by the user (initial value empty string)
+  const [data, setData] = useState([]);
   const [menus, setMenus] = useState([]); //to get the menu of recommendation
   const step = 1; //const to specify in which stage we are ( in component StepperHorizontal)
+  const [flag, setFlag] = useState(true);
 
   useEffect(() => {
     //Prepare cancel request
@@ -46,8 +47,10 @@ export default function UpdateRecommendations() {
       (error, response) => {
         if (response) {
           if (mounted) {
-            setName(response.data.recommendation.name);
-            setAvoid(response.data.recommendation.avoid);
+            // setName(response.data.recommendation.name);
+            // setAvoid(response.data.recommendation.avoid);
+            setData(response.data.recommendation);
+            setFlag(false);
             setMenus(response.data.recommendation.menus);
           }
         } else console.log('error to get a recommendation', error);
@@ -67,7 +70,7 @@ export default function UpdateRecommendations() {
   };
   const renderFunction = () => {
     //Skeleton component
-    if (name === '') {
+    if (flag) {
       return (
         <Grid item xs={12} className={classes.grid}>
           <Grid item xs={12} sm={6}>
@@ -86,8 +89,15 @@ export default function UpdateRecommendations() {
       return (
         <Grid item xs={12} className={classes.grid}>
           <Grid item xs={12} sm={6}>
-            {/* Component ModificationRecommendation */}
-            <ModificationRecommendation name={name} avoid={avoid} />
+            {/* Component RecommendationForm */}
+            <Paper className={classes.recommendationForm}>
+              <RecommendationForm
+                data={data}
+                endPoint={`${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}`}
+                method={PUT}
+                message={MODIFICATION_MADE}
+              />
+            </Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
             {/* Component MenusRealtedRecommendation */}

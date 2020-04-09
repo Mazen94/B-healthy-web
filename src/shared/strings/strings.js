@@ -85,6 +85,7 @@ export const AGE = 'Age';
 export const YEARS = 'Ans';
 export const ADD_INGREDIENT = 'Ingredient ajouté';
 export const UPDATE_INDREDIENT = 'Ingredient modifié ';
+export const ADD_RECOMMENDATION = 'Recommendation Ajoutée';
 export const TABLE_HEAD_MENUS = [MENUS, MENU_TYPE, CALORIES, AGE_RANGE];
 export const TABLE_HEAD_INGREDIENTS = [INGREDIENTS, CALORIES, AMOUNT];
 export const TABLE_HEAD_PATIENTS = [

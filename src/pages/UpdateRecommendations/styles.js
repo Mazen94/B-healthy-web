@@ -27,6 +27,15 @@ export const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     width: '99%',
   },
+  recommendationForm: {
+    padding: theme.spacing(5),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+    marginLeft: 15,
+    marginRight: 15,
+    height: 200,
+  },
   stepperHorizontal: {
     marginTop: '2%',
     margin: 'auto',
