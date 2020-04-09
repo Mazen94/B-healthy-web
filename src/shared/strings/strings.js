@@ -83,6 +83,8 @@ export const CHART_LABEL_MALE = 'Homme';
 export const CHART_LABEL_FEMALE = 'Femme';
 export const AGE = 'Age';
 export const YEARS = 'Ans';
+export const ADD_INGREDIENT = 'Ingredient ajouté';
+export const UPDATE_INDREDIENT = 'Ingredient modifié ';
 export const TABLE_HEAD_MENUS = [MENUS, MENU_TYPE, CALORIES, AGE_RANGE];
 export const TABLE_HEAD_INGREDIENTS = [INGREDIENTS, CALORIES, AMOUNT];
 export const TABLE_HEAD_PATIENTS = [
@@ -99,4 +101,4 @@ export const SELECT_TYPE_MENU = [
   SECOND_SNAKE,
   DINNER,
 ];
-export const RADIOGROUP_PATIENT = [FEMALE,MALE]
+export const RADIOGROUP_PATIENT = [FEMALE, MALE];

@@ -29,15 +29,6 @@ export default function Consulation() {
             <Grid item sm={6}>
               {/* Component CardPatient */}
               <CardPatient />
-              {/*<Paper className={classes.prochainRendezVous}>
-                <Typography
-                  variant="subtitle1"
-                  gutterBottom
-                  className={classes.typography}
-                >
-                  Prochain Rendez-vous
-                </Typography>
-  </Paper>*/}
             </Grid>
             {/* Component HistoricalMeasures */}
             <HistoricalMeasures />
