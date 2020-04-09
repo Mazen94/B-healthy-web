@@ -29,7 +29,6 @@ import {
   VALIDATE,
 } from '../../shared/strings/strings';
 import { PATH_INGREDIENTS } from '../../routes/path';
-import { headers } from '../../shared/constants/env';
 import { useStyles } from './styles';
 import { isInteger } from '../../shared/services/services';
 
@@ -92,11 +91,11 @@ export default function AddIngredient() {
    * Function to send the data to DB (using axios and async await)
    * @param {Object} ingredient
    */
-  const addIngredient = async (ingredient) => {
+  const addIngredient = (ingredient) => {
     axiosService(
       ENDPOINT_INGREDIENTS,
       POST,
-      headers,
+      true,
       ingredient,
       (error, response) => {
         if (response) history.push(`${PATH_INGREDIENTS}/1`);

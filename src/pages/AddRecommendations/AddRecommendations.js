@@ -8,7 +8,6 @@ import React, { useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory, useParams } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
@@ -66,17 +65,10 @@ export default function AddRecommendations() {
       avoid: avoid,
     };
     console.log(recommendation);
-    addRecommendation(recommendation);
-  };
-  /**
-   * Function to send the data to DB (using axios and async await)
-   * @param {Object} recommendation
-   */
-  const addRecommendation = async (recommendation) => {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}`,
       POST,
-      headers,
+      true,
       recommendation,
       (error, response) => {
         if (response)

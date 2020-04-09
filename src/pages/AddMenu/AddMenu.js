@@ -37,7 +37,6 @@ import {
   MESSAGE_VALIDATORS_INTEGER,
 } from '../../shared/constants/constants';
 import { PATH_MENU, PATH_MENUS, PATH_INGREDIENTS } from '../../routes/path';
-import { headers } from '../../shared/constants/env';
 import { useStyles } from './styles';
 import { isInteger } from '../../shared/services/services';
 
@@ -95,24 +94,14 @@ export default function AddIngredient() {
    */
   const onSubmitForm = (e) => {
     e.preventDefault();
-
     const menu = {
       name: name,
       max_age: maxAge,
       min_age: minAge,
       type_menu: typeMenu,
     };
-    console.log(menu);
     setFlag(true); //to diplay the loading component
-    addMenu(menu);
-  };
-
-  /**
-   * Function to send the data to DB (using axios and async await)
-   * @param {Object} menu
-   */
-  const addMenu = (menu) => {
-    axiosService(ENDPOINT_MEALS, POST, headers, menu, (error, response) => {
+    axiosService(ENDPOINT_MEALS, POST, true, menu, (error, response) => {
       if (response) {
         history.push(
           `${PATH_MENU}/${response.data.MealStore.id}${PATH_INGREDIENTS}`
