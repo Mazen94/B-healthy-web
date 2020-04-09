@@ -24,17 +24,8 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     height: 300,
   },
-
-  submit: {
-    marginTop: 30,
-    position: 'relative',
-    left: '45%',
-  },
   iconButton: {
     marginRight: '100%',
-  },
-  select: {
-    width: '100%',
   },
   spinner: {
     margin: 'auto   ',
