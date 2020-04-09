@@ -18,7 +18,6 @@ import {
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
-import { headers } from '../../shared/constants/env';
 import {
   axiosService,
   isInteger,
@@ -101,22 +100,16 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
       profession: proffesion,
       age: age,
     };
-    axiosService(
-      ENDPOINT_PATIENTS,
-      POST,
-      headers,
-      patient,
-      (error, response) => {
-        if (response) {
-          console.log(response.data);
-          changeFlag(false);
-          history.push(`${PATH_PATIENTS}/1`);
-        } else {
-          changeFlag(false);
-          changeErreurValidation(true);
-        }
+    axiosService(ENDPOINT_PATIENTS, POST, true, patient, (error, response) => {
+      if (response) {
+        console.log(response.data);
+        changeFlag(false);
+        history.push(`${PATH_PATIENTS}/1`);
+      } else {
+        changeFlag(false);
+        changeErreurValidation(true);
       }
-    );
+    });
   };
 
   return (

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
-import { headers } from '../../shared/constants/env';
 import { CHART_BACKGROUNDCOLOR } from '../../shared/constants/constants'; // Get constants from  constants  file
 import {
   DISTRIBUTION_BY_GENDER,
@@ -37,7 +36,7 @@ export default function Chart() {
    */
   useEffect(() => {
     let mounted = true;
-    axiosService(STATISTICS_GENDER, GET, headers, null, (error, response) => {
+    axiosService(STATISTICS_GENDER, GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
           setCountFemale(response.data.countGender.female);

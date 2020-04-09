@@ -11,7 +11,6 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { Button } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import { PRIMARY_COLOR, GET } from '../../shared/constants/constants';
 import {
   ENDPOINT_PATIENTS,
@@ -42,7 +41,7 @@ export default function UpdateRecommendations() {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}`,
       GET,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {

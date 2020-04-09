@@ -6,7 +6,6 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import people from '../../assets/people.png';
 import { GET } from '../../shared/constants/constants';
-import { headers } from '../../shared/constants/env';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
 import { PATIENT } from '../../shared/strings/strings';
@@ -19,25 +18,17 @@ export default function CardPatient() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-
-    /**
-     * Arrow function to get the data (patients) using Async await
-     */
-    const loadPatientById = async () => {
-      axiosService(
-        `${ENDPOINT_PATIENTS}${id}`,
-        GET,
-        headers,
-        null,
-        (error, response) => {
-          if (response) {
-            if (mounted) setPatient(response.data.patient);
-          } else console.log(error);
-        }
-      );
-    };
-    //call function
-    loadPatientById();
+    axiosService(
+      `${ENDPOINT_PATIENTS}${id}`,
+      GET,
+      true,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) setPatient(response.data.patient);
+        } else console.log(error);
+      }
+    );
     return () => {
       mounted = false;
     };
