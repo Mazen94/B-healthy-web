@@ -31,7 +31,6 @@ import {
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import { PATH_MENUS } from '../../routes/path';
-import { headers } from '../../shared/constants/env';
 import { useStyles } from './styles';
 import ModifyIngredientMenu from '../../components/ModifyIngredientMenu/ModifyIngredientMenu';
 
@@ -53,7 +52,7 @@ export default function UpdateMenu() {
     axiosService(
       `${ENDPOINT_MEALS}${params.id}`,
       GET,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {
@@ -114,7 +113,7 @@ export default function UpdateMenu() {
     axiosService(
       `${ENDPOINT_MEALS}${params.id}`,
       PUT,
-      headers,
+      true,
       menu,
       (error, response) => {
         if (response) history.push(`${PATH_MENUS}/1`);

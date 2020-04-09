@@ -15,7 +15,6 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ingredient from '../../assets/ingredient.png';
 import { axiosService } from '../../shared/services/services';
-import { headers } from '../../shared/constants/env';
 import {
   ENDPOINT_LIST_INGREDIENTS,
   ENDPOINT_INGREDIENTS,
@@ -59,26 +58,21 @@ export default function AddIngredient() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    //Arrow function to get the data (ingredients) using Async await
-    const loadIngredient = async () => {
-      axiosService(
-        `${ENDPOINT_LIST_INGREDIENTS}${currentPage}`,
-        GET,
-        headers,
-        null,
-        (error, response) => {
-          if (response) {
-            if (mounted) {
-              setData(response.data.ingredients.data); //add the received data to the state data
-              setCurrentPage(response.data.ingredients.current_page); //add the received current_page to the state lastPage
-              setLastPage(response.data.ingredients.last_page); //add the received last_page to the state lastPage
-            }
-          } else console.log('error to get the list of ingredients', error);
-        }
-      );
-    };
-    //call function
-    loadIngredient();
+    axiosService(
+      `${ENDPOINT_LIST_INGREDIENTS}${currentPage}`,
+      GET,
+      true,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setData(response.data.ingredients.data); //add the received data to the state data
+            setCurrentPage(response.data.ingredients.current_page); //add the received current_page to the state lastPage
+            setLastPage(response.data.ingredients.last_page); //add the received last_page to the state lastPage
+          }
+        } else console.log('error to get the list of ingredients', error);
+      }
+    );
     return () => {
       mounted = false;
     };
@@ -103,11 +97,11 @@ export default function AddIngredient() {
   /**
    * arrow function to delete a ingredient
    */
-  const handleButtonDelete = async () => {
-    await axiosService(
+  const handleButtonDelete = () => {
+    axiosService(
       `${ENDPOINT_INGREDIENTS}${deleteIngredientId}`,
       DELETE,
-      headers,
+      true,
       null,
       (error, response) => {
         if (response) {

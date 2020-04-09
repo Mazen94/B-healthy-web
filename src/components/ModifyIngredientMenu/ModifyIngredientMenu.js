@@ -15,7 +15,6 @@ import {
 } from '../../shared/constants/endpoint';
 import { INGREDIENT_OF_MENU } from '../../shared/strings/strings';
 import { PUT, PRIMARY_COLOR } from '../../shared/constants/constants';
-import { headers } from '../../shared/constants/env';
 import { useStyles } from './styles';
 
 export default function ModifyIngredientMenu({ ingredients, ChangeFalg }) {
@@ -45,15 +44,15 @@ export default function ModifyIngredientMenu({ ingredients, ChangeFalg }) {
    * Change the amount of ingredient related to menu
    * @param {event} e
    */
-  const handleClickButton = async () => {
+  const handleClickButton = () => {
     //test before opening the backdrop component
     if (valueOfamount !== '') {
       ChangeFalg(true);
     }
-    await axiosService(
+    axiosService(
       `${ENDPOINT_MEALS}${params.id}/${ENDPOINT_INGREDIENTS}${valueOfIngredient.id}`,
       PUT,
-      headers,
+      true,
       { amount: valueOfamount },
       (error, response) => {
         if (response) console.log('changed amount', response);
