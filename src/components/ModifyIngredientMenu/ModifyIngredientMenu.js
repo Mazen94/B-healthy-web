@@ -17,6 +17,7 @@ import { axiosService } from '../../shared/services/services';
 import { INGREDIENT_OF_MENU, AMOUNT } from '../../shared/strings/strings';
 import AlertComponent from '../AlertComponent/AlertComponent';
 import { useStyles } from './styles';
+import { MODIFICATION_MADE } from '../../shared/strings/strings';
 
 export default function ModifyIngredientMenu({ ingredients }) {
   const classes = useStyles(); //add styles to variable classes
@@ -67,6 +68,7 @@ export default function ModifyIngredientMenu({ ingredients }) {
       <AlertComponent
         openSnackbar={openSnackbar}
         handleCloseSnackbar={handleCloseSnackbar}
+        message={MODIFICATION_MADE}
       />
       <Grid item xs={12} sm={6} className={classes.handleIngredient}>
         {/* Component UpdateAmountIngredient Related to Menu*/}

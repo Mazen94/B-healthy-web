@@ -1,9 +1,8 @@
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
-import { MODIFICATION_MADE } from '../../shared/strings/strings';
 
-const AlertComponent = ({ openSnackbar, handleCloseSnackbar }) => {
+const AlertComponent = ({ openSnackbar, handleCloseSnackbar, message }) => {
   return (
     <Snackbar
       open={openSnackbar}
@@ -11,7 +10,7 @@ const AlertComponent = ({ openSnackbar, handleCloseSnackbar }) => {
       onClose={handleCloseSnackbar}
     >
       <Alert onClose={handleCloseSnackbar} severity="success">
-        {MODIFICATION_MADE}
+        {message}
       </Alert>
     </Snackbar>
   );

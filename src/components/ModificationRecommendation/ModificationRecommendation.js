@@ -18,6 +18,7 @@ import { axiosService } from '../../shared/services/services';
 import { EDIT } from '../../shared/strings/strings';
 import AlertComponent from '../AlertComponent/AlertComponent';
 import { useStyles } from './styles';
+import { MODIFICATION_MADE } from '../../shared/strings/strings';
 
 const ModificationRecommendation = (props) => {
   const classes = useStyles(); //add styles to variable classes
@@ -90,6 +91,7 @@ const ModificationRecommendation = (props) => {
       <AlertComponent
         openSnackbar={openSnackbar}
         handleCloseSnackbar={handleCloseSnackbar}
+        message={MODIFICATION_MADE}
       />
       {/* From */}
       <Paper className={classes.paper}>
