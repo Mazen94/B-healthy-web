@@ -12,26 +12,27 @@ import { useHistory } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_REGISTER } from '../../shared/constants/endpoint';
 import Copyright from '../../components/Copyright/Copyright';
-import { REGISTER, HAVE_AN_ACCOUNT } from '../../shared/strings/strings';
+import {
+  REGISTER,
+  HAVE_AN_ACCOUNT,
+  EMAIL,
+  LAST_NAME,
+  FIRST_NAME,
+} from '../../shared/strings/strings';
 import {
   POST,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_EMAIL,
+  PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import { PATH_LOGIN, PATH_DASHBOARD } from '../../routes/path';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
+import { PASSWORD } from '../../shared/strings/strings';
 
 export default function SignUp() {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
-  /**
-   * The states used in this component
-   * email : to retrieve the email entered by the user (initial value empty string)
-   * password : to retrieve the password entered by the user (initial value empty string)
-   * firstName : to retrieve the firstName entered by the user (initial value empty string)
-   * lastName : to retrieve the lastName entered by the user (initial value empty string)
-   */
   const [email, setEmail] = useState('');
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -109,13 +110,10 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextValidator
-                autoComplete="fname"
-                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="Prénom"
+                label={FIRST_NAME}
                 autoFocus
                 value={firstName}
                 onChange={handleFirstName}
@@ -128,10 +126,7 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Nom de famille"
-                name="lastName"
-                autoComplete="lname"
+                label={LAST_NAME}
                 value={lastName}
                 onChange={handleLastName}
                 validators={['required']}
@@ -143,10 +138,7 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Adresse e-mail"
-                name="email"
-                autoComplete="email"
+                label={EMAIL}
                 value={email}
                 onChange={handleEmail}
                 validators={['required', 'isEmail']}
@@ -161,11 +153,7 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
-                label="Mot de passe"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                label={PASSWORD}
                 value={password}
                 onChange={handlePassword}
                 validators={['required']}
@@ -177,7 +165,7 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color={PRIMARY_COLOR}
             className={classes.submit}
           >
             {REGISTER}
