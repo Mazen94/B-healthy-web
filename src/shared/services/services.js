@@ -1,6 +1,7 @@
 import { URL_API } from '../constants/constants';
 import Axios from 'axios';
 import { ValidatorForm } from 'react-material-ui-form-validator';
+import { createBrowserHistory } from 'history';
 
 export async function axiosService(endPoint, method, headers, data, callback) {
   const config = {
@@ -18,7 +19,13 @@ export async function axiosService(endPoint, method, headers, data, callback) {
     const response = await Axios(config);
     callback(undefined, response);
   } catch (error) {
-    callback(error.response);
+    if (error.response.status === 401) {
+      const customHistory = createBrowserHistory();
+      localStorage.removeItem('token');
+      customHistory.push('/');
+    } else {
+      callback(error.response);
+    }
   }
 }
 /**
