@@ -35,10 +35,11 @@ import {
   PRIMARY_COLOR,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_INTEGER,
+  MESSAGE_VALIDATORS_AGE,
 } from '../../shared/constants/constants';
 import { PATH_MENU, PATH_MENUS, PATH_INGREDIENTS } from '../../routes/path';
 import { useStyles } from './styles';
-import { isInteger } from '../../shared/services/services';
+import { isInteger, validationAge } from '../../shared/services/services';
 
 export default function AddIngredient() {
   const classes = useStyles(); //add styles to variable classes
@@ -87,6 +88,7 @@ export default function AddIngredient() {
 
   useEffect(() => {
     isInteger();
+    validationAge();
   }, []);
   /**
    * arrow function to retrieve the final inputs
@@ -179,9 +181,10 @@ export default function AddIngredient() {
                         required
                         onChange={handleMaxAge}
                         value={maxAge}
-                        validators={['isInteger', 'required']}
+                        validators={['isInteger', 'validationAge', 'required']}
                         errorMessages={[
                           MESSAGE_VALIDATORS_INTEGER,
+                          MESSAGE_VALIDATORS_AGE,
                           MESSAGE_VALIDATORS_REQUIRED,
                         ]}
                         InputProps={{
@@ -200,9 +203,10 @@ export default function AddIngredient() {
                         required
                         onChange={handleMinAge}
                         value={minAge}
-                        validators={['isInteger', 'required']}
+                        validators={['isInteger', 'validationAge', 'required']}
                         errorMessages={[
                           MESSAGE_VALIDATORS_INTEGER,
+                          MESSAGE_VALIDATORS_AGE,
                           MESSAGE_VALIDATORS_REQUIRED,
                         ]}
                         InputProps={{

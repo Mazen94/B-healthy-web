@@ -40,3 +40,11 @@ export function lenghOfPassword() {
     return true;
   });
 }
+export function validationAge() {
+  ValidatorForm.addValidationRule('validationAge', (value) => {
+    if (value > 90 || value < 5) {
+      return false;
+    }
+    return true;
+  });
+}
