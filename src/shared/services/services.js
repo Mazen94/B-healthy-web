@@ -15,7 +15,6 @@ export async function axiosService(endPoint, method, headers, data, callback) {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     };
   try {
-    console.log(config.headers);
     const response = await Axios(config);
     callback(undefined, response);
   } catch (error) {
