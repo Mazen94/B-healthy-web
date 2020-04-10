@@ -2,7 +2,7 @@ import { URL_API } from '../constants/constants';
 import Axios from 'axios';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import { createBrowserHistory } from 'history';
-import { LOGIN } from '../strings/strings';
+import { PATH_LOGIN } from '../../routes/path';
 
 export async function axiosService(endPoint, method, headers, data, callback) {
   const config = {
@@ -22,7 +22,7 @@ export async function axiosService(endPoint, method, headers, data, callback) {
     if (error.response.status === 401) {
       const customHistory = createBrowserHistory();
       localStorage.removeItem('token');
-      customHistory.push(LOGIN);
+      customHistory.push(PATH_LOGIN);
     } else {
       callback(error.response);
     }
