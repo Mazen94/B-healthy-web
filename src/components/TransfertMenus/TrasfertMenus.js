@@ -57,7 +57,7 @@ export default function TrasfertMenus() {
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    const newChecked = [checked];
 
     if (currentIndex === -1) {
       setMealId(value.id);
