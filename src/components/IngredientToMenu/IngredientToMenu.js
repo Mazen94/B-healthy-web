@@ -10,7 +10,7 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
 import {
-  ENDPOINT_ALL_INGREDIENTS,
+  ENDPOINT_LIST_INGREDIENTS,
   ENDPOINT_MEALS,
   ENDPOINT_INGREDIENTS,
 } from '../../shared/constants/endpoint';
@@ -34,7 +34,7 @@ export default function IngredientToMenu() {
 
   useEffect(() => {
     axiosService(
-      ENDPOINT_ALL_INGREDIENTS,
+      `${ENDPOINT_LIST_INGREDIENTS}1`,
       GET,
       true,
       null,
