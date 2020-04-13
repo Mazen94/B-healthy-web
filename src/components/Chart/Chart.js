@@ -39,8 +39,8 @@ export default function Chart() {
     axiosService(STATISTICS_GENDER, GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
-          setCountFemale(response.data.countGender.female);
-          setCountMale(response.data.countGender.male);
+          setCountFemale(response.data.data.female);
+          setCountMale(response.data.data.male);
           setFlag(false);
         }
       } else console.log(error);

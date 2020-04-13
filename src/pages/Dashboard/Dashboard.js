@@ -37,7 +37,7 @@ export default function Dashboard() {
       // get the number of menus
       axiosService(STATISTICS_MENUS, GET, true, null, (error, response) => {
         if (response) {
-          if (mounted) setCountMenus(response.data.countOfMenus);
+          if (mounted) setCountMenus(response.data.data);
         } else console.log(error);
       });
 
@@ -49,7 +49,7 @@ export default function Dashboard() {
         null,
         (error, response) => {
           if (response) {
-            if (mounted) setCountIngredient(response.data.countOfIngredient);
+            if (mounted) setCountIngredient(response.data.data);
           } else console.log(error);
         }
       );
