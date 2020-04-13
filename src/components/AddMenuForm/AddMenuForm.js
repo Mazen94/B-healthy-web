@@ -92,7 +92,7 @@ export default function MenuForm({ changeFlag }) {
     axiosService(ENDPOINT_MEALS, POST, true, menu, (error, response) => {
       if (response) {
         history.push(
-          `${PATH_MENU}/${response.data.MealStore.id}${PATH_INGREDIENTS}`
+          `${PATH_MENU}/${response.data.data.id}${PATH_INGREDIENTS}`
         );
       }
     });

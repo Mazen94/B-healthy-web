@@ -66,9 +66,9 @@ export default function AddIngredient() {
       (error, response) => {
         if (response) {
           if (mounted) {
-            setData(response.data.ingredients.data); //add the received data to the state data
-            setCurrentPage(response.data.ingredients.current_page); //add the received current_page to the state lastPage
-            setLastPage(response.data.ingredients.last_page); //add the received last_page to the state lastPage
+            setData(response.data.data.data); //add the received data to the state data
+            setCurrentPage(response.data.data.current_page); //add the received current_page to the state lastPage
+            setLastPage(response.data.data.last_page); //add the received last_page to the state lastPage
           }
         } else console.log('error to get the list of ingredients', error);
       }

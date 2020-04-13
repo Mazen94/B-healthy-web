@@ -57,11 +57,11 @@ export default function UpdateMenu() {
       (error, response) => {
         if (response) {
           if (mounted) {
-            setName(response.data.StoreMenu.name);
-            setMaxAge(response.data.StoreMenu.max_age);
-            setMinAge(response.data.StoreMenu.min_age);
-            setIngredients(response.data.StoreMenu.ingredients);
-            setTypeMenu(response.data.StoreMenu.type_menu);
+            setName(response.data.data.name);
+            setMaxAge(response.data.data.max_age);
+            setMinAge(response.data.data.min_age);
+            setIngredients(response.data.data.ingredients);
+            setTypeMenu(response.data.data.type_menu);
             setOpenSkeleton(false);
           }
         } else console.log('error to get a mealStore', error);

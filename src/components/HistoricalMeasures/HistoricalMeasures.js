@@ -49,8 +49,8 @@ export default function HistoricalMeasures() {
       null,
       (error, response) => {
         if (response) {
-          if (response.data.visits.data.length !== 0)
-            setVisit(response.data.visits.data[0]); //add the received data to the state data
+          if (response.data.data.data.length !== 0)
+            setVisit(response.data.data.data[0]); //add the received data to the state data
           setFlag(false);
         } else console.log('error to get data', error);
       }

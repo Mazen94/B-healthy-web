@@ -72,9 +72,9 @@ export default function ListPatients(props) {
     axiosService(url, GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
-          setData(response.data.patients.data); //add the received data to the state data
-          setCurrentPage(response.data.patients.current_page); //add the received current_page  to the state currentPage
-          setLastPage(response.data.patients.last_page); //add the received last_page to the state lastPage
+          setData(response.data.data.data); //add the received data to the state data
+          setCurrentPage(response.data.data.current_page); //add the received current_page  to the state currentPage
+          setLastPage(response.data.data.last_page); //add the received last_page to the state lastPage
           setFlag(false);
         }
       } else console.log(error);

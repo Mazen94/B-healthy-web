@@ -49,7 +49,7 @@ export default function TrasfertMenus() {
       null,
       (error, response) => {
         if (response) {
-          if (mounted) setLeft(response.data.MealStore.data); //add the received data to the state d
+          if (mounted) setLeft(response.data.data.data); //add the received data to the state d
         } else
           console.log('error to get all the list of recommendations', error);
       }

@@ -15,6 +15,7 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_EMAIL,
+  PRIMARY_COLOR,
 } from '../../shared/constants/constants';
 import {
   PROFIL,
@@ -81,9 +82,9 @@ export default function Profil() {
     axiosService(ENDPOINT_PROFIL, GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
-          setFirstName(response.data.nutritionist.firstName);
-          setLastName(response.data.nutritionist.lastName);
-          setEmail(response.data.nutritionist.email);
+          setFirstName(response.data.data.firstName);
+          setLastName(response.data.data.lastName);
+          setEmail(response.data.data.email);
           setOpenSkeleton(false);
         }
       } else console.log('error to get connected nutritionnist', error);
@@ -153,7 +154,6 @@ export default function Profil() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextValidator
-                  name="firstName"
                   variant="outlined"
                   onChange={handleFirstName}
                   value={firstName}
@@ -179,7 +179,6 @@ export default function Profil() {
                   onChange={handleEmail}
                   value={email}
                   fullWidth
-                  autoComplete="email"
                   validators={['required', 'isEmail']}
                   errorMessages={[
                     MESSAGE_VALIDATORS_REQUIRED,
@@ -194,10 +193,8 @@ export default function Profil() {
                   onChange={handlePassword}
                   value={password}
                   fullWidth
-                  name="password"
                   label={PASSWORD}
                   type="password"
-                  id="password"
                   autoComplete="current-password"
                   validators={['lenghPassword']}
                   errorMessages={[MESSAGE_VALIDATORS_PASSWORD]}
@@ -208,7 +205,7 @@ export default function Profil() {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              color={PRIMARY_COLOR}
               className={classes.submit}
             >
               {VALIDATE}

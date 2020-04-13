@@ -25,7 +25,7 @@ export default function CardPatient() {
       null,
       (error, response) => {
         if (response) {
-          if (mounted) setPatient(response.data.patient);
+          if (mounted) setPatient(response.data.data);
         } else console.log(error);
       }
     );

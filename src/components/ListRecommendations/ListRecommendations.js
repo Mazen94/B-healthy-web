@@ -56,7 +56,7 @@ export default function ListRecommendations() {
       (error, response) => {
         if (response) {
           if (mounted) {
-            setData(response.data.recommendations); //add the received data to the state data
+            setData(response.data.data); //add the received data to the state data
             setFlag(false);
           }
         } else

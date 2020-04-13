@@ -53,7 +53,7 @@ export default function ListFood(props) {
       (error, response) => {
         if (response) {
           if (mounted) {
-            setData(response.data.menus);
+            setData(response.data.data);
             setFlag(false);
           }
         } else console.log('error to delete a menu', error);
@@ -77,7 +77,7 @@ export default function ListFood(props) {
       null,
       (error, response) => {
         if (response) {
-          setMenu(response.data.menus);
+          setMenu(response.data.data);
           handleToggle(false);
           setOpen(true);
         } else console.log('error to get a menu', error);

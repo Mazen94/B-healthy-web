@@ -52,7 +52,7 @@ export default function UpdateIngredient(props) {
       (error, response) => {
         if (response) {
           if (mounted) {
-            setData(response.data.ingredient);
+            setData(response.data.data);
             setOpenSkeleton(false);
           }
         } else console.log('error to get only one ingredient', error);

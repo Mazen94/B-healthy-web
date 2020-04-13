@@ -47,11 +47,9 @@ export default function UpdateRecommendations() {
       (error, response) => {
         if (response) {
           if (mounted) {
-            // setName(response.data.recommendation.name);
-            // setAvoid(response.data.recommendation.avoid);
-            setData(response.data.recommendation);
+            setData(response.data.data);
             setFlag(false);
-            setMenus(response.data.recommendation.menus);
+            setMenus(response.data.data.menus);
           }
         } else console.log('error to get a recommendation', error);
       }

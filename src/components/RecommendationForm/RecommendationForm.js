@@ -75,7 +75,7 @@ const RecommendationForm = (props) => {
         if (response) {
           if (props.method === POST)
             history.push(
-              `${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATION}/${response.data.recommendation.id}`
+              `${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATION}/${response.data.data.id}`
             );
           setOpenSnackbar(true);
         } else console.log('error to modifie a recommendation', error);
