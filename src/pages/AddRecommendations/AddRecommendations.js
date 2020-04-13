@@ -29,11 +29,11 @@ export default function AddRecommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
+        {/* MenuBar Component */}
         <MenuBar title={PATIENT} />
-
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-
+          {/* NavBar  Component */}
           <NavBar recommendation="contained"></NavBar>
 
           <Grid container spacing={4} className={classes.gridContainer}>
@@ -44,9 +44,9 @@ export default function AddRecommendations() {
               stepProps={step}
             />
             <Grid container spacing={1}>
-              {/* Component Menu */}
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
+                  {/* RecommendationForm component */}
                   <RecommendationForm
                     data={[]}
                     endPoint={`${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}`}
