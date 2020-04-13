@@ -39,7 +39,7 @@ export default function IngredientToMenu() {
       true,
       null,
       (error, response) => {
-        if (response) setIngredients(response.data.ingredients);
+        if (response) setIngredients(response.data.ingredients.data);
         else console.log('error to get an ingredient', error);
       }
     );
