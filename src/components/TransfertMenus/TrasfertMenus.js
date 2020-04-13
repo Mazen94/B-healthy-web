@@ -16,7 +16,6 @@ import { axiosService } from '../../shared/services/services';
 import recommendations from '../../assets/recommendations.png';
 import {
   ENDPOINT_LIST_MEALS,
-  ENDPOINT_MEALS,
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
   ENDPOINT_MENUS,
@@ -50,7 +49,7 @@ export default function TrasfertMenus() {
       null,
       (error, response) => {
         if (response) {
-          if (mounted) setLeft(response.data.mealStore); //add the received data to the state d
+          if (mounted) setLeft(response.data.MealStore.data); //add the received data to the state d
         } else
           console.log('error to get all the list of recommendations', error);
       }
@@ -80,7 +79,6 @@ export default function TrasfertMenus() {
   const numberOfChecked = (items) => intersection(checked, items).length;
 
   const handleCheckedRight = () => {
-    console.log('params == ', params);
     PostMenuWithIngredientToRecommendation(mealId);
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
@@ -91,24 +89,15 @@ export default function TrasfertMenus() {
    * @param {int} id
    */
   function PostMenuWithIngredientToRecommendation(id) {
+    console.log(id);
     axiosService(
-      `${ENDPOINT_MEALS}${id}`,
-      GET,
+      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${ENDPOINT_MENUS}`,
+      POST,
       true,
-      null,
-      (error, response) => {
-        if (response) {
-          axiosService(
-            `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${ENDPOINT_MENUS}`,
-            POST,
-            true,
-            response.data,
-            (err, result) => {
-              if (result) console.log('aded menu  ==', result.data);
-              else console.log('error to add this menu', err);
-            }
-          );
-        } else console.log('error to find this menu', error);
+      { id: id },
+      (err, result) => {
+        if (result) console.log('aded menu  ==', result.data);
+        else console.log('error to add this menu', err);
       }
     );
   }
