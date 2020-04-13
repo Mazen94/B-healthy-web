@@ -122,3 +122,4 @@ export const URL_API = 'http://healthy.test/api/nutritionist/';
  * Constant message : age validation
  */
 export const MESSAGE_VALIDATORS_AGE = "L'age doit etre entre 5 et 90 ans";
+export const VALUE_TYPE_MENU = [0, 1, 2, 3, 4];
