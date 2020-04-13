@@ -13,6 +13,7 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   POST,
   PRIMARY_COLOR,
+  VALUE_TYPE_MENU,
 } from '../../shared/constants/constants';
 import { ENDPOINT_MEALS } from '../../shared/constants/endpoint';
 import {
@@ -121,11 +122,11 @@ export default function MenuForm({ changeFlag }) {
             className={classes.select}
             onChange={handleTypeMenu}
           >
-            <MenuItem value={BREAKFAST}>{BREAKFAST}</MenuItem>
-            <MenuItem value={FIRST_SNAKE}>{FIRST_SNAKE}</MenuItem>
-            <MenuItem value={LUNCH}>{LUNCH}</MenuItem>
-            <MenuItem value={SECOND_SNAKE}>{SECOND_SNAKE}</MenuItem>
-            <MenuItem value={DINNER}>{DINNER}</MenuItem>
+            <MenuItem value={VALUE_TYPE_MENU[0]}>{BREAKFAST}</MenuItem>
+            <MenuItem value={VALUE_TYPE_MENU[1]}>{FIRST_SNAKE}</MenuItem>
+            <MenuItem value={VALUE_TYPE_MENU[2]}>{LUNCH}</MenuItem>
+            <MenuItem value={VALUE_TYPE_MENU[3]}>{SECOND_SNAKE}</MenuItem>
+            <MenuItem value={VALUE_TYPE_MENU[4]}>{DINNER}</MenuItem>
           </Select>
         </Grid>
         <Grid item xs={12} sm={6}>
