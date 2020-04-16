@@ -12,7 +12,7 @@ pipelines:
               SERVER: '46.101.108.105'
               REMOTE_PATH: '/home/forge/b-healthy.dev.anypli.com'
               LOCAL_PATH: '.'
-              EXTRA_ARGS: '--exclude .env'
+              EXTRA_ARGS: '--exclude .env --exclude node_modules/'
       - step:
           name: restart docker-compose
           script:
