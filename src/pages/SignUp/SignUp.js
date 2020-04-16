@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
@@ -21,6 +21,7 @@ import {
 } from '../../shared/strings/strings';
 import {
   POST,
+  MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_EMAIL,
   PRIMARY_COLOR,
@@ -29,6 +30,7 @@ import { PATH_LOGIN, PATH_DASHBOARD } from '../../routes/path';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
 import { PASSWORD } from '../../shared/strings/strings';
+import { lenghOfPassword } from '../../shared/services/services';
 
 export default function SignUp() {
   const classes = useStyles(); //add styles to variable classes
@@ -37,6 +39,10 @@ export default function SignUp() {
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    lenghOfPassword();
+  });
   /**
    * arrow function to get the email entered by the user
    * @param {event} e
@@ -156,8 +162,11 @@ export default function SignUp() {
                 label={PASSWORD}
                 value={password}
                 onChange={handlePassword}
-                validators={['required']}
-                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                validators={['lenghPassword', 'required']}
+                errorMessages={[
+                  MESSAGE_VALIDATORS_PASSWORD,
+                  MESSAGE_VALIDATORS_REQUIRED,
+                ]}
               />
             </Grid>
           </Grid>
