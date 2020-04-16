@@ -14,7 +14,11 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { axiosService } from '../../shared/services/services';
+import {
+  axiosService,
+  isInteger,
+  validationAge,
+} from '../../shared/services/services';
 import { ENDPOINT_MEALS } from '../../shared/constants/endpoint';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {
@@ -27,6 +31,8 @@ import {
   VALIDATE,
 } from '../../shared/strings/strings';
 import {
+  MESSAGE_VALIDATORS_AGE,
+  MESSAGE_VALIDATORS_INTEGER,
   GET,
   PUT,
   MESSAGE_VALIDATORS_REQUIRED,
@@ -49,6 +55,8 @@ export default function UpdateMenu() {
   const params = useParams(); //to get params URL
 
   useEffect(() => {
+    isInteger();
+    validationAge();
     //Prepare cancel request
     let mounted = true;
     axiosService(
@@ -180,8 +188,12 @@ export default function UpdateMenu() {
                     label={MIN_AGE}
                     value={minAge}
                     onChange={handleChangeMinAge}
-                    validators={['required']}
-                    errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                    validators={['isInteger', 'validationAge', 'required']}
+                    errorMessages={[
+                      MESSAGE_VALIDATORS_INTEGER,
+                      MESSAGE_VALIDATORS_AGE,
+                      MESSAGE_VALIDATORS_REQUIRED,
+                    ]}
                     endadornment={
                       <InputAdornment position="end">g</InputAdornment>
                     }
@@ -195,8 +207,12 @@ export default function UpdateMenu() {
                     label={MAX_AGE}
                     value={maxAge}
                     onChange={handleChangeMaxAge}
-                    validators={['required']}
-                    errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                    validators={['isInteger', 'validationAge', 'required']}
+                    errorMessages={[
+                      MESSAGE_VALIDATORS_INTEGER,
+                      MESSAGE_VALIDATORS_AGE,
+                      MESSAGE_VALIDATORS_REQUIRED,
+                    ]}
                     endadornment={
                       <InputAdornment position="end">g</InputAdornment>
                     }
