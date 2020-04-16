@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: 35,
     overflow: 'auto',
     flexDirection: 'column',
-    height: 350,
+    height: 360,
   },
   select: {
     width: '100%',
