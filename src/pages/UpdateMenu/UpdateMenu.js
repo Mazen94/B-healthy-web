@@ -16,7 +16,9 @@ import { useHistory } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_MEALS } from '../../shared/constants/endpoint';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import {
+  MENU_TYPE,
   EDIT,
   MIN_AGE,
   MAX_AGE,
@@ -168,6 +170,7 @@ export default function UpdateMenu() {
                       </MenuItem>
                     ))}
                   </Select>
+                  <FormHelperText>{MENU_TYPE}</FormHelperText>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextValidator
