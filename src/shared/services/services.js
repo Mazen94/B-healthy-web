@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import { createBrowserHistory } from 'history';
 import { PATH_LOGIN } from '../../routes/path';
-
+import { UNAUTHENTICATED } from '../../shared/strings/strings';
 export async function axiosService(endPoint, method, headers, data, callback) {
   const config = {
     method: method,
@@ -19,13 +19,11 @@ export async function axiosService(endPoint, method, headers, data, callback) {
     const response = await Axios(config);
     callback(undefined, response);
   } catch (error) {
-    // if (error.response.status === 401) {
-    //   localStorage.removeItem('token');
-    //   const customHistory = createBrowserHistory();
-    //   customHistory.push(PATH_LOGIN);
-    // } else {
-    //   callback(error.response);
-    // }
+    if (error.response.data.message === UNAUTHENTICATED) {
+      localStorage.removeItem('token');
+      const customHistory = createBrowserHistory();
+      customHistory.go(PATH_LOGIN);
+    }
     callback(error.response);
   }
 }
