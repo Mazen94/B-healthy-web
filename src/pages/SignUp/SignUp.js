@@ -11,8 +11,10 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_REGISTER } from '../../shared/constants/endpoint';
+import Alert from '@material-ui/lab/Alert';
 import Copyright from '../../components/Copyright/Copyright';
 import {
+  EMAIL_EXISTS,
   REGISTER,
   HAVE_AN_ACCOUNT,
   EMAIL,
@@ -39,7 +41,7 @@ export default function SignUp() {
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [password, setPassword] = useState('');
-
+  const [flag, setFlag] = useState(false);
   useEffect(() => {
     lenghOfPassword();
   });
@@ -48,6 +50,7 @@ export default function SignUp() {
    * @param {event} e
    */
   const handleEmail = (e) => {
+    setFlag(false);
     setEmail(e.target.value);
   };
   /**
@@ -92,7 +95,7 @@ export default function SignUp() {
         if (response) {
           localStorage.setItem('token', response.data.token);
           history.push(PATH_DASHBOARD);
-        } else console.log(error.response.data);
+        } else setFlag(true);
       }
     );
   };
@@ -108,6 +111,7 @@ export default function SignUp() {
           {REGISTER}
         </Typography>
         {/* Form */}
+        {flag && <Alert severity="error">{EMAIL_EXISTS}</Alert>}
         <ValidatorForm
           onSubmit={onSubmitValidatorForm}
           className={classes.form}
@@ -161,6 +165,7 @@ export default function SignUp() {
                 fullWidth
                 label={PASSWORD}
                 value={password}
+                type="password"
                 onChange={handlePassword}
                 validators={['lenghPassword', 'required']}
                 errorMessages={[
