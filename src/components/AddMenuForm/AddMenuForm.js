@@ -22,6 +22,7 @@ import {
   validationAge,
 } from '../../shared/services/services';
 import {
+  MENU_TYPE,
   BREAKFAST,
   DINNER,
   FIRST_SNAKE,
@@ -33,6 +34,7 @@ import {
   SECOND_SNAKE,
 } from '../../shared/strings/strings';
 import { useStyles } from './styles';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 export default function MenuForm({ changeFlag }) {
   const classes = useStyles(); //add styles to variable classes
@@ -128,6 +130,7 @@ export default function MenuForm({ changeFlag }) {
             <MenuItem value={VALUE_TYPE_MENU[3]}>{SECOND_SNAKE}</MenuItem>
             <MenuItem value={VALUE_TYPE_MENU[4]}>{DINNER}</MenuItem>
           </Select>
+          <FormHelperText>{MENU_TYPE}</FormHelperText>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextValidator
