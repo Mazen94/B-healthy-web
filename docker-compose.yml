@@ -1,0 +1,20 @@
+version: '3'
+services:
+    b-healthy-client:
+        build:
+            dockerfile: Dockerfile.dev
+            context: .
+        container_name: b-healthy-client
+        restart: unless-stopped
+        volumes:
+            - /app/node_modules
+            - .:/app
+    b-healthy-client-webserver:
+        restart: always
+        build: 
+            dockerfile: Dockerfile.dev
+            context: ./nginx
+        container_name: b-healthy-client-webserver
+        restart: unless-stopped
+        ports:
+            - '8003:80'
