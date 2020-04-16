@@ -3,31 +3,25 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Alert from '@material-ui/lab/Alert';
+import Skeleton from '@material-ui/lab/Skeleton';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
+import ChangePassword from '../../components/ChangePassword/ChangePassword';
 import MenuBar from '../../components/MenuBar/MenuBar';
-import Alert from '@material-ui/lab/Alert';
-import Skeleton from '@material-ui/lab/Skeleton';
+import { PATH_DASHBOARD } from '../../routes/path';
 import {
   GET,
-  PUT,
-  MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_PASSWORD,
   MESSAGE_VALIDATORS_EMAIL,
+  MESSAGE_VALIDATORS_REQUIRED,
   PRIMARY_COLOR,
+  PUT,
 } from '../../shared/constants/constants';
-import {
-  PROFIL,
-  EMAIL_EXISTS,
-  PASSWORD,
-  VALIDATE,
-} from '../../shared/strings/strings';
-import { PATH_DASHBOARD } from '../../routes/path';
-import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
+import { axiosService, lenghOfPassword } from '../../shared/services/services';
+import { EMAIL_EXISTS, PROFIL, VALIDATE } from '../../shared/strings/strings';
 import { useStyles } from './styles';
-import { lenghOfPassword } from '../../shared/services/services';
 
 /**
  * Component for showing profil of nutritionist
@@ -42,7 +36,7 @@ export default function Profil() {
   const [password, setPassword] = useState(''); //to retrieve the password entered by the user
   const [erreurValidation, setErreurValidation] = useState(false); //when the user gives an email exists
   const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
-
+  const [changeMdp, setchangeMdp] = useState(false); //to open and close the Skeleton
   /**
    * arrow function to get the email entered by the user
    * @param {event} e
@@ -78,7 +72,6 @@ export default function Profil() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-
     axiosService(ENDPOINT_PROFIL, GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
@@ -122,7 +115,9 @@ export default function Profil() {
       }
     );
   };
-
+  const handleClickChangeMdp = () => {
+    setchangeMdp(!changeMdp);
+  };
   useEffect(() => {
     //custom rules
     lenghOfPassword();
@@ -186,20 +181,12 @@ export default function Profil() {
                   ]}
                 />
               </Grid>
-
-              <Grid item xs={12}>
-                <TextValidator
-                  variant="outlined"
-                  onChange={handlePassword}
-                  value={password}
-                  fullWidth
-                  label={PASSWORD}
-                  type="password"
-                  autoComplete="current-password"
-                  validators={['lenghPassword']}
-                  errorMessages={[MESSAGE_VALIDATORS_PASSWORD]}
-                />
-              </Grid>
+              <ChangePassword
+                handleClickChangeMdp={handleClickChangeMdp}
+                changeMdp={changeMdp}
+                handlePassword={handlePassword}
+                password={password}
+              />
             </Grid>
             <Button
               type="submit"
