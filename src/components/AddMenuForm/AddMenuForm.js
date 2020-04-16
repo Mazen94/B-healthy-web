@@ -131,11 +131,11 @@ export default function MenuForm({ changeFlag }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextValidator
-            label={MAX_AGE}
+            label={MIN_AGE}
             fullWidth
             required
-            onChange={handleMaxAge}
-            value={maxAge}
+            onChange={handleMinAge}
+            value={minAge}
             validators={['isInteger', 'validationAge', 'required']}
             errorMessages={[
               MESSAGE_VALIDATORS_INTEGER,
@@ -150,11 +150,11 @@ export default function MenuForm({ changeFlag }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextValidator
-            label={MIN_AGE}
+            label={MAX_AGE}
             fullWidth
             required
-            onChange={handleMinAge}
-            value={minAge}
+            onChange={handleMaxAge}
+            value={maxAge}
             validators={['isInteger', 'validationAge', 'required']}
             errorMessages={[
               MESSAGE_VALIDATORS_INTEGER,
