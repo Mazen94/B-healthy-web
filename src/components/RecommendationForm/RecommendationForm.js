@@ -93,12 +93,8 @@ const RecommendationForm = (props) => {
       />
       {/* From */}
 
-      <ValidatorForm
-        onSubmit={onSubmitForm}
-        className={classes.formValidator}
-        noValidate
-      >
-        <Grid container spacing={2}>
+      <ValidatorForm onSubmit={onSubmitForm} noValidate>
+        <Grid container spacing={2} className={classes.gridContainer}>
           <Grid item xs={12} sm={6}>
             <TextValidator
               className={classes.textValidator}
@@ -117,14 +113,14 @@ const RecommendationForm = (props) => {
           <Grid item xs={12} sm={6}>
             <TextValidator
               className={classes.textValidator}
-              name="name"
-              variant="outlined"
+              id="outlined-multiline-static"
               label={AVOID}
-              required
               fullWidth
-              id="name"
               onChange={handleAvoid}
               value={avoid}
+              multiline
+              rows="4"
+              variant="outlined"
               validators={['required']}
               errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
               endadornment={<InputAdornment position="end">g</InputAdornment>}

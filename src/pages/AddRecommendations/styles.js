@@ -23,7 +23,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    height: 200,
+    height: 220,
   },
   formValidator: {
     marginTop: '2%',

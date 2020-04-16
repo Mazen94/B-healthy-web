@@ -34,7 +34,7 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     marginLeft: 15,
     marginRight: 15,
-    height: 200,
+    height: 280,
   },
   stepperHorizontal: {
     marginTop: '2%',
