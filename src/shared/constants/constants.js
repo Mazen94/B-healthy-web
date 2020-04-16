@@ -117,7 +117,7 @@ export const PUT = 'PUT';
  */
 export const DELETE = 'DELETE';
 
-export const URL_API = 'http://localhost:8002/api/nutritionist/';
+export const URL_API = process.env.REACT_APP_API_URL;
 /**
  * Constant message : age validation
  */
