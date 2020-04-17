@@ -52,11 +52,9 @@ export default function ListFood(props) {
       null,
       (error, response) => {
         if (response) {
-          if (mounted) {
-            setData(response.data.data);
-            setFlag(false);
-          }
+          if (mounted) setData(response.data.data);
         } else console.log('error to delete a menu', error);
+        setFlag(false);
       }
     );
     return () => {
@@ -98,18 +96,8 @@ export default function ListFood(props) {
     if (flag) {
       return (
         <Fragment>
-          <Skeleton
-            className={classes.skeleton}
-            variant="text"
-            height="5%"
-            width="90%"
-          />
-          <Skeleton
-            className={classes.skeletonRec}
-            variant="rect"
-            width="90%"
-            height="25%"
-          />
+          <Skeleton className={classes.skeleton} variant="text" />
+          <Skeleton className={classes.skeletonRec} variant="rect" />
         </Fragment>
       );
     } else {

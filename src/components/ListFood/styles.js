@@ -17,10 +17,14 @@ export const useStyles = makeStyles((theme) => ({
     'font-size': '14px',
   },
   skeleton: {
-    marginTop: '5%',
+    marginTop: '2%',
+    height: 80,
+    width: '80%',
     margin: 'auto',
   },
   skeletonRec: {
+    height: 300,
+    width: '80%',
     margin: 'auto',
   },
 }));
