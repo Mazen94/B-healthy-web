@@ -14,17 +14,6 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    paddingTop: 35,
-    overflow: 'auto',
-    flexDirection: 'column',
-    height: 380,
-  },
-  select: {
-    width: '100%',
-  },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
