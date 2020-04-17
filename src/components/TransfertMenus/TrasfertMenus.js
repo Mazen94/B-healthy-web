@@ -34,22 +34,27 @@ function intersection(a, b) {
 
 export default function TrasfertMenus() {
   const classes = useStyles(); //add styles to variable classes
-  const [checked, setChecked] = useState([]);
-  const [left, setLeft] = useState([]);
-  const [right, setRight] = useState([]);
-  const [mealId, setMealId] = useState('');
+  const [checked, setChecked] = useState([]); //the radio bottom checked
+  const [left, setLeft] = useState([]); //the data that is on the left
+  const [right, setRight] = useState([]); //the data that is on the right
+  const [mealId, setMealId] = useState(''); //the id of meal checked
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const params = useParams();
 
   useEffect(() => {
     let mounted = true;
     axiosService(
-      `${ENDPOINT_LIST_MEALS}1`,
+      `${ENDPOINT_LIST_MEALS}${currentPage}`,
       GET,
       true,
       null,
       (error, response) => {
         if (response) {
-          if (mounted) setLeft(response.data.data.data); //add the received data to the state d
+          if (mounted) {
+            setLeft((left) => left.concat(response.data.data.data));
+            setLastPage(response.data.data.last_page);
+          }
         } else
           console.log('error to get all the list of recommendations', error);
       }
@@ -57,17 +62,16 @@ export default function TrasfertMenus() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [currentPage]);
 
   const leftChecked = intersection(checked, left);
 
+  //when the use check a radio
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [checked];
-
     if (currentIndex === -1) {
       setMealId(value.id);
-      console.log('value.id==', value.id);
       newChecked.push(value);
     } else {
       setMealId('');
@@ -101,44 +105,40 @@ export default function TrasfertMenus() {
       }
     );
   }
+  //event handleScroll
+  const handleScroll = (event) => {
+    const bottom =
+      event.target.scrollHeight - event.target.scrollTop <
+      event.target.clientHeight; //detect scroll to bottom
+
+    if (bottom && currentPage < lastPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   const customList = (title, items, iconAvatar, flag) => (
     <Card>
       <CardHeader
         className={classes.cardHeader}
-        avatar={
-          <Avatar
-            aria-label="recipe"
-            className={classes.avatar}
-            src={iconAvatar}
-          />
-        }
+        avatar={<Avatar className={classes.avatar} src={iconAvatar} />}
         title={title}
         subheader={`${numberOfChecked(items)}/${items.length} selected`}
       />
       <Divider />
-      <List className={classes.list} dense component="div" role="list">
+      <List className={classes.list} dense onScroll={handleScroll}>
         {items.map((value) => {
-          const labelId = `transfer-list-all-item-${value.name}-label`;
-
           return (
-            <ListItem
-              key={value.id}
-              role="listitem"
-              button
-              onClick={handleToggle(value)}
-            >
+            <ListItem key={value.id} button onClick={handleToggle(value)}>
               {flag && (
                 <ListItemIcon>
                   <Checkbox
                     checked={checked.indexOf(value) !== -1}
                     tabIndex={-1}
                     disableRipple
-                    inputProps={{ 'aria-labelledby': labelId }}
                   />
                 </ListItemIcon>
               )}
-              <ListItemText id={labelId} primary={value.name} />
+              <ListItemText primary={value.name} />
             </ListItem>
           );
         })}
@@ -148,23 +148,16 @@ export default function TrasfertMenus() {
   );
 
   return (
-    <Grid
-      container
-      spacing={2}
-      justify="center"
-      alignItems="center"
-      className={classes.root}
-    >
+    <Grid container spacing={2} className={classes.root}>
       <Grid item>{customList(MENUS, left, meal, true)}</Grid>
       <Grid item>
-        <Grid container direction="column" alignItems="center">
+        <Grid container className={classes.gridContainer}>
           <Button
             variant="outlined"
             size="small"
             className={classes.button}
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
-            aria-label="move selected right"
           >
             &gt;
           </Button>
