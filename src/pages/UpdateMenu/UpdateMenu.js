@@ -7,11 +7,13 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import UpdateMenuForm from '../../components/UpdateMenuForm/UpdateMenuForm';
 import { EDIT } from '../../shared/strings/strings';
 import { useStyles } from './styles';
+import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
+import { MENU_STEPPER_ADD } from '../../shared/strings/strings';
 
 export default function UpdateMenu() {
   const classes = useStyles(); //add styles to variable classes
   const [flag, setFlag] = useState(false); //to open and close the CircularProgress
-
+  const step = 0;
   const changeFlag = (newFalg) => {
     setFlag(newFalg);
   };
@@ -23,6 +25,7 @@ export default function UpdateMenu() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+          <StepperHorizontal add={MENU_STEPPER_ADD} stepProps={step} />
           {/* UpdateMenuForm component */}
           <UpdateMenuForm changeFlag={changeFlag} />
           {/* Backdrop Component */}

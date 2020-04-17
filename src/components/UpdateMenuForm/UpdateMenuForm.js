@@ -1,5 +1,3 @@
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -34,7 +32,7 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
-import { PATH_MENUS } from '../../routes/path';
+import { PATH_MENU, PATH_INGREDIENTS } from '../../routes/path';
 import { useStyles } from './styles';
 import ModifyIngredientMenu from '../../components/ModifyIngredientMenu/ModifyIngredientMenu';
 
@@ -107,7 +105,8 @@ export default function UpdateMenuForm({ changeFlag }) {
       true,
       menu,
       (error, response) => {
-        if (response) history.push(`${PATH_MENUS}/1`);
+        if (response)
+          history.push(`${PATH_MENU}/${params.id}${PATH_INGREDIENTS}`);
         else changeFlag(false);
       }
     );
