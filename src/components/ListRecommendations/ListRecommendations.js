@@ -114,13 +114,10 @@ export default function ListRecommendations() {
     //Loading until the state get the data from db
     if (flag) {
       return (
-        <div className={classes.skeleton}>
-          {/* Loading when the data is empty */}
-          <Skeleton />
-          <Skeleton animation={false} />
-          <Skeleton animation="wave" />
-          <Skeleton animation="wave" />
-        </div>
+        <Fragment>
+          <Skeleton className={classes.skeleton} variant="text" />
+          <Skeleton className={classes.skeletonRec} variant="rect" />
+        </Fragment>
       );
       // when the states get the data and if the data is not empty then display
     } else {

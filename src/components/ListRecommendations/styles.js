@@ -5,11 +5,6 @@ export const useStyles = makeStyles((theme) => ({
     width: '80%',
     margin: 'auto',
   },
-  skeleton: {
-    margin: 'auto',
-    marginTop: '10%',
-    width: '90%',
-  },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -38,5 +33,15 @@ export const useStyles = makeStyles((theme) => ({
   },
   link: {
     color: 'rgb(39 , 39, 39)',
+  },
+  skeleton: {
+    height: 80,
+    width: '80%',
+    margin: 'auto',
+  },
+  skeletonRec: {
+    height: 300,
+    width: '80%',
+    margin: 'auto',
   },
 }));
