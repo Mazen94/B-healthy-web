@@ -65,6 +65,7 @@ export const LIST_OF_MENU = 'Liste des menus';
 export const NUMBER_OF_CALORIES = ' Nombre de calories pour ce menu :';
 export const OK = 'Ok';
 export const FOOD_JOURNAL = 'Journal Alimentaire';
+export const STATISCALS = 'Statistiques';
 export const CONSULTATION = ' Consultation';
 export const PATIENTS = 'Patients';
 export const DASHBOARD = 'Dashboard';
