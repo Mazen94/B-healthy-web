@@ -20,102 +20,100 @@ import Recommendation from '../pages/Recommendation/Recommendation';
 import AddRecommendations from '../pages/AddRecommendations/AddRecommendations';
 import AddMenuToRecommendations from '../pages/AddMenuToRecommendations/AddMenuToRecommendations';
 import UpdateRecommendations from '../pages/UpdateRecommendations/UpdateRecommendations';
+import StatiscalsPatient from '../pages/StatiscalsPatient/StatiscalsPatient';
 import FoodJournal from '../pages/FoodJournal/FoodJournal';
-import {
-  PATH_LOGIN,
-  PATH_REGISTER,
-  PATH_DASHBOARD,
-  PATH_PATIENTS,
-  PATH_PATIENT,
-  PATH_CONSULTATION,
-  PATH_RECOMMENDATIONS,
-  PATH_RECOMMENDATION,
-  PATH_PROFIL,
-  PATH_INGREDIENTS,
-  PATH_INGREDIENT,
-  PATH_MENUS,
-  PATH_MENU,
-  PATH_JOURNAL,
-  ID,
-  PAGE,
-  ID_MENU,
-  ID_RECOMMENDATION
-} from './path';
+import * as paths from './path';
 
 function Route() {
   return (
     <Fragment>
       <BrowserRouter>
         {/* Components CheckConnection */}
-        <CheckConnection exact path={PATH_LOGIN} component={SignIn} />
-        <CheckConnection path={PATH_REGISTER} component={SignUp} />
+        <CheckConnection exact path={paths.PATH_LOGIN} component={SignIn} />
+        <CheckConnection path={paths.PATH_REGISTER} component={SignUp} />
         {/* Components PrivateRoute */}
-        <PrivateRoute exact path={PATH_DASHBOARD} component={Dashboard} />
+        <PrivateRoute exact path={paths.PATH_DASHBOARD} component={Dashboard} />
         {/* Route Patient */}
         <PrivateRoute
           exact
-          path={`${PATH_PATIENTS}${PAGE}`}
+          path={`${paths.PATH_PATIENTS}${paths.PAGE}`}
           component={Patients}
         />
-        <PrivateRoute exact path={PATH_PATIENT} component={AddPatient} />
+        <PrivateRoute exact path={paths.PATH_PATIENT} component={AddPatient} />
         <PrivateRoute
           exact
-          path={`${PATH_PATIENT}${ID}${PATH_CONSULTATION}`}
+          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_CONSULTATION}`}
           component={Consultation}
         />
         <PrivateRoute
-          path={`${PATH_PATIENT}${ID}${PATH_JOURNAL}`}
+          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_STATISCALS}`}
+          component={StatiscalsPatient}
+        />
+        <PrivateRoute
+          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_JOURNAL}`}
           component={FoodJournal}
         />
         {/* Route get  all  recommendation */}
         <PrivateRoute
           exact
-          path={`${PATH_PATIENT}${ID}${PATH_RECOMMENDATIONS}`}
+          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATIONS}`}
           component={Recommendation}
         />
         {/* Route add new  recommendation */}
         <PrivateRoute
           exact
-          path={`${PATH_PATIENT}${ID}${PATH_RECOMMENDATION}`}
+          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATION}`}
           component={AddRecommendations}
         />
         {/* Route add menu to a recommendation */}
         <PrivateRoute
           exact
-          path={`${PATH_PATIENT}${ID}${PATH_RECOMMENDATION}${ID_RECOMMENDATION}`}
+          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATION}${paths.ID_RECOMMENDATION}`}
           component={AddMenuToRecommendations}
         />
         {/* Route update recommendation */}
         <PrivateRoute
           exact
-          path={`${PATH_PATIENT}${ID}${PATH_RECOMMENDATIONS}${ID_RECOMMENDATION}`}
+          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATIONS}${paths.ID_RECOMMENDATION}`}
           component={UpdateRecommendations}
         />
         {/* Route Update Nutritionist */}
-        <PrivateRoute exact path={PATH_PROFIL} component={Profil} />
+        <PrivateRoute exact path={paths.PATH_PROFIL} component={Profil} />
         {/* Route Ingredient */}
         <PrivateRoute
           exact
-          path={`${PATH_INGREDIENTS}${PAGE}`}
+          path={`${paths.PATH_INGREDIENTS}${paths.PAGE}`}
           component={Ingredients}
         />
-        <PrivateRoute exact path={PATH_INGREDIENT} component={AddIngredient} />
         <PrivateRoute
           exact
-          path={`${PATH_INGREDIENT}${ID}`}
+          path={paths.PATH_INGREDIENT}
+          component={AddIngredient}
+        />
+        <PrivateRoute
+          exact
+          path={`${paths.PATH_INGREDIENT}${paths.ID}`}
           component={UpdateIngredient}
         />
         {/* Route Menu */}
         {/* Route to add ingredient to a Menu */}
         <PrivateRoute
           exact
-          path={`${PATH_MENU}${ID_MENU}${PATH_INGREDIENTS}`}
+          path={`${paths.PATH_MENU}${paths.ID_MENU}${paths.PATH_INGREDIENTS}`}
           component={AddIngredientToMenu}
         />
         {/* Route to get all menus per page */}
-        <PrivateRoute exact path={`${PATH_MENUS}${PAGE}`} component={Menus} />
-        <PrivateRoute exact path={PATH_MENU} component={AddMenu} />
-        <PrivateRoute exact path={`${PATH_MENU}${ID}`} component={UpdateMenu} />
+        <PrivateRoute
+          exact
+          path={`${paths.PATH_MENUS}${paths.PAGE}`}
+          component={Menus}
+        />
+        <PrivateRoute exact path={paths.PATH_MENU} component={AddMenu} />
+        <PrivateRoute
+          exact
+          path={`${paths.PATH_MENU}${paths.ID}`}
+          component={UpdateMenu}
+        />
       </BrowserRouter>
     </Fragment>
   );
