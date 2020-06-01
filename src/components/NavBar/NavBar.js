@@ -7,6 +7,7 @@ import {
   RECOMMENDATIONS,
   FOOD_JOURNAL,
   CONSULTATION,
+  STATISCALS,
 } from '../../shared/strings/strings';
 import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
@@ -14,6 +15,7 @@ import {
   PATH_CONSULTATION,
   PATH_RECOMMENDATIONS,
   PATH_JOURNAL,
+  PATH_STATISCALS,
 } from '../../routes/path';
 import { useStyles } from './styles';
 
@@ -21,7 +23,7 @@ export default function NavBar(props) {
   const classes = useStyles();
   const params = useParams();
   const history = useHistory();
-  const { consultation, recommendation, journalAlimentaire } = props;
+  const { consultation, recommendation, journalAlimentaire, statiscal } = props;
   /**
    * when the user clicks on the button consultation
    */
@@ -40,7 +42,12 @@ export default function NavBar(props) {
   const handleClickJournal = () => {
     history.push(`${PATH_PATIENT}/${params.id}${PATH_JOURNAL}`);
   };
-
+  /**
+   * when the user clicks on the button Journal Alimentaire
+   */
+  const handleClickStatiscals = () => {
+    history.push(`${PATH_PATIENT}/${params.id}${PATH_STATISCALS}`);
+  };
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid className={classes.control}>
@@ -76,6 +83,18 @@ export default function NavBar(props) {
             onClick={handleClickJournal}
           >
             {FOOD_JOURNAL}
+          </Button>
+        </Paper>
+      </Grid>
+      <Grid className={classes.control}>
+        <Paper className={classes.paper}>
+          <Button
+            className={classes.button}
+            color={PRIMARY_COLOR}
+            variant={statiscal}
+            onClick={handleClickStatiscals}
+          >
+            {STATISCALS}
           </Button>
         </Paper>
       </Grid>
