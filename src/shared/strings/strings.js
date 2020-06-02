@@ -88,6 +88,13 @@ export const ADD_INGREDIENT = 'Ingredient ajouté';
 export const UPDATE_INDREDIENT = 'Ingredient modifié ';
 export const ADD_RECOMMENDATION = 'Recommendation Ajoutée';
 export const UNAUTHENTICATED = 'Unauthenticated.';
+
+export const CHEST_PROGRESSION = ' la poitrine ';
+export const BELLY_PROGRESSION = ' la hanche ';
+export const WEIGHT_PROGRESSION = ' le poids ';
+export const LEGS_PROGRESSION = ' la cuisse ';
+export const PROGRESSION = 'Progression de';
+export const PER_MONTH = 'par mois';
 export const TABLE_HEAD_MENUS = [MENUS, MENU_TYPE, CALORIES, AGE_RANGE];
 export const TABLE_HEAD_INGREDIENTS = [INGREDIENTS, CALORIES, AMOUNT];
 export const TABLE_HEAD_PATIENTS = [
@@ -104,4 +111,21 @@ export const SELECT_TYPE_MENU = [
   SECOND_SNAKE,
   DINNER,
 ];
+export const EMPTY_PROGRESSION_DATA = "vous n'avez pas pris des meusres pour";
+export const GET_MEASURE = 'Pour Prendre des mesures cliques ici';
+export const STATISCALS_EMPTY = "vous n'avez pas encores pris des measures";
 export const RADIOGROUP_PATIENT = [FEMALE, MALE];
+export const THE_MONTHS = [
+  'janvier',
+  'février',
+  'mars',
+  'avril',
+  'mai',
+  'juin',
+  'juillet',
+  'août',
+  'septembre',
+  'octobre',
+  'novembre',
+  'décembre',
+];

@@ -123,3 +123,15 @@ export const URL_API = process.env.REACT_APP_API_URL;
  */
 export const MESSAGE_VALIDATORS_AGE = "L'age doit etre entre 5 et 90 ans";
 export const VALUE_TYPE_MENU = [0, 1, 2, 3, 4];
+
+export const WEIGHT_PROGRESSION_BACKGROUNDCOLOR = 'rgba(63, 81, 181, 0.4)';
+export const WEIGHT_PROGRESSION_BORDERCOLOR = 'rgba(63, 81, 181, 0.5)';
+
+export const CHEST_PROGRESSION_BACKGROUNDCOLOR = 'rgba(95, 49, 1 , 0.4)';
+export const CHEST_PROGRESSION_BORDERCOLOR = 'rgba(95, 49, 1 , 0.5)';
+
+export const BELLY_PROGRESSIO_BACKGROUNDCOLOR = 'rgba(117, 0, 0, 0.4)';
+export const BELLY_PROGRESSIO_BORDERCOLOR = 'rgba(117, 0, 0, 0.5)';
+
+export const LEGS_PROGRESSION_BACKGROUNDCOLOR = 'rgba(0, 85, 66 , 0.4)';
+export const LEGS_PROGRESSION_BORDERCOLOR = 'rgba(0, 85, 66 , 0.5)';
