@@ -4,6 +4,8 @@ import { ValidatorForm } from 'react-material-ui-form-validator';
 import { createBrowserHistory } from 'history';
 import { PATH_LOGIN } from '../../routes/path';
 import { UNAUTHENTICATED } from '../../shared/strings/strings';
+import * as strings from '../../shared/strings/strings';
+
 export async function axiosService(endPoint, method, headers, data, callback) {
   const config = {
     method: method,
@@ -54,3 +56,36 @@ export function validationAge() {
     return true;
   });
 }
+
+//GET THE MOUNTH RELATED TO THE KEY
+export const findTheMonth = (key) => {
+  switch (key) {
+    case '01':
+      return strings.THE_MONTHS[0];
+    case '02':
+      return strings.THE_MONTHS[1];
+    case '03':
+      return strings.THE_MONTHS[2];
+    case '04':
+      return strings.THE_MONTHS[3];
+    case '05':
+      return strings.THE_MONTHS[4];
+    case '06':
+      return strings.THE_MONTHS[5];
+    case '07':
+      return strings.THE_MONTHS[6];
+    case '08':
+      return strings.THE_MONTHS[7];
+    case '09':
+      return strings.THE_MONTHS[8];
+    case '10':
+      return strings.THE_MONTHS[9];
+    case '11':
+      return strings.THE_MONTHS[10];
+    case '12':
+      return strings.THE_MONTHS[11];
+
+    default:
+      return strings.THE_MONTHS[0];
+  }
+};
