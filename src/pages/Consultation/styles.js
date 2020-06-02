@@ -10,8 +10,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    height: '180vh',
-    overflow: 'none',
+    height: '165vh',
+    'overflow-x': 'auto',
   },
   gridContainer: {
     marginTop: '2%',
