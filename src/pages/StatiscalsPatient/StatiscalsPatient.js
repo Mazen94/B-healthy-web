@@ -24,7 +24,7 @@ const StatiscalsPatient = () => {
     //Prepare cancel request
     let mounted = true;
     axiosService(
-      `${endpoints.ENDPOINT_PATIENTS}${params.id}/${endpoints.ENDPOINT_STATISCAL}`,
+      `${endpoints.ENDPOINT_PATIENTS}${params.id}/${endpoints.ENDPOINT_STATISCAL}${endpoints.ENDPOINT_PROGRESSION}`,
       constants.GET,
       true,
       null,

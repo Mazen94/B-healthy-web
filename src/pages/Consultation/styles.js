@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     'overflow-x': 'auto',
   },
   gridContainer: {
-    marginTop: '2%',
+    marginTop: 2,
   },
   small: {
     width: 35,
