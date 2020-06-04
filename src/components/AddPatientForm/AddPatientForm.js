@@ -9,32 +9,10 @@ import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import { PATH_PATIENTS } from '../../routes/path';
-import {
-  MESSAGE_VALIDATORS_EMAIL,
-  MESSAGE_VALIDATORS_INTEGER,
-  MESSAGE_VALIDATORS_PASSWORD,
-  MESSAGE_VALIDATORS_REQUIRED,
-  POST,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
+import * as constants from '../../shared/constants/constants';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
-import {
-  axiosService,
-  isInteger,
-  lenghOfPassword,
-} from '../../shared/services/services';
-import {
-  AGE,
-  EMAIL,
-  FIRST_NAME,
-  LAST_NAME,
-  RADIOGROUP_PATIENT,
-  PASSWORD,
-  PHONE,
-  PREFFESION,
-  VALIDATE,
-  YEARS,
-} from '../../shared/strings/strings';
+import * as services from '../../shared/services/services';
+import * as strings from '../../shared/strings/strings';
 import { useStyles } from './styles';
 
 export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
@@ -46,7 +24,6 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
   const [firstName, setFirstName] = useState(''); //to retrieve the firstName entered by the user .
   const [numberPhone, setNumberPhone] = useState(''); //to retrieve the numberPhone entered by the user.
   const [lastName, setLastName] = useState(''); //to retrieve the lastName entered by the user.
-  const [password, setPassword] = useState(''); //to retrieve the password entered by the user.
   const [age, setAge] = useState(''); //to retrieve the password entered by the user.
 
   //when the user types the email
@@ -73,43 +50,46 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
   const handleAge = (e) => {
     setAge(e.target.value);
   };
-  //when the user types the Password
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
+
   //when the user types the Gender
   const handleGender = (e) => {
     setGender(e.target.value);
   };
   useEffect(() => {
     //custom rules
-    lenghOfPassword();
-    isInteger();
+    services.lenghOfPassword();
+    services.isInteger();
   }, []);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
+    const valueOfGender = gender === strings.RADIOGROUP_PATIENT[0] ? 1 : 0;
     changeFlag(true);
     const patient = {
       email: email,
       firstName: firstName,
       lastName: lastName,
-      gender: gender,
+      gender: valueOfGender,
       numberPhone: numberPhone,
-      password: password,
       profession: proffesion,
       age: age,
     };
-    axiosService(ENDPOINT_PATIENTS, POST, true, patient, (error, response) => {
-      if (response) {
-        console.log(response.data);
-        changeFlag(false);
-        history.push(`${PATH_PATIENTS}/1`);
-      } else {
-        changeFlag(false);
-        changeErreurValidation(true);
+    services.axiosService(
+      ENDPOINT_PATIENTS,
+      constants.POST,
+      true,
+      patient,
+      (error, response) => {
+        if (response) {
+          console.log(response.data);
+          changeFlag(false);
+          history.push(`${PATH_PATIENTS}/1`);
+        } else {
+          changeFlag(false);
+          changeErreurValidation(true);
+        }
       }
-    });
+    );
   };
 
   return (
@@ -122,10 +102,10 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             fullWidth
             onChange={handleFirstName}
             value={firstName}
-            label={FIRST_NAME}
+            label={strings.FIRST_NAME}
             autoFocus
             validators={['required']}
-            errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+            errorMessages={[constants.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -135,9 +115,9 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             fullWidth
             onChange={handleLastName}
             value={lastName}
-            label={LAST_NAME}
+            label={strings.LAST_NAME}
             validators={['required']}
-            errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+            errorMessages={[constants.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -147,11 +127,11 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             fullWidth
             onChange={handleEmail}
             value={email}
-            label={EMAIL}
+            label={strings.EMAIL}
             validators={['required', 'isEmail']}
             errorMessages={[
-              MESSAGE_VALIDATORS_REQUIRED,
-              MESSAGE_VALIDATORS_EMAIL,
+              constants.MESSAGE_VALIDATORS_REQUIRED,
+              constants.MESSAGE_VALIDATORS_EMAIL,
             ]}
           />
         </Grid>
@@ -162,11 +142,11 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             fullWidth
             onChange={handleNumberPhone}
             value={numberPhone}
-            label={PHONE}
+            label={strings.PHONE}
             validators={['required', 'isInteger']}
             errorMessages={[
-              MESSAGE_VALIDATORS_REQUIRED,
-              MESSAGE_VALIDATORS_INTEGER,
+              constants.MESSAGE_VALIDATORS_REQUIRED,
+              constants.MESSAGE_VALIDATORS_INTEGER,
             ]}
           />
         </Grid>
@@ -177,9 +157,9 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             fullWidth
             onChange={handleProffesion}
             value={proffesion}
-            label={PREFFESION}
+            label={strings.PREFFESION}
             validators={['required']}
-            errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+            errorMessages={[constants.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
 
@@ -189,48 +169,31 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             fullWidth
             onChange={handleAge}
             value={age}
-            label={AGE}
+            label={strings.AGE}
             validators={['required', 'isInteger']}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">{YEARS}</InputAdornment>
+                <InputAdornment position="end">{strings.YEARS}</InputAdornment>
               ),
             }}
             errorMessages={[
-              MESSAGE_VALIDATORS_REQUIRED,
-              MESSAGE_VALIDATORS_INTEGER,
+              constants.MESSAGE_VALIDATORS_REQUIRED,
+              constants.MESSAGE_VALIDATORS_INTEGER,
             ]}
           />
         </Grid>
         <Grid item xs={12}>
-          <TextValidator
-            variant="outlined"
-            required
-            fullWidth
-            label={PASSWORD}
-            type="password"
-            onChange={handlePassword}
-            value={password}
-            validators={['lenghPassword', 'required']}
-            errorMessages={[
-              MESSAGE_VALIDATORS_PASSWORD,
-              MESSAGE_VALIDATORS_REQUIRED,
-            ]}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl component="fieldset">
+          <FormControl>
             <RadioGroup
-              aria-label="gender"
               value={gender}
               onChange={handleGender}
               className={classes.radioGroup}
             >
-              {RADIOGROUP_PATIENT.map((row, index) => (
+              {strings.RADIOGROUP_PATIENT.map((row, index) => (
                 <FormControlLabel
                   value={row}
                   key={index}
-                  control={<Radio color={PRIMARY_COLOR} />}
+                  control={<Radio color={constants.PRIMARY_COLOR} />}
                   label={row}
                 />
               ))}
@@ -242,10 +205,10 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
         type="submit"
         fullWidth
         variant="contained"
-        color={PRIMARY_COLOR}
+        color={constants.PRIMARY_COLOR}
         className={classes.submit}
       >
-        {VALIDATE}
+        {strings.VALIDATE}
       </Button>
     </ValidatorForm>
   );
