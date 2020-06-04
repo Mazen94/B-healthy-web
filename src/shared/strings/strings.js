@@ -3,6 +3,8 @@
  */
 export const LOGIN = 'Se connecter';
 export const FORGOT_PASSWORD = 'Mot de passe oublié?';
+export const BACK_TO_LOGIN_INTERFACE = "Retourner a la page d'accueil";
+export const RESET_PASSWORD = 'Mot de passe oublié';
 export const DONT_HAVE_ACCOUNT = "Vous n'avez pas de compte? S'inscrire";
 export const REGISTER = "S'inscrire";
 export const HAVE_AN_ACCOUNT = 'Vous avez déjà un compte? se connecter';
@@ -36,6 +38,8 @@ export const LUNCH = 'Déjeuner';
 export const DINNER = 'Dîner';
 export const INGREDIENT_OF_MENU = 'Les ingredients de ce menu';
 export const EMAIL_EXISTS = 'Email existe';
+export const EMAIL_FAILED = "Ton adresse email n'est pas valide.";
+export const EMAIL_SUCCESS = 'Merci de vérifier votre boite mail';
 export const INGREDIENTS = 'Ingredients';
 export const AMOUNT = 'Quantitie (g)';
 export const GRAM = 'gramme';

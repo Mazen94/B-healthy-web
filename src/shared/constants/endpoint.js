@@ -17,3 +17,4 @@ export const ENDPOINT_LOGIN = 'login/';
 export const ENDPOINT_STATISCAL = 'statistical/';
 export const ENDPOINT_PROGRESSION = 'progression';
 export const ENDPOINT_FOLLOW_UP = 'followRate';
+export const ENDPOINT_FORGOT_PASSWORD = 'forgotPassword/';
