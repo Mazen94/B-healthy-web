@@ -24,8 +24,13 @@ import {
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_EMAIL,
 } from '../../shared/constants/constants';
-import { PATH_REGISTER, PATH_DASHBOARD } from '../../routes/path';
+import {
+  PATH_REGISTER,
+  PATH_DASHBOARD,
+  PATH_RESET_PASSWORD,
+} from '../../routes/path';
 import { useStyles } from './styles';
+import { CircularProgress } from '@material-ui/core';
 
 export default function SignIn() {
   const classes = useStyles(); //add styles to variable classes
@@ -36,6 +41,7 @@ export default function SignIn() {
    * password : to retrieve the password entered by the user (initial value empty string)
    * flag : state to generate an alert in case of invalid email or password (initial value false)
    */
+  const [disabled, setDisabled] = useState(false);
   const [email, setEmail] = useState('');
   const [flag, setFlag] = useState(false);
   const [password, setPassword] = useState('');
@@ -61,13 +67,18 @@ export default function SignIn() {
    * and call the funtion postLogin to send the data to the DB
    */
   const onSubmitForm = (e) => {
+    setDisabled(true);
     e.preventDefault();
     const user = { email: email, password: password };
     axiosService(ENDPOINT_LOGIN, POST, false, user, (error, response) => {
       if (response) {
+        setDisabled(false);
         localStorage.setItem('token', response.data.token);
         history.push(PATH_DASHBOARD);
-      } else setFlag(true);
+      } else {
+        setFlag(true);
+        setDisabled(false);
+      }
     });
   };
 
@@ -119,17 +130,24 @@ export default function SignIn() {
             />
 
             <Button
+              disabled={disabled}
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
             >
+              {disabled && (
+                <CircularProgress
+                  size={15}
+                  className={classes.circularProgress}
+                />
+              )}
               {LOGIN}
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href={PATH_RESET_PASSWORD} variant="body2">
                   {FORGOT_PASSWORD}
                 </Link>
               </Grid>
