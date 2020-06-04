@@ -21,6 +21,7 @@ import AddRecommendations from '../pages/AddRecommendations/AddRecommendations';
 import AddMenuToRecommendations from '../pages/AddMenuToRecommendations/AddMenuToRecommendations';
 import UpdateRecommendations from '../pages/UpdateRecommendations/UpdateRecommendations';
 import StatiscalsPatient from '../pages/StatiscalsPatient/StatiscalsPatient';
+import ForgotPassword from '../pages/ForgotPassword/ForgotPassword';
 import FoodJournal from '../pages/FoodJournal/FoodJournal';
 import * as paths from './path';
 
@@ -31,6 +32,11 @@ function Route() {
         {/* Components CheckConnection */}
         <CheckConnection exact path={paths.PATH_LOGIN} component={SignIn} />
         <CheckConnection path={paths.PATH_REGISTER} component={SignUp} />
+        <CheckConnection
+          exact
+          path={paths.PATH_RESET_PASSWORD}
+          component={ForgotPassword}
+        />
         {/* Components PrivateRoute */}
         <PrivateRoute exact path={paths.PATH_DASHBOARD} component={Dashboard} />
         {/* Route Patient */}
