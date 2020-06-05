@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { FilledInput, Divider } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
@@ -22,6 +23,7 @@ import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
 import { axiosService, lenghOfPassword } from '../../shared/services/services';
 import { EMAIL_EXISTS, PROFIL, VALIDATE } from '../../shared/strings/strings';
 import { useStyles } from './styles';
+import UpdateImage from '../../components/UpdateImage/UpdateImage';
 
 /**
  * Component for showing profil of nutritionist
@@ -32,6 +34,7 @@ export default function Profil() {
   const [flag, setFlag] = useState(false); //to display the loadings when the user validate the fields
   const [email, setEmail] = useState(''); //to retrieve the email entered by the user
   const [firstName, setFirstName] = useState(''); //to retrieve the firstName entered by the user
+  const [image, setImage] = useState(''); //to retrieve the firstName entered by the user
   const [lastName, setLastName] = useState(''); //to retrieve the lastName entered by the user
   const [password, setPassword] = useState(''); //to retrieve the password entered by the user
   const [erreurValidation, setErreurValidation] = useState(false); //when the user gives an email exists
@@ -75,6 +78,7 @@ export default function Profil() {
     axiosService(ENDPOINT_PROFIL, GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
+          setImage(response.data.data.photo);
           setFirstName(response.data.data.firstName);
           setLastName(response.data.data.lastName);
           setEmail(response.data.data.email);
@@ -138,6 +142,8 @@ export default function Profil() {
     } else
       return (
         <Grid item md={10} component={Paper} className={classes.paper}>
+          <UpdateImage propsImage={image} />
+
           {/* Alert when the user gives email exist */}
           {erreurValidation && <Alert severity="error">{EMAIL_EXISTS}</Alert>}
           {/* Form */}
