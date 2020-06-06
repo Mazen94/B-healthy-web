@@ -4,6 +4,7 @@ import {
   IMAGES_PATH,
   POST,
   PRIMARY_COLOR,
+  TYPE_OF_IMAGES,
 } from '../../shared/constants/constants';
 import { ENDPOINT_UPLOAD_IMAGE } from '../../shared/constants/endpoint';
 import { axiosService } from '../../shared/services/services';
@@ -39,10 +40,7 @@ export default function UpdateImage({ propsImage }) {
   return (
     <div className={classes.container}>
       <img
-        src={
-          newImage ? `${IMAGES_PATH}${newImage}` : `${IMAGES_PATH}${propsImage}`
-        }
-        alt="Logo"
+        src={newImage ? `${newImage}` : `${propsImage}`}
         className={classes.img}
       />
 
@@ -52,7 +50,7 @@ export default function UpdateImage({ propsImage }) {
             <input
               type="file"
               onChange={(e) => _onChangeImage(e)}
-              accept="image/png, image/jpeg, image/jpg"
+              accept={TYPE_OF_IMAGES}
             />
           </div>
           <Button

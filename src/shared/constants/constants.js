@@ -137,4 +137,4 @@ export const LEGS_PROGRESSION_BACKGROUNDCOLOR = 'rgba(0, 85, 66 , 0.4)';
 export const LEGS_PROGRESSION_BORDERCOLOR = 'rgba(0, 85, 66 , 0.5)';
 export const TEXT_SECONDARY = 'textSecondary';
 
-export const IMAGES_PATH = 'http://localhost:8002/images/nutritionists/';
+export const TYPE_OF_IMAGES = 'image/png, image/jpeg, image/jpg';
