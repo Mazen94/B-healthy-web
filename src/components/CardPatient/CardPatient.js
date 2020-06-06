@@ -4,8 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import people from '../../assets/people.png';
-import { GET } from '../../shared/constants/constants';
+import { GET, PATH_IMAGES_PAITENTS } from '../../shared/constants/constants';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
 import { PATIENT } from '../../shared/strings/strings';
@@ -59,7 +58,11 @@ export default function CardPatient() {
           >
             {PATIENT}
           </Typography>
-          <img src={people} className={classes.large} alt="Logo" />
+          <img
+            src={PATH_IMAGES_PAITENTS + patient.photo}
+            className={classes.large}
+            alt={patient.firstName}
+          />
           <Grid className={classes.grid}>
             <Typography
               variant="subtitle2"

@@ -138,3 +138,8 @@ export const LEGS_PROGRESSION_BORDERCOLOR = 'rgba(0, 85, 66 , 0.5)';
 export const TEXT_SECONDARY = 'textSecondary';
 
 export const TYPE_OF_IMAGES = 'image/png, image/jpeg, image/jpg';
+
+export const PATH_IMAGES_PAITENTS = 'http://localhost:8002/images/patients/';
+
+export const SKELETON_VARIANT_TEXT = 'text';
+export const SKELETON_VARIANT_RECT = 'rec';

@@ -26,4 +26,8 @@ export const useStyles = makeStyles({
   button: {
     marginRight: 5,
   },
+  boxStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 });

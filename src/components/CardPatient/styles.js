@@ -8,10 +8,10 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: '4%',
     width: theme.spacing(20),
     height: theme.spacing(20),
+    borderRadius: 100,
   },
   typography: {
     marginTop: '20%',
-
     margin: 'auto',
     color: 'white',
   },

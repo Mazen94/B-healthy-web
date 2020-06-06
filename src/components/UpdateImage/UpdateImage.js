@@ -1,7 +1,6 @@
 import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
 import {
-  IMAGES_PATH,
   POST,
   PRIMARY_COLOR,
   TYPE_OF_IMAGES,
