@@ -5,9 +5,8 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import { useHistory } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_FORGOT_PASSWORD } from '../../shared/constants/endpoint';
 import Alert from '@material-ui/lab/Alert';
@@ -25,11 +24,11 @@ import {
   MESSAGE_VALIDATORS_EMAIL,
   PRIMARY_COLOR,
 } from '../../shared/constants/constants';
-import { PATH_LOGIN, PATH_DASHBOARD } from '../../routes/path';
+import { PATH_LOGIN } from '../../routes/path';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
 import { RESET_PASSWORD } from '../../shared/strings/strings';
-import { lenghOfPassword } from '../../shared/services/services';
+
 import { Link, CircularProgress } from '@material-ui/core';
 
 export default function SignUp() {
