@@ -54,7 +54,7 @@ export default function PatientStatistics() {
       },
     ],
   };
-  console.log('aaaaaaaaa', data);
+
   /**
    * Function to render
    */

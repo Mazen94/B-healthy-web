@@ -31,7 +31,6 @@ export default function LinearProgressWithLabel() {
       (error, response) => {
         if (response) {
           if (mounted) {
-            console.log(response.data.data);
             setData(response.data.data);
             setLoading(true);
           }
@@ -41,7 +40,7 @@ export default function LinearProgressWithLabel() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [params.id]);
 
   const functionToRender = () => {
     if (loading) {

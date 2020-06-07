@@ -12,7 +12,6 @@ export default function BarComponent(props) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); //clsx is a tiny utility for constructing className strings conditionally
   const [data, setData] = useState({});
   useEffect(() => {
-    console.log(count);
     setData({
       labels: [name],
       datasets: [
