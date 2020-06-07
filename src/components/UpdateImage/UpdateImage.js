@@ -8,6 +8,7 @@ import {
 import { ENDPOINT_UPLOAD_IMAGE } from '../../shared/constants/endpoint';
 import { axiosService } from '../../shared/services/services';
 import { useStyles } from './styles';
+import { NAME } from '../../shared/strings/strings';
 
 export default function UpdateImage({ propsImage }) {
   const [image, setImage] = useState();
@@ -41,6 +42,7 @@ export default function UpdateImage({ propsImage }) {
       <img
         src={newImage ? `${newImage}` : `${propsImage}`}
         className={classes.img}
+        alt={NAME}
       />
 
       <form onSubmit={_handleSubmit}>

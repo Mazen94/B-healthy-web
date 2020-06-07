@@ -16,7 +16,7 @@ import { useHistory } from 'react-router-dom';
 import meal from '../../assets/meal.png';
 import { DIALOG_MENU } from '../../shared/constants/constants';
 import DialogComponent from '../DialogComponent/DialogComponent';
-import { axiosService } from '../../shared/services/services';
+import { axiosService, findTheMenuType } from '../../shared/services/services';
 import HeadersTable from '../HeadersTable/HeadersTable';
 import {
   ENDPOINT_LIST_MEALS,
@@ -151,7 +151,9 @@ export default function AddIngredient() {
                         </Box>
                       </Box>
                     </TableCell>
-                    <TableCell align="left">{row.type_menu}</TableCell>
+                    <TableCell align="left">
+                      {findTheMenuType(row.type_menu)}
+                    </TableCell>
 
                     <TableCell align="left">{row.calorie} </TableCell>
                     <TableCell align="left">
