@@ -62,6 +62,7 @@ export const findTheMonth = (key) => {
   switch (key) {
     case '01':
       return strings.THE_MONTHS[0];
+
     case '02':
       return strings.THE_MONTHS[1];
     case '03':
@@ -87,5 +88,33 @@ export const findTheMonth = (key) => {
 
     default:
       return strings.THE_MONTHS[0];
+  }
+};
+
+//GET THE MOUNTH RELATED TO THE KEY
+export const findTheMenuType = (key) => {
+  switch (key) {
+    case 0:
+      return strings.SELECT_TYPE_MENU[0];
+    case 1:
+      return strings.SELECT_TYPE_MENU[1];
+    case 2:
+      return strings.SELECT_TYPE_MENU[2];
+    case 3:
+      return strings.SELECT_TYPE_MENU[3];
+    case 4:
+      return strings.SELECT_TYPE_MENU[4];
+    case 5:
+      return strings.SELECT_TYPE_MENU[0];
+    case 6:
+      return strings.SELECT_TYPE_MENU[1];
+    case 7:
+      return strings.SELECT_TYPE_MENU[2];
+    case 8:
+      return strings.SELECT_TYPE_MENU[3];
+    case 9:
+      return strings.SELECT_TYPE_MENU[4];
+    default:
+      return strings.SELECT_TYPE_MENU[0];
   }
 };
