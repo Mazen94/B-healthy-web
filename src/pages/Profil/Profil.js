@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { FilledInput, Divider } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
