@@ -16,6 +16,7 @@ import { useStyles } from './styles';
 export default function PatientStatistics() {
   const classes = useStyles(); //add styles to variable classes
   const [group, setGroup] = useState([]);
+  const [labels, setLabels] = useState([]);
   const [flag, setFlag] = useState(true);
 
   useEffect(() => {
@@ -23,7 +24,11 @@ export default function PatientStatistics() {
     axiosService(STATISTICS_AGE, GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
-          setGroup(response.data.data);
+          let groupData = Object.values(response.data.data); //return values of object in array
+          let key = Object.keys(response.data.data); // return keys of object in array
+          setLabels(key);
+          console.log(key);
+          setGroup(groupData);
           setFlag(false);
         }
       } else console.log(error);
@@ -34,22 +39,10 @@ export default function PatientStatistics() {
     };
   }, []);
   const data = {
-    labels: PATIENT_STATISTICS_LABELS,
+    labels: ['', ...labels, ''],
     datasets: [
       {
-        data: [
-          0,
-          group['[10-15]'],
-          group['[16-20]'],
-          group['[21-25]'],
-          group['[26-30]'],
-          group['[31-35]'],
-          group['[36-40]'],
-          group['[41-45]'],
-          group['[46-50]'],
-          group['[51-55]'],
-          group['[56-60]'],
-        ],
+        data: [0, ...group, 0],
         backgroundColor: PATIENT_STATISTICS_BACKGROUNDCOLOR,
       },
     ],

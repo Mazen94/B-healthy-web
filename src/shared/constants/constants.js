@@ -1,23 +1,5 @@
 /**
  * Constant used in the PatientStatistics component
- * the labels of the chart (bar)
- */
-export const PATIENT_STATISTICS_LABELS = [
-  '',
-  '[10,15]',
-  '[16,20]',
-  '[21,25]',
-  '[26,30]',
-  '[31,35]',
-  '[36,40]',
-  '[41,45]',
-  '[46,50]',
-  '[51,55]',
-  '[56,60]',
-  '',
-];
-/**
- * Constant used in the PatientStatistics component
  * The background color of the chart (bar)
  */
 export const PATIENT_STATISTICS_BACKGROUNDCOLOR = [
