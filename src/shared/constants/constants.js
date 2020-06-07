@@ -122,7 +122,10 @@ export const URL_API = process.env.REACT_APP_API_URL;
  * Constant message : age validation
  */
 export const MESSAGE_VALIDATORS_AGE = "L'age doit etre entre 5 et 90 ans";
+//VALUE OF TYPE MENU CREATED BY NUTRITIONIST
 export const VALUE_TYPE_MENU = [0, 1, 2, 3, 4];
+//VALUE OF TYPE MENU CREATED BY PATIENT
+export const VALUE_TYPE_MENU_PATIENT = [5, 6, 7, 8, 9];
 
 export const WEIGHT_PROGRESSION_BACKGROUNDCOLOR = 'rgba(63, 81, 181, 0.4)';
 export const WEIGHT_PROGRESSION_BORDERCOLOR = 'rgba(63, 81, 181, 0.5)';
@@ -142,4 +145,8 @@ export const TYPE_OF_IMAGES = 'image/png, image/jpeg, image/jpg';
 export const PATH_IMAGES_PAITENTS = 'http://localhost:8002/images/patients/';
 
 export const SKELETON_VARIANT_TEXT = 'text';
-export const SKELETON_VARIANT_RECT = 'rec';
+export const SKELETON_VARIANT_RECT = 'rect';
+
+export const SPAN_COMPONENT = 'span';
+export const GRAM = 'g';
+export const KCL = 'kcl';
