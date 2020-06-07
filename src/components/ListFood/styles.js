@@ -8,13 +8,23 @@ export const useStyles = makeStyles((theme) => ({
     maxWidth: '90%',
     backgroundColor: theme.palette.background.paper,
   },
-  numberCalorie: {
-    color: 'black',
-    'font-size': '14px',
+  dialogHeader: {
+    backgroundColor: 'rgb(63,81,181)',
+    color: 'white',
   },
-  ingredients: {
-    marginLeft: '25%',
-    'font-size': '14px',
+  numberCalorie: {
+    marginTop: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    color: 'black',
+    'font-size': '16px',
+  },
+
+  calorieStyle: {
+    marginLeft: 5,
+    color: 'rgb(63,81,181)',
+    'font-size': '16px',
+    fontWeight: 'bold',
   },
   skeleton: {
     marginTop: '2%',
@@ -26,5 +36,10 @@ export const useStyles = makeStyles((theme) => ({
     height: 300,
     width: '80%',
     margin: 'auto',
+  },
+
+  dividerStyle: {
+    marginTop: 20,
+    marginBottom: 20,
   },
 }));
