@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,12 +15,13 @@ import List from '@material-ui/core/List';
 import ListItems from '../../components/ListItems/ListItems';
 import { PATH_LOGIN } from '../../routes/path';
 import { useStyles } from './styles';
+import { AppBarContext } from '../../shared/context/AppBarContext';
 
 export default function MenuBar(props) {
   const { title } = props; //take the title of page
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const classes = useStyles(); //add styles to variable classes
-  const [open, setOpen] = useState(true); //to open and close the AppBar (initial value is True)
+  const { open, setOpen } = useContext(AppBarContext);
   /**
    * Arrow function to disconnect the user when he clicks on the icon <ExitToAppIcon/>
    */
