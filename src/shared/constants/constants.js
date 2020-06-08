@@ -132,3 +132,5 @@ export const SKELETON_VARIANT_RECT = 'rect';
 export const SPAN_COMPONENT = 'span';
 export const GRAM = 'g';
 export const KCL = 'kcl';
+export const CONTAINED = 'contained';
+export const OUTLINED = 'outlined';
