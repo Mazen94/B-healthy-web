@@ -3,7 +3,6 @@ import { Bar } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
 import {
   GET,
-  PATIENT_STATISTICS_LABELS,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
 } from '../../shared/constants/constants';
 import { DISTRIBUTION_BY_AGE_GROUB } from '../../shared/strings/strings';
