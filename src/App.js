@@ -4,7 +4,7 @@ import Route from './routes/Route';
 import { AppBarContext } from './shared/context/AppBarContext';
 
 function App() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <div className="App">
       <AppBarContext.Provider value={{ open, setOpen }}>
