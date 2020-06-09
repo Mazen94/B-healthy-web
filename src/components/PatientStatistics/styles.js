@@ -13,4 +13,8 @@ export const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  skeletonRect: {
+    width: '100%',
+    height: '32vh',
+  },
 }));

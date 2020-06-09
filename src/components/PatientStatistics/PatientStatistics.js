@@ -4,6 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import {
   GET,
   PATIENT_STATISTICS_BACKGROUNDCOLOR,
+  PRIMARY_COLOR,
+  SKELETON_VARIANT_RECT,
 } from '../../shared/constants/constants';
 import { DISTRIBUTION_BY_AGE_GROUB } from '../../shared/strings/strings';
 import { axiosService } from '../../shared/services/services';
@@ -55,19 +57,17 @@ export default function PatientStatistics() {
       return (
         <div className={classes.skeleton}>
           {/* Loading when the data is empty */}
-          <Skeleton variant="rect" width="100%" height="32vh" />
+          <Skeleton
+            variant={SKELETON_VARIANT_RECT}
+            className={classes.skeletonRect}
+          />
         </div>
       );
     } else
       return (
         <React.Fragment>
           <Paper className={classes.paper}>
-            <Typography
-              component="h2"
-              variant="h6"
-              color="primary"
-              gutterBottom
-            >
+            <Typography color={PRIMARY_COLOR} gutterBottom>
               {DISTRIBUTION_BY_AGE_GROUB}
             </Typography>
 

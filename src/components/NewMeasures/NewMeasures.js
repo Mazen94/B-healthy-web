@@ -19,20 +19,9 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { POST, PRIMARY_COLOR } from '../../shared/constants/constants';
+import * as contants from '../../shared/constants/constants';
 import * as validations from '../../shared/constants/validation';
-import {
-  ADDED_MEASURES,
-  NEW_MEASURES,
-  WEIGHT,
-  TALL,
-  CHEST,
-  BELLY,
-  NECK,
-  LEGS,
-  NOTE,
-  VALIDATE,
-} from '../../shared/strings/strings';
+import * as strings from '../../shared/strings/strings';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_VISITS,
@@ -68,52 +57,31 @@ export default function NewMeasures() {
     //custom rules
     isInteger();
   }, []);
-  /**
-   * arrow function to get the belly entered by the user
-   * @param {event} e
-   */
+
   const handleBelly = (e) => {
     setBelly(e.target.value);
   };
-  /**
-   * arrow function to get the chest entered by the user
-   * @param {event} e
-   */
+
   const handleChest = (e) => {
     setChest(e.target.value);
   };
-  /**
-   * arrow function to get the legs entered by the user
-   * @param {event} e
-   */
+
   const handleLegs = (e) => {
     setLegs(e.target.value);
   };
-  /**
-   * arrow function to get the Neck entered by the user
-   * @param {event} e
-   */
+
   const handleNeck = (e) => {
     setNeck(e.target.value);
   };
-  /**
-   * arrow function to get the Note entered by the user
-   * @param {event} e
-   */
+
   const handleNote = (e) => {
     setNote(e.target.value);
   };
-  /**
-   * arrow function to get the tall entered by the user
-   * @param {event} e
-   */
+
   const handleTall = (e) => {
     setTall(e.target.value);
   };
-  /**
-   * arrow function to get the Weight entered by the user
-   * @param {event} e
-   */
+
   const handleWeight = (e) => {
     setWeight(e.target.value);
   };
@@ -125,19 +93,19 @@ export default function NewMeasures() {
     e.preventDefault();
     setOpenBackdrop(!openBackdrop);
     const visit = {
-      belly: belly,
-      chest: chest,
-      legs: legs,
-      neck: neck,
-      note: note,
-      tall: tall,
-      weight: weight,
+      belly,
+      chest,
+      legs,
+      neck,
+      note,
+      tall,
+      weight,
     };
     console.log(params.id);
     // setFlag(true);
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_VISITS}`,
-      POST,
+      contants.POST,
       true,
       visit,
       (error, response) => {
@@ -151,8 +119,36 @@ export default function NewMeasures() {
           setWeight('');
           setOpenSnackbar(true);
           setOpenBackdrop(false);
-        } else console.log('error to add new visit', error);
+        }
       }
+    );
+  };
+
+  const customizeTextFiled = (
+    name,
+    handleChange,
+    value,
+    validatior,
+    errorMessage,
+    srcIcon
+  ) => {
+    return (
+      <TextValidator
+        className={classes.textFiledMesure}
+        label={name}
+        variant={contants.OUTLINED}
+        onChange={handleChange}
+        value={value}
+        validators={validatior}
+        errorMessages={errorMessage}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Avatar src={srcIcon} className={classes.small} />
+            </InputAdornment>
+          ),
+        }}
+      />
     );
   };
 
@@ -164,130 +160,83 @@ export default function NewMeasures() {
         onClose={handleCloseSnackbar}
       >
         <Alert onClose={handleCloseSnackbar} severity="success">
-          {ADDED_MEASURES}
+          {strings.ADDED_MEASURES}
         </Alert>
       </Snackbar>
       <Paper className={classes.paperNewMeasure}>
         <Typography
-          variant="subtitle1"
+          variant={contants.VARAINT_SUBTITLE_ONE}
           gutterBottom
           className={classes.typography}
         >
-          {NEW_MEASURES}
+          {strings.NEW_MEASURES}
         </Typography>
         <ValidatorForm onSubmit={onSubmitForm} noValidate>
           <Grid className={classes.gridMesure}>
-            <TextValidator
-              className={classes.textFiledMesure}
-              label={WEIGHT}
-              variant="outlined"
-              onChange={handleWeight}
-              value={weight}
-              validators={['isInteger', 'required']}
-              errorMessages={[
+            {customizeTextFiled(
+              strings.WEIGHT,
+              handleWeight,
+              weight,
+              [
+                validations.RULES_NAME_IS_INTEGER,
+                validations.RULES_NAME_REQUIRED,
+              ],
+              [
                 validations.MESSAGE_VALIDATORS_INTEGER,
                 validations.MESSAGE_VALIDATORS_REQUIRED,
-              ]}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Avatar src={iconWeight} className={classes.small} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextValidator
-              className={classes.textFiledMesure}
-              label={TALL}
-              variant="outlined"
-              onChange={handleTall}
-              value={tall}
-              validators={['isInteger']}
-              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Avatar src={iconTall} className={classes.small} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextValidator
-              className={classes.textFiledMesure}
-              label={CHEST}
-              variant="outlined"
-              validators={['isInteger']}
-              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
-              onChange={handleChest}
-              value={chest}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Avatar src={iconChest} />
-                  </InputAdornment>
-                ),
-              }}
-            />
+              ],
+              iconWeight
+            )}
+            {customizeTextFiled(
+              strings.TALL,
+              handleTall,
+              tall,
+              [validations.RULES_NAME_IS_INTEGER],
+              [validations.MESSAGE_VALIDATORS_INTEGER],
+              iconTall
+            )}
+            {customizeTextFiled(
+              strings.CHEST,
+              handleChest,
+              chest,
+              [validations.RULES_NAME_IS_INTEGER],
+              [validations.MESSAGE_VALIDATORS_INTEGER],
+              iconChest
+            )}
           </Grid>
           <Grid className={classes.gridMesure}>
-            <TextValidator
-              className={classes.textFiledMesure}
-              label={BELLY}
-              variant="outlined"
-              validators={['isInteger']}
-              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
-              onChange={handleBelly}
-              value={belly}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Avatar src={iconBelly} className={classes.small} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextValidator
-              className={classes.textFiledMesure}
-              label={NECK}
-              variant="outlined"
-              validators={['isInteger']}
-              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
-              onChange={handleNeck}
-              value={neck}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Avatar src={iconNeck} className={classes.small} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextValidator
-              className={classes.textFiledMesure}
-              label={LEGS}
-              variant="outlined"
-              validators={['isInteger']}
-              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
-              onChange={handleLegs}
-              value={legs}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Avatar src={iconLegs} className={classes.small} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
+            {customizeTextFiled(
+              strings.BELLY,
+              handleBelly,
+              belly,
+              [validations.RULES_NAME_IS_INTEGER],
+              [validations.MESSAGE_VALIDATORS_INTEGER],
+              iconBelly
+            )}
+            {customizeTextFiled(
+              strings.NECK,
+              handleNeck,
+              neck,
+              [validations.RULES_NAME_IS_INTEGER],
+              [validations.MESSAGE_VALIDATORS_INTEGER],
+              iconNeck
+            )}
+            {customizeTextFiled(
+              strings.LEGS,
+              handleLegs,
+              legs,
+              [validations.RULES_NAME_IS_INTEGER],
+              [validations.MESSAGE_VALIDATORS_INTEGER],
+              iconLegs
+            )}
             <TextValidator
               className={classes.textArea}
-              id="outlined-multiline-static"
-              label={NOTE}
+              label={strings.NOTE}
               onChange={handleNote}
               value={note}
               multiline
               rows="4"
-              variant="outlined"
+              variant={contants.OUTLINED}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -297,16 +246,13 @@ export default function NewMeasures() {
               }}
             />
           </Grid>
-
           <Button
-            mx="auto"
-            size="small"
-            variant="contained"
+            variant={contants.CONTAINED}
             className={classes.button}
-            color={PRIMARY_COLOR}
+            color={contants.PRIMARY_COLOR}
             type="submit"
           >
-            {VALIDATE}
+            {strings.VALIDATE}
           </Button>
         </ValidatorForm>
 
@@ -315,7 +261,7 @@ export default function NewMeasures() {
           open={openBackdrop}
           onClick={handleCloseBackdrop}
         >
-          <CircularProgress color="inherit" />
+          <CircularProgress color={contants.INHERIT_COLOR} />
         </Backdrop>
       </Paper>
     </Grid>
