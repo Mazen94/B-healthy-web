@@ -44,4 +44,8 @@ export const useStyles = makeStyles((theme) => ({
     width: '80%',
     margin: 'auto',
   },
+  boxStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 }));
