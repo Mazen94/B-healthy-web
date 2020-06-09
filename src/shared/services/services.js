@@ -8,6 +8,7 @@ import * as strings from '../../shared/strings/strings';
 import {
   RULES_NAME_IS_INTEGER,
   RULES_NAME_VALIDATION_AGE,
+  RULES_NAME_LENGHT_PASSWORD,
 } from '../constants/validation';
 
 export async function axiosService(endPoint, method, headers, data, callback) {
@@ -45,7 +46,7 @@ export function isInteger() {
   });
 }
 export function lenghOfPassword() {
-  ValidatorForm.addValidationRule(RULES_NAME_IS_INTEGER, (value) => {
+  ValidatorForm.addValidationRule(RULES_NAME_LENGHT_PASSWORD, (value) => {
     if (value.length < 8) {
       return false;
     }

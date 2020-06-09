@@ -8,7 +8,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
-import { PATH_PATIENTS } from '../../routes/path';
+import { PATH_PATIENT, PATH_CONSULTATION } from '../../routes/path';
 import * as constants from '../../shared/constants/constants';
 import * as validations from '../../shared/constants/validation';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
@@ -51,7 +51,6 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
   const handleAge = (e) => {
     setAge(e.target.value);
   };
-
   //when the user types the Gender
   const handleGender = (e) => {
     setGender(e.target.value);
@@ -67,13 +66,13 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
     const valueOfGender = gender === strings.RADIOGROUP_PATIENT[0] ? 1 : 0;
     changeFlag(true);
     const patient = {
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
+      email,
+      firstName,
+      lastName,
       gender: valueOfGender,
-      numberPhone: numberPhone,
+      numberPhone,
       profession: proffesion,
-      age: age,
+      age,
     };
     services.axiosService(
       ENDPOINT_PATIENTS,
@@ -82,9 +81,11 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
       patient,
       (error, response) => {
         if (response) {
-          console.log(response.data);
+          console.log();
           changeFlag(false);
-          history.push(`${PATH_PATIENTS}/1`);
+          history.push(
+            `${PATH_PATIENT}/${response.data.data.id}${PATH_CONSULTATION}`
+          );
         } else {
           changeFlag(false);
           changeErreurValidation(true);
@@ -98,38 +99,41 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextValidator
-            variant="outlined"
+            variant={constants.OUTLINED}
             required
             fullWidth
             onChange={handleFirstName}
             value={firstName}
             label={strings.FIRST_NAME}
             autoFocus
-            validators={['required']}
+            validators={[validations.RULES_NAME_REQUIRED]}
             errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextValidator
-            variant="outlined"
+            variant={constants.OUTLINED}
             required
             fullWidth
             onChange={handleLastName}
             value={lastName}
             label={strings.LAST_NAME}
-            validators={['required']}
+            validators={[validations.RULES_NAME_REQUIRED]}
             errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextValidator
-            variant="outlined"
+            variant={constants.OUTLINED}
             required
             fullWidth
             onChange={handleEmail}
             value={email}
             label={strings.EMAIL}
-            validators={['required', 'isEmail']}
+            validators={[
+              validations.RULES_NAME_REQUIRED,
+              validations.RULES_NAME_IS_EMAIL,
+            ]}
             errorMessages={[
               validations.MESSAGE_VALIDATORS_REQUIRED,
               validations.MESSAGE_VALIDATORS_EMAIL,
@@ -139,12 +143,15 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
 
         <Grid item xs={12} sm={6}>
           <TextValidator
-            variant="outlined"
+            variant={constants.OUTLINED}
             fullWidth
             onChange={handleNumberPhone}
             value={numberPhone}
             label={strings.PHONE}
-            validators={['required', 'isInteger']}
+            validators={[
+              validations.RULES_NAME_REQUIRED,
+              validations.RULES_NAME_IS_INTEGER,
+            ]}
             errorMessages={[
               validations.MESSAGE_VALIDATORS_REQUIRED,
               validations.MESSAGE_VALIDATORS_INTEGER,
@@ -154,24 +161,27 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
 
         <Grid item xs={12} sm={6}>
           <TextValidator
-            variant="outlined"
+            variant={constants.OUTLINED}
             fullWidth
             onChange={handleProffesion}
             value={proffesion}
             label={strings.PREFFESION}
-            validators={['required']}
+            validators={[validations.RULES_NAME_REQUIRED]}
             errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
 
         <Grid item xs={12} sm={6}>
           <TextValidator
-            variant="outlined"
+            variant={constants.OUTLINED}
             fullWidth
             onChange={handleAge}
             value={age}
             label={strings.AGE}
-            validators={['required', 'isInteger']}
+            validators={[
+              validations.RULES_NAME_REQUIRED,
+              validations.RULES_NAME_IS_INTEGER,
+            ]}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">{strings.YEARS}</InputAdornment>
@@ -205,7 +215,7 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
       <Button
         type="submit"
         fullWidth
-        variant="contained"
+        variant={constants.CONTAINED}
         color={constants.PRIMARY_COLOR}
         className={classes.submit}
       >

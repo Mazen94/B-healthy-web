@@ -23,3 +23,4 @@ export const RULES_NAME_IS_INTEGER = 'isInteger';
 export const RULES_NAME_LENGHT_PASSWORD = 'lenghPassword';
 export const RULES_NAME_VALIDATION_AGE = 'validationAge';
 export const RULES_NAME_REQUIRED = 'required';
+export const RULES_NAME_IS_EMAIL = 'isEmail';
