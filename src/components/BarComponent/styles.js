@@ -10,6 +10,10 @@ export const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  skeletonStyle: {
+    width: '100%',
+    height: '32vh',
+  },
   fixedHeight: {
     height: 240,
   },

@@ -5,6 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useStyles } from './styles';
+import {
+  SKELETON_VARIANT_RECT,
+  PRIMARY_COLOR,
+} from '../../shared/constants/constants';
 
 export default function BarComponent(props) {
   const classes = useStyles();
@@ -28,21 +32,19 @@ export default function BarComponent(props) {
   const renderFunction = () => {
     if (count === -1) {
       return (
-        <div className={classes.skeleton}>
+        <div>
           {/* Loading when the data is empty */}
-          <Skeleton variant="rect" width="100%" height="32vh" />
+          <Skeleton
+            variant={SKELETON_VARIANT_RECT}
+            className={classes.skeletonStyle}
+          />
         </div>
       );
     } else
       return (
         <React.Fragment>
           <Paper className={fixedHeightPaper}>
-            <Typography
-              component="h2"
-              variant="h6"
-              color="primary"
-              gutterBottom
-            >
+            <Typography color={PRIMARY_COLOR} gutterBottom>
               {name}
             </Typography>
             <Bar
