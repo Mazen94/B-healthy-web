@@ -9,27 +9,12 @@ import { useParams } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
-import {
-  axiosService,
-  isInteger,
-  validationAge,
-} from '../../shared/services/services';
+import * as services from '../../shared/services/services';
 import { ENDPOINT_MEALS } from '../../shared/constants/endpoint';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {
-  MENU_TYPE,
-  MIN_AGE,
-  MAX_AGE,
-  NAME,
-  SELECT_TYPE_MENU,
-  VALIDATE,
-} from '../../shared/strings/strings';
-import { GET, PUT, PRIMARY_COLOR } from '../../shared/constants/constants';
-import {
-  MESSAGE_VALIDATORS_AGE,
-  MESSAGE_VALIDATORS_INTEGER,
-  MESSAGE_VALIDATORS_REQUIRED,
-} from '../../shared/constants/validation';
+import * as strings from '../../shared/strings/strings';
+import * as constants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { PATH_MENU, PATH_INGREDIENTS } from '../../routes/path';
 import { useStyles } from './styles';
 import ModifyIngredientMenu from '../../components/ModifyIngredientMenu/ModifyIngredientMenu';
@@ -44,15 +29,27 @@ export default function UpdateMenuForm({ changeFlag }) {
   const [ingredients, setIngredients] = useState([]); // to get the ingredient related to menu
   const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
   const params = useParams(); //to get params URL
+  //RULES NAME OF MIN AND MAX AGE
+  const RULES_NAME_OF_TEXTFIELD_AGE = [
+    validations.RULES_NAME_IS_INTEGER,
+    validations.RULES_NAME_VALIDATION_AGE,
+    validations.RULES_NAME_REQUIRED,
+  ];
+  //ERROR MESSAGE OF MIN AND MAX AGE
+  const MESSAGE_OF_TEXTFIELD_AGE = [
+    validations.MESSAGE_VALIDATORS_INTEGER,
+    validations.MESSAGE_VALIDATORS_AGE,
+    validations.MESSAGE_VALIDATORS_REQUIRED,
+  ];
 
   useEffect(() => {
-    isInteger();
-    validationAge();
+    services.isInteger();
+    services.validationAge();
     //Prepare cancel request
     let mounted = true;
-    axiosService(
+    services.axiosService(
       `${ENDPOINT_MEALS}${params.id}`,
-      GET,
+      constants.GET,
       true,
       null,
       (error, response) => {
@@ -97,9 +94,9 @@ export default function UpdateMenuForm({ changeFlag }) {
       type_menu: typeMenu,
     };
     changeFlag(true);
-    axiosService(
+    services.axiosService(
       `${ENDPOINT_MEALS}${params.id}`,
-      PUT,
+      constants.PUT,
       true,
       menu,
       (error, response) => {
@@ -107,6 +104,31 @@ export default function UpdateMenuForm({ changeFlag }) {
           history.push(`${PATH_MENU}/${params.id}${PATH_INGREDIENTS}`);
         else changeFlag(false);
       }
+    );
+  };
+
+  const customeTextField = (
+    name,
+    value,
+    handleChange,
+    validator,
+    errorMessage,
+    endadorment = ''
+  ) => {
+    return (
+      <TextValidator
+        variant={constants.OUTLINED}
+        required
+        fullWidth
+        label={name}
+        value={value}
+        onChange={handleChange}
+        validators={validator}
+        errorMessages={errorMessage}
+        InputProps={{
+          endAdornment: endadorment,
+        }}
+      />
     );
   };
 
@@ -119,7 +141,10 @@ export default function UpdateMenuForm({ changeFlag }) {
       return (
         <div className={classes.skeleton}>
           {/* Loading when the data is empty */}
-          <Skeleton variant="rect" width="100%" height="55vh" />
+          <Skeleton
+            variant={constants.SKELETON_VARIANT_TEXT}
+            className={classes.skeletonText}
+          />
         </div>
       );
     } else
@@ -129,82 +154,62 @@ export default function UpdateMenuForm({ changeFlag }) {
             <ValidatorForm onSubmit={onSubmitFrom} noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <TextValidator
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label={NAME}
-                    value={name}
-                    onChange={handleChangeName}
-                    validators={['required']}
-                    errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
-                    endadornment={
-                      <InputAdornment position="end">g</InputAdornment>
-                    }
-                  />
+                  {customeTextField(
+                    strings.NAME,
+                    name,
+                    handleChangeName,
+                    [validations.RULES_NAME_REQUIRED],
+                    [validations.MESSAGE_VALIDATORS_REQUIRED]
+                  )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Select
-                    variant="outlined"
+                    variant={constants.OUTLINED}
                     value={typeMenu}
                     onChange={handleTypeMenu}
                     className={classes.select}
                   >
-                    {SELECT_TYPE_MENU.map((row, index) => (
+                    {strings.SELECT_TYPE_MENU.map((row, index) => (
                       <MenuItem key={row} value={index}>
                         {row}
                       </MenuItem>
                     ))}
                   </Select>
-                  <FormHelperText>{MENU_TYPE}</FormHelperText>
+                  <FormHelperText>{strings.MENU_TYPE}</FormHelperText>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextValidator
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label={MIN_AGE}
-                    value={minAge}
-                    onChange={handleChangeMinAge}
-                    validators={['isInteger', 'validationAge', 'required']}
-                    errorMessages={[
-                      MESSAGE_VALIDATORS_INTEGER,
-                      MESSAGE_VALIDATORS_AGE,
-                      MESSAGE_VALIDATORS_REQUIRED,
-                    ]}
-                    endadornment={
-                      <InputAdornment position="end">g</InputAdornment>
-                    }
-                  />
+                  {customeTextField(
+                    strings.MIN_AGE,
+                    minAge,
+                    handleChangeMinAge,
+                    RULES_NAME_OF_TEXTFIELD_AGE,
+                    MESSAGE_OF_TEXTFIELD_AGE,
+                    <InputAdornment position="end">
+                      {strings.YEARS}
+                    </InputAdornment>
+                  )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextValidator
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label={MAX_AGE}
-                    value={maxAge}
-                    onChange={handleChangeMaxAge}
-                    validators={['isInteger', 'validationAge', 'required']}
-                    errorMessages={[
-                      MESSAGE_VALIDATORS_INTEGER,
-                      MESSAGE_VALIDATORS_AGE,
-                      MESSAGE_VALIDATORS_REQUIRED,
-                    ]}
-                    endadornment={
-                      <InputAdornment position="end">g</InputAdornment>
-                    }
-                  />
+                  {customeTextField(
+                    strings.MAX_AGE,
+                    maxAge,
+                    handleChangeMaxAge,
+                    RULES_NAME_OF_TEXTFIELD_AGE,
+                    MESSAGE_OF_TEXTFIELD_AGE,
+                    <InputAdornment position="end">
+                      {strings.YEARS}
+                    </InputAdornment>
+                  )}
                 </Grid>
                 <ModifyIngredientMenu ingredients={ingredients} />
               </Grid>
               <Button
                 type="submit"
-                variant="contained"
-                color={PRIMARY_COLOR}
+                variant={constants.CONTAINED}
+                color={constants.PRIMARY_COLOR}
                 className={classes.submit}
               >
-                {VALIDATE}
+                {strings.VALIDATE}
               </Button>
             </ValidatorForm>
           </Paper>

@@ -1,14 +1,10 @@
 import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
-import {
-  POST,
-  PRIMARY_COLOR,
-  TYPE_OF_IMAGES,
-} from '../../shared/constants/constants';
+import * as constants from '../../shared/constants/constants';
 import { ENDPOINT_UPLOAD_IMAGE } from '../../shared/constants/endpoint';
 import { axiosService } from '../../shared/services/services';
 import { useStyles } from './styles';
-import { NAME } from '../../shared/strings/strings';
+import { NAME, SEND } from '../../shared/strings/strings';
 
 export default function UpdateImage({ propsImage }) {
   const [image, setImage] = useState();
@@ -25,7 +21,7 @@ export default function UpdateImage({ propsImage }) {
     console.log(formData);
     axiosService(
       ENDPOINT_UPLOAD_IMAGE,
-      POST,
+      constants.POST,
       true,
       formData,
       (error, response) => {
@@ -51,16 +47,16 @@ export default function UpdateImage({ propsImage }) {
             <input
               type="file"
               onChange={(e) => _onChangeImage(e)}
-              accept={TYPE_OF_IMAGES}
+              accept={constants.TYPE_OF_IMAGES}
             />
           </div>
           <Button
             type="submit"
-            variant="contained"
-            color={PRIMARY_COLOR}
+            variant={constants.CONTAINED}
+            color={constants.PRIMARY_COLOR}
             className={classes.submit}
           >
-            Envoyer
+            {SEND}
           </Button>
         </div>
       </form>

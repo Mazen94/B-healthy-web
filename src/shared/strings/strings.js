@@ -141,3 +141,5 @@ export const DELETE_MESSAGE = 'Supprimer';
 
 export const NO_RECOMMENDATION_FOUND =
   'Aucune recommendation trouvé pour ce patient';
+
+export const SEND = 'Envoyer';

@@ -14,13 +14,8 @@ import { useParams } from 'react-router-dom';
 import meal from '../../assets/meal.png';
 import { axiosService } from '../../shared/services/services';
 import recommendations from '../../assets/recommendations.png';
-import {
-  ENDPOINT_LIST_MEALS,
-  ENDPOINT_PATIENTS,
-  ENDPOINT_RECOMMENDATIONS,
-  ENDPOINT_MENUS,
-} from '../../shared/constants/endpoint';
-import { GET, POST } from '../../shared/constants/constants';
+import * as endPoints from '../../shared/constants/endpoint';
+import { GET, POST, OUTLINED } from '../../shared/constants/constants';
 import { MENUS, RECOMMENDATIONS } from '../../shared/strings/strings';
 import { useStyles } from './styles';
 
@@ -45,7 +40,7 @@ export default function TrasfertMenus() {
   useEffect(() => {
     let mounted = true;
     axiosService(
-      `${ENDPOINT_LIST_MEALS}${currentPage}`,
+      `${endPoints.ENDPOINT_LIST_MEALS}${currentPage}`,
       GET,
       true,
       null,
@@ -55,8 +50,7 @@ export default function TrasfertMenus() {
             setLeft((left) => left.concat(response.data.data.data));
             setLastPage(response.data.data.last_page);
           }
-        } else
-          console.log('error to get all the list of recommendations', error);
+        }
       }
     );
     return () => {
@@ -95,7 +89,7 @@ export default function TrasfertMenus() {
   function PostMenuWithIngredientToRecommendation(id) {
     console.log(id);
     axiosService(
-      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${ENDPOINT_MENUS}`,
+      `${endPoints.ENDPOINT_PATIENTS}${params.id}/${endPoints.ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${endPoints.ENDPOINT_MENUS}`,
       POST,
       true,
       { id: id },
@@ -153,7 +147,7 @@ export default function TrasfertMenus() {
       <Grid item>
         <Grid container className={classes.gridContainer}>
           <Button
-            variant="outlined"
+            variant={OUTLINED}
             size="small"
             className={classes.button}
             onClick={handleCheckedRight}

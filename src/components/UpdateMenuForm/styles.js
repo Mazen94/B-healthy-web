@@ -12,4 +12,8 @@ export const useStyles = makeStyles((theme) => ({
   select: {
     width: '100%',
   },
+  skeletonText: {
+    width: '100%',
+    height: '55vh',
+  },
 }));
