@@ -5,6 +5,10 @@ import { createBrowserHistory } from 'history';
 import { PATH_LOGIN } from '../../routes/path';
 import { UNAUTHENTICATED } from '../../shared/strings/strings';
 import * as strings from '../../shared/strings/strings';
+import {
+  RULES_NAME_IS_INTEGER,
+  RULES_NAME_VALIDATION_AGE,
+} from '../constants/validation';
 
 export async function axiosService(endPoint, method, headers, data, callback) {
   const config = {
@@ -33,7 +37,7 @@ export async function axiosService(endPoint, method, headers, data, callback) {
  * Validation : add custom rules (must be number).
  */
 export function isInteger() {
-  ValidatorForm.addValidationRule('isInteger', (value) => {
+  ValidatorForm.addValidationRule(RULES_NAME_IS_INTEGER, (value) => {
     if (isNaN(value)) {
       return false;
     }
@@ -41,7 +45,7 @@ export function isInteger() {
   });
 }
 export function lenghOfPassword() {
-  ValidatorForm.addValidationRule('lenghPassword', (value) => {
+  ValidatorForm.addValidationRule(RULES_NAME_IS_INTEGER, (value) => {
     if (value.length < 8) {
       return false;
     }
@@ -49,7 +53,7 @@ export function lenghOfPassword() {
   });
 }
 export function validationAge() {
-  ValidatorForm.addValidationRule('validationAge', (value) => {
+  ValidatorForm.addValidationRule(RULES_NAME_VALIDATION_AGE, (value) => {
     if (value > 90 || value < 5) {
       return false;
     }
@@ -62,7 +66,6 @@ export const findTheMonth = (key) => {
   switch (key) {
     case '01':
       return strings.THE_MONTHS[0];
-
     case '02':
       return strings.THE_MONTHS[1];
     case '03':

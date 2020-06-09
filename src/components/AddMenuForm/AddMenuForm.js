@@ -23,32 +23,18 @@ export default function MenuForm({ changeFlag }) {
   const [minAge, setMinAge] = useState(''); // to retrieve the minimum age entered by the user (initial value empty string)
   const [typeMenu, setTypeMenu] = useState(''); // to retrieve the minimum age entered by the user (initial value empty string)
 
-  /**
-   * arrow function to get the MinAges entered by the user
-   * @param {event} e
-   */
   const handleMinAge = (e) => {
     setMinAge(e.target.value);
   };
-  /**
-   * arrow function to get the name entered by the user
-   * @param {event} e
-   */
+
   const handleName = (e) => {
     setName(e.target.value);
   };
-  /**
-   * arrow function to get the type de menu entered by the user
-   * @param {event} e
-   */
+
   const handleTypeMenu = (e) => {
     setTypeMenu(e.target.value);
   };
 
-  /**
-   * arrow function to get the MaxAge entered by the user
-   * @param {event} e
-   */
   const handleMaxAge = (e) => {
     setMaxAge(e.target.value);
   };
@@ -57,6 +43,7 @@ export default function MenuForm({ changeFlag }) {
     services.isInteger();
     services.validationAge();
   }, []);
+
   /**
    * arrow function to retrieve the final inputs
    * and call the funtion addMenu to send the data to the DB
@@ -97,7 +84,7 @@ export default function MenuForm({ changeFlag }) {
             autoFocus
             onChange={handleName}
             value={name}
-            validators={['required']}
+            validators={[validations.RULES_NAME_REQUIRED]}
             errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
             endadornment={
               <InputAdornment position="end">{strings.GRAM}</InputAdornment>
@@ -136,7 +123,11 @@ export default function MenuForm({ changeFlag }) {
             required
             onChange={handleMinAge}
             value={minAge}
-            validators={['isInteger', 'validationAge', 'required']}
+            validators={[
+              validations.RULES_NAME_IS_INTEGER,
+              validations.RULES_NAME_VALIDATION_AGE,
+              validations.RULES_NAME_REQUIRED,
+            ]}
             errorMessages={[
               validations.MESSAGE_VALIDATORS_INTEGER,
               validations.MESSAGE_VALIDATORS_AGE,
@@ -157,7 +148,11 @@ export default function MenuForm({ changeFlag }) {
             required
             onChange={handleMaxAge}
             value={maxAge}
-            validators={['isInteger', 'validationAge', 'required']}
+            validators={[
+              validations.RULES_NAME_IS_INTEGER,
+              validations.RULES_NAME_VALIDATION_AGE,
+              validations.RULES_NAME_REQUIRED,
+            ]}
             errorMessages={[
               validations.MESSAGE_VALIDATORS_INTEGER,
               validations.MESSAGE_VALIDATORS_AGE,
