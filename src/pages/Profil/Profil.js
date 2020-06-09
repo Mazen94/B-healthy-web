@@ -11,13 +11,11 @@ import { useHistory } from 'react-router-dom';
 import ChangePassword from '../../components/ChangePassword/ChangePassword';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import { PATH_DASHBOARD } from '../../routes/path';
+import { GET, PRIMARY_COLOR, PUT } from '../../shared/constants/constants';
 import {
-  GET,
   MESSAGE_VALIDATORS_EMAIL,
   MESSAGE_VALIDATORS_REQUIRED,
-  PRIMARY_COLOR,
-  PUT,
-} from '../../shared/constants/constants';
+} from '../../shared/constants/validation';
 import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
 import { axiosService, lenghOfPassword } from '../../shared/services/services';
 import { EMAIL_EXISTS, PROFIL, VALIDATE } from '../../shared/strings/strings';

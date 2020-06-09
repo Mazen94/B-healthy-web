@@ -21,13 +21,8 @@ import {
   LAST_NAME,
   FIRST_NAME,
 } from '../../shared/strings/strings';
-import {
-  POST,
-  MESSAGE_VALIDATORS_PASSWORD,
-  MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_EMAIL,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
+import { POST, PRIMARY_COLOR } from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { PATH_LOGIN, PATH_DASHBOARD } from '../../routes/path';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
@@ -128,7 +123,7 @@ export default function SignUp() {
                 value={firstName}
                 onChange={handleFirstName}
                 validators={['required']}
-                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -140,7 +135,7 @@ export default function SignUp() {
                 value={lastName}
                 onChange={handleLastName}
                 validators={['required']}
-                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
               />
             </Grid>
             <Grid item xs={12}>
@@ -153,8 +148,8 @@ export default function SignUp() {
                 onChange={handleEmail}
                 validators={['required', 'isEmail']}
                 errorMessages={[
-                  MESSAGE_VALIDATORS_REQUIRED,
-                  MESSAGE_VALIDATORS_EMAIL,
+                  validations.MESSAGE_VALIDATORS_REQUIRED,
+                  validations.MESSAGE_VALIDATORS_EMAIL,
                 ]}
               />
             </Grid>
@@ -169,8 +164,8 @@ export default function SignUp() {
                 onChange={handlePassword}
                 validators={['lenghPassword', 'required']}
                 errorMessages={[
-                  MESSAGE_VALIDATORS_PASSWORD,
-                  MESSAGE_VALIDATORS_REQUIRED,
+                  validations.MESSAGE_VALIDATORS_PASSWORD,
+                  validations.MESSAGE_VALIDATORS_REQUIRED,
                 ]}
               />
             </Grid>

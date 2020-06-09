@@ -3,11 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import {
-  MESSAGE_VALIDATORS_REQUIRED,
-  PRIMARY_COLOR,
-  POST,
-} from '../../shared/constants/constants';
+import { PRIMARY_COLOR, POST } from '../../shared/constants/constants';
+import { MESSAGE_VALIDATORS_REQUIRED } from '../../shared/constants/validation';
 import { axiosService } from '../../shared/services/services';
 import { AVOID, NAME, VALIDATE } from '../../shared/strings/strings';
 import AlertComponent from '../AlertComponent/AlertComponent';

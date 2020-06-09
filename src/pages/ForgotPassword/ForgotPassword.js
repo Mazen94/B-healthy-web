@@ -18,12 +18,11 @@ import {
   VALIDATE,
   EMAIL_FAILED,
 } from '../../shared/strings/strings';
+import { POST, PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
-  POST,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_EMAIL,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
+} from '../../shared/constants/validation';
 import { PATH_LOGIN } from '../../routes/path';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';

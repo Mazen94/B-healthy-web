@@ -19,12 +19,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {
-  POST,
-  MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_INTEGER,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
+import { POST, PRIMARY_COLOR } from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import {
   ADDED_MEASURES,
   NEW_MEASURES,
@@ -189,8 +185,8 @@ export default function NewMeasures() {
               value={weight}
               validators={['isInteger', 'required']}
               errorMessages={[
-                MESSAGE_VALIDATORS_INTEGER,
-                MESSAGE_VALIDATORS_REQUIRED,
+                validations.MESSAGE_VALIDATORS_INTEGER,
+                validations.MESSAGE_VALIDATORS_REQUIRED,
               ]}
               InputProps={{
                 startAdornment: (
@@ -207,7 +203,7 @@ export default function NewMeasures() {
               onChange={handleTall}
               value={tall}
               validators={['isInteger']}
-              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
+              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -221,7 +217,7 @@ export default function NewMeasures() {
               label={CHEST}
               variant="outlined"
               validators={['isInteger']}
-              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
+              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
               onChange={handleChest}
               value={chest}
               InputProps={{
@@ -239,7 +235,7 @@ export default function NewMeasures() {
               label={BELLY}
               variant="outlined"
               validators={['isInteger']}
-              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
+              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
               onChange={handleBelly}
               value={belly}
               InputProps={{
@@ -255,7 +251,7 @@ export default function NewMeasures() {
               label={NECK}
               variant="outlined"
               validators={['isInteger']}
-              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
+              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
               onChange={handleNeck}
               value={neck}
               InputProps={{
@@ -271,7 +267,7 @@ export default function NewMeasures() {
               label={LEGS}
               variant="outlined"
               validators={['isInteger']}
-              errorMessages={[MESSAGE_VALIDATORS_INTEGER]}
+              errorMessages={[validations.MESSAGE_VALIDATORS_INTEGER]}
               onChange={handleLegs}
               value={legs}
               InputProps={{

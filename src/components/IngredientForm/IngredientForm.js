@@ -6,11 +6,11 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import AlertComponent from '../AlertComponent/AlertComponent';
 import { PATH_INGREDIENTS } from '../../routes/path';
+import { PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
   MESSAGE_VALIDATORS_INTEGER,
   MESSAGE_VALIDATORS_REQUIRED,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
+} from '../../shared/constants/validation';
 import { axiosService, isInteger } from '../../shared/services/services';
 import {
   AMOUNT,

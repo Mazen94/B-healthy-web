@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
 import * as constants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import * as endPoints from '../../shared/constants/endpoint';
 import { axiosService } from '../../shared/services/services';
 import { AMOUNT, ADD } from '../../shared/strings/strings';
@@ -137,7 +138,7 @@ export default function IngredientToMenu() {
               onChange={handleAmountChange}
               value={amount}
               validators={['required']}
-              errorMessages={[constants.MESSAGE_VALIDATORS_REQUIRED]}
+              errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

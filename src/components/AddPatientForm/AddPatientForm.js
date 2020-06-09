@@ -10,6 +10,7 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import { PATH_PATIENTS } from '../../routes/path';
 import * as constants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
 import * as services from '../../shared/services/services';
 import * as strings from '../../shared/strings/strings';
@@ -105,7 +106,7 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             label={strings.FIRST_NAME}
             autoFocus
             validators={['required']}
-            errorMessages={[constants.MESSAGE_VALIDATORS_REQUIRED]}
+            errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -117,7 +118,7 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             value={lastName}
             label={strings.LAST_NAME}
             validators={['required']}
-            errorMessages={[constants.MESSAGE_VALIDATORS_REQUIRED]}
+            errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -130,8 +131,8 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             label={strings.EMAIL}
             validators={['required', 'isEmail']}
             errorMessages={[
-              constants.MESSAGE_VALIDATORS_REQUIRED,
-              constants.MESSAGE_VALIDATORS_EMAIL,
+              validations.MESSAGE_VALIDATORS_REQUIRED,
+              validations.MESSAGE_VALIDATORS_EMAIL,
             ]}
           />
         </Grid>
@@ -145,8 +146,8 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             label={strings.PHONE}
             validators={['required', 'isInteger']}
             errorMessages={[
-              constants.MESSAGE_VALIDATORS_REQUIRED,
-              constants.MESSAGE_VALIDATORS_INTEGER,
+              validations.MESSAGE_VALIDATORS_REQUIRED,
+              validations.MESSAGE_VALIDATORS_INTEGER,
             ]}
           />
         </Grid>
@@ -159,7 +160,7 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
             value={proffesion}
             label={strings.PREFFESION}
             validators={['required']}
-            errorMessages={[constants.MESSAGE_VALIDATORS_REQUIRED]}
+            errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
           />
         </Grid>
 
@@ -177,8 +178,8 @@ export default function AddPatientForm({ changeFlag, changeErreurValidation }) {
               ),
             }}
             errorMessages={[
-              constants.MESSAGE_VALIDATORS_REQUIRED,
-              constants.MESSAGE_VALIDATORS_INTEGER,
+              validations.MESSAGE_VALIDATORS_REQUIRED,
+              validations.MESSAGE_VALIDATORS_INTEGER,
             ]}
           />
         </Grid>

@@ -19,11 +19,11 @@ import {
   FORGOT_PASSWORD,
   DONT_HAVE_ACCOUNT,
 } from '../../shared/strings/strings';
+import { POST } from '../../shared/constants/constants';
 import {
-  POST,
   MESSAGE_VALIDATORS_REQUIRED,
   MESSAGE_VALIDATORS_EMAIL,
-} from '../../shared/constants/constants';
+} from '../../shared/constants/validation';
 import {
   PATH_REGISTER,
   PATH_DASHBOARD,

@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import React, { Fragment } from 'react';
 import { TextValidator } from 'react-material-ui-form-validator';
-import { MESSAGE_VALIDATORS_PASSWORD } from '../../shared/constants/constants';
+import { MESSAGE_VALIDATORS_PASSWORD } from '../../shared/constants/validation';
 import { PASSWORD } from '../../shared/strings/strings';
 
 /**

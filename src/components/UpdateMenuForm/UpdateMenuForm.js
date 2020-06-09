@@ -24,14 +24,12 @@ import {
   SELECT_TYPE_MENU,
   VALIDATE,
 } from '../../shared/strings/strings';
+import { GET, PUT, PRIMARY_COLOR } from '../../shared/constants/constants';
 import {
   MESSAGE_VALIDATORS_AGE,
   MESSAGE_VALIDATORS_INTEGER,
-  GET,
-  PUT,
   MESSAGE_VALIDATORS_REQUIRED,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
+} from '../../shared/constants/validation';
 import { PATH_MENU, PATH_INGREDIENTS } from '../../routes/path';
 import { useStyles } from './styles';
 import ModifyIngredientMenu from '../../components/ModifyIngredientMenu/ModifyIngredientMenu';
