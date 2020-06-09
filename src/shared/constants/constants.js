@@ -98,3 +98,4 @@ export const VARAINT_SUBTITLE_ONE = 'subtitle1';
 export const VARAINT_SUBTITLE_TWO = 'subtitle2';
 export const VARAINT_BODY_TWO = 'body2';
 export const VARAINT_DETERMINATE = 'determinate';
+export const TEXT_PRIMARY = 'textPrimary';

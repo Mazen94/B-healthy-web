@@ -13,7 +13,11 @@ import {
 import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { PATH_PATIENT, PATH_CONSULTATION } from '../../routes/path';
-import { PRIMARY_COLOR } from '../../shared/constants/constants';
+import {
+  PRIMARY_COLOR,
+  TEXT_PRIMARY,
+  VARAINT_SUBTITLE_ONE,
+} from '../../shared/constants/constants';
 
 function chartData(label, labels, backgroundColor, borderColor, values) {
   return {
@@ -50,8 +54,8 @@ const LineProgress = ({
           <Typography
             className={classes.typogh}
             align="center"
-            color="textPrimary"
-            variant="subtitle1"
+            color={TEXT_PRIMARY}
+            variant={VARAINT_SUBTITLE_ONE}
           >
             {`${EMPTY_PROGRESSION_DATA} ${label}`.toUpperCase()}
           </Typography>
