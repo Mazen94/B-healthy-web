@@ -3,16 +3,17 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import React, { useState, Fragment, useEffect } from 'react';
 import { useStyles } from './styles';
+import * as constants from '../../shared/constants/constants';
 import {
-  TEXT_SECONDARY,
-  GET,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
-import { FOLLOW_UP_RATE, LOADING } from '../../shared/strings/strings';
+  FOLLOW_UP_RATE,
+  LOADING,
+  NO_RECOMMENDATION_FOUND,
+} from '../../shared/strings/strings';
 import { axiosService } from '../../shared/services/services';
 import { useParams, useHistory } from 'react-router-dom';
 import * as endpoints from '../../shared/constants/endpoint';
 import { PATH_PATIENT, PATH_RECOMMENDATIONS } from '../../routes/path';
+
 export default function LinearProgressWithLabel() {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export default function LinearProgressWithLabel() {
     let mounted = true;
     axiosService(
       `${endpoints.ENDPOINT_PATIENTS}${params.id}/${endpoints.ENDPOINT_STATISCAL}${endpoints.ENDPOINT_FOLLOW_UP}`,
-      GET,
+      constants.GET,
       true,
       null,
       (error, response) => {
@@ -48,14 +49,14 @@ export default function LinearProgressWithLabel() {
         return (
           <Fragment>
             <LinearProgress
-              variant="determinate"
+              variant={constants.VARAINT_DETERMINATE}
               value={data}
               className={classes.linearProgress}
             />
             <Box minWidth={35}>
               <Typography
-                variant="body2"
-                color={PRIMARY_COLOR}
+                variant={constants.VARAINT_BODY_TWO}
+                color={constants.PRIMARY_COLOR}
                 className={classes.poucentage}
               >{`${data}%`}</Typography>
             </Box>
@@ -70,9 +71,9 @@ export default function LinearProgressWithLabel() {
                   `${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATIONS}`
                 )
               }
-              color={PRIMARY_COLOR}
+              color={constants.PRIMARY_COLOR}
             >
-              Aucune recommendation trouvé pour ce patient
+              {NO_RECOMMENDATION_FOUND}
             </Button>
           </Box>
         );
@@ -81,7 +82,10 @@ export default function LinearProgressWithLabel() {
         <Fragment>
           <LinearProgress />
           <Box minWidth={35}>
-            <Typography variant="body2" color={TEXT_SECONDARY}>
+            <Typography
+              variant={constants.VARAINT_BODY_TWO}
+              color={constants.TEXT_SECONDARY}
+            >
               {LOADING}
             </Typography>
           </Box>
@@ -92,7 +96,10 @@ export default function LinearProgressWithLabel() {
   return (
     <Grid item className={classes.gridContainer}>
       <Paper className={classes.paper}>
-        <Typography className={classes.topography} variant={'subtitle1'}>
+        <Typography
+          className={classes.topography}
+          variant={constants.VARAINT_SUBTITLE_ONE}
+        >
           {FOLLOW_UP_RATE}
         </Typography>
         <Box className={classes.boxStyle}>

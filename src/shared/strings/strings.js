@@ -138,3 +138,6 @@ export const LOADING = 'chargement...';
 
 export const UPDATE_PASSWORD = 'Changer Mot de passe';
 export const DELETE_MESSAGE = 'Supprimer';
+
+export const NO_RECOMMENDATION_FOUND =
+  'Aucune recommendation trouvé pour ce patient';
