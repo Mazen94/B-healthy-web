@@ -47,7 +47,7 @@ export default function Patients() {
       <div className={classes.root}>
         <CssBaseline />
         {/* Component MenuBar */}
-        <MenuBar title={PATIENT} />
+        <MenuBar title={PATIENT} patientProps={true} />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg">

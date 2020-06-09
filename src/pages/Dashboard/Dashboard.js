@@ -63,7 +63,7 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <MenuBar title={DASHBOARD} />
+      <MenuBar title={DASHBOARD} dashboardProps={true} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

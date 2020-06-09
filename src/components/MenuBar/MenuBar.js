@@ -18,7 +18,14 @@ import { useStyles } from './styles';
 import { AppBarContext } from '../../shared/context/AppBarContext';
 
 export default function MenuBar(props) {
-  const { title } = props; //take the title of page
+  const {
+    title,
+    dashboardProps,
+    patientProps,
+    ingredientsProps,
+    menusProps,
+    profilProps,
+  } = props;
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const classes = useStyles(); //add styles to variable classes
   const { open, setOpen } = useContext(AppBarContext);
@@ -95,7 +102,13 @@ export default function MenuBar(props) {
         <Divider />
         <List>
           {/* Component listItems */}
-          <ListItems />
+          <ListItems
+            dashboardProps={dashboardProps}
+            patientProps={patientProps}
+            ingredientsProps={ingredientsProps}
+            menusProps={menusProps}
+            profilProps={profilProps}
+          />
         </List>
         <Divider />
       </Drawer>

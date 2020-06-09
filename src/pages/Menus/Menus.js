@@ -22,7 +22,7 @@ export default function Menus() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title={MENUS} />
+      <MenuBar title={MENUS} menusProps={true} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

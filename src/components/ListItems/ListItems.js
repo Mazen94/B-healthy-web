@@ -2,7 +2,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import {
   default as ListItemLink,
-  default as ListItemText
+  default as ListItemText,
 } from '@material-ui/core/ListItemText';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -11,94 +11,92 @@ import PeopleIcon from '@material-ui/icons/People';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 import React, { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  MENUS,
-  INGREDIENTS,
-  PATIENTS,
-  DASHBOARD,
-  PROFIL
-} from '../../shared/strings/strings';
-import {
-  PATH_PATIENTS,
-  PATH_DASHBOARD,
-  PATH_PROFIL,
-  PATH_INGREDIENTS,
-  PATH_MENUS
-} from '../../routes/path';
+import * as strings from '../../shared/strings/strings';
+import * as paths from '../../routes/path';
 /**
  * Component for showing the list of items in the MenuBar
  */
-export default function ListItems() {
+export default function ListItems({
+  dashboardProps = false,
+  patientProps = false,
+  ingredientsProps = false,
+  menusProps = false,
+  profilProps = false,
+}) {
   let history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   /**
    * arrow function to navigate to the patient page
    */
   const handleClickPatients = () => {
-    history.push(`${PATH_PATIENTS}/1`);
+    history.push(`${paths.PATH_PATIENTS}/1`);
   };
   /**
    * arrow function to navigate to the dashboard page
    */
   const handleClickDashboard = () => {
-    history.push(PATH_DASHBOARD);
+    history.push(paths.PATH_DASHBOARD);
   };
   /**
    * arrow function to navigate to the profil page
    */
   const handleClickProfil = () => {
-    history.push(PATH_PROFIL);
+    history.push(paths.PATH_PROFIL);
   };
   /**
    * arrow function to navigate to the ingredient page
    */
   const handleClickIngredients = () => {
-    history.push(`${PATH_INGREDIENTS}/1`);
+    history.push(`${paths.PATH_INGREDIENTS}/1`);
   };
   /**
    * arrow function to navigate to the menu page
    */
   const handleClickMenus = () => {
-    history.push(`${PATH_MENUS}/1`);
+    history.push(`${paths.PATH_MENUS}/1`);
   };
 
   return (
     <Fragment>
       {/* Item Dashboard */}
-      <ListItem button onClick={handleClickDashboard}>
+      <ListItem selected={dashboardProps} button onClick={handleClickDashboard}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary={DASHBOARD} />
+        <ListItemText primary={strings.DASHBOARD} />
       </ListItem>
       {/* Item Patient */}
-      <ListItem button onClick={handleClickPatients}>
+      <ListItem selected={patientProps} button onClick={handleClickPatients}>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
-        <ListItemText primary={PATIENTS} path="/typography" />
+        <ListItemText primary={strings.PATIENTS} />
       </ListItem>
       {/* Item Ingredients */}
-      <ListItem button onClick={handleClickIngredients}>
+      <ListItem
+        selected={ingredientsProps}
+        button
+        onClick={handleClickIngredients}
+      >
         <ListItemIcon>
           <FastfoodIcon />
         </ListItemIcon>
         <ListItemLink>
-          <ListItemText primary={INGREDIENTS} />
+          <ListItemText primary={strings.INGREDIENTS} />
         </ListItemLink>
       </ListItem>
       {/* Item Menus */}
-      <ListItem button onClick={handleClickMenus}>
+      <ListItem selected={menusProps} button onClick={handleClickMenus}>
         <ListItemIcon>
           <RestaurantMenuIcon />
         </ListItemIcon>
-        <ListItemText primary={MENUS} />
+        <ListItemText primary={strings.MENUS} />
       </ListItem>
       {/* Item Profil */}
-      <ListItem button onClick={handleClickProfil}>
+      <ListItem selected={profilProps} button onClick={handleClickProfil}>
         <ListItemIcon>
           <AccountBoxIcon />
         </ListItemIcon>
-        <ListItemText primary={PROFIL} />
+        <ListItemText primary={strings.PROFIL} />
       </ListItem>
     </Fragment>
   );

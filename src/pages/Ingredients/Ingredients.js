@@ -23,7 +23,7 @@ export default function Ingredients() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component AppBarre */}
-      <MenuBar title={INGREDIENTS} />
+      <MenuBar title={INGREDIENTS} ingredientsProps={true} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

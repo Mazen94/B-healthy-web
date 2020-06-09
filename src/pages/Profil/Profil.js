@@ -215,7 +215,7 @@ export default function Profil() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component MenuBar */}
-      <MenuBar title={PROFIL} />
+      <MenuBar title={PROFIL} profilProps={true} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {renderFunction()}
