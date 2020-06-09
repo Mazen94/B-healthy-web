@@ -6,19 +6,10 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import AlertComponent from '../AlertComponent/AlertComponent';
 import { PATH_INGREDIENTS } from '../../routes/path';
-import { PRIMARY_COLOR } from '../../shared/constants/constants';
-import {
-  MESSAGE_VALIDATORS_INTEGER,
-  MESSAGE_VALIDATORS_REQUIRED,
-} from '../../shared/constants/validation';
+import * as consants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { axiosService, isInteger } from '../../shared/services/services';
-import {
-  AMOUNT,
-  CALORIES,
-  GRAM,
-  NAME,
-  VALIDATE,
-} from '../../shared/strings/strings';
+import * as strings from '../../shared/strings/strings';
 import { useStyles } from './styles';
 
 export default function AddIngredientForm({
@@ -38,24 +29,12 @@ export default function AddIngredientForm({
   const handleCloseSnackbar = (event, reason) => {
     setOpenSnackbar(false);
   };
-  /**
-   * arrow function to get the calories entered by the user
-   * @param {event} e
-   */
   const handleCalorie = (e) => {
     setCalorie(e.target.value);
   };
-  /**
-   * arrow function to get the name entered by the user
-   * @param {event} e
-   */
   const handleName = (e) => {
     setName(e.target.value);
   };
-  /**
-   * arrow function to get the amount entered by the user
-   * @param {event} e
-   */
   const handleAmount = (e) => {
     setAmount(e.target.value);
   };
@@ -83,7 +62,7 @@ export default function AddIngredientForm({
     axiosService(endPoint, method, true, ingredient, (error, response) => {
       if (response) {
         history.push(`${PATH_INGREDIENTS}/1`);
-      } else console.log('error to add ingredient', error);
+      }
     });
   };
 
@@ -100,65 +79,71 @@ export default function AddIngredientForm({
             <TextValidator
               required
               fullWidth
-              variant="outlined"
-              label={NAME}
+              variant={consants.OUTLINED}
+              label={strings.NAME}
               autoFocus
               onChange={handleName}
               value={name}
-              validators={['required']}
-              errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+              validators={[validations.RULES_NAME_REQUIRED]}
+              errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
               endadornment={<InputAdornment position="end">g</InputAdornment>}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextValidator
-              label={AMOUNT}
+              label={strings.AMOUNT}
               fullWidth
               required
               onChange={handleAmount}
               value={amount}
-              validators={['isInteger', 'required']}
+              validators={[
+                validations.RULES_NAME_IS_INTEGER,
+                validations.RULES_NAME_REQUIRED,
+              ]}
               errorMessages={[
-                MESSAGE_VALIDATORS_INTEGER,
-                MESSAGE_VALIDATORS_REQUIRED,
+                validations.MESSAGE_VALIDATORS_INTEGER,
+                validations.MESSAGE_VALIDATORS_REQUIRED,
               ]}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">{GRAM}</InputAdornment>
+                  <InputAdornment position="end">{strings.GRAM}</InputAdornment>
                 ),
               }}
-              variant="outlined"
+              variant={consants.OUTLINED}
             />
           </Grid>
           <Grid item xs={12}>
             <TextValidator
-              label={CALORIES}
+              label={strings.CALORIES}
               fullWidth
               required
               onChange={handleCalorie}
               value={calorie}
-              validators={['isInteger', 'required']}
+              validators={[
+                validations.RULES_NAME_IS_INTEGER,
+                validations.RULES_NAME_REQUIRED,
+              ]}
               errorMessages={[
-                MESSAGE_VALIDATORS_INTEGER,
-                MESSAGE_VALIDATORS_REQUIRED,
+                validations.MESSAGE_VALIDATORS_INTEGER,
+                validations.MESSAGE_VALIDATORS_REQUIRED,
               ]}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">Kcal</InputAdornment>
+                  <InputAdornment position="end">{strings.KCLA}</InputAdornment>
                 ),
               }}
-              variant="outlined"
+              variant={consants.OUTLINED}
             />
           </Grid>
         </Grid>
         <Button
           type="submit"
           fullWidth
-          variant="contained"
-          color={PRIMARY_COLOR}
+          variant={consants.CONTAINED}
+          color={consants.PRIMARY_COLOR}
           className={classes.submit}
         >
-          {VALIDATE}
+          {strings.VALIDATE}
         </Button>
       </ValidatorForm>
     </Fragment>
