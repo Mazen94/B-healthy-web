@@ -43,24 +43,15 @@ export default function IngredientToMenu() {
       }
     );
   }, []);
-  /**
-   * arrow function to get the type de menu entered by the user
-   * @param {event} e
-   */
+
   const handleIngredientSelected = (e) => {
     setIngredientSelected(e.target.value);
   };
-  /**
-   *
-   * @param {event} e
-   */
+
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
   };
-  /**
-   * arrow function to retrieve the final inputs
-   * and call the funtion addPatient to send the data to the DB
-   */
+
   const onSubmitForm = (e) => {
     e.preventDefault();
     const ingredient = {
@@ -82,8 +73,6 @@ export default function IngredientToMenu() {
             setErrorToAdd(response.data.data);
             setOpenSnackbar(true);
           }
-        } else {
-          console.log('error to add ');
         }
       }
     );
@@ -137,7 +126,7 @@ export default function IngredientToMenu() {
               required
               onChange={handleAmountChange}
               value={amount}
-              validators={['required']}
+              validators={[validations.RULES_NAME_REQUIRED]}
               errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
               InputProps={{
                 endAdornment: (
