@@ -16,6 +16,10 @@ import ListItems from '../../components/ListItems/ListItems';
 import { PATH_LOGIN } from '../../routes/path';
 import { useStyles } from './styles';
 import { AppBarContext } from '../../shared/context/AppBarContext';
+import {
+  INHERIT_COLOR,
+  SECONDARY_COLOR,
+} from '../../shared/constants/constants';
 
 export default function MenuBar(props) {
   const {
@@ -51,15 +55,11 @@ export default function MenuBar(props) {
 
   return (
     <Fragment>
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
+      <AppBar className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
-            color="inherit"
-            aria-label="open drawer"
+            color={INHERIT_COLOR}
             onClick={handleDrawerOpen}
             className={clsx(
               classes.menuButton,
@@ -69,17 +69,11 @@ export default function MenuBar(props) {
             <MenuIcon />
           </IconButton>
           {/* Page title */}
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
+          <Typography noWrap className={classes.title}>
             {title}
           </Typography>
-          <IconButton color="inherit">
-            <Badge color="secondary">
+          <IconButton color={INHERIT_COLOR}>
+            <Badge color={SECONDARY_COLOR}>
               <ExitToAppIcon onClick={handleExitToAppIcon} />
             </Badge>
           </IconButton>

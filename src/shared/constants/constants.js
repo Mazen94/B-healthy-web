@@ -14,6 +14,7 @@ export const PATIENT_STATISTICS_BACKGROUNDCOLOR = [
   'rgba(100, 140, 64, 0.6)',
   'rgba(50, 10, 200, 0.6)',
 ];
+export const INHERIT_COLOR = 'inherit';
 /**
  * Constant used in the Dashboard component
  * The background color of the chart (Ingredient)
