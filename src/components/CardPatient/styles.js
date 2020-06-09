@@ -15,7 +15,15 @@ export const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     color: 'white',
   },
-
+  skeletonText: {
+    height: '20%',
+    width: '99%',
+  },
+  skeletonRec: {
+    width: '99%',
+    height: '60%',
+  },
+  skeletonCircle: { margin: 'auto', width: 100, height: 100 },
   grid: {
     display: 'flex',
     overflow: 'hidden',
@@ -32,8 +40,5 @@ export const useStyles = makeStyles((theme) => ({
     color: 'white',
 
     'font-size': '16px',
-  },
-  skeleton: {
-    margin: 'auto',
   },
 }));

@@ -36,49 +36,24 @@ export const CHART_BACKGROUNDCOLOR = [
   'rgba(54, 162, 235, 0.6)',
 ];
 
-/**
- * The message of the dialog component related to recommendation
- */
 export const DIALOG_RECOMMENDATION = 'cette recommandation';
 
-/**
- * The message of the dialog component related to ingredients
- */
 export const DIALOG_INGREDIENT = 'ce ingredient';
 
-/**
- * The message of the dialog component related to patient
- */
 export const DIALOG_PATIENT = 'ce patient';
 
-/**
- * The message of the dialog component related to patient
- */
 export const DIALOG_MENU = 'ce menu';
-/**
- * Primary color
- */
+
 export const PRIMARY_COLOR = 'primary';
-/**
- * Secondary color
- */
+
 export const SECONDARY_COLOR = 'secondary';
-/**
- * Get
- */
+
 export const GET = 'GET';
-/**
- * POST
- */
+
 export const POST = 'POST';
-/**
- * PUT
- */
+
 export const PUT = 'PUT';
 
-/**
- * Delete
- */
 export const DELETE = 'DELETE';
 
 export const URL_API = process.env.REACT_APP_API_URL;
@@ -107,9 +82,17 @@ export const PATH_IMAGES_PAITENTS = 'http://localhost:8002/images/patients/';
 
 export const SKELETON_VARIANT_TEXT = 'text';
 export const SKELETON_VARIANT_RECT = 'rect';
+export const SKELETON_VARIANT_CIRCLE = 'circle';
 
 export const SPAN_COMPONENT = 'span';
+
 export const GRAM = 'g';
+
 export const KCL = 'kcl';
+
 export const CONTAINED = 'contained';
+
 export const OUTLINED = 'outlined';
+
+export const VARAINT_SUBTITLE_ONE = 'subtitle1';
+export const VARAINT_SUBTITLE_TWO = 'subtitle2';
