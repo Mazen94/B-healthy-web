@@ -1,7 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Pie } from 'react-chartjs-2';
 import Typography from '@material-ui/core/Typography';
-import { CHART_BACKGROUNDCOLOR } from '../../shared/constants/constants'; // Get constants from  constants  file
+import {
+  CHART_BACKGROUNDCOLOR,
+  PRIMARY_COLOR,
+  SKELETON_VARIANT_RECT,
+} from '../../shared/constants/constants'; // Get constants from  constants  file
 import {
   DISTRIBUTION_BY_GENDER,
   CHART_LABEL_MALE,
@@ -57,7 +61,10 @@ export default function Chart() {
       return (
         <div className={classes.skeleton}>
           {/* Loading when the data is empty */}
-          <Skeleton variant="rect" width="100%" height="32vh" />
+          <Skeleton
+            variant={SKELETON_VARIANT_RECT}
+            className={classes.skeletonStyle}
+          />
         </div>
       );
     } else
@@ -67,9 +74,7 @@ export default function Chart() {
             {/* Title of  Pie */}
             <Typography
               className={classes.typography}
-              component="h2"
-              variant="h6"
-              color="primary"
+              color={PRIMARY_COLOR}
               gutterBottom
             >
               {DISTRIBUTION_BY_GENDER}

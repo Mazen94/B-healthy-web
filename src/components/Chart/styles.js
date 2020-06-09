@@ -16,4 +16,8 @@ export const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  skeletonStyle: {
+    width: '100%',
+    height: '32vh',
+  },
 }));
