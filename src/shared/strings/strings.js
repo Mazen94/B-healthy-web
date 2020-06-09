@@ -135,3 +135,5 @@ export const THE_MONTHS = [
 ];
 export const FOLLOW_UP_RATE = ' Taux de suivie de la recommandation';
 export const LOADING = 'chargement...';
+
+export const UPDATE_PASSWORD = 'Changer Mot de passe';
