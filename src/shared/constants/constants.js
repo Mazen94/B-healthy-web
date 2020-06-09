@@ -37,25 +37,6 @@ export const CHART_BACKGROUNDCOLOR = [
 ];
 
 /**
- * Constant message : use when field is required
- */
-export const MESSAGE_VALIDATORS_REQUIRED = 'Ce champ est requis';
-/**
- * Constant message : min length password
- */
-export const MESSAGE_VALIDATORS_PASSWORD =
-  'Le mot de passe doit contenir au moins 8 caractères.';
-/**
- * Constant message : email validation
- */
-export const MESSAGE_VALIDATORS_EMAIL = "L'email n'est pas valide";
-
-/**
- * Constant message : is integer validation
- */
-export const MESSAGE_VALIDATORS_INTEGER = 'Ce champ doit être un nombre';
-
-/**
  * The message of the dialog component related to recommendation
  */
 export const DIALOG_RECOMMENDATION = 'cette recommandation';
@@ -101,10 +82,7 @@ export const PUT = 'PUT';
 export const DELETE = 'DELETE';
 
 export const URL_API = process.env.REACT_APP_API_URL;
-/**
- * Constant message : age validation
- */
-export const MESSAGE_VALIDATORS_AGE = "L'age doit etre entre 5 et 90 ans";
+
 //VALUE OF TYPE MENU CREATED BY NUTRITIONIST
 export const VALUE_TYPE_MENU = [0, 1, 2, 3, 4];
 //VALUE OF TYPE MENU CREATED BY PATIENT
