@@ -3,8 +3,17 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import { PRIMARY_COLOR, POST } from '../../shared/constants/constants';
-import { MESSAGE_VALIDATORS_REQUIRED } from '../../shared/constants/validation';
+import {
+  PRIMARY_COLOR,
+  POST,
+  OUTLINED,
+  CONTAINED,
+  GRAM,
+} from '../../shared/constants/constants';
+import {
+  MESSAGE_VALIDATORS_REQUIRED,
+  RULES_NAME_REQUIRED,
+} from '../../shared/constants/validation';
 import { axiosService } from '../../shared/services/services';
 import { AVOID, NAME, VALIDATE } from '../../shared/strings/strings';
 import AlertComponent from '../AlertComponent/AlertComponent';
@@ -37,25 +46,15 @@ const RecommendationForm = (props) => {
       setAvoid(props.data.avoid);
     }
   }, [props]);
-  /**
-   * arrow function to get the name entered by the user
-   * @param {event} e
-   */
+
   const handleName = (e) => {
     setName(e.target.value);
   };
-  /**
-   * arrow function to get the name entered by the user
-   * @param {event} e
-   */
+
   const handleAvoid = (e) => {
     setAvoid(e.target.value);
   };
-  /**
-   * arrow function to retrieve the final inputs
-   * and call the funtion updateRecommendation to send the data to the DB
-   * @param {event} e
-   */
+
   const onSubmitForm = (e) => {
     e.preventDefault();
 
@@ -75,7 +74,7 @@ const RecommendationForm = (props) => {
               `${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATION}/${response.data.data.id}`
             );
           setOpenSnackbar(true);
-        } else console.log('error to modifie a recommendation', error);
+        }
       }
     );
   };
@@ -96,37 +95,40 @@ const RecommendationForm = (props) => {
             <TextValidator
               className={classes.textValidator}
               label={NAME}
-              variant="outlined"
+              variant={OUTLINED}
               required
               fullWidth
               onChange={handleName}
               value={name}
               autoFocus
-              validators={['required']}
+              validators={[RULES_NAME_REQUIRED]}
               errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
-              endadornment={<InputAdornment position="end">g</InputAdornment>}
+              endadornment={
+                <InputAdornment position="end">{GRAM}</InputAdornment>
+              }
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextValidator
               className={classes.textValidator}
-              id="outlined-multiline-static"
               label={AVOID}
               fullWidth
               onChange={handleAvoid}
               value={avoid}
               multiline
               rows="4"
-              variant="outlined"
-              validators={['required']}
+              variant={OUTLINED}
+              validators={[RULES_NAME_REQUIRED]}
               errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
-              endadornment={<InputAdornment position="end">g</InputAdornment>}
+              endadornment={
+                <InputAdornment position="end">{GRAM}</InputAdornment>
+              }
             />
           </Grid>
         </Grid>
         <Button
           type="submit"
-          variant="contained"
+          variant={CONTAINED}
           color={PRIMARY_COLOR}
           className={classes.submit}
         >
