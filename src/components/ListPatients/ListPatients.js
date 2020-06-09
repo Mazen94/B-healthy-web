@@ -125,14 +125,12 @@ export default function ListPatients(props) {
         <div className={classes.skeleton}>
           <Skeleton
             variant={constants.SKELETON_VARIANT_TEXT}
-            height="70px"
-            width="100%"
+            className={classes.skeletonText}
           />
 
           <Skeleton
             variant={constants.SKELETON_VARIANT_RECT}
-            width="100%"
-            height="55vh"
+            className={classes.skeletonText}
           />
         </div>
       );

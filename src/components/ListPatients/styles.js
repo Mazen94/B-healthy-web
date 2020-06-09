@@ -30,4 +30,12 @@ export const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
   },
+  skeletonText: {
+    height: '70px',
+    width: '100%',
+  },
+  skeletonRect: {
+    height: '55vh',
+    width: '100%',
+  },
 });
