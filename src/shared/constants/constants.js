@@ -96,3 +96,4 @@ export const OUTLINED = 'outlined';
 
 export const VARAINT_SUBTITLE_ONE = 'subtitle1';
 export const VARAINT_SUBTITLE_TWO = 'subtitle2';
+export const VARAINT_BODY_TWO = 'body2';
