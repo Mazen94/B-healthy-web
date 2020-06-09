@@ -54,7 +54,6 @@ const MenusRealtedRecommendation = (props) => {
         if (response)
           setMenus(menus.filter((item) => item.id !== deleteMenuId));
         //get the new data without the menu deleted)
-        else console.log('error to delete a menu', error);
       }
     );
   };
@@ -66,18 +65,14 @@ const MenusRealtedRecommendation = (props) => {
   };
   return (
     <Card>
-      <CardHeader
-        avatar={<Avatar aria-label="recipe" src={meal} />}
-        title={CARD_HEADER_TITLE}
-      />
+      <CardHeader avatar={<Avatar src={meal} />} title={CARD_HEADER_TITLE} />
       <Divider />
-      <List dense component="div" role="list">
+      <List dense>
         {menus.map((value) => {
           return (
             <ListItem
               key={value.id}
               className={classes.listItem}
-              role="listitem"
               button
               onClick={() => handleClickListItem(value.id)}
             >
