@@ -35,4 +35,16 @@ export const useStyles = makeStyles((theme) => ({
   link: {
     color: 'rgb(39 , 39, 39)',
   },
+  skeletonText: {
+    height: '70px',
+    width: '100%',
+  },
+  skeletonRect: {
+    height: '55vh',
+    width: '100%',
+  },
+  boxStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 }));
