@@ -20,13 +20,7 @@ import {
   ENDPOINT_INGREDIENTS,
 } from '../../shared/constants/endpoint';
 import DialogComponent from '../DialogComponent/DialogComponent';
-import {
-  DELETE,
-  GET,
-  DIALOG_RECOMMENDATION,
-  PRIMARY_COLOR,
-  SECONDARY_COLOR,
-} from '../../shared/constants/constants';
+import * as constants from '../../shared/constants/constants';
 import { TABLE_HEAD_INGREDIENTS } from '../../shared/strings/strings';
 import { PATH_INGREDIENT, PATH_INGREDIENTS } from '../../routes/path';
 import { useStyles } from './styles';
@@ -60,7 +54,7 @@ export default function AddIngredient() {
     let mounted = true;
     axiosService(
       `${ENDPOINT_LIST_INGREDIENTS}${currentPage}`,
-      GET,
+      constants.GET,
       true,
       null,
       (error, response) => {
@@ -100,7 +94,7 @@ export default function AddIngredient() {
   const handleButtonDelete = () => {
     axiosService(
       `${ENDPOINT_INGREDIENTS}${deleteIngredientId}`,
-      DELETE,
+      constants.DELETE,
       true,
       null,
       (error, response) => {
@@ -120,22 +114,28 @@ export default function AddIngredient() {
       return (
         <div className={classes.skeleton}>
           {/* Loading when the data is empty */}
-          <Skeleton variant="text" height="70px" width="100%" />
-          <Skeleton variant="rect" width="100%" height="55vh" />
+          <Skeleton
+            variant={constants.SKELETON_VARIANT_TEXT}
+            className={classes.skeletonText}
+          />
+          <Skeleton
+            variant={constants.SKELETON_VARIANT_RECT}
+            className={classes.skeletonRect}
+          />
         </div>
       );
     } else
       return (
         <Fragment>
           <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+            <Table className={classes.table}>
               {/* HeadersTable Component */}
               <HeadersTable headerData={TABLE_HEAD_INGREDIENTS} />
               <TableBody>
                 {data.map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
-                      <Box display="flex" flexDirection="row">
+                    <TableCell>
+                      <Box className={classes.boxStyle}>
                         <Box>
                           <Avatar
                             className={classes.avatar}
@@ -155,14 +155,14 @@ export default function AddIngredient() {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickIconButton(row.id)}
-                        color={PRIMARY_COLOR}
+                        color={constants.PRIMARY_COLOR}
                       >
                         <EditIcon />
                       </IconButton>
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickOpen(row.id)}
-                        color={SECONDARY_COLOR}
+                        color={constants.SECONDARY_COLOR}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -176,14 +176,14 @@ export default function AddIngredient() {
               count={lasPage}
               page={currentPage}
               onChange={handleChange}
-              color={PRIMARY_COLOR}
+              color={constants.PRIMARY_COLOR}
             />
           </TableContainer>
           <DialogComponent
             handleButtonDelete={handleButtonDelete}
             open={open}
             handleClose={handleClose}
-            message={DIALOG_RECOMMENDATION}
+            message={constants.DIALOG_RECOMMENDATION}
           />
         </Fragment>
       );
