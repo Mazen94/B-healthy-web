@@ -11,17 +11,12 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { Button } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { axiosService } from '../../shared/services/services';
-import { PRIMARY_COLOR, GET, PUT } from '../../shared/constants/constants';
+import * as constants from '../../shared/constants/constants';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
 } from '../../shared/constants/endpoint';
-import {
-  FOLLOWING,
-  UPDATERECOMMENDATION_STEPPER_CREATION,
-  PATIENT,
-  RECOMMENDATION_STEPPER_ADD,
-} from '../../shared/strings/strings';
+import * as strings from '../../shared/strings/strings';
 import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
 import { useStyles } from './styles';
 import { MODIFICATION_MADE } from '../../shared/strings/strings';
@@ -41,7 +36,7 @@ export default function UpdateRecommendations() {
     // Arrow function to get the recommendation by id
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}`,
-      GET,
+      constants.GET,
       true,
       null,
       (error, response) => {
@@ -73,13 +68,15 @@ export default function UpdateRecommendations() {
         <Grid item xs={12} className={classes.grid}>
           <Grid item xs={12} sm={6}>
             <Skeleton
-              variant="rect"
-              height="200px"
-              className={classes.skeleton}
+              variant={constants.SKELETON_VARIANT_RECT}
+              className={classes.skeletonRectOne}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Skeleton variant="rect" height="300px" />
+            <Skeleton
+              variant={constants.SKELETON_VARIANT_RECT}
+              className={classes.skeletonRectTwo}
+            />
           </Grid>
         </Grid>
       );
@@ -92,7 +89,7 @@ export default function UpdateRecommendations() {
               <RecommendationForm
                 data={data}
                 endPoint={`${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}`}
-                method={PUT}
+                method={constants.PUT}
                 message={MODIFICATION_MADE}
               />
             </Paper>
@@ -113,18 +110,18 @@ export default function UpdateRecommendations() {
     <div>
       <div className={classes.root}>
         <CssBaseline />
-        <MenuBar title={PATIENT} />
+        <MenuBar title={strings.PATIENT} />
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           {/* Component NavBar */}
-          <NavBar recommendation="contained"></NavBar>
+          <NavBar recommendation={constants.CONTAINED}></NavBar>
           <div className={classes.stepperHorizontal}>
             {/*Component StepperHorizontal */}
             <StepperHorizontal
               setp={step}
-              creation={UPDATERECOMMENDATION_STEPPER_CREATION}
-              add={RECOMMENDATION_STEPPER_ADD}
+              creation={strings.UPDATERECOMMENDATION_STEPPER_CREATION}
+              add={strings.RECOMMENDATION_STEPPER_ADD}
             />
           </div>
           {/* render Function */}
@@ -132,12 +129,12 @@ export default function UpdateRecommendations() {
           <Paper className={classes.paper}>
             <Button
               type="submit"
-              variant="contained"
-              color={PRIMARY_COLOR}
+              variant={constants.CONTAINED}
+              color={constants.PRIMARY_COLOR}
               className={classes.submit}
               onClick={handleButtonOnClick}
             >
-              {FOLLOWING}
+              {strings.FOLLOWING}
             </Button>
           </Paper>
         </main>

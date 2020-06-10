@@ -143,3 +143,5 @@ export const NO_RECOMMENDATION_FOUND =
   'Aucune recommendation trouvé pour ce patient';
 
 export const SEND = 'Envoyer';
+
+export const EMAIL_PASSWORD_FAILED = 'Email ou mot de passe invalide';

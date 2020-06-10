@@ -6,7 +6,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import ListRecommendations from '../../components/ListRecommendations/ListRecommendations';
 import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
-import { PRIMARY_COLOR } from '../../shared/constants/constants';
+import { PRIMARY_COLOR, CONTAINED } from '../../shared/constants/constants';
 import { ADD, PATIENT } from '../../shared/strings/strings';
 import { PATH_PATIENT, PATH_RECOMMENDATION } from '../../routes/path';
 import { useStyles } from './styles';
@@ -30,10 +30,10 @@ export default function Recommendations() {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
 
-          <NavBar recommendation="contained"></NavBar>
+          <NavBar recommendation={CONTAINED}></NavBar>
           <Button
             className={classes.ButtonGroup}
-            variant="contained"
+            variant={CONTAINED}
             color={PRIMARY_COLOR}
             onClick={handleClickAjouter}
           >

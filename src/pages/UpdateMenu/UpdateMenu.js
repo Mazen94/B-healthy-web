@@ -9,6 +9,7 @@ import { EDIT } from '../../shared/strings/strings';
 import { useStyles } from './styles';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import { MENU_STEPPER_ADD } from '../../shared/strings/strings';
+import { INHERIT_COLOR } from '../../shared/constants/constants';
 
 export default function UpdateMenu() {
   const classes = useStyles(); //add styles to variable classes
@@ -30,7 +31,7 @@ export default function UpdateMenu() {
           <UpdateMenuForm changeFlag={changeFlag} />
           {/* Backdrop Component */}
           <Backdrop className={classes.backdrop} open={flag}>
-            <CircularProgress color="inherit" />
+            <CircularProgress color={INHERIT_COLOR} />
           </Backdrop>
         </Container>
       </main>

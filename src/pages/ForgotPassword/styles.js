@@ -24,4 +24,7 @@ export const useStyles = makeStyles((theme) => ({
   circularProgress: {
     marginRight: 4,
   },
+  gridContainer: {
+    justify: 'flex-end',
+  },
 }));

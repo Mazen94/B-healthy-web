@@ -43,7 +43,11 @@ export const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     width: '99%',
   },
-  skeleton: {
+  skeletonRectOne: {
     marginRight: 10,
+    height: '200px',
+  },
+  skeletonRectTwo: {
+    height: '300px',
   },
 }));

@@ -11,18 +11,9 @@ import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_FORGOT_PASSWORD } from '../../shared/constants/endpoint';
 import Alert from '@material-ui/lab/Alert';
 import Copyright from '../../components/Copyright/Copyright';
-import {
-  EMAIL_SUCCESS,
-  BACK_TO_LOGIN_INTERFACE,
-  EMAIL,
-  VALIDATE,
-  EMAIL_FAILED,
-} from '../../shared/strings/strings';
-import { POST, PRIMARY_COLOR } from '../../shared/constants/constants';
-import {
-  MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_EMAIL,
-} from '../../shared/constants/validation';
+import * as strings from '../../shared/strings/strings';
+import * as constants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { PATH_LOGIN } from '../../routes/path';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
@@ -54,7 +45,7 @@ export default function SignUp() {
     setDisabled(true);
     axiosService(
       ENDPOINT_FORGOT_PASSWORD,
-      POST,
+      constants.POST,
       false,
       { email },
       (error, response) => {
@@ -72,24 +63,22 @@ export default function SignUp() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <VpnKeyRoundedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          {RESET_PASSWORD}
-        </Typography>
+        <Typography variant="h5">{RESET_PASSWORD}</Typography>
         {/* Form */}
         {flag &&
           (success ? (
             <Alert severity="success" className={classes.alert}>
-              {EMAIL_SUCCESS}
+              {strings.EMAIL_SUCCESS}
             </Alert>
           ) : (
             <Alert severity="error" className={classes.alert}>
-              {EMAIL_FAILED}
+              {strings.EMAIL_FAILED}
             </Alert>
           ))}
         <ValidatorForm
@@ -100,16 +89,19 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextValidator
-                variant="outlined"
+                variant={constants.OUTLINED}
                 required
                 fullWidth
-                label={EMAIL}
+                label={strings.EMAIL}
                 value={email}
                 onChange={handleEmail}
-                validators={['required', 'isEmail']}
+                validators={[
+                  validations.RULES_NAME_REQUIRED,
+                  validations.RULES_NAME_IS_EMAIL,
+                ]}
                 errorMessages={[
-                  MESSAGE_VALIDATORS_REQUIRED,
-                  MESSAGE_VALIDATORS_EMAIL,
+                  validations.MESSAGE_VALIDATORS_REQUIRED,
+                  validations.MESSAGE_VALIDATORS_EMAIL,
                 ]}
               />
             </Grid>
@@ -118,8 +110,8 @@ export default function SignUp() {
             type="submit"
             fullWidth
             disabled={disabled}
-            variant="contained"
-            color={PRIMARY_COLOR}
+            variant={constants.CONTAINED}
+            color={constants.PRIMARY_COLOR}
             className={classes.submit}
           >
             {disabled && (
@@ -128,12 +120,12 @@ export default function SignUp() {
                 className={classes.circularProgress}
               />
             )}
-            {VALIDATE}
+            {strings.VALIDATE}
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container className={classes.gridContainer}>
             <Grid item>
-              <Link href={PATH_LOGIN} variant="body2">
-                {BACK_TO_LOGIN_INTERFACE}
+              <Link href={PATH_LOGIN} variant={constants.VARAINT_BODY_TWO}>
+                {strings.BACK_TO_LOGIN_INTERFACE}
               </Link>
             </Grid>
           </Grid>

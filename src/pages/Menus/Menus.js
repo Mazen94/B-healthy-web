@@ -8,6 +8,7 @@ import ListMenus from '../../components/ListMenus/ListMenus';
 import { ADD, MENUS } from '../../shared/strings/strings';
 import { PATH_MENU } from '../../routes/path';
 import { useStyles } from './styles';
+import { CONTAINED, PRIMARY_COLOR } from '../../shared/constants/constants';
 
 export default function Menus() {
   const classes = useStyles(); //add styles to variable classes
@@ -28,8 +29,8 @@ export default function Menus() {
         <Container maxWidth="lg" className={classes.container}>
           <Button
             className={classes.ButtonGroup}
-            variant="contained"
-            color="primary"
+            variant={CONTAINED}
+            color={PRIMARY_COLOR}
             onClick={handleClickAjouter}
           >
             {ADD}

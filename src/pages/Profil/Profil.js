@@ -11,11 +11,8 @@ import { useHistory } from 'react-router-dom';
 import ChangePassword from '../../components/ChangePassword/ChangePassword';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import { PATH_DASHBOARD } from '../../routes/path';
-import { GET, PRIMARY_COLOR, PUT } from '../../shared/constants/constants';
-import {
-  MESSAGE_VALIDATORS_EMAIL,
-  MESSAGE_VALIDATORS_REQUIRED,
-} from '../../shared/constants/validation';
+import * as constants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
 import { axiosService, lenghOfPassword } from '../../shared/services/services';
 import { EMAIL_EXISTS, PROFIL, VALIDATE } from '../../shared/strings/strings';
@@ -72,17 +69,23 @@ export default function Profil() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-    axiosService(ENDPOINT_PROFIL, GET, true, null, (error, response) => {
-      if (response) {
-        if (mounted) {
-          setImage(response.data.data.photo);
-          setFirstName(response.data.data.firstName);
-          setLastName(response.data.data.lastName);
-          setEmail(response.data.data.email);
-          setOpenSkeleton(false);
-        }
-      } else console.log('error to get connected nutritionnist', error);
-    });
+    axiosService(
+      ENDPOINT_PROFIL,
+      constants.GET,
+      true,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setImage(response.data.data.photo);
+            setFirstName(response.data.data.firstName);
+            setLastName(response.data.data.lastName);
+            setEmail(response.data.data.email);
+            setOpenSkeleton(false);
+          }
+        } else console.log('error to get connected nutritionnist', error);
+      }
+    );
 
     return () => {
       mounted = false;
@@ -103,7 +106,7 @@ export default function Profil() {
     };
     axiosService(
       ENDPOINT_PROFIL,
-      PUT,
+      constants.PUT,
       true,
       nutritionist,
       (error, response) => {
@@ -152,35 +155,38 @@ export default function Profil() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextValidator
-                  variant="outlined"
+                  variant={constants.OUTLINED}
                   onChange={handleFirstName}
                   value={firstName}
                   fullWidth
                   autoFocus
-                  validators={['required']}
-                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                  validators={[validations.RULES_NAME_REQUIRED]}
+                  errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextValidator
-                  variant="outlined"
+                  variant={constants.OUTLINED}
                   onChange={handleLastName}
                   value={lastName}
                   fullWidth
-                  validators={['required']}
-                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                  validators={[validations.RULES_NAME_REQUIRED]}
+                  errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextValidator
-                  variant="outlined"
+                  variant={constants.OUTLINED}
                   onChange={handleEmail}
                   value={email}
                   fullWidth
-                  validators={['required', 'isEmail']}
+                  validators={[
+                    validations.RULES_NAME_REQUIRED,
+                    validations.RULES_NAME_IS_EMAIL,
+                  ]}
                   errorMessages={[
-                    MESSAGE_VALIDATORS_REQUIRED,
-                    MESSAGE_VALIDATORS_EMAIL,
+                    validations.MESSAGE_VALIDATORS_REQUIRED,
+                    validations.MESSAGE_VALIDATORS_EMAIL,
                   ]}
                 />
               </Grid>
@@ -194,8 +200,8 @@ export default function Profil() {
             <Button
               type="submit"
               fullWidth
-              variant="contained"
-              color={PRIMARY_COLOR}
+              variant={constants.CONTAINED}
+              color={constants.PRIMARY_COLOR}
               className={classes.submit}
             >
               {VALIDATE}

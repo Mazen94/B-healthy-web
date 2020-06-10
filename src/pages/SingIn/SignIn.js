@@ -14,21 +14,10 @@ import { useHistory } from 'react-router-dom';
 import Copyright from '../../components/Copyright/Copyright';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_LOGIN } from '../../shared/constants/endpoint';
-import {
-  LOGIN,
-  FORGOT_PASSWORD,
-  DONT_HAVE_ACCOUNT,
-} from '../../shared/strings/strings';
-import { POST } from '../../shared/constants/constants';
-import {
-  MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_EMAIL,
-} from '../../shared/constants/validation';
-import {
-  PATH_REGISTER,
-  PATH_DASHBOARD,
-  PATH_RESET_PASSWORD,
-} from '../../routes/path';
+import * as strings from '../../shared/strings/strings';
+import * as constants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
+import * as paths from '../../routes/path';
 import { useStyles } from './styles';
 import { CircularProgress } from '@material-ui/core';
 
@@ -45,18 +34,12 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [flag, setFlag] = useState(false);
   const [password, setPassword] = useState('');
-  /**
-   * arrow function to get the email entered by the user
-   * @param {event} e
-   */
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setFlag(false);
   };
-  /**
-   * arrow function to get the password entered by the user
-   * @param {event} e
-   */
+
   const handlePassword = (e) => {
     setPassword(e.target.value);
     setFlag(false);
@@ -70,20 +53,26 @@ export default function SignIn() {
     setDisabled(true);
     e.preventDefault();
     const user = { email: email, password: password };
-    axiosService(ENDPOINT_LOGIN, POST, false, user, (error, response) => {
-      if (response) {
-        setDisabled(false);
-        localStorage.setItem('token', response.data.token);
-        history.push(PATH_DASHBOARD);
-      } else {
-        setFlag(true);
-        setDisabled(false);
+    axiosService(
+      ENDPOINT_LOGIN,
+      constants.POST,
+      false,
+      user,
+      (error, response) => {
+        if (response) {
+          setDisabled(false);
+          localStorage.setItem('token', response.data.token);
+          history.push(paths.PATH_DASHBOARD);
+        } else {
+          setFlag(true);
+          setDisabled(false);
+        }
       }
-    });
+    );
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -91,41 +80,39 @@ export default function SignIn() {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            {LOGIN}
-          </Typography>
+          <Typography variant="h5">{strings.LOGIN}</Typography>
           {/* Alert when the user gives false data  */}
           {flag && (
-            <Alert severity="error">Email ou mot de passe invalide</Alert>
+            <Alert severity="error">{strings.EMAIL_PASSWORD_FAILED}</Alert>
           )}
           {/* Form */}
           <ValidatorForm onSubmit={onSubmitForm} className={classes.form}>
             <TextValidator
-              label="Adresse e-mail"
-              name="email"
+              label={strings.EMAIL}
               autoFocus
+              autoComplete="email"
               onChange={handleEmail}
               value={email}
-              validators={['required', 'isEmail']}
+              validators={[
+                validations.RULES_NAME_REQUIRED,
+                validations.RULES_NAME_IS_EMAIL,
+              ]}
               errorMessages={[
-                MESSAGE_VALIDATORS_REQUIRED,
-                MESSAGE_VALIDATORS_EMAIL,
+                validations.MESSAGE_VALIDATORS_REQUIRED,
+                validations.MESSAGE_VALIDATORS_EMAIL,
               ]}
               fullWidth
-              variant="outlined"
+              variant={constants.OUTLINED}
               margin="normal"
             />
             <TextValidator
-              variant="outlined"
-              margin="normal"
-              name="password"
-              label="Mot de passe"
+              variant={constants.OUTLINED}
+              label={strings.PASSWORD}
               type="password"
-              autoComplete="current-password"
               onChange={handlePassword}
               value={password}
-              validators={['required']}
-              errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+              validators={[validations.RULES_NAME_REQUIRED]}
+              errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
               fullWidth
             />
 
@@ -133,8 +120,8 @@ export default function SignIn() {
               disabled={disabled}
               type="submit"
               fullWidth
-              variant="contained"
-              color="primary"
+              variant={constants.CONTAINED}
+              color={constants.PRIMARY_COLOR}
               className={classes.submit}
             >
               {disabled && (
@@ -143,17 +130,23 @@ export default function SignIn() {
                   className={classes.circularProgress}
                 />
               )}
-              {LOGIN}
+              {strings.LOGIN}
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href={PATH_RESET_PASSWORD} variant="body2">
-                  {FORGOT_PASSWORD}
+                <Link
+                  href={paths.PATH_RESET_PASSWORD}
+                  variant={constants.VARAINT_BODY_TWO}
+                >
+                  {strings.FORGOT_PASSWORD}
                 </Link>
               </Grid>
               <Grid item>
-                <Link href={PATH_REGISTER} variant="body2">
-                  {DONT_HAVE_ACCOUNT}
+                <Link
+                  href={paths.PATH_REGISTER}
+                  variant={constants.VARAINT_BODY_TWO}
+                >
+                  {strings.DONT_HAVE_ACCOUNT}
                 </Link>
               </Grid>
             </Grid>

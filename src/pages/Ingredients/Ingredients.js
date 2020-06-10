@@ -5,7 +5,7 @@ import React from 'react';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import ListIngredients from '../../components/ListIngredients/ListIngredients';
 import { useHistory } from 'react-router-dom';
-import { PRIMARY_COLOR } from '../../shared/constants/constants';
+import { PRIMARY_COLOR, CONTAINED } from '../../shared/constants/constants';
 import { ADD, INGREDIENTS } from '../../shared/strings/strings';
 import { PATH_INGREDIENT } from '../../routes/path';
 import { useStyles } from './styles';
@@ -29,7 +29,7 @@ export default function Ingredients() {
         <Container maxWidth="lg" className={classes.container}>
           <Button
             className={classes.ButtonGroup}
-            variant="contained"
+            variant={CONTAINED}
             color={PRIMARY_COLOR}
             onClick={handleClickAjouter}
           >

@@ -25,5 +25,6 @@ export const useStyles = makeStyles((theme) => ({
   typogh: {
     fontSize: 15,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 }));

@@ -9,6 +9,7 @@ import NewMeasures from '../../components/NewMeasures/NewMeasures';
 import { PATIENT } from '../../shared/strings/strings';
 import { useStyles } from './styles';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel/LinearProgressWithLabel';
+import { CONTAINED } from '../../shared/constants/constants';
 
 export default function Consulation() {
   const classes = useStyles();
@@ -21,7 +22,7 @@ export default function Consulation() {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <NavBar consultation="contained"></NavBar>
+          <NavBar consultation={CONTAINED}></NavBar>
           <LinearProgressWithLabel />
 
           <Grid container spacing={4} className={classes.gridContainer}>

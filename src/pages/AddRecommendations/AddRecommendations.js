@@ -7,7 +7,7 @@ import MenuBar from '../../components/MenuBar/MenuBar';
 import NavBar from '../../components/NavBar/NavBar';
 import RecommendationForm from '../../components/RecommendationForm/RecommendationForm';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
-import { POST } from '../../shared/constants/constants';
+import { POST, CONTAINED } from '../../shared/constants/constants';
 import {
   ENDPOINT_PATIENTS,
   ENDPOINT_RECOMMENDATIONS,
@@ -34,7 +34,7 @@ export default function AddRecommendations() {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           {/* NavBar  Component */}
-          <NavBar recommendation="contained"></NavBar>
+          <NavBar recommendation={CONTAINED}></NavBar>
 
           <Grid container spacing={4} className={classes.gridContainer}>
             {/* StepperHorizontal component */}

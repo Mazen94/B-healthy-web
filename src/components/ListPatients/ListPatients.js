@@ -127,10 +127,9 @@ export default function ListPatients(props) {
             variant={constants.SKELETON_VARIANT_TEXT}
             className={classes.skeletonText}
           />
-
           <Skeleton
             variant={constants.SKELETON_VARIANT_RECT}
-            className={classes.skeletonText}
+            className={classes.skeletonRect}
           />
         </div>
       );

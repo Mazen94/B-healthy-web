@@ -58,9 +58,8 @@ const StatiscalsPatient = () => {
             <Paper className={classes.paper}>
               <Typography
                 className={classes.typogh}
-                align="center"
-                color="textPrimary"
-                variant="subtitle1"
+                color={constants.TEXT_PRIMARY}
+                variant={constants.VARAINT_SUBTITLE_ONE}
               >
                 {`${strings.STATISCALS_EMPTY}`.toUpperCase()}
               </Typography>
@@ -88,7 +87,7 @@ const StatiscalsPatient = () => {
       <MenuBar title={strings.PATIENT} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <NavBar statiscal="contained"></NavBar>
+        <NavBar statiscal={constants.CONTAINED}></NavBar>
         <Grid spacing={5} container className={classes.gridContainer}>
           {functionToRender()}
         </Grid>

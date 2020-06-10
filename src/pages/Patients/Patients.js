@@ -18,7 +18,11 @@ import {
   PATIENT_PLACEHOLDER,
 } from '../../shared/strings/strings';
 import { PATH_PATIENT } from '../../routes/path';
-import { PRIMARY_COLOR } from '../../shared/constants/constants';
+import {
+  PRIMARY_COLOR,
+  OUTLINED,
+  CONTAINED,
+} from '../../shared/constants/constants';
 import TextField from '@material-ui/core/TextField';
 
 /**
@@ -61,16 +65,12 @@ export default function Patients() {
                       className={classes.input}
                       placeholder={PATIENT_PLACEHOLDER}
                       value={search}
-                      variant="outlined"
+                      variant={OUTLINED}
                       onChange={handleSearch}
                     />
                   </Paper>
                   <Paper className={classes.IconButton}>
-                    <IconButton
-                      type="submit"
-                      className={classes.iconButton}
-                      aria-label="search"
-                    >
+                    <IconButton type="submit" className={classes.iconButton}>
                       <SearchIcon />
                     </IconButton>
                   </Paper>
@@ -79,7 +79,7 @@ export default function Patients() {
               {/* Button add */}
               <Button
                 className={classes.ButtonGroup}
-                variant="contained"
+                variant={CONTAINED}
                 color={PRIMARY_COLOR}
                 onClick={handleClickAjouter}
               >
