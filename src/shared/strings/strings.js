@@ -145,3 +145,11 @@ export const NO_RECOMMENDATION_FOUND =
 export const SEND = 'Envoyer';
 
 export const EMAIL_PASSWORD_FAILED = 'Email ou mot de passe invalide';
+export const NEXT_MEETING = 'Prochain rendez-vous';
+
+export const SELECT_DATA = 'choisir une  date';
+export const MEETING_DATE = 'Vos rendez-vous a cette date :';
+export const NO_MEETING_DATE =
+  "Vous n'avez pas effectuer des rendez-vous a cette date";
+export const CHOOSE_HOUR = "Choisir l'heure de ce rendez-vous";
+export const MEEETING_ADDED = 'Rendez-vous Ajoutées';

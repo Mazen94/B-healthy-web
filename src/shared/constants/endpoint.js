@@ -19,3 +19,5 @@ export const ENDPOINT_PROGRESSION = 'progression';
 export const ENDPOINT_FOLLOW_UP = 'followRate';
 export const ENDPOINT_FORGOT_PASSWORD = 'forgotPassword/';
 export const ENDPOINT_UPLOAD_IMAGE = 'uploadImage/';
+export const ENDPOINT_MEETING = 'meeting';
+export const ENDPOINT_NEW_MEETING = 'newMeeting';
