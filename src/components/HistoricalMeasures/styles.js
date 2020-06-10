@@ -44,4 +44,11 @@ export const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     width: '45%',
   },
+  skeletonText: {
+    width: '50%',
+    height: 200,
+  },
+  skeletonRect: {
+    height: 350,
+  },
 }));

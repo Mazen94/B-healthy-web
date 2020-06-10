@@ -25,6 +25,8 @@ import {
   GET,
   VARAINT_SUBTITLE_ONE,
   OUTLINED,
+  SKELETON_VARIANT_TEXT,
+  SKELETON_VARIANT_RECT,
 } from '../../shared/constants/constants';
 import * as strings from '../../shared/strings/strings';
 import { useStyles } from './styles';
@@ -71,14 +73,20 @@ export default function HistoricalMeasures() {
   if (flag) {
     return (
       <Fragment>
-        <Skeleton variant="text" width="99%" height={100} />
-        <Skeleton variant="rect" width="99%" height={350} />
+        <Skeleton
+          variant={SKELETON_VARIANT_TEXT}
+          className={classes.skeletonText}
+        />
+        <Skeleton
+          variant={SKELETON_VARIANT_RECT}
+          className={classes.skeletonRect}
+        />
       </Fragment>
     );
   } else {
     return (
       <Fragment>
-        <Grid item sm={12}>
+        <Grid item sm={6}>
           <Paper className={classes.paperFiche}>
             <Typography
               variant={VARAINT_SUBTITLE_ONE}
