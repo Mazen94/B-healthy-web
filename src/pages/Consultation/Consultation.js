@@ -10,6 +10,7 @@ import { PATIENT } from '../../shared/strings/strings';
 import { useStyles } from './styles';
 import LinearProgressWithLabel from '../../components/LinearProgressWithLabel/LinearProgressWithLabel';
 import { CONTAINED } from '../../shared/constants/constants';
+import Nextmeeting from '../../components/Nextmeeting/Nextmeeting';
 
 export default function Consulation() {
   const classes = useStyles();
@@ -25,7 +26,7 @@ export default function Consulation() {
           <NavBar consultation={CONTAINED}></NavBar>
           <LinearProgressWithLabel />
 
-          <Grid container spacing={4} className={classes.gridContainer}>
+          <Grid container spacing={3} className={classes.gridContainer}>
             {/* Component NewMeasures */}
             <NewMeasures />
 
@@ -35,6 +36,7 @@ export default function Consulation() {
             </Grid>
             {/* Component HistoricalMeasures */}
             <HistoricalMeasures />
+            <Nextmeeting />
           </Grid>
         </main>
       </div>
