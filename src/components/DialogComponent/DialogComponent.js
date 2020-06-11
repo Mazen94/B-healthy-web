@@ -5,25 +5,28 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import React, { Fragment } from 'react';
-import {
-  YES,
-  NO,
-  DIALOG_CONTEXT_TEXT,
-  DELETE_MESSAGE,
-} from '../../shared/strings/strings';
+import { YES, NO, DELETE_MESSAGE } from '../../shared/strings/strings';
 import { PRIMARY_COLOR } from '../../shared/constants/constants';
 
-export default function AddIngredient(props) {
-  const { open, handleButtonDelete, handleClose, message } = props;
+export default function DialogComponent(props) {
+  const {
+    open,
+    handleButtonDelete,
+    handleClose,
+    message,
+    title = DELETE_MESSAGE,
+    displayButton = false,
+    buttonMsg,
+    handleButton,
+  } = props;
 
   return (
     <Fragment>
       <Dialog open={open} onClick={handleClose}>
-        <DialogTitle>{DELETE_MESSAGE}</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {DIALOG_CONTEXT_TEXT} {message} ?
-          </DialogContentText>
+          <DialogContentText>{message} </DialogContentText>
+          {displayButton && <Button onClick={handleButton}>{buttonMsg}</Button>}
         </DialogContent>
         <DialogActions>
           <Button color={PRIMARY_COLOR} onClick={handleClose}>
