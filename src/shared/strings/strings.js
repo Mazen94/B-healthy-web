@@ -158,3 +158,6 @@ export const START_MEETING = 'Lancer la consultation';
 export const MEETING_NOT_FOUND =
   "  VOUS N'AVEZ AUCUN RENDEZ-VOUS POUR AJOURD'HUIT";
 export const WAIT = 'En Attente';
+export const COUNT_BAR = "VOUS N'AVEZ PAS DES";
+export const CLICK_FOR_CREATE = 'cliquez ici pour créer ';
+export const ZERO_PATIENTS = "VOUS N'AVEZ PAS DES PATIENTS";

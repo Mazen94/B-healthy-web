@@ -17,4 +17,8 @@ export const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  fixedHeightPaperEmpty: {
+    height: 240,
+    justifyContent: 'space-between',
+  },
 }));

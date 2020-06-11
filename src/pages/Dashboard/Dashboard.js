@@ -20,6 +20,13 @@ import {
 } from '../../shared/constants/constants'; // Get constants from  constants  file
 import { MENUS, DASHBOARD, INGREDIENTS } from '../../shared/strings/strings';
 import { useStyles } from './styles';
+import { useHistory } from 'react-router-dom';
+import {
+  PATH_INGREDIENTS,
+  PATH_MENUS,
+  PATH_INGREDIENT,
+  PATH_MENU,
+} from '../../routes/path';
 
 /**
  * Component for showing dashboard Page
@@ -28,6 +35,7 @@ export default function Dashboard() {
   const classes = useStyles(); //add styles to variable classes
   const [countIngredient, setCountIngredient] = useState(-1); //state to get the number of ingredient
   const [countMenus, setCountMenus] = useState(-1); //state to get the number of ingredient
+  const history = useHistory();
   /**
    * Hook to get the number of menus and ingredients
    */
@@ -60,6 +68,12 @@ export default function Dashboard() {
       mounted = false;
     };
   }, []);
+  const handleNavigationIngredient = () => {
+    history.push(PATH_INGREDIENT);
+  };
+  const handleNavigationMenu = () => {
+    history.push(PATH_MENU);
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -78,6 +92,7 @@ export default function Dashboard() {
                 name={INGREDIENTS}
                 count={countIngredient}
                 backgroundColor={DASHBOARD_INGREDIENT_BACKGROUNDCOLOR}
+                handleButton={handleNavigationIngredient}
               />
             </Grid>
             {/* BarComponent Menus */}
@@ -86,6 +101,7 @@ export default function Dashboard() {
                 name={MENUS}
                 count={countMenus}
                 backgroundColor={DASHBOARD_MENU_BACKGROUNDCOLOR}
+                handleButton={handleNavigationMenu}
               />
             </Grid>
             {/* PatientStatistics */}
