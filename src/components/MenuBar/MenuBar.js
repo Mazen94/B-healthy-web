@@ -29,6 +29,7 @@ export default function MenuBar(props) {
     ingredientsProps,
     menusProps,
     profilProps,
+    meetingProps,
   } = props;
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const classes = useStyles(); //add styles to variable classes
@@ -102,6 +103,7 @@ export default function MenuBar(props) {
             ingredientsProps={ingredientsProps}
             menusProps={menusProps}
             profilProps={profilProps}
+            meetingProps={meetingProps}
           />
         </List>
         <Divider />

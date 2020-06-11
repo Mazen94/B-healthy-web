@@ -13,6 +13,7 @@ import React, { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as strings from '../../shared/strings/strings';
 import * as paths from '../../routes/path';
+import WatchLaterIcon from '@material-ui/icons/WatchLater';
 /**
  * Component for showing the list of items in the MenuBar
  */
@@ -22,6 +23,7 @@ export default function ListItems({
   ingredientsProps = false,
   menusProps = false,
   profilProps = false,
+  meetingProps = false,
 }) {
   let history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   /**
@@ -55,6 +57,10 @@ export default function ListItems({
     history.push(`${paths.PATH_MENUS}/1`);
   };
 
+  const handleClickMeeting = () => {
+    history.push(`${paths.PATH_MEETING}`);
+  };
+
   return (
     <Fragment>
       {/* Item Dashboard */}
@@ -63,6 +69,12 @@ export default function ListItems({
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary={strings.DASHBOARD} />
+      </ListItem>
+      <ListItem selected={meetingProps} button onClick={handleClickMeeting}>
+        <ListItemIcon>
+          <WatchLaterIcon />
+        </ListItemIcon>
+        <ListItemText primary={strings.MEETING} />
       </ListItem>
       {/* Item Patient */}
       <ListItem selected={patientProps} button onClick={handleClickPatients}>
