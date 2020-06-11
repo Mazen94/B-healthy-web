@@ -16,9 +16,9 @@ import { axiosService } from '../../shared/services/services';
 import * as strings from '../../shared/strings/strings';
 import { useStyles } from './styles';
 import { useParams } from 'react-router-dom';
-import { PATH_PATIENTS } from '../../routes/path';
 import * as endpoint from '../../shared/constants/endpoint';
 import Alert from '@material-ui/lab/Alert';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 export default function Nextmeeting() {
   const classes = useStyles();
@@ -161,9 +161,11 @@ export default function Nextmeeting() {
                         className={classes.listItem}
                         button
                       >
+                        <AccessTimeIcon />
                         <Typography
                           variant={constants.VARAINT_SUBTITLE_ONE}
                           gutterBottom
+                          className={classes.gutterBottom}
                         >
                           {value.meetingHour.slice(0, 5)}
                         </Typography>

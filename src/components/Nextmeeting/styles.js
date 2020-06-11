@@ -65,4 +65,8 @@ export const useStyles = makeStyles((theme) => ({
     width: '30%',
     margin: 'auto',
   },
+  gutterBottom: {
+    marginTop: 5,
+    marginLeft: 10,
+  },
 }));
