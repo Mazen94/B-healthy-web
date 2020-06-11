@@ -36,13 +36,17 @@ export const CHART_BACKGROUNDCOLOR = [
   'rgba(54, 162, 235, 0.6)',
 ];
 
-export const DIALOG_RECOMMENDATION = 'cette recommandation';
+export const DIALOG_RECOMMENDATION =
+  'Vous voulez vraiment supprimer cette recommandation ?';
 
-export const DIALOG_INGREDIENT = 'ce ingredient';
+export const DIALOG_INGREDIENT =
+  'Vous voulez vraiment supprimer ce ingredient ?';
 
-export const DIALOG_PATIENT = 'ce patient';
+export const DIALOG_PATIENT = ' Vous voulez vraiment supprimer ce patient ?';
 
-export const DIALOG_MENU = 'ce menu';
+export const DIALOG_MENU = ' Vous voulez vraiment supprimer ce menu ?';
+export const DIALOG_MEETING =
+  'Si vous cliquez oui le rendez-vous sera supprimé de cette liste ';
 
 export const PRIMARY_COLOR = 'primary';
 

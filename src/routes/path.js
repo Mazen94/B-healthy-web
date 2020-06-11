@@ -2,6 +2,7 @@ export const PATH_LOGIN = '/';
 export const PATH_REGISTER = '/register';
 export const PATH_RESET_PASSWORD = '/resetPassword';
 export const PATH_DASHBOARD = '/dashboard';
+export const PATH_MEETING = '/meeting';
 export const PATH_PATIENTS = '/patients';
 export const PATH_PATIENT = '/patient';
 export const PATH_CONSULTATION = '/consultation';

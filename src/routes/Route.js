@@ -24,6 +24,7 @@ import StatiscalsPatient from '../pages/StatiscalsPatient/StatiscalsPatient';
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword';
 import FoodJournal from '../pages/FoodJournal/FoodJournal';
 import * as paths from './path';
+import Meeting from '../pages/Meeting/Meeting';
 
 function Route() {
   return (
@@ -39,6 +40,7 @@ function Route() {
         />
         {/* Components PrivateRoute */}
         <PrivateRoute exact path={paths.PATH_DASHBOARD} component={Dashboard} />
+        <PrivateRoute exact path={paths.PATH_MEETING} component={Meeting} />
         {/* Route Patient */}
         <PrivateRoute
           exact

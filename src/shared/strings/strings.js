@@ -24,6 +24,8 @@ export const PASSWORD = 'Mot de passe';
 export const FEMALE = 'Femme';
 export const MALE = 'male';
 export const MENUS = 'Menus';
+export const MEETING = 'Rendez-vous';
+export const MEETING_OF_DAY = "Rendez-vous d'aujourd'hui";
 export const MENU_TYPE = 'Type de Menu';
 export const CALORIES = 'Calories';
 export const AGE_RANGE = "Tranche d'age";
@@ -92,7 +94,6 @@ export const ADD_INGREDIENT = 'Ingredient ajouté';
 export const UPDATE_INDREDIENT = 'Ingredient modifié ';
 export const ADD_RECOMMENDATION = 'Recommendation Ajoutée';
 export const UNAUTHENTICATED = 'Unauthenticated.';
-
 export const CHEST_PROGRESSION = ' la poitrine ';
 export const BELLY_PROGRESSION = ' la hanche ';
 export const WEIGHT_PROGRESSION = ' le poids ';
@@ -153,3 +154,7 @@ export const NO_MEETING_DATE =
   "Vous n'avez pas effectuer des rendez-vous a cette date";
 export const CHOOSE_HOUR = "Choisir l'heure de ce rendez-vous";
 export const MEEETING_ADDED = 'Rendez-vous Ajoutées';
+export const START_MEETING = 'Lancer la consultation';
+export const MEETING_NOT_FOUND =
+  "  VOUS N'AVEZ AUCUN RENDEZ-VOUS POUR AJOURD'HUIT";
+export const WAIT = 'En Attente';
