@@ -63,12 +63,13 @@ export default function Chart() {
       mounted = false;
     };
   }, []);
-  /**
-   * Function to render
-   */
   const handleButton = () => {
     history.push(PATH_PATIENT);
   };
+  /**
+   * Function to render
+   */
+
   const renderFunction = () => {
     if (flag) {
       return (

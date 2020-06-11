@@ -1,4 +1,4 @@
-import { Avatar } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
@@ -20,7 +20,12 @@ import {
 } from '../../shared/constants/endpoint';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import * as constants from '../../shared/constants/constants';
-import { TABLE_HEAD_PATIENTS } from '../../shared/strings/strings';
+import {
+  TABLE_HEAD_PATIENTS,
+  CLICK_FOR_CREATE,
+  ZERO_PATIENTS,
+  ZERO_INGREDIENTS,
+} from '../../shared/strings/strings';
 import HeadersTable from '../HeadersTable/HeadersTable';
 import {
   PATH_PATIENTS,
@@ -38,7 +43,9 @@ export default function ListPatients(props) {
   const [data, setData] = useState([]); //to get the list of patients
   const [deletePatientId, setDeletePatientId] = useState(''); // to retrieve the patient id to delete
   const [flag, setFlag] = useState(true);
-
+  const handleButton = () => {
+    history.push(PATH_PATIENT);
+  };
   /**
    *  Arrow function to go to the next page
    * @param {event} e
@@ -77,6 +84,9 @@ export default function ListPatients(props) {
       mounted = false;
     };
   }, [currentPage, props.search]);
+  useEffect(() => {
+    if (data.length !== 0) props.handleDisplaySearchBar(true);
+  }, [data]);
   /**
    * arrow function to delete a patient
    */
@@ -133,7 +143,16 @@ export default function ListPatients(props) {
           />
         </div>
       );
-    } else
+    } else {
+      if (data.length === 0) {
+        return (
+          <Fragment>
+            <Paper className={classes.paper} elevation={3}>
+              {ZERO_PATIENTS}
+            </Paper>
+          </Fragment>
+        );
+      }
       return (
         <Fragment>
           <TableContainer component={Paper}>
@@ -203,6 +222,7 @@ export default function ListPatients(props) {
           />
         </Fragment>
       );
+    }
   };
   /**
    * render

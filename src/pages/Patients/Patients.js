@@ -32,6 +32,8 @@ export default function Patients() {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const [search, Setsearch] = useState('');
+  const [displaySearchBar, SetDisplaySearchBar] = useState(false);
+
   const [searchDone, SetsearchDone] = useState('');
   /**
    * arrow function to navigate the user to the addPatient page
@@ -57,25 +59,27 @@ export default function Patients() {
           <Container maxWidth="lg">
             <Box pt={4}>
               {/* Search Bar */}
-              <form onSubmit={searchIconButton}>
-                <Grid className={classes.grid}>
-                  <Paper className={classes.paperSearch}>
-                    <TextField
-                      fullWidth
-                      className={classes.input}
-                      placeholder={PATIENT_PLACEHOLDER}
-                      value={search}
-                      variant={OUTLINED}
-                      onChange={handleSearch}
-                    />
-                  </Paper>
-                  <Paper className={classes.IconButton}>
-                    <IconButton type="submit" className={classes.iconButton}>
-                      <SearchIcon />
-                    </IconButton>
-                  </Paper>
-                </Grid>
-              </form>
+              {displaySearchBar && (
+                <form onSubmit={searchIconButton}>
+                  <Grid className={classes.grid}>
+                    <Paper className={classes.paperSearch}>
+                      <TextField
+                        fullWidth
+                        className={classes.input}
+                        placeholder={PATIENT_PLACEHOLDER}
+                        value={search}
+                        variant={OUTLINED}
+                        onChange={handleSearch}
+                      />
+                    </Paper>
+                    <Paper className={classes.IconButton}>
+                      <IconButton type="submit" className={classes.iconButton}>
+                        <SearchIcon />
+                      </IconButton>
+                    </Paper>
+                  </Grid>
+                </form>
+              )}
               {/* Button add */}
               <Button
                 className={classes.ButtonGroup}
@@ -87,7 +91,10 @@ export default function Patients() {
               </Button>
             </Box>
             {/* Component ListPatients */}
-            <ListPatients search={searchDone} />
+            <ListPatients
+              handleDisplaySearchBar={SetDisplaySearchBar}
+              search={searchDone}
+            />
 
             <Box pt={4}>
               {/* Component Copyright */}

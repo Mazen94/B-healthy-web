@@ -161,3 +161,5 @@ export const WAIT = 'En Attente';
 export const COUNT_BAR = "VOUS N'AVEZ PAS DES";
 export const CLICK_FOR_CREATE = 'cliquez ici pour créer ';
 export const ZERO_PATIENTS = "VOUS N'AVEZ PAS DES PATIENTS";
+export const ZERO_INGREDIENTS = "VOUS N'AVEZ PAS DES INGREDIENTS";
+export const ZERO_MENUS = "VOUS N'AVEZ PAS DES MENUS";

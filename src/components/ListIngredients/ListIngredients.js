@@ -21,7 +21,10 @@ import {
 } from '../../shared/constants/endpoint';
 import DialogComponent from '../DialogComponent/DialogComponent';
 import * as constants from '../../shared/constants/constants';
-import { TABLE_HEAD_INGREDIENTS } from '../../shared/strings/strings';
+import {
+  TABLE_HEAD_INGREDIENTS,
+  ZERO_INGREDIENTS,
+} from '../../shared/strings/strings';
 import { PATH_INGREDIENT, PATH_INGREDIENTS } from '../../routes/path';
 import { useStyles } from './styles';
 import HeadersTable from '../HeadersTable/HeadersTable';
@@ -34,7 +37,7 @@ export default function AddIngredient() {
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete ingredient (initial value is false)
   const [deleteIngredientId, setDeleteIngredientId] = useState(''); //to retrieve the ingredient id to delete
-
+  const [loading, setLoading] = useState(true);
   /**
    *  Arrow function to go to the next page
    * @param {event} e
@@ -63,6 +66,7 @@ export default function AddIngredient() {
             setData(response.data.data.data); //add the received data to the state data
             setCurrentPage(response.data.data.current_page); //add the received current_page to the state lastPage
             setLastPage(response.data.data.last_page); //add the received last_page to the state lastPage
+            setLoading(false);
           }
         } else console.log('error to get the list of ingredients', error);
       }
@@ -110,7 +114,7 @@ export default function AddIngredient() {
    *  function to render
    */
   const renderFunction = () => {
-    if (data.length === 0) {
+    if (loading) {
       return (
         <div className={classes.skeleton}>
           {/* Loading when the data is empty */}
@@ -124,69 +128,79 @@ export default function AddIngredient() {
           />
         </div>
       );
-    } else
-      return (
-        <Fragment>
-          <TableContainer component={Paper}>
-            <Table className={classes.table}>
-              {/* HeadersTable Component */}
-              <HeadersTable headerData={TABLE_HEAD_INGREDIENTS} />
-              <TableBody>
-                {data.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell>
-                      <Box className={classes.boxStyle}>
-                        <Box>
-                          <Avatar
-                            className={classes.avatar}
-                            src={ingredient}
-                          ></Avatar>
+    } else {
+      if (data.length !== 0)
+        return (
+          <Fragment>
+            <TableContainer component={Paper}>
+              <Table className={classes.table}>
+                {/* HeadersTable Component */}
+                <HeadersTable headerData={TABLE_HEAD_INGREDIENTS} />
+                <TableBody>
+                  {data.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell>
+                        <Box className={classes.boxStyle}>
+                          <Box>
+                            <Avatar
+                              className={classes.avatar}
+                              src={ingredient}
+                            ></Avatar>
+                          </Box>
+                          <Box p={2}>
+                            <a className={classes.link} href="# ">
+                              {row.name}
+                            </a>
+                          </Box>
                         </Box>
-                        <Box p={2}>
-                          <a className={classes.link} href="# ">
-                            {row.name}
-                          </a>
-                        </Box>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="left">{row.calorie}</TableCell>
-                    <TableCell align="left">{row.amount}</TableCell>
-                    <TableCell align="right">
-                      <IconButton
-                        value={row.id}
-                        onClick={() => handleClickIconButton(row.id)}
-                        color={constants.PRIMARY_COLOR}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        value={row.id}
-                        onClick={() => handleClickOpen(row.id)}
-                        color={constants.SECONDARY_COLOR}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <Pagination
-              className={classes.pagination}
-              count={lasPage}
-              page={currentPage}
-              onChange={handleChange}
-              color={constants.PRIMARY_COLOR}
+                      </TableCell>
+                      <TableCell align="left">{row.calorie}</TableCell>
+                      <TableCell align="left">{row.amount}</TableCell>
+                      <TableCell align="right">
+                        <IconButton
+                          value={row.id}
+                          onClick={() => handleClickIconButton(row.id)}
+                          color={constants.PRIMARY_COLOR}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          value={row.id}
+                          onClick={() => handleClickOpen(row.id)}
+                          color={constants.SECONDARY_COLOR}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <Pagination
+                className={classes.pagination}
+                count={lasPage}
+                page={currentPage}
+                onChange={handleChange}
+                color={constants.PRIMARY_COLOR}
+              />
+            </TableContainer>
+            <DialogComponent
+              handleButtonDelete={handleButtonDelete}
+              open={open}
+              handleClose={handleClose}
+              message={constants.DIALOG_RECOMMENDATION}
             />
-          </TableContainer>
-          <DialogComponent
-            handleButtonDelete={handleButtonDelete}
-            open={open}
-            handleClose={handleClose}
-            message={constants.DIALOG_RECOMMENDATION}
-          />
-        </Fragment>
-      );
+          </Fragment>
+        );
+      else
+        return (
+          <Fragment>
+            <Paper className={classes.paper} elevation={3}>
+              {ZERO_INGREDIENTS}
+            </Paper>
+          </Fragment>
+        );
+    }
   };
 
   /**

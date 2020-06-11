@@ -22,7 +22,7 @@ import {
   ENDPOINT_LIST_MEALS,
   ENDPOINT_MEALS,
 } from '../../shared/constants/endpoint';
-import { TABLE_HEAD_MENUS } from '../../shared/strings/strings';
+import { TABLE_HEAD_MENUS, ZERO_MENUS } from '../../shared/strings/strings';
 import * as constants from '../../shared/constants/constants';
 import { PATH_MENU, PATH_MENUS } from '../../routes/path';
 import { useStyles } from './styles';
@@ -35,7 +35,7 @@ export default function AddIngredient() {
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const [open, setOpen] = useState(false); //to open and close the Dialog when i want to delete menu (initial value is false)
   const [deleteMenuId, setDeleteMenuId] = useState(''); //to retrieve the menu id to delete
-
+  const [loading, setLoading] = useState(true);
   /**
    *  Arrow function to go to the next page
    * @param {event} e
@@ -64,6 +64,7 @@ export default function AddIngredient() {
             setData(response.data.data.data); //add the received data to the state data
             setCurrentPage(response.data.data.current_page); //add the received current_page to the state lastPage
             setLastPage(response.data.data.last_page); //add the received last_page to the state lastPage
+            setLoading(false);
           }
         } else console.log('error to get all the list of menus', error);
       }
@@ -112,7 +113,7 @@ export default function AddIngredient() {
    * Function to render
    */
   const renderFunction = () => {
-    if (data.length === 0) {
+    if (loading) {
       return (
         <div className={classes.skeleton}>
           {/* Loading when the data is empty */}
@@ -126,80 +127,90 @@ export default function AddIngredient() {
           />
         </div>
       );
-    } else
-      return (
-        <Fragment>
-          {/* Table */}
-          <TableContainer component={Paper}>
-            <Table className={classes.table}>
-              {/* HeadersTable Component */}
-              <HeadersTable headerData={TABLE_HEAD_MENUS} />
-              <TableBody>
-                {data.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell>
-                      <Box className={classes.boxStyle}>
-                        <Box>
-                          <Avatar
-                            className={classes.avatar}
-                            src={meal}
-                          ></Avatar>
+    } else {
+      if (data.length !== 0)
+        return (
+          <Fragment>
+            {/* Table */}
+            <TableContainer component={Paper}>
+              <Table className={classes.table}>
+                {/* HeadersTable Component */}
+                <HeadersTable headerData={TABLE_HEAD_MENUS} />
+                <TableBody>
+                  {data.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell>
+                        <Box className={classes.boxStyle}>
+                          <Box>
+                            <Avatar
+                              className={classes.avatar}
+                              src={meal}
+                            ></Avatar>
+                          </Box>
+                          <Box p={2}>
+                            <a
+                              className={classes.link}
+                              href={`${PATH_MENU}/${row.id}`}
+                            >
+                              {row.name}
+                            </a>
+                          </Box>
                         </Box>
-                        <Box p={2}>
-                          <a
-                            className={classes.link}
-                            href={`${PATH_MENU}/${row.id}`}
-                          >
-                            {row.name}
-                          </a>
-                        </Box>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="left">
-                      {findTheMenuType(row.type_menu)}
-                    </TableCell>
+                      </TableCell>
+                      <TableCell align="left">
+                        {findTheMenuType(row.type_menu)}
+                      </TableCell>
 
-                    <TableCell align="left">{row.calorie} </TableCell>
-                    <TableCell align="left">
-                      [{row.min_age},{row.max_age}]
-                    </TableCell>
+                      <TableCell align="left">{row.calorie} </TableCell>
+                      <TableCell align="left">
+                        [{row.min_age},{row.max_age}]
+                      </TableCell>
 
-                    <TableCell align="right">
-                      <IconButton
-                        value={row.id}
-                        onClick={() => handleClickIconButton(row.id)}
-                        color={constants.PRIMARY_COLOR}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        value={row.id}
-                        onClick={() => handleClickOpen(row.id)}
-                        color={constants.SECONDARY_COLOR}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <Pagination
-              className={classes.pagination}
-              count={lasPage}
-              page={currentPage}
-              onChange={handleChange}
-              color={constants.PRIMARY_COLOR}
+                      <TableCell align="right">
+                        <IconButton
+                          value={row.id}
+                          onClick={() => handleClickIconButton(row.id)}
+                          color={constants.PRIMARY_COLOR}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          value={row.id}
+                          onClick={() => handleClickOpen(row.id)}
+                          color={constants.SECONDARY_COLOR}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <Pagination
+                className={classes.pagination}
+                count={lasPage}
+                page={currentPage}
+                onChange={handleChange}
+                color={constants.PRIMARY_COLOR}
+              />
+            </TableContainer>
+            <DialogComponent
+              handleButtonDelete={handleButtonDelete}
+              open={open}
+              handleClose={handleClose}
+              message={DIALOG_MENU}
             />
-          </TableContainer>
-          <DialogComponent
-            handleButtonDelete={handleButtonDelete}
-            open={open}
-            handleClose={handleClose}
-            message={DIALOG_MENU}
-          />
-        </Fragment>
-      );
+          </Fragment>
+        );
+      else
+        return (
+          <Fragment>
+            <Paper className={classes.paper} elevation={3}>
+              {ZERO_MENUS}
+            </Paper>
+          </Fragment>
+        );
+    }
   };
   return <Fragment>{renderFunction()}</Fragment>;
 }

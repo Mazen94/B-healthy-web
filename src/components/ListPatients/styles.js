@@ -38,4 +38,7 @@ export const useStyles = makeStyles({
     height: '55vh',
     width: '100%',
   },
+  paper: {
+    padding: 15,
+  },
 });
