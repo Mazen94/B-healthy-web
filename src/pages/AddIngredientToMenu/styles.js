@@ -11,7 +11,9 @@ export const useStyles = makeStyles((theme) => ({
   iconButton: {
     marginRight: '95%',
   },
-  appBarSpacer: theme.mixins.toolbar,
+  appBarSpacer: {
+    marginTop: 65,
+  },
   content: {
     flexGrow: 1,
     height: '100vh',

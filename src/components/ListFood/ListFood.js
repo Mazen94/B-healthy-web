@@ -1,44 +1,35 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import List from '@material-ui/core/List';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import { useParams } from 'react-router-dom';
+import { Divider, Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Button from '@material-ui/core/Button';
-import { useTheme } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { axiosService } from '../../shared/services/services';
-import {
-  ENDPOINT_PATIENTS,
-  ENDPOINT_RECOMMENDATIONS,
-  ENDPOINT_MENUS,
-} from '../../shared/constants/endpoint';
-import {
-  LIST_OF_MENU,
-  NUMBER_OF_CALORIES,
-  OK,
-} from '../../shared/strings/strings';
-import { GET } from '../../shared/constants/constants';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import * as constants from '../../shared/constants/constants';
+import * as endpoint from '../../shared/constants/endpoint';
+import { axiosService, findTheMenuType } from '../../shared/services/services';
+import * as strings from '../../shared/strings/strings';
+import FoodIngredients from '../FoodIngredients/FoodIngredients';
 import { useStyles } from './styles';
 
-export default function ListFood(props) {
+export default function ListFood({ handleToggle }) {
   const classes = useStyles();
   const [data, setData] = useState([]); //get all the menu posted by patient
   const [flag, setFlag] = useState(true);
   const [menu, setMenu] = useState([]); //get only one menu posted by patient
+  const [ingredients, setIngredients] = useState([]);
   const [open, setOpen] = useState(false);
   const params = useParams();
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { handleToggle } = props;
+
   /**
    * Get All the menus posted by patient
    */
@@ -46,17 +37,20 @@ export default function ListFood(props) {
     //Prepare cancel request
     let mounted = true;
     axiosService(
-      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${ENDPOINT_MENUS}`,
-      GET,
+      `${endpoint.ENDPOINT_PATIENTS}${params.id}/${endpoint.ENDPOINT_RECOMMENDATIONS}${endpoint.ENDPOINT_MENUS}`,
+      constants.GET,
       true,
       null,
       (error, response) => {
         if (response) {
           if (mounted) {
-            setData(response.data.data);
-            setFlag(false);
+            let menus = response.data.data.filter((menu) =>
+              constants.VALUE_TYPE_MENU_PATIENT.includes(menu.type_menu)
+            );
+            setData(menus);
           }
-        } else console.log('error to delete a menu', error);
+        } else console.log('error to get a menu', error);
+        setFlag(false);
       }
     );
     return () => {
@@ -71,12 +65,13 @@ export default function ListFood(props) {
   const handleClickButton = async (menu) => {
     handleToggle(true);
     axiosService(
-      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${ENDPOINT_MENUS}${menu.id}`,
-      GET,
+      `${endpoint.ENDPOINT_PATIENTS}${params.id}/${endpoint.ENDPOINT_RECOMMENDATIONS}${endpoint.ENDPOINT_MENUS}${menu.id}`,
+      constants.GET,
       true,
       null,
       (error, response) => {
         if (response) {
+          setIngredients(response.data.data.ingredients);
           setMenu(response.data.data);
           handleToggle(false);
           setOpen(true);
@@ -100,23 +95,19 @@ export default function ListFood(props) {
         <Fragment>
           <Skeleton
             className={classes.skeleton}
-            variant="text"
-            height="5%"
-            width="90%"
+            variant={constants.SKELETON_VARIANT_TEXT}
           />
           <Skeleton
             className={classes.skeletonRec}
-            variant="rect"
-            width="90%"
-            height="25%"
+            variant={constants.SKELETON_VARIANT_RECT}
           />
         </Fragment>
       );
     } else {
       return (
         <div className={classes.root}>
-          <List component="nav" aria-label="main mailbox folders">
-            <ListSubheader>{LIST_OF_MENU} </ListSubheader>
+          <List>
+            <ListSubheader>{strings.LIST_OF_MENU} </ListSubheader>
             {data.map((row, x) => (
               <ListItem
                 button
@@ -131,31 +122,33 @@ export default function ListFood(props) {
             ))}
           </List>
           {/* Dialog */}
-          <Dialog
-            fullScreen={fullScreen}
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="responsive-dialog-title"
-          >
-            <DialogTitle id="responsive-dialog-title">
-              {menu.type_menu} | {menu.created_at}
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle className={classes.dialogHeader}>
+              {findTheMenuType(menu.type_menu)} | {menu.created_at}
             </DialogTitle>
+
             <DialogContent>
-              <DialogContentText className={classes.ingredients}>
-                Ingredient 1 : 200 (Grammes)<br></br> Ingredient 2 : 200
-                (Grammes)
-                <br></br>
-                Ingredient 3 : 200 (Grammes) <br></br>Ingredient 4 : 200
-                (Grammes)
-                <br></br>
+              <DialogContentText component={constants.SPAN_COMPONENT}>
+                <FoodIngredients ingredients={ingredients} />
               </DialogContentText>
+              <Divider className={classes.dividerStyle} />
               <DialogContentText className={classes.numberCalorie}>
-                {NUMBER_OF_CALORIES} {menu.calorie}
+                {strings.NUMBER_OF_CALORIES}
+                <Typography
+                  component={constants.SPAN_COMPONENT}
+                  className={classes.calorieStyle}
+                >
+                  {menu.calorie} {constants.KCL}
+                </Typography>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} color="primary" autoFocus>
-                {OK}
+              <Button
+                onClick={handleClose}
+                color={constants.PRIMARY_COLOR}
+                autoFocus
+              >
+                {strings.OK}
               </Button>
             </DialogActions>
           </Dialog>

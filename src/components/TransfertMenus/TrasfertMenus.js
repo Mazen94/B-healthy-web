@@ -14,15 +14,12 @@ import { useParams } from 'react-router-dom';
 import meal from '../../assets/meal.png';
 import { axiosService } from '../../shared/services/services';
 import recommendations from '../../assets/recommendations.png';
-import {
-  ENDPOINT_LIST_MEALS,
-  ENDPOINT_PATIENTS,
-  ENDPOINT_RECOMMENDATIONS,
-  ENDPOINT_MENUS,
-} from '../../shared/constants/endpoint';
-import { GET, POST } from '../../shared/constants/constants';
+import * as endPoints from '../../shared/constants/endpoint';
+import { GET, POST, OUTLINED } from '../../shared/constants/constants';
 import { MENUS, RECOMMENDATIONS } from '../../shared/strings/strings';
 import { useStyles } from './styles';
+import { Snackbar } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -34,111 +31,123 @@ function intersection(a, b) {
 
 export default function TrasfertMenus() {
   const classes = useStyles(); //add styles to variable classes
-  const [checked, setChecked] = useState([]);
-  const [left, setLeft] = useState([]);
-  const [right, setRight] = useState([]);
-  const [mealId, setMealId] = useState('');
+  const [checked, setChecked] = useState([]); //the radio bottom checked
+  const [left, setLeft] = useState([]); //the data that is on the left
+  const [right, setRight] = useState([]); //the data that is on the right
+  const [mealId, setMealId] = useState(''); //the id of meal checked
+  const [error, setError] = useState(''); //the id of meal checked
+  const [currentPage, setCurrentPage] = useState(1);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [lastPage, setLastPage] = useState(1);
   const params = useParams();
 
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
   useEffect(() => {
     let mounted = true;
     axiosService(
-      `${ENDPOINT_LIST_MEALS}1`,
+      `${endPoints.ENDPOINT_LIST_MEALS}${currentPage}`,
       GET,
       true,
       null,
       (error, response) => {
         if (response) {
-          if (mounted) setLeft(response.data.data.data); //add the received data to the state d
-        } else
-          console.log('error to get all the list of recommendations', error);
+          if (mounted) {
+            setLeft((left) => left.concat(response.data.data.data));
+            setLastPage(response.data.data.last_page);
+          }
+        }
       }
     );
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [currentPage]);
 
   const leftChecked = intersection(checked, left);
 
+  //when the use check a radio
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [checked];
-
     if (currentIndex === -1) {
       setMealId(value.id);
-      console.log('value.id==', value.id);
       newChecked.push(value);
+      setChecked(newChecked);
     } else {
       setMealId('');
-      newChecked.splice(currentIndex, 1);
+      setChecked(newChecked.splice(currentIndex, 1));
     }
-    setChecked(newChecked);
   };
 
   const numberOfChecked = (items) => intersection(checked, items).length;
 
   const handleCheckedRight = () => {
     PostMenuWithIngredientToRecommendation(mealId);
-    setRight(right.concat(leftChecked));
-    setLeft(not(left, leftChecked));
-    setChecked(not(checked, leftChecked));
   };
   /**
    * function to get the post menu
    * @param {int} id
    */
   function PostMenuWithIngredientToRecommendation(id) {
-    console.log(id);
     axiosService(
-      `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${ENDPOINT_MENUS}`,
+      `${endPoints.ENDPOINT_PATIENTS}${params.id}/${endPoints.ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${endPoints.ENDPOINT_MENUS}`,
       POST,
       true,
       { id: id },
       (err, result) => {
-        if (result) console.log('aded menu  ==', result.data);
-        else console.log('error to add this menu', err);
+        if (result) {
+          if (result.status === 201) {
+            setRight(right.concat(leftChecked));
+            setLeft(not(left, leftChecked));
+          } else {
+            setError(result.data.data);
+            setOpenSnackbar(true);
+          }
+        } else {
+          console.log('error to add menu to recommendation', err);
+        }
       }
     );
   }
+  //event handleScroll
+  const handleScroll = (event) => {
+    const bottom =
+      event.target.scrollHeight - event.target.scrollTop <
+      event.target.clientHeight; //detect scroll to bottom
+
+    if (bottom && currentPage < lastPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   const customList = (title, items, iconAvatar, flag) => (
     <Card>
       <CardHeader
         className={classes.cardHeader}
-        avatar={
-          <Avatar
-            aria-label="recipe"
-            className={classes.avatar}
-            src={iconAvatar}
-          />
-        }
+        avatar={<Avatar className={classes.avatar} src={iconAvatar} />}
         title={title}
         subheader={`${numberOfChecked(items)}/${items.length} selected`}
       />
       <Divider />
-      <List className={classes.list} dense component="div" role="list">
+      <List className={classes.list} dense onScroll={handleScroll}>
         {items.map((value) => {
-          const labelId = `transfer-list-all-item-${value.name}-label`;
-
           return (
-            <ListItem
-              key={value.id}
-              role="listitem"
-              button
-              onClick={handleToggle(value)}
-            >
+            <ListItem key={value.id} button onClick={handleToggle(value)}>
               {flag && (
                 <ListItemIcon>
                   <Checkbox
                     checked={checked.indexOf(value) !== -1}
                     tabIndex={-1}
                     disableRipple
-                    inputProps={{ 'aria-labelledby': labelId }}
                   />
                 </ListItemIcon>
               )}
-              <ListItemText id={labelId} primary={value.name} />
+              <ListItemText primary={value.name} />
             </ListItem>
           );
         })}
@@ -148,23 +157,25 @@ export default function TrasfertMenus() {
   );
 
   return (
-    <Grid
-      container
-      spacing={2}
-      justify="center"
-      alignItems="center"
-      className={classes.root}
-    >
+    <Grid container spacing={2} className={classes.root}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error">
+          {error}
+        </Alert>
+      </Snackbar>
       <Grid item>{customList(MENUS, left, meal, true)}</Grid>
       <Grid item>
-        <Grid container direction="column" alignItems="center">
+        <Grid container className={classes.gridContainer}>
           <Button
-            variant="outlined"
+            variant={OUTLINED}
             size="small"
             className={classes.button}
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
-            aria-label="move selected right"
           >
             &gt;
           </Button>

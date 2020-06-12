@@ -3,31 +3,21 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Alert from '@material-ui/lab/Alert';
+import Skeleton from '@material-ui/lab/Skeleton';
 import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
+import ChangePassword from '../../components/ChangePassword/ChangePassword';
 import MenuBar from '../../components/MenuBar/MenuBar';
-import Alert from '@material-ui/lab/Alert';
-import Skeleton from '@material-ui/lab/Skeleton';
-import {
-  GET,
-  PUT,
-  MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_PASSWORD,
-  MESSAGE_VALIDATORS_EMAIL,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
-import {
-  PROFIL,
-  EMAIL_EXISTS,
-  PASSWORD,
-  VALIDATE,
-} from '../../shared/strings/strings';
 import { PATH_DASHBOARD } from '../../routes/path';
-import { axiosService } from '../../shared/services/services';
+import * as constants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { ENDPOINT_PROFIL } from '../../shared/constants/endpoint';
+import { axiosService, lenghOfPassword } from '../../shared/services/services';
+import { EMAIL_EXISTS, PROFIL, VALIDATE } from '../../shared/strings/strings';
 import { useStyles } from './styles';
-import { lenghOfPassword } from '../../shared/services/services';
+import UpdateImage from '../../components/UpdateImage/UpdateImage';
 
 /**
  * Component for showing profil of nutritionist
@@ -38,11 +28,12 @@ export default function Profil() {
   const [flag, setFlag] = useState(false); //to display the loadings when the user validate the fields
   const [email, setEmail] = useState(''); //to retrieve the email entered by the user
   const [firstName, setFirstName] = useState(''); //to retrieve the firstName entered by the user
+  const [image, setImage] = useState(''); //to retrieve the firstName entered by the user
   const [lastName, setLastName] = useState(''); //to retrieve the lastName entered by the user
   const [password, setPassword] = useState(''); //to retrieve the password entered by the user
   const [erreurValidation, setErreurValidation] = useState(false); //when the user gives an email exists
   const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
-
+  const [changeMdp, setchangeMdp] = useState(false); //to open and close the Skeleton
   /**
    * arrow function to get the email entered by the user
    * @param {event} e
@@ -78,17 +69,23 @@ export default function Profil() {
   useEffect(() => {
     //Prepare cancel request
     let mounted = true;
-
-    axiosService(ENDPOINT_PROFIL, GET, true, null, (error, response) => {
-      if (response) {
-        if (mounted) {
-          setFirstName(response.data.data.firstName);
-          setLastName(response.data.data.lastName);
-          setEmail(response.data.data.email);
-          setOpenSkeleton(false);
-        }
-      } else console.log('error to get connected nutritionnist', error);
-    });
+    axiosService(
+      ENDPOINT_PROFIL,
+      constants.GET,
+      true,
+      null,
+      (error, response) => {
+        if (response) {
+          if (mounted) {
+            setImage(response.data.data.photo);
+            setFirstName(response.data.data.firstName);
+            setLastName(response.data.data.lastName);
+            setEmail(response.data.data.email);
+            setOpenSkeleton(false);
+          }
+        } else console.log('error to get connected nutritionnist', error);
+      }
+    );
 
     return () => {
       mounted = false;
@@ -109,7 +106,7 @@ export default function Profil() {
     };
     axiosService(
       ENDPOINT_PROFIL,
-      PUT,
+      constants.PUT,
       true,
       nutritionist,
       (error, response) => {
@@ -122,7 +119,9 @@ export default function Profil() {
       }
     );
   };
-
+  const handleClickChangeMdp = () => {
+    setchangeMdp(!changeMdp);
+  };
   useEffect(() => {
     //custom rules
     lenghOfPassword();
@@ -143,6 +142,8 @@ export default function Profil() {
     } else
       return (
         <Grid item md={10} component={Paper} className={classes.paper}>
+          <UpdateImage propsImage={image} />
+
           {/* Alert when the user gives email exist */}
           {erreurValidation && <Alert severity="error">{EMAIL_EXISTS}</Alert>}
           {/* Form */}
@@ -154,58 +155,53 @@ export default function Profil() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextValidator
-                  variant="outlined"
+                  variant={constants.OUTLINED}
                   onChange={handleFirstName}
                   value={firstName}
                   fullWidth
                   autoFocus
-                  validators={['required']}
-                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                  validators={[validations.RULES_NAME_REQUIRED]}
+                  errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextValidator
-                  variant="outlined"
+                  variant={constants.OUTLINED}
                   onChange={handleLastName}
                   value={lastName}
                   fullWidth
-                  validators={['required']}
-                  errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                  validators={[validations.RULES_NAME_REQUIRED]}
+                  errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextValidator
-                  variant="outlined"
+                  variant={constants.OUTLINED}
                   onChange={handleEmail}
                   value={email}
                   fullWidth
-                  validators={['required', 'isEmail']}
+                  validators={[
+                    validations.RULES_NAME_REQUIRED,
+                    validations.RULES_NAME_IS_EMAIL,
+                  ]}
                   errorMessages={[
-                    MESSAGE_VALIDATORS_REQUIRED,
-                    MESSAGE_VALIDATORS_EMAIL,
+                    validations.MESSAGE_VALIDATORS_REQUIRED,
+                    validations.MESSAGE_VALIDATORS_EMAIL,
                   ]}
                 />
               </Grid>
-
-              <Grid item xs={12}>
-                <TextValidator
-                  variant="outlined"
-                  onChange={handlePassword}
-                  value={password}
-                  fullWidth
-                  label={PASSWORD}
-                  type="password"
-                  autoComplete="current-password"
-                  validators={['lenghPassword']}
-                  errorMessages={[MESSAGE_VALIDATORS_PASSWORD]}
-                />
-              </Grid>
+              <ChangePassword
+                handleClickChangeMdp={handleClickChangeMdp}
+                changeMdp={changeMdp}
+                handlePassword={handlePassword}
+                password={password}
+              />
             </Grid>
             <Button
               type="submit"
               fullWidth
-              variant="contained"
-              color={PRIMARY_COLOR}
+              variant={constants.CONTAINED}
+              color={constants.PRIMARY_COLOR}
               className={classes.submit}
             >
               {VALIDATE}
@@ -223,7 +219,7 @@ export default function Profil() {
     <div className={classes.root}>
       <CssBaseline />
       {/* Component MenuBar */}
-      <MenuBar title={PROFIL} />
+      <MenuBar title={PROFIL} profilProps={true} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {renderFunction()}

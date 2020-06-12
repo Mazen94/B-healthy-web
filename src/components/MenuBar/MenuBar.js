@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,12 +15,25 @@ import List from '@material-ui/core/List';
 import ListItems from '../../components/ListItems/ListItems';
 import { PATH_LOGIN } from '../../routes/path';
 import { useStyles } from './styles';
+import { AppBarContext } from '../../shared/context/AppBarContext';
+import {
+  INHERIT_COLOR,
+  SECONDARY_COLOR,
+} from '../../shared/constants/constants';
 
 export default function MenuBar(props) {
-  const { title } = props; //take the title of page
+  const {
+    title,
+    dashboardProps,
+    patientProps,
+    ingredientsProps,
+    menusProps,
+    profilProps,
+    meetingProps,
+  } = props;
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const classes = useStyles(); //add styles to variable classes
-  const [open, setOpen] = useState(true); //to open and close the AppBar (initial value is True)
+  const { open, setOpen } = useContext(AppBarContext);
   /**
    * Arrow function to disconnect the user when he clicks on the icon <ExitToAppIcon/>
    */
@@ -43,15 +56,11 @@ export default function MenuBar(props) {
 
   return (
     <Fragment>
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
+      <AppBar className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
-            color="inherit"
-            aria-label="open drawer"
+            color={INHERIT_COLOR}
             onClick={handleDrawerOpen}
             className={clsx(
               classes.menuButton,
@@ -61,17 +70,11 @@ export default function MenuBar(props) {
             <MenuIcon />
           </IconButton>
           {/* Page title */}
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
+          <Typography noWrap className={classes.title}>
             {title}
           </Typography>
-          <IconButton color="inherit">
-            <Badge color="secondary">
+          <IconButton color={INHERIT_COLOR}>
+            <Badge color={SECONDARY_COLOR}>
               <ExitToAppIcon onClick={handleExitToAppIcon} />
             </Badge>
           </IconButton>
@@ -94,7 +97,14 @@ export default function MenuBar(props) {
         <Divider />
         <List>
           {/* Component listItems */}
-          <ListItems />
+          <ListItems
+            dashboardProps={dashboardProps}
+            patientProps={patientProps}
+            ingredientsProps={ingredientsProps}
+            menusProps={menusProps}
+            profilProps={profilProps}
+            meetingProps={meetingProps}
+          />
         </List>
         <Divider />
       </Drawer>

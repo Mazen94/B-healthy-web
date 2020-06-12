@@ -5,7 +5,9 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
 
-  appBarSpacer: theme.mixins.toolbar,
+  appBarSpacer: {
+    marginTop: 65,
+  },
   content: {
     flexGrow: 1,
     minHeight: '110vh',
@@ -41,7 +43,11 @@ export const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     width: '99%',
   },
-  skeleton: {
+  skeletonRectOne: {
     marginRight: 10,
+    height: '200px',
+  },
+  skeletonRectTwo: {
+    height: '300px',
   },
 }));

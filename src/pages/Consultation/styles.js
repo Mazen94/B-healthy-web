@@ -5,14 +5,16 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
 
-  appBarSpacer: theme.mixins.toolbar,
+  appBarSpacer: {
+    marginTop: 65,
+  },
   content: {
     flexGrow: 1,
-    height: '180vh',
-    overflow: 'none',
+    height: '165vh',
+    'overflow-x': 'auto',
   },
   gridContainer: {
-    marginTop: '2%',
+    marginTop: 2,
   },
   small: {
     width: 35,

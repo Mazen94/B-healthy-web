@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import IngredientForm from '../../components/IngredientForm/IngredientForm';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import { PATH_INGREDIENTS } from '../../routes/path';
-import { GET, PUT } from '../../shared/constants/constants';
+import { GET, PUT, PRIMARY_COLOR } from '../../shared/constants/constants';
 import { ENDPOINT_INGREDIENTS } from '../../shared/constants/endpoint';
 import { axiosService, isInteger } from '../../shared/services/services';
 import { EDIT, UPDATE_INDREDIENT } from '../../shared/strings/strings';
@@ -109,7 +109,7 @@ export default function UpdateIngredient(props) {
         <IconButton
           className={classes.iconButton}
           onClick={handleArrowBack}
-          color="primary"
+          color={PRIMARY_COLOR}
         >
           <ArrowBackIcon />
         </IconButton>

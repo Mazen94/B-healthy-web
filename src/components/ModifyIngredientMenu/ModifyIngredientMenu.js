@@ -8,7 +8,12 @@ import DoneIcon from '@material-ui/icons/Done';
 import React, { Fragment, useState } from 'react';
 import { TextValidator } from 'react-material-ui-form-validator';
 import { useParams } from 'react-router-dom';
-import { PRIMARY_COLOR, PUT } from '../../shared/constants/constants';
+import {
+  PRIMARY_COLOR,
+  PUT,
+  OUTLINED,
+  GRAM,
+} from '../../shared/constants/constants';
 import {
   ENDPOINT_INGREDIENTS,
   ENDPOINT_MEALS,
@@ -58,7 +63,6 @@ export default function ModifyIngredientMenu({ ingredients }) {
       { amount: valueOfamount },
       (error, response) => {
         if (response) setOpenSnackbar(true);
-        else console.log('error to change amount of ingredient', error);
       }
     );
   };
@@ -73,7 +77,7 @@ export default function ModifyIngredientMenu({ ingredients }) {
       <Grid item xs={12} sm={6} className={classes.handleIngredient}>
         {/* Component UpdateAmountIngredient Related to Menu*/}
         <Select
-          variant="outlined"
+          variant={OUTLINED}
           className={classes.select}
           value={valueOfIngredient}
           onChange={handleIngredient}
@@ -89,14 +93,14 @@ export default function ModifyIngredientMenu({ ingredients }) {
       </Grid>
       <Grid item xs={12} sm={5} className={classes.handleIngredient}>
         <TextValidator
-          variant="outlined"
+          variant={OUTLINED}
           required
           fullWidth
           label={AMOUNT}
           disabled={isdisbaled}
           value={valueOfamount}
           onChange={handleChangeAmount}
-          endadornment={<InputAdornment position="end">g</InputAdornment>}
+          endadornment={<InputAdornment position="end">{GRAM}</InputAdornment>}
         />
       </Grid>
       <Grid item xs={12} sm={1} className={classes.handleIngredient}>

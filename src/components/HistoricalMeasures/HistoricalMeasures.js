@@ -21,18 +21,14 @@ import weight from '../../assets/weight.png';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { axiosService } from '../../shared/services/services';
-import { GET } from '../../shared/constants/constants';
 import {
-  HISTORY_PERVIOUS_MEASUREMENTS,
-  DATE,
-  WEIGHT,
-  TALL,
-  CHEST,
-  BELLY,
-  NECK,
-  LEGS,
-  NOTE,
-} from '../../shared/strings/strings';
+  GET,
+  VARAINT_SUBTITLE_ONE,
+  OUTLINED,
+  SKELETON_VARIANT_TEXT,
+  SKELETON_VARIANT_RECT,
+} from '../../shared/constants/constants';
+import * as strings from '../../shared/strings/strings';
 import { useStyles } from './styles';
 
 export default function HistoricalMeasures() {
@@ -43,7 +39,7 @@ export default function HistoricalMeasures() {
 
   useEffect(() => {
     axiosService(
-      `${ENDPOINT_PATIENTS}${id}/${ENDPOINT_VISITS}?page=1&orderBy=updated_at&orderDirection=desc`,
+      `${ENDPOINT_PATIENTS}${id}/${ENDPOINT_VISITS}`,
       GET,
       true,
       null,
@@ -52,36 +48,59 @@ export default function HistoricalMeasures() {
           if (response.data.data.data.length !== 0)
             setVisit(response.data.data.data[0]); //add the received data to the state data
           setFlag(false);
-        } else console.log('error to get data', error);
+        }
       }
     );
   }, [id]);
+  const customTextField = (name, value, srcIcon) => {
+    return (
+      <TextField
+        className={classes.textFiledMesure}
+        label={name}
+        variant={OUTLINED}
+        disabled
+        value={value || ''}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Avatar src={srcIcon} className={classes.small} />
+            </InputAdornment>
+          ),
+        }}
+      />
+    );
+  };
   if (flag) {
     return (
       <Fragment>
-        <Skeleton variant="text" width="99%" height={100} />
-        <Skeleton variant="rect" width="99%" height={350} />
+        <Skeleton
+          variant={SKELETON_VARIANT_TEXT}
+          className={classes.skeletonText}
+        />
+        <Skeleton
+          variant={SKELETON_VARIANT_RECT}
+          className={classes.skeletonRect}
+        />
       </Fragment>
     );
   } else {
     return (
       <Fragment>
-        <Grid item sm={12}>
+        <Grid item sm={6}>
           <Paper className={classes.paperFiche}>
             <Typography
-              variant="subtitle1"
+              variant={VARAINT_SUBTITLE_ONE}
               gutterBottom
               className={classes.typography}
             >
-              {HISTORY_PERVIOUS_MEASUREMENTS}
+              {strings.HISTORY_PERVIOUS_MEASUREMENTS}
             </Typography>
             <TextField
               className={classes.date}
-              label={DATE}
-              variant="outlined"
+              label={strings.DATE}
+              variant={OUTLINED}
               disabled
               value={visit.updated_at || ''}
-              fullWidth
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -92,106 +111,23 @@ export default function HistoricalMeasures() {
             />
             <FormControl>
               <Grid className={classes.gridMesure}>
-                <TextField
-                  className={classes.textFiledMesure}
-                  label={WEIGHT}
-                  variant="outlined"
-                  disabled
-                  value={visit.weight || ''}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Avatar src={weight} className={classes.small} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <TextField
-                  className={classes.textFiledMesure}
-                  label={TALL}
-                  variant="outlined"
-                  disabled
-                  value={visit.tall || ''}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={tall}
-                          className={classes.small}
-                        />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-
-                <TextField
-                  className={classes.textFiledMesure}
-                  label={CHEST}
-                  variant="outlined"
-                  disabled
-                  value={visit.chest || ''}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Avatar src={chest} className={classes.small} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+                {customTextField(strings.WEIGHT, visit.weight, weight)}
+                {customTextField(strings.TALL, visit.tall, tall)}
+                {customTextField(strings.CHEST, visit.chest, chest)}
               </Grid>
               <Grid className={classes.gridMesure}>
-                <TextField
-                  className={classes.textFiledMesure}
-                  label={BELLY}
-                  variant="outlined"
-                  disabled
-                  value={visit.belly || ''}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Avatar src={belly} className={classes.small} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <TextField
-                  className={classes.textFiledMesure}
-                  label={NECK}
-                  variant="outlined"
-                  disabled
-                  value={visit.neck || ''}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Avatar src={neck} className={classes.small} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <TextField
-                  className={classes.textFiledMesure}
-                  label={LEGS}
-                  variant="outlined"
-                  disabled
-                  value={visit.legs || ''}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Avatar src={legs} className={classes.small} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+                {customTextField(strings.BELLY, visit.belly, belly)}
+                {customTextField(strings.NECK, visit.neck, neck)}
+                {customTextField(strings.LEGS, visit.legs, legs)}
               </Grid>
               <TextField
                 className={classes.textArea}
-                label={NOTE}
+                label={strings.NOTE}
                 multiline
                 rows="4"
                 disabled
                 value={visit.note || ''}
-                variant="outlined"
+                variant={OUTLINED}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

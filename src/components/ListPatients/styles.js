@@ -26,4 +26,19 @@ export const useStyles = makeStyles({
   button: {
     marginRight: 5,
   },
+  boxStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  skeletonText: {
+    height: '70px',
+    width: '100%',
+  },
+  skeletonRect: {
+    height: '55vh',
+    width: '100%',
+  },
+  paper: {
+    padding: 15,
+  },
 });

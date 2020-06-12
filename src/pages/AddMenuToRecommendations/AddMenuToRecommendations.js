@@ -8,7 +8,7 @@ import TrasfertMenus from '../../components/TransfertMenus/TrasfertMenus';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
-import { PRIMARY_COLOR } from '../../shared/constants/constants';
+import { PRIMARY_COLOR, CONTAINED } from '../../shared/constants/constants';
 import {
   VALIDATE,
   PATIENT,
@@ -35,7 +35,7 @@ export default function AddMenuToRecommendations() {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
 
-          <NavBar recommendation="contained"></NavBar>
+          <NavBar recommendation={CONTAINED}></NavBar>
 
           <Grid container spacing={4} className={classes.gridContainer}>
             {/* Component StepperHorizontal */}
@@ -48,7 +48,7 @@ export default function AddMenuToRecommendations() {
             <Paper className={classes.paperButton}>
               <Button
                 type="submit"
-                variant="contained"
+                variant={CONTAINED}
                 color={PRIMARY_COLOR}
                 className={classes.submit}
                 onClick={onClickButtomValider}

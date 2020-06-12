@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import StepperHorizontal from '../../components/StepperHorizontal/StepperHorizontal';
 import IngredientToMenu from '../../components/IngredientToMenu/IngredientToMenu';
-import { PRIMARY_COLOR } from '../../shared/constants/constants';
+import { PRIMARY_COLOR, CONTAINED } from '../../shared/constants/constants';
 import {
   FOLLOWING,
   MENU_STEPPER_ADD,
@@ -60,7 +60,7 @@ export default function AddIngredientToMenu() {
           <Paper elevation={0} className={classes.paper}>
             <Button
               type="submit"
-              variant="contained"
+              variant={CONTAINED}
               color={PRIMARY_COLOR}
               className={classes.submit}
               onClick={handleClickButton}

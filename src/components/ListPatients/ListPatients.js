@@ -1,4 +1,4 @@
-import { Avatar } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
@@ -13,21 +13,19 @@ import Pagination from '@material-ui/lab/Pagination';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'; //new instance of axios with a custom config
-import people from '../../assets/people.png';
 import { axiosService } from '../../shared/services/services';
 import {
   ENDPOINT_LIST_PATIENTS,
   ENDPOINT_PATIENTS,
 } from '../../shared/constants/endpoint';
 import DialogComponent from '../DialogComponent/DialogComponent';
+import * as constants from '../../shared/constants/constants';
 import {
-  DELETE,
-  GET,
-  DIALOG_PATIENT,
-  PRIMARY_COLOR,
-  SECONDARY_COLOR,
-} from '../../shared/constants/constants';
-import { TABLE_HEAD_PATIENTS } from '../../shared/strings/strings';
+  TABLE_HEAD_PATIENTS,
+  CLICK_FOR_CREATE,
+  ZERO_PATIENTS,
+  ZERO_INGREDIENTS,
+} from '../../shared/strings/strings';
 import HeadersTable from '../HeadersTable/HeadersTable';
 import {
   PATH_PATIENTS,
@@ -45,7 +43,9 @@ export default function ListPatients(props) {
   const [data, setData] = useState([]); //to get the list of patients
   const [deletePatientId, setDeletePatientId] = useState(''); // to retrieve the patient id to delete
   const [flag, setFlag] = useState(true);
-
+  const handleButton = () => {
+    history.push(PATH_PATIENT);
+  };
   /**
    *  Arrow function to go to the next page
    * @param {event} e
@@ -69,7 +69,7 @@ export default function ListPatients(props) {
     else url = `${ENDPOINT_LIST_PATIENTS}${currentPage}`;
     setFlag(true);
     //axiosService to get list of patients
-    axiosService(url, GET, true, null, (error, response) => {
+    axiosService(url, constants.GET, true, null, (error, response) => {
       if (response) {
         if (mounted) {
           setData(response.data.data.data); //add the received data to the state data
@@ -84,13 +84,16 @@ export default function ListPatients(props) {
       mounted = false;
     };
   }, [currentPage, props.search]);
+  useEffect(() => {
+    if (data.length !== 0) props.handleDisplaySearchBar(true);
+  }, [data]);
   /**
    * arrow function to delete a patient
    */
   const handleButtonDelete = () => {
     axiosService(
       `${ENDPOINT_PATIENTS}${deletePatientId}`,
-      DELETE,
+      constants.DELETE,
       true,
       null,
       (error, response) => {
@@ -130,31 +133,48 @@ export default function ListPatients(props) {
     if (flag) {
       return (
         <div className={classes.skeleton}>
-          <Skeleton variant="text" height="70px" width="100%" />
-
-          <Skeleton variant="rect" width="100%" height="55vh" />
+          <Skeleton
+            variant={constants.SKELETON_VARIANT_TEXT}
+            className={classes.skeletonText}
+          />
+          <Skeleton
+            variant={constants.SKELETON_VARIANT_RECT}
+            className={classes.skeletonRect}
+          />
         </div>
       );
-    } else
+    } else {
+      if (data.length === 0) {
+        return (
+          <Fragment>
+            <Paper className={classes.paper} elevation={3}>
+              {ZERO_PATIENTS}
+            </Paper>
+          </Fragment>
+        );
+      }
       return (
         <Fragment>
           <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+            <Table className={classes.table}>
               {/* HeadersTable Component */}
               <HeadersTable headerData={TABLE_HEAD_PATIENTS} />
               <TableBody>
                 {data.map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
-                      <Box display="flex" flexDirection="row">
+                    <TableCell>
+                      <Box className={classes.boxStyle}>
                         <Box>
                           <Avatar
                             className={classes.avatar}
-                            src={people}
+                            src={constants.PATH_IMAGES_PAITENTS + row.photo}
                           ></Avatar>
                         </Box>
                         <Box p={2}>
-                          <a className={classes.link} href="!#">
+                          <a
+                            className={classes.link}
+                            href={`${PATH_PATIENT}/${row.id}${PATH_CONSULTATION}`}
+                          >
                             {row.firstName} {row.lastName}
                           </a>
                         </Box>
@@ -168,7 +188,7 @@ export default function ListPatients(props) {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickArrowForwardIcon(row.id)}
-                        color={PRIMARY_COLOR}
+                        color={constants.PRIMARY_COLOR}
                       >
                         <ArrowForwardIcon />
                       </IconButton>
@@ -176,7 +196,7 @@ export default function ListPatients(props) {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickOpen(row.id)}
-                        color={SECONDARY_COLOR}
+                        color={constants.SECONDARY_COLOR}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -191,17 +211,18 @@ export default function ListPatients(props) {
               count={lasPage}
               page={currentPage}
               onChange={handleChange}
-              color={PRIMARY_COLOR}
+              color={constants.PRIMARY_COLOR}
             />
           </TableContainer>
           <DialogComponent
             handleButtonDelete={handleButtonDelete}
             open={open}
             handleClose={handleClose}
-            message={DIALOG_PATIENT}
+            message={constants.DIALOG_PATIENT}
           />
         </Fragment>
       );
+    }
   };
   /**
    * render

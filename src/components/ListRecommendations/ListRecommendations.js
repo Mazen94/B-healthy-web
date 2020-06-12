@@ -15,14 +15,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import recommendations from '../../assets/recommendations.png';
 import { axiosService } from '../../shared/services/services';
 import DialogComponent from '../DialogComponent/DialogComponent';
-import { DIALOG_RECOMMENDATION } from '../../shared/constants/constants';
 import { TABLE_HEAD_RECOMMENDATION } from '../../shared/strings/strings';
-import {
-  DELETE,
-  GET,
-  PRIMARY_COLOR,
-  SECONDARY_COLOR,
-} from '../../shared/constants/constants';
+import * as constants from '../../shared/constants/constants';
 import { PATH_PATIENT, PATH_RECOMMENDATIONS } from '../../routes/path';
 import {
   ENDPOINT_PATIENTS,
@@ -50,7 +44,7 @@ export default function ListRecommendations() {
     let mounted = true;
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}`,
-      GET,
+      constants.GET,
       true,
       null,
       (error, response) => {
@@ -59,8 +53,7 @@ export default function ListRecommendations() {
             setData(response.data.data); //add the received data to the state data
             setFlag(false);
           }
-        } else
-          console.log('error to get all the list of recommendations', error);
+        }
       }
     );
 
@@ -96,12 +89,11 @@ export default function ListRecommendations() {
   const handleButtonDelete = () => {
     axiosService(
       `${ENDPOINT_PATIENTS}${params.id}/${ENDPOINT_RECOMMENDATIONS}${deleteRecommendationId}`,
-      DELETE,
+      constants.DELETE,
       true,
       null,
       (error, response) => {
         if (response) setCurrentPage(currentPage);
-        else console.log('error to delete a recommendations', error);
       }
     );
     setOpen(false); //to close the dialogue
@@ -114,26 +106,29 @@ export default function ListRecommendations() {
     //Loading until the state get the data from db
     if (flag) {
       return (
-        <div className={classes.skeleton}>
-          {/* Loading when the data is empty */}
-          <Skeleton />
-          <Skeleton animation={false} />
-          <Skeleton animation="wave" />
-          <Skeleton animation="wave" />
-        </div>
+        <Fragment>
+          <Skeleton
+            className={classes.skeleton}
+            variant={constants.SKELETON_VARIANT_TEXT}
+          />
+          <Skeleton
+            className={classes.skeletonRec}
+            variant={constants.SKELETON_VARIANT_RECT}
+          />
+        </Fragment>
       );
       // when the states get the data and if the data is not empty then display
     } else {
       return (
         <Fragment>
           <TableContainer className={classes.tableContainer} component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+            <Table className={classes.table}>
               <HeadersTable headerData={TABLE_HEAD_RECOMMENDATION} />
               <TableBody>
                 {data.map((row, x) => (
                   <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
-                      <Box display="flex" flexDirection="row">
+                    <TableCell>
+                      <Box className={classes.boxStyle}>
                         <Box>
                           <Avatar
                             className={classes.avatar}
@@ -141,7 +136,10 @@ export default function ListRecommendations() {
                           ></Avatar>
                         </Box>
                         <Box p={2}>
-                          <a className={classes.link} href="# ">
+                          <a
+                            className={classes.link}
+                            href={`${PATH_PATIENT}/${params.id}${PATH_RECOMMENDATIONS}/${row.id}/`}
+                          >
                             {row.name}
                           </a>
                         </Box>
@@ -153,14 +151,14 @@ export default function ListRecommendations() {
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickIconButton(row.id)}
-                        color={PRIMARY_COLOR}
+                        color={constants.PRIMARY_COLOR}
                       >
                         <EditIcon />
                       </IconButton>
                       <IconButton
                         value={row.id}
                         onClick={() => handleClickOpen(row.id)}
-                        color={SECONDARY_COLOR}
+                        color={constants.SECONDARY_COLOR}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -175,7 +173,7 @@ export default function ListRecommendations() {
             handleButtonDelete={handleButtonDelete}
             open={open}
             handleClose={handleClose}
-            message={DIALOG_RECOMMENDATION}
+            message={constants.DIALOG_RECOMMENDATION}
           />
         </Fragment>
       );

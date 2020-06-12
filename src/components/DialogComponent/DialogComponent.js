@@ -5,30 +5,34 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import React, { Fragment } from 'react';
-import { YES, NO, DIALOG_CONTEXT_TEXT } from '../../shared/strings/strings';
+import { YES, NO, DELETE_MESSAGE } from '../../shared/strings/strings';
+import { PRIMARY_COLOR } from '../../shared/constants/constants';
 
-export default function AddIngredient(props) {
-  const { open, handleButtonDelete, handleClose, message } = props;
+export default function DialogComponent(props) {
+  const {
+    open,
+    handleButtonDelete,
+    handleClose,
+    message,
+    title = DELETE_MESSAGE,
+    displayButton = false,
+    buttonMsg,
+    handleButton,
+  } = props;
 
   return (
     <Fragment>
-      <Dialog
-        open={open}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        onClick={handleClose}
-      >
-        <DialogTitle id="alert-dialog-title">{'Supprimer'}</DialogTitle>
+      <Dialog open={open} onClick={handleClose}>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {DIALOG_CONTEXT_TEXT} {message} ?
-          </DialogContentText>
+          <DialogContentText>{message} </DialogContentText>
+          {displayButton && <Button onClick={handleButton}>{buttonMsg}</Button>}
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={handleClose}>
+          <Button color={PRIMARY_COLOR} onClick={handleClose}>
             {NO}
           </Button>
-          <Button color="primary" onClick={handleButtonDelete} autoFocus>
+          <Button color={PRIMARY_COLOR} onClick={handleButtonDelete} autoFocus>
             {YES}
           </Button>
         </DialogActions>

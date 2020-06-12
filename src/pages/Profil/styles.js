@@ -12,7 +12,9 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: '3%',
     width: '85%',
   },
-  appBarSpacer: theme.mixins.toolbar,
+  appBarSpacer: {
+    marginTop: 100,
+  },
   content: {
     flexGrow: 1,
     height: '100vh',
@@ -20,7 +22,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%',
-    padding: '5%',
+    padding: '3%',
   },
   submit: {
     marginTop: 30,
@@ -28,6 +30,7 @@ export const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(4),
     margin: 'auto',
+    marginBottom: 20,
   },
   spinner: {
     marginBottom: 20,

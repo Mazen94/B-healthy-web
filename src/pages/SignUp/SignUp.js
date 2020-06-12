@@ -6,29 +6,21 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_REGISTER } from '../../shared/constants/endpoint';
+import Alert from '@material-ui/lab/Alert';
 import Copyright from '../../components/Copyright/Copyright';
-import {
-  REGISTER,
-  HAVE_AN_ACCOUNT,
-  EMAIL,
-  LAST_NAME,
-  FIRST_NAME,
-} from '../../shared/strings/strings';
-import {
-  POST,
-  MESSAGE_VALIDATORS_REQUIRED,
-  MESSAGE_VALIDATORS_EMAIL,
-  PRIMARY_COLOR,
-} from '../../shared/constants/constants';
+import * as strings from '../../shared/strings/strings';
+import * as constants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { PATH_LOGIN, PATH_DASHBOARD } from '../../routes/path';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
 import { PASSWORD } from '../../shared/strings/strings';
+import { lenghOfPassword } from '../../shared/services/services';
 
 export default function SignUp() {
   const classes = useStyles(); //add styles to variable classes
@@ -37,11 +29,16 @@ export default function SignUp() {
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [password, setPassword] = useState('');
+  const [flag, setFlag] = useState(false);
+  useEffect(() => {
+    lenghOfPassword();
+  });
   /**
    * arrow function to get the email entered by the user
    * @param {event} e
    */
   const handleEmail = (e) => {
+    setFlag(false);
     setEmail(e.target.value);
   };
   /**
@@ -79,29 +76,28 @@ export default function SignUp() {
     };
     axiosService(
       ENDPOINT_REGISTER,
-      POST,
+      constants.POST,
       false,
       userRegister,
       (error, response) => {
         if (response) {
           localStorage.setItem('token', response.data.token);
           history.push(PATH_DASHBOARD);
-        } else console.log(error.response.data);
+        } else setFlag(true);
       }
     );
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          {REGISTER}
-        </Typography>
+        <Typography variant="h5">{strings.REGISTER}</Typography>
         {/* Form */}
+        {flag && <Alert severity="error">{strings.EMAIL_EXISTS}</Alert>}
         <ValidatorForm
           onSubmit={onSubmitValidatorForm}
           className={classes.form}
@@ -110,70 +106,80 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextValidator
-                variant="outlined"
+                variant={constants.OUTLINED}
                 required
                 fullWidth
-                label={FIRST_NAME}
+                label={strings.FIRST_NAME}
                 autoFocus
                 value={firstName}
                 onChange={handleFirstName}
-                validators={['required']}
-                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                validators={[validations.RULES_NAME_REQUIRED]}
+                errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextValidator
-                variant="outlined"
+                variant={constants.OUTLINED}
                 required
                 fullWidth
-                label={LAST_NAME}
+                label={strings.LAST_NAME}
                 value={lastName}
                 onChange={handleLastName}
-                validators={['required']}
-                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                validators={[validations.RULES_NAME_REQUIRED]}
+                errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
               />
             </Grid>
             <Grid item xs={12}>
               <TextValidator
-                variant="outlined"
+                variant={constants.OUTLINED}
                 required
                 fullWidth
-                label={EMAIL}
+                label={strings.EMAIL}
                 value={email}
                 onChange={handleEmail}
-                validators={['required', 'isEmail']}
+                validators={[
+                  validations.RULES_NAME_REQUIRED,
+                  validations.RULES_NAME_IS_EMAIL,
+                ]}
                 errorMessages={[
-                  MESSAGE_VALIDATORS_REQUIRED,
-                  MESSAGE_VALIDATORS_EMAIL,
+                  validations.MESSAGE_VALIDATORS_REQUIRED,
+                  validations.MESSAGE_VALIDATORS_EMAIL,
                 ]}
               />
             </Grid>
             <Grid item xs={12}>
               <TextValidator
-                variant="outlined"
+                variant={constants.OUTLINED}
                 required
                 fullWidth
                 label={PASSWORD}
                 value={password}
+                type="password"
                 onChange={handlePassword}
-                validators={['required']}
-                errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
+                validators={[
+                  validations.RULES_NAME_LENGHT_PASSWORD,
+                  validations.RULES_NAME_REQUIRED,
+                ]}
+                errorMessages={[
+                  validations.MESSAGE_VALIDATORS_PASSWORD,
+                  validations.MESSAGE_VALIDATORS_REQUIRED,
+                ]}
               />
             </Grid>
           </Grid>
           <Button
             type="submit"
             fullWidth
-            variant="contained"
-            color={PRIMARY_COLOR}
+            variant={constants.CONTAINED}
+            color={constants.PRIMARY_COLOR}
             className={classes.submit}
           >
-            {REGISTER}
+            {strings.REGISTER}
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container className={classes.gridContainer}>
             <Grid item>
-              <Link href={PATH_LOGIN} variant="body2">
-                {HAVE_AN_ACCOUNT}
+              <Link href={PATH_LOGIN} variant={constants.VARAINT_BODY_TWO}>
+                {strings.HAVE_AN_ACCOUNT}
               </Link>
             </Grid>
           </Grid>

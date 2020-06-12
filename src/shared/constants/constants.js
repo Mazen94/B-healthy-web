@@ -1,23 +1,5 @@
 /**
  * Constant used in the PatientStatistics component
- * the labels of the chart (bar)
- */
-export const PATIENT_STATISTICS_LABELS = [
-  '',
-  '[10,15]',
-  '[16,20]',
-  '[21,25]',
-  '[26,30]',
-  '[31,35]',
-  '[36,40]',
-  '[41,45]',
-  '[46,50]',
-  '[51,55]',
-  '[56,60]',
-  '',
-];
-/**
- * Constant used in the PatientStatistics component
  * The background color of the chart (bar)
  */
 export const PATIENT_STATISTICS_BACKGROUNDCOLOR = [
@@ -32,6 +14,7 @@ export const PATIENT_STATISTICS_BACKGROUNDCOLOR = [
   'rgba(100, 140, 64, 0.6)',
   'rgba(50, 10, 200, 0.6)',
 ];
+export const INHERIT_COLOR = 'inherit';
 /**
  * Constant used in the Dashboard component
  * The background color of the chart (Ingredient)
@@ -53,73 +36,70 @@ export const CHART_BACKGROUNDCOLOR = [
   'rgba(54, 162, 235, 0.6)',
 ];
 
-/**
- * Constant message : use when field is required
- */
-export const MESSAGE_VALIDATORS_REQUIRED = 'Ce champ est requis';
-/**
- * Constant message : min length password
- */
-export const MESSAGE_VALIDATORS_PASSWORD =
-  'Le mot de passe doit contenir au moins 8 caractères.';
-/**
- * Constant message : email validation
- */
-export const MESSAGE_VALIDATORS_EMAIL = "L'email n'est pas valide";
+export const DIALOG_RECOMMENDATION =
+  'Vous voulez vraiment supprimer cette recommandation ?';
 
-/**
- * Constant message : is integer validation
- */
-export const MESSAGE_VALIDATORS_INTEGER = 'Ce champ doit être un nombre';
+export const DIALOG_INGREDIENT =
+  'Vous voulez vraiment supprimer ce ingredient ?';
 
-/**
- * The message of the dialog component related to recommendation
- */
-export const DIALOG_RECOMMENDATION = 'cette recommandation';
+export const DIALOG_PATIENT = ' Vous voulez vraiment supprimer ce patient ?';
 
-/**
- * The message of the dialog component related to ingredients
- */
-export const DIALOG_INGREDIENT = 'ce ingredient';
+export const DIALOG_MENU = ' Vous voulez vraiment supprimer ce menu ?';
+export const DIALOG_MEETING =
+  'Si vous cliquez oui le rendez-vous sera supprimé de cette liste ';
 
-/**
- * The message of the dialog component related to patient
- */
-export const DIALOG_PATIENT = 'ce patient';
-
-/**
- * The message of the dialog component related to patient
- */
-export const DIALOG_MENU = 'ce menu';
-/**
- * Primary color
- */
 export const PRIMARY_COLOR = 'primary';
-/**
- * Secondary color
- */
+
 export const SECONDARY_COLOR = 'secondary';
-/**
- * Get
- */
+
 export const GET = 'GET';
-/**
- * POST
- */
+
 export const POST = 'POST';
-/**
- * PUT
- */
+
 export const PUT = 'PUT';
 
-/**
- * Delete
- */
 export const DELETE = 'DELETE';
 
 export const URL_API = process.env.REACT_APP_API_URL;
-/**
- * Constant message : age validation
- */
-export const MESSAGE_VALIDATORS_AGE = "L'age doit etre entre 5 et 90 ans";
+
+//VALUE OF TYPE MENU CREATED BY NUTRITIONIST
 export const VALUE_TYPE_MENU = [0, 1, 2, 3, 4];
+//VALUE OF TYPE MENU CREATED BY PATIENT
+export const VALUE_TYPE_MENU_PATIENT = [5, 6, 7, 8, 9];
+
+export const WEIGHT_PROGRESSION_BACKGROUNDCOLOR = 'rgba(63, 81, 181, 0.4)';
+export const WEIGHT_PROGRESSION_BORDERCOLOR = 'rgba(63, 81, 181, 0.5)';
+
+export const CHEST_PROGRESSION_BACKGROUNDCOLOR = 'rgba(95, 49, 1 , 0.4)';
+export const CHEST_PROGRESSION_BORDERCOLOR = 'rgba(95, 49, 1 , 0.5)';
+
+export const BELLY_PROGRESSIO_BACKGROUNDCOLOR = 'rgba(117, 0, 0, 0.4)';
+export const BELLY_PROGRESSIO_BORDERCOLOR = 'rgba(117, 0, 0, 0.5)';
+
+export const LEGS_PROGRESSION_BACKGROUNDCOLOR = 'rgba(0, 85, 66 , 0.4)';
+export const LEGS_PROGRESSION_BORDERCOLOR = 'rgba(0, 85, 66 , 0.5)';
+export const TEXT_SECONDARY = 'textSecondary';
+
+export const TYPE_OF_IMAGES = 'image/png, image/jpeg, image/jpg';
+
+export const PATH_IMAGES_PAITENTS = 'http://localhost:8002/images/patients/';
+
+export const SKELETON_VARIANT_TEXT = 'text';
+export const SKELETON_VARIANT_RECT = 'rect';
+export const SKELETON_VARIANT_CIRCLE = 'circle';
+
+export const SPAN_COMPONENT = 'span';
+
+export const GRAM = 'g';
+
+export const KCL = 'kcl';
+
+export const CONTAINED = 'contained';
+
+export const OUTLINED = 'outlined';
+
+export const VARAINT_SUBTITLE_ONE = 'subtitle1';
+export const VARAINT_SUBTITLE_TWO = 'subtitle2';
+export const VARAINT_BODY_TWO = 'body2';
+export const VARAINT_DETERMINATE = 'determinate';
+export const TEXT_PRIMARY = 'textPrimary';

@@ -7,6 +7,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { PATIENT } from '../../shared/strings/strings';
 import { useStyles } from './styles';
+import { INHERIT_COLOR, CONTAINED } from '../../shared/constants/constants';
 
 const FoodJournal = () => {
   const classes = useStyles();
@@ -21,7 +22,7 @@ const FoodJournal = () => {
   return (
     <div>
       <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-        <CircularProgress color="inherit" />
+        <CircularProgress color={INHERIT_COLOR} />
       </Backdrop>
       <div className={classes.root}>
         <CssBaseline />
@@ -30,7 +31,7 @@ const FoodJournal = () => {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
 
-          <NavBar journalAlimentaire="contained"></NavBar>
+          <NavBar journalAlimentaire={CONTAINED}></NavBar>
           <ListFood className={classes.listFood} handleToggle={handleToggle} />
           <div className={classes.listFood}></div>
         </main>

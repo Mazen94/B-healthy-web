@@ -4,8 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import people from '../../assets/people.png';
-import { GET } from '../../shared/constants/constants';
+import * as constants from '../../shared/constants/constants';
 import { axiosService } from '../../shared/services/services';
 import { ENDPOINT_PATIENTS } from '../../shared/constants/endpoint';
 import { PATIENT } from '../../shared/strings/strings';
@@ -20,7 +19,7 @@ export default function CardPatient() {
     let mounted = true;
     axiosService(
       `${ENDPOINT_PATIENTS}${id}`,
-      GET,
+      constants.GET,
       true,
       null,
       (error, response) => {
@@ -36,15 +35,18 @@ export default function CardPatient() {
   if (patient.length === 0) {
     return (
       <Fragment>
-        <Skeleton variant="text" height="20%" width="99%" />
         <Skeleton
-          variant="circle"
-          mx="auto"
-          width={90}
-          height={90}
-          className={classes.skeleton}
+          variant={constants.SKELETON_VARIANT_TEXT}
+          className={classes.skeletonText}
         />
-        <Skeleton variant="rect" width="99%" height="60%" />
+        <Skeleton
+          variant={constants.SKELETON_VARIANT_CIRCLE}
+          className={classes.skeletonCircle}
+        />
+        <Skeleton
+          variant={constants.SKELETON_VARIANT_RECT}
+          className={classes.skeletonRec}
+        />
       </Fragment>
     );
   }
@@ -53,30 +55,34 @@ export default function CardPatient() {
       <Grid className={classes.gridFiche}>
         <Paper className={classes.patientPaper}>
           <Typography
-            variant="subtitle1"
+            variant={constants.VARAINT_SUBTITLE_ONE}
             gutterBottom
             className={classes.patientTypography}
           >
             {PATIENT}
           </Typography>
-          <img src={people} className={classes.large} alt="Logo" />
+          <img
+            src={constants.PATH_IMAGES_PAITENTS + patient.photo}
+            className={classes.large}
+            alt={patient.firstName}
+          />
           <Grid className={classes.grid}>
             <Typography
-              variant="subtitle2"
+              variant={constants.VARAINT_SUBTITLE_TWO}
               gutterBottom
               className={classes.typography}
             >
               {patient.firstName} {patient.lastName}
             </Typography>
             <Typography
-              variant="subtitle2"
+              variant={constants.VARAINT_SUBTITLE_TWO}
               gutterBottom
               className={classes.typography}
             >
               {patient.email}
             </Typography>
             <Typography
-              variant="subtitle2"
+              variant={constants.VARAINT_SUBTITLE_TWO}
               gutterBottom
               className={classes.typography}
             >

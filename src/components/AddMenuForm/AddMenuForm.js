@@ -7,32 +7,11 @@ import React, { useEffect, useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import { PATH_INGREDIENTS, PATH_MENU } from '../../routes/path';
-import {
-  MESSAGE_VALIDATORS_AGE,
-  MESSAGE_VALIDATORS_INTEGER,
-  MESSAGE_VALIDATORS_REQUIRED,
-  POST,
-  PRIMARY_COLOR,
-  VALUE_TYPE_MENU,
-} from '../../shared/constants/constants';
+import * as contants from '../../shared/constants/constants';
+import * as validations from '../../shared/constants/validation';
 import { ENDPOINT_MEALS } from '../../shared/constants/endpoint';
-import {
-  axiosService,
-  isInteger,
-  validationAge,
-} from '../../shared/services/services';
-import {
-  MENU_TYPE,
-  BREAKFAST,
-  DINNER,
-  FIRST_SNAKE,
-  FOLLOWING,
-  LUNCH,
-  MAX_AGE,
-  MIN_AGE,
-  NAME,
-  SECOND_SNAKE,
-} from '../../shared/strings/strings';
+import * as services from '../../shared/services/services';
+import * as strings from '../../shared/strings/strings';
 import { useStyles } from './styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
@@ -44,40 +23,27 @@ export default function MenuForm({ changeFlag }) {
   const [minAge, setMinAge] = useState(''); // to retrieve the minimum age entered by the user (initial value empty string)
   const [typeMenu, setTypeMenu] = useState(''); // to retrieve the minimum age entered by the user (initial value empty string)
 
-  /**
-   * arrow function to get the MinAges entered by the user
-   * @param {event} e
-   */
   const handleMinAge = (e) => {
     setMinAge(e.target.value);
   };
-  /**
-   * arrow function to get the name entered by the user
-   * @param {event} e
-   */
+
   const handleName = (e) => {
     setName(e.target.value);
   };
-  /**
-   * arrow function to get the type de menu entered by the user
-   * @param {event} e
-   */
+
   const handleTypeMenu = (e) => {
     setTypeMenu(e.target.value);
   };
 
-  /**
-   * arrow function to get the MaxAge entered by the user
-   * @param {event} e
-   */
   const handleMaxAge = (e) => {
     setMaxAge(e.target.value);
   };
 
   useEffect(() => {
-    isInteger();
-    validationAge();
+    services.isInteger();
+    services.validationAge();
   }, []);
+
   /**
    * arrow function to retrieve the final inputs
    * and call the funtion addMenu to send the data to the DB
@@ -91,13 +57,19 @@ export default function MenuForm({ changeFlag }) {
       type_menu: typeMenu,
     };
     changeFlag(true); //to diplay the loading component
-    axiosService(ENDPOINT_MEALS, POST, true, menu, (error, response) => {
-      if (response) {
-        history.push(
-          `${PATH_MENU}/${response.data.data.id}${PATH_INGREDIENTS}`
-        );
+    services.axiosService(
+      ENDPOINT_MEALS,
+      contants.POST,
+      true,
+      menu,
+      (error, response) => {
+        if (response) {
+          history.push(
+            `${PATH_MENU}/${response.data.data.id}${PATH_INGREDIENTS}`
+          );
+        }
       }
-    });
+    );
   };
 
   return (
@@ -105,79 +77,103 @@ export default function MenuForm({ changeFlag }) {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextValidator
-            variant="outlined"
+            variant={contants.OUTLINED}
             required
             fullWidth
-            label={NAME}
+            label={strings.NAME}
             autoFocus
             onChange={handleName}
             value={name}
-            validators={['required']}
-            errorMessages={[MESSAGE_VALIDATORS_REQUIRED]}
-            endadornment={<InputAdornment position="end">g</InputAdornment>}
+            validators={[validations.RULES_NAME_REQUIRED]}
+            errorMessages={[validations.MESSAGE_VALIDATORS_REQUIRED]}
+            endadornment={
+              <InputAdornment position="end">{strings.GRAM}</InputAdornment>
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Select
-            variant="outlined"
+            variant={contants.OUTLINED}
             value={typeMenu}
             className={classes.select}
             onChange={handleTypeMenu}
           >
-            <MenuItem value={VALUE_TYPE_MENU[0]}>{BREAKFAST}</MenuItem>
-            <MenuItem value={VALUE_TYPE_MENU[1]}>{FIRST_SNAKE}</MenuItem>
-            <MenuItem value={VALUE_TYPE_MENU[2]}>{LUNCH}</MenuItem>
-            <MenuItem value={VALUE_TYPE_MENU[3]}>{SECOND_SNAKE}</MenuItem>
-            <MenuItem value={VALUE_TYPE_MENU[4]}>{DINNER}</MenuItem>
+            <MenuItem value={contants.VALUE_TYPE_MENU[0]}>
+              {strings.BREAKFAST}
+            </MenuItem>
+            <MenuItem value={contants.VALUE_TYPE_MENU[1]}>
+              {strings.FIRST_SNAKE}
+            </MenuItem>
+            <MenuItem value={contants.VALUE_TYPE_MENU[2]}>
+              {strings.LUNCH}
+            </MenuItem>
+            <MenuItem value={contants.VALUE_TYPE_MENU[3]}>
+              {strings.SECOND_SNAKE}
+            </MenuItem>
+            <MenuItem value={contants.VALUE_TYPE_MENU[4]}>
+              {strings.DINNER}
+            </MenuItem>
           </Select>
-          <FormHelperText>{MENU_TYPE}</FormHelperText>
+          <FormHelperText>{strings.MENU_TYPE}</FormHelperText>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextValidator
-            label={MIN_AGE}
+            label={strings.MIN_AGE}
             fullWidth
             required
             onChange={handleMinAge}
             value={minAge}
-            validators={['isInteger', 'validationAge', 'required']}
+            validators={[
+              validations.RULES_NAME_IS_INTEGER,
+              validations.RULES_NAME_VALIDATION_AGE,
+              validations.RULES_NAME_REQUIRED,
+            ]}
             errorMessages={[
-              MESSAGE_VALIDATORS_INTEGER,
-              MESSAGE_VALIDATORS_AGE,
-              MESSAGE_VALIDATORS_REQUIRED,
+              validations.MESSAGE_VALIDATORS_INTEGER,
+              validations.MESSAGE_VALIDATORS_AGE,
+              validations.MESSAGE_VALIDATORS_REQUIRED,
             ]}
             InputProps={{
-              endAdornment: <InputAdornment position="end">Ans</InputAdornment>,
+              endAdornment: (
+                <InputAdornment position="end">{strings.YEARS}</InputAdornment>
+              ),
             }}
-            variant="outlined"
+            variant={contants.OUTLINED}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextValidator
-            label={MAX_AGE}
+            label={strings.MAX_AGE}
             fullWidth
             required
             onChange={handleMaxAge}
             value={maxAge}
-            validators={['isInteger', 'validationAge', 'required']}
+            validators={[
+              validations.RULES_NAME_IS_INTEGER,
+              validations.RULES_NAME_VALIDATION_AGE,
+              validations.RULES_NAME_REQUIRED,
+            ]}
             errorMessages={[
-              MESSAGE_VALIDATORS_INTEGER,
-              MESSAGE_VALIDATORS_AGE,
-              MESSAGE_VALIDATORS_REQUIRED,
+              validations.MESSAGE_VALIDATORS_INTEGER,
+              validations.MESSAGE_VALIDATORS_AGE,
+              validations.MESSAGE_VALIDATORS_REQUIRED,
             ]}
             InputProps={{
-              endAdornment: <InputAdornment position="end">Ans</InputAdornment>,
+              endAdornment: (
+                <InputAdornment position="end">{strings.YEARS}</InputAdornment>
+              ),
             }}
-            variant="outlined"
+            variant={contants.OUTLINED}
           />
         </Grid>
       </Grid>
       <Button
         type="submit"
-        variant="contained"
-        color={PRIMARY_COLOR}
+        variant={contants.CONTAINED}
+        color={contants.PRIMARY_COLOR}
         className={classes.submit}
       >
-        {FOLLOWING}
+        {strings.FOLLOWING}
       </Button>
     </ValidatorForm>
   );

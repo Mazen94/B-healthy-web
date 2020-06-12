@@ -4,7 +4,9 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  appBarSpacer: theme.mixins.toolbar,
+  appBarSpacer: {
+    marginTop: 100,
+  },
   content: {
     flexGrow: 1,
     height: '100vh',
@@ -13,17 +15,6 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    paddingTop: 35,
-    overflow: 'auto',
-    flexDirection: 'column',
-    height: 360,
-  },
-  select: {
-    width: '100%',
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
