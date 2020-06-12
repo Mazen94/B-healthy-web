@@ -53,6 +53,7 @@ export default function AddIngredient() {
    * this hook executed when the value of currentPage changes
    */
   useEffect(() => {
+    setLoading(true);
     //Prepare cancel request
     let mounted = true;
     axiosService(

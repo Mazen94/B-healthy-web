@@ -10,7 +10,6 @@ import {
   PATH_IMAGES_PAITENTS,
   PRIMARY_COLOR,
   SKELETON_VARIANT_TEXT,
-  DIALOG_PATIENT,
   DIALOG_MEETING,
   POST,
 } from '../../shared/constants/constants';

@@ -52,6 +52,7 @@ export default function AddIngredient() {
    */
   useEffect(() => {
     //Prepare cancel request
+    setLoading(true);
     let mounted = true;
     axiosService(
       `${ENDPOINT_LIST_MEALS}${currentPage}`,
