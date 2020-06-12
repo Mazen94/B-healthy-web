@@ -18,6 +18,8 @@ import * as endPoints from '../../shared/constants/endpoint';
 import { GET, POST, OUTLINED } from '../../shared/constants/constants';
 import { MENUS, RECOMMENDATIONS } from '../../shared/strings/strings';
 import { useStyles } from './styles';
+import { Snackbar } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -33,10 +35,18 @@ export default function TrasfertMenus() {
   const [left, setLeft] = useState([]); //the data that is on the left
   const [right, setRight] = useState([]); //the data that is on the right
   const [mealId, setMealId] = useState(''); //the id of meal checked
+  const [error, setError] = useState(''); //the id of meal checked
   const [currentPage, setCurrentPage] = useState(1);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [lastPage, setLastPage] = useState(1);
   const params = useParams();
 
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
   useEffect(() => {
     let mounted = true;
     axiosService(
@@ -67,35 +77,40 @@ export default function TrasfertMenus() {
     if (currentIndex === -1) {
       setMealId(value.id);
       newChecked.push(value);
+      setChecked(newChecked);
     } else {
       setMealId('');
-      newChecked.splice(currentIndex, 1);
+      setChecked(newChecked.splice(currentIndex, 1));
     }
-    setChecked(newChecked);
   };
 
   const numberOfChecked = (items) => intersection(checked, items).length;
 
   const handleCheckedRight = () => {
     PostMenuWithIngredientToRecommendation(mealId);
-    setRight(right.concat(leftChecked));
-    setLeft(not(left, leftChecked));
-    setChecked(not(checked, leftChecked));
   };
   /**
    * function to get the post menu
    * @param {int} id
    */
   function PostMenuWithIngredientToRecommendation(id) {
-    console.log(id);
     axiosService(
       `${endPoints.ENDPOINT_PATIENTS}${params.id}/${endPoints.ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${endPoints.ENDPOINT_MENUS}`,
       POST,
       true,
       { id: id },
       (err, result) => {
-        if (result) console.log('aded menu  ==', result.data);
-        else console.log('error to add this menu', err);
+        if (result) {
+          if (result.status === 201) {
+            setRight(right.concat(leftChecked));
+            setLeft(not(left, leftChecked));
+          } else {
+            setError(result.data.data);
+            setOpenSnackbar(true);
+          }
+        } else {
+          console.log('error to add menu to recommendation', err);
+        }
       }
     );
   }
@@ -143,6 +158,15 @@ export default function TrasfertMenus() {
 
   return (
     <Grid container spacing={2} className={classes.root}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error">
+          {error}
+        </Alert>
+      </Snackbar>
       <Grid item>{customList(MENUS, left, meal, true)}</Grid>
       <Grid item>
         <Grid container className={classes.gridContainer}>
