@@ -189,7 +189,7 @@ export default function AddIngredient() {
               handleButtonDelete={handleButtonDelete}
               open={open}
               handleClose={handleClose}
-              message={constants.DIALOG_RECOMMENDATION}
+              message={constants.DIALOG_INGREDIENT}
             />
           </Fragment>
         );

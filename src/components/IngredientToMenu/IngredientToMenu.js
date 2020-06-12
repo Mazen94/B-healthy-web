@@ -23,7 +23,6 @@ export default function IngredientToMenu() {
   const [addedIngredients, setAddedIngredients] = useState([]); //to get the ingredients added to menu
   const [lastPage, setLastPage] = useState(1); //to get the ingredients added to menu
   const [currentPage, setCurrentPage] = useState(1); //to get the ingredients added to menu
-
   const [ingredientSelected, setIngredientSelected] = useState(''); // to retrieve the ingredient selected by the user (initial value empty string)
   const [flag, setFlag] = useState(false); //to diplay the list of ingredients added ()
   const [amount, setAmount] = useState(''); // to retrieve the amount  by the user (initial value empty string)
