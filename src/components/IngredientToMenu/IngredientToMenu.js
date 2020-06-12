@@ -21,6 +21,9 @@ export default function IngredientToMenu() {
   const { menuId } = useParams(); //to get the menu id from url
   const [ingredients, setIngredients] = useState([]); //to get the ingredients in the DB
   const [addedIngredients, setAddedIngredients] = useState([]); //to get the ingredients added to menu
+  const [lastPage, setLastPage] = useState(1); //to get the ingredients added to menu
+  const [currentPage, setCurrentPage] = useState(1); //to get the ingredients added to menu
+
   const [ingredientSelected, setIngredientSelected] = useState(''); // to retrieve the ingredient selected by the user (initial value empty string)
   const [flag, setFlag] = useState(false); //to diplay the list of ingredients added ()
   const [amount, setAmount] = useState(''); // to retrieve the amount  by the user (initial value empty string)
@@ -33,16 +36,20 @@ export default function IngredientToMenu() {
 
   useEffect(() => {
     axiosService(
-      `${endPoints.ENDPOINT_LIST_INGREDIENTS}1`,
+      `${endPoints.ENDPOINT_LIST_INGREDIENTS}${currentPage}`,
       constants.GET,
       true,
       null,
       (error, response) => {
-        if (response) setIngredients(response.data.data.data);
-        else console.log('error to get an ingredient', error);
+        if (response) {
+          console.log(response.data.data);
+          setIngredients([...ingredients, ...response.data.data.data]);
+          setLastPage(response.data.data.last_page);
+          setCurrentPage(response.data.data.current_page);
+        } else console.log('error to get an ingredient', error);
       }
     );
-  }, []);
+  }, [currentPage]);
 
   const handleIngredientSelected = (e) => {
     setIngredientSelected(e.target.value);
@@ -97,7 +104,15 @@ export default function IngredientToMenu() {
       }
     );
   };
-
+  //event handleScroll
+  const handleScroll = (event) => {
+    const bottom =
+      event.target.scrollHeight - event.target.scrollTop <
+      event.target.clientHeight; //detect scroll to bottom
+    if (bottom && currentPage < lastPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   return (
     <div>
       <ValidatorForm
@@ -112,6 +127,7 @@ export default function IngredientToMenu() {
               value={ingredientSelected}
               onChange={handleIngredientSelected}
               variant={constants.OUTLINED}
+              onScroll={handleScroll}
             >
               {ingredients.map((ingredient) => (
                 <MenuItem key={ingredient.id} value={ingredient}>
