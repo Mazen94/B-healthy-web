@@ -101,6 +101,7 @@ export const WEIGHT_PROGRESSION = ' le poids ';
 export const LEGS_PROGRESSION = ' la cuisse ';
 export const PROGRESSION = 'Progression de';
 export const PER_MONTH = 'par mois';
+export const STATUS = 'Status';
 export const TABLE_HEAD_MENUS = [MENUS, MENU_TYPE, CALORIES, AGE_RANGE];
 export const TABLE_HEAD_INGREDIENTS = [INGREDIENTS, CALORIES, AMOUNT];
 export const TABLE_HEAD_PATIENTS = [
@@ -108,6 +109,11 @@ export const TABLE_HEAD_PATIENTS = [
   EMAIL,
   PHONE,
   PREFFESION,
+];
+export const TABLE_HEAD_NUTRITIONISTS = [
+  `${LAST_NAME}  ${FIRST_NAME}`,
+  EMAIL,
+  STATUS,
 ];
 export const TABLE_HEAD_RECOMMENDATION = [RECOMMENDATIONS, DATE];
 export const SELECT_TYPE_MENU = [
@@ -164,3 +170,6 @@ export const CLICK_FOR_CREATE = 'cliquez ici pour créer ';
 export const ZERO_PATIENTS = "VOUS N'AVEZ PAS DES PATIENTS";
 export const ZERO_INGREDIENTS = "VOUS N'AVEZ PAS DES INGREDIENTS";
 export const ZERO_MENUS = "VOUS N'AVEZ PAS DES MENUS";
+export const WAITING = 'En attente';
+export const ACTIVATED = 'Activé';
+export const REJECTED = 'Rejetée';

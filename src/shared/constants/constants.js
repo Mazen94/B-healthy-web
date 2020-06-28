@@ -43,7 +43,10 @@ export const DIALOG_INGREDIENT =
   'Vous voulez vraiment supprimer ce ingredient ?';
 
 export const DIALOG_PATIENT = ' Vous voulez vraiment supprimer ce patient ?';
-
+export const DIALOG_NUTRITIONIST =
+  ' Vous voulez vraiment supprimer ce nutritioniste ?';
+export const DIALOG_NUTRITIONIST_ACTIVATED =
+  ' Vous voulez vraiment activer ce compte ?';
 export const DIALOG_MENU = ' Vous voulez vraiment supprimer ce menu ?';
 export const DIALOG_MEETING =
   'Si vous cliquez oui le rendez-vous sera supprimé de cette liste ';
@@ -84,7 +87,8 @@ export const TYPE_OF_IMAGES = 'image/png, image/jpeg, image/jpg';
 
 export const PATH_IMAGES_PAITENTS =
   'http://api.b-healthy.dev.anypli.com/images/patients/';
-
+export const PATH_IMAGES_NUTRITIONISTS =
+  'http://api.b-healthy.dev.anypli.com/images/nutritionists/';
 export const SKELETON_VARIANT_TEXT = 'text';
 export const SKELETON_VARIANT_RECT = 'rect';
 export const SKELETON_VARIANT_CIRCLE = 'circle';

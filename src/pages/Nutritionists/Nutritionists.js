@@ -26,6 +26,7 @@ import {
 } from '../../shared/constants/constants';
 import TextField from '@material-ui/core/TextField';
 import MenuBarAdmin from '../../components/MenuBarAdmin/MenuBarAdmin';
+import ListNutritionists from '../../components/ListNutritionists/ListNutritionists';
 
 /**
  * Component for showing patient Page
@@ -58,7 +59,9 @@ export default function Nutritionists() {
         <MenuBarAdmin title={NUTRITIONISTS} nutritonistProps={true} />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg"></Container>
+          <Container maxWidth="lg" style={{ marginTop: 100 }}>
+            <ListNutritionists />
+          </Container>
         </main>
       </div>
     </Fragment>

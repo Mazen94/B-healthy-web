@@ -24,3 +24,5 @@ export const ENDPOINT_MEETING = 'nutritionist/meeting';
 export const ENDPOINT_NEW_MEETING = 'nutritionist/newMeeting';
 export const ENDPOINT_MEETING_OF_DAY = `nutritionist/meetingOfDay`;
 export const ENDPOINT_DELETE_MEETING = 'nutritionist/deleteMeeting';
+export const ENDPOINT_LIST_NUTRITIONISTS = 'admin/nutritionist?page=';
+export const ENDPOINT_NUTRITIONISTS = 'admin/nutritionist/';
