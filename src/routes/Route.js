@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState, useContext } from 'react';
 import { BrowserRouter, useHistory } from 'react-router-dom';
 import { CheckConnection } from '../components/CheckConnection/CheckConnection';
 import { PrivateRoute } from '../components/PrivateRoute/PrivateRoute'; //
@@ -30,10 +30,13 @@ import NotActivate from '../pages/NotActivate/NotActivate';
 import AdminDashboard from '../pages/AdminDashboard/AdminDashboard';
 import NotFound from '../pages/NotFound/NotFound';
 import Nutritionists from '../pages/Nutritionists/Nutritionists';
+import { IsActivateContext } from '../shared/context/IsActivateContext';
+import { IsAdminContext } from '../shared/context/IsAdminContext';
 
 function Route() {
-  const isActivate = localStorage.getItem('status') === '1';
-  const isAdmin = localStorage.getItem('admin') === '0';
+  const { isActivate, setIsActivate } = useContext(IsActivateContext);
+  const { isAdmin, setIsAdmin } = useContext(IsAdminContext);
+
   return (
     <Fragment>
       <BrowserRouter>

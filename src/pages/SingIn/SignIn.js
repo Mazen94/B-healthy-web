@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Alert from '@material-ui/lab/Alert';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import Copyright from '../../components/Copyright/Copyright';
@@ -20,6 +20,8 @@ import * as validations from '../../shared/constants/validation';
 import * as paths from '../../routes/path';
 import { useStyles } from './styles';
 import { CircularProgress } from '@material-ui/core';
+import { IsActivateContext } from '../../shared/context/IsActivateContext';
+import { IsAdminContext } from '../../shared/context/IsAdminContext';
 
 export default function SignIn() {
   const classes = useStyles(); //add styles to variable classes
@@ -34,7 +36,8 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [flag, setFlag] = useState(false);
   const [password, setPassword] = useState('');
-
+  const { isActivate, setIsActivate } = useContext(IsActivateContext);
+  const { isAdmin, setIsAdmin } = useContext(IsAdminContext);
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setFlag(false);
@@ -65,12 +68,9 @@ export default function SignIn() {
           localStorage.setItem('token', response.data.data.token);
           localStorage.setItem('status', response.data.data.status);
           localStorage.setItem('admin', '1');
-          if (localStorage.getItem('status') === '0')
-            history.push(paths.PATH_NOT_ACTIVATE);
-          else history.push(paths.PATH_DASHBOARD);
-
-          //
-          //history.push(paths.PATH_DASHBOARD);
+          setIsActivate(response.data.data.status === 1);
+          setIsAdmin(localStorage.getItem('admin') === '0');
+          history.push(paths.PATH_DASHBOARD);
         } else {
           setFlag(true);
           setDisabled(false);

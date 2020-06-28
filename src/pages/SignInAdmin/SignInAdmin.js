@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Alert from '@material-ui/lab/Alert';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
 import * as paths from '../../routes/path';
@@ -19,6 +19,7 @@ import * as validations from '../../shared/constants/validation';
 import { axiosService } from '../../shared/services/services';
 import * as strings from '../../shared/strings/strings';
 import { useStyles } from './styles';
+import { IsAdminContext } from '../../shared/context/IsAdminContext';
 
 export default function SignInAdmin() {
   const classes = useStyles(); //add styles to variable classes
@@ -33,6 +34,7 @@ export default function SignInAdmin() {
   const [email, setEmail] = useState('');
   const [flag, setFlag] = useState(false);
   const [password, setPassword] = useState('');
+  const { isAdmin, setIsAdmin } = useContext(IsAdminContext);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -63,7 +65,7 @@ export default function SignInAdmin() {
           console.log(response.data.data);
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('admin', '0');
-
+          setIsAdmin(localStorage.getItem('admin') === '0');
           history.push(paths.PATH_DASHBOARD_ADMIN);
 
           //
