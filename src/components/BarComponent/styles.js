@@ -15,7 +15,7 @@ export const useStyles = makeStyles((theme) => ({
     height: '32vh',
   },
   fixedHeight: {
-    height: 240,
+    height: 260,
   },
   fixedHeightPaperEmpty: {
     height: 240,

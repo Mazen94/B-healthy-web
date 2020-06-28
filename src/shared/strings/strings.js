@@ -173,3 +173,6 @@ export const ZERO_MENUS = "VOUS N'AVEZ PAS DES MENUS";
 export const WAITING = 'En attente';
 export const ACTIVATED = 'Activé';
 export const REJECTED = 'Rejetée';
+export const COUNT_NUTRITIONSIT = 'Nutritionistes';
+export const COUNT_NUTRITIONSIT_WAITING = 'Nutritionistes en attente';
+export const COUNT_PATIENT = 'Patient';

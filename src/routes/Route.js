@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState, useContext } from 'react';
-import { BrowserRouter, useHistory } from 'react-router-dom';
+import { BrowserRouter, useHistory, Switch } from 'react-router-dom';
 import { CheckConnection } from '../components/CheckConnection/CheckConnection';
 import { PrivateRoute } from '../components/PrivateRoute/PrivateRoute'; //
 import AddPatient from '../pages/AddPatient/AddPatient';
@@ -40,297 +40,323 @@ function Route() {
   return (
     <Fragment>
       <BrowserRouter>
-        {/* Components CheckConnection */}
-        <CheckConnection exact path={paths.PATH_LOGIN} component={SignIn} />
-        <CheckConnection path={paths.PATH_REGISTER} component={SignUp} />
-        <CheckConnection
-          exact
-          path={paths.PATH_RESET_PASSWORD}
-          component={ForgotPassword}
-        />
-        <CheckConnection
-          exact
-          path={paths.PATH_ADMIN}
-          component={SignInAdmin}
-        />
+        <Switch>
+          {/* Components CheckConnection */}
+          <CheckConnection exact path={paths.PATH_LOGIN} component={SignIn} />
+          <CheckConnection path={paths.PATH_REGISTER} component={SignUp} />
+          <CheckConnection
+            exact
+            path={paths.PATH_RESET_PASSWORD}
+            component={ForgotPassword}
+          />
+          <CheckConnection
+            exact
+            path={paths.PATH_ADMIN}
+            component={SignInAdmin}
+          />
 
-        <PrivateRoute
-          exact
-          path={paths.PATH_DASHBOARD_ADMIN}
-          component={() => (isAdmin ? <AdminDashboard /> : <NotFound />)}
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_NUTIRITONISTS}${paths.PAGE}`}
-          component={() => (isAdmin ? <Nutritionists /> : <NotFound />)}
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_NOT_ACTIVATE}`}
-          component={NotActivate}
-        />
-        <PrivateRoute
-          exact
-          path={paths.PATH_DASHBOARD}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <Dashboard />
+          <PrivateRoute
+            exact
+            path={paths.PATH_DASHBOARD_ADMIN}
+            component={() => (isAdmin ? <AdminDashboard /> : <NotFound />)}
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_NUTIRITONISTS}${paths.PAGE}`}
+            component={() => (isAdmin ? <Nutritionists /> : <NotFound />)}
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_NOT_ACTIVATE}`}
+            component={NotActivate}
+          />
+          <PrivateRoute
+            exact
+            path={paths.PATH_DASHBOARD}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <Dashboard />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        {/* Components PrivateRoute */}
-        <PrivateRoute
-          exact
-          path={paths.PATH_MEETING}
-          component={() =>
-            !isAdmin ? isActivate ? <Meeting /> : <NotActivate /> : <NotFound />
-          }
-        />
-        {/* Route Patient */}
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_PATIENTS}${paths.PAGE}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <Patients />
+            }
+          />
+          {/* Components PrivateRoute */}
+          <PrivateRoute
+            exact
+            path={paths.PATH_MEETING}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <Meeting />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={paths.PATH_PATIENT}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <AddPatient />
+            }
+          />
+          {/* Route Patient */}
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_PATIENTS}${paths.PAGE}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <Patients />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_CONSULTATION}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <Consultation />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={paths.PATH_PATIENT}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <AddPatient />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_STATISCALS}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <StatiscalsPatient />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_CONSULTATION}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <Consultation />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_JOURNAL}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <FoodJournal />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_STATISCALS}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <StatiscalsPatient />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        {/* Route get  all  recommendation */}
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATIONS}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <Recommendation />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_JOURNAL}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <FoodJournal />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATION}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <AddRecommendations />
+            }
+          />
+          {/* Route get  all  recommendation */}
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATIONS}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <Recommendation />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATION}${paths.ID_RECOMMENDATION}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <AddMenuToRecommendations />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATION}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <AddRecommendations />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        {/* Route update recommendation */}
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATION}${paths.ID_RECOMMENDATION}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <AddMenuToRecommendations />
+                ) : (
+                  <NotActivate />
+                )
+              ) : (
+                <NotFound />
+              )
+            }
+          />
+          {/* Route update recommendation */}
 
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATIONS}${paths.ID_RECOMMENDATION}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <UpdateRecommendations />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATIONS}${paths.ID_RECOMMENDATION}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <UpdateRecommendations />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        {/* Route Update Nutritionist */}
-        <PrivateRoute
-          exact
-          path={paths.PATH_PROFIL}
-          component={() =>
-            !isAdmin ? isActivate ? <Profil /> : <NotActivate /> : <NotFound />
-          }
-        />
+            }
+          />
+          {/* Route Update Nutritionist */}
+          <PrivateRoute
+            exact
+            path={paths.PATH_PROFIL}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <Profil />
+                ) : (
+                  <NotActivate />
+                )
+              ) : (
+                <NotFound />
+              )
+            }
+          />
 
-        {/* Route Ingredient */}
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_INGREDIENTS}${paths.PAGE}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <Ingredients />
+          {/* Route Ingredient */}
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_INGREDIENTS}${paths.PAGE}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <Ingredients />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={paths.PATH_INGREDIENT}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <AddIngredient />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={paths.PATH_INGREDIENT}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <AddIngredient />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_INGREDIENT}${paths.ID}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <UpdateIngredient />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_INGREDIENT}${paths.ID}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <UpdateIngredient />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_MENU}${paths.ID_MENU}${paths.PATH_INGREDIENTS}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <AddIngredientToMenu />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_MENU}${paths.ID_MENU}${paths.PATH_INGREDIENTS}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <AddIngredientToMenu />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_MENUS}${paths.PAGE}`}
-          component={() =>
-            !isAdmin ? isActivate ? <Menus /> : <NotActivate /> : <NotFound />
-          }
-        />
-        <PrivateRoute
-          exact
-          path={paths.PATH_MENU}
-          component={() =>
-            !isAdmin ? isActivate ? <AddMenu /> : <NotActivate /> : <NotFound />
-          }
-        />
-        <PrivateRoute
-          exact
-          path={`${paths.PATH_MENU}${paths.ID}`}
-          component={() =>
-            !isAdmin ? (
-              isActivate ? (
-                <UpdateMenu />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_MENUS}${paths.PAGE}`}
+            component={() =>
+              !isAdmin ? isActivate ? <Menus /> : <NotActivate /> : <NotFound />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={paths.PATH_MENU}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <AddMenu />
+                ) : (
+                  <NotActivate />
+                )
               ) : (
-                <NotActivate />
+                <NotFound />
               )
-            ) : (
-              <NotFound />
-            )
-          }
-        />
-        <PrivateRoute component={NotFound} />
+            }
+          />
+          <PrivateRoute
+            exact
+            path={`${paths.PATH_MENU}${paths.ID}`}
+            component={() =>
+              !isAdmin ? (
+                isActivate ? (
+                  <UpdateMenu />
+                ) : (
+                  <NotActivate />
+                )
+              ) : (
+                <NotFound />
+              )
+            }
+          />
+          <PrivateRoute component={NotFound} />
+        </Switch>
       </BrowserRouter>
     </Fragment>
   );

@@ -26,6 +26,11 @@ export const DASHBOARD_INGREDIENT_BACKGROUNDCOLOR = 'rgba(54, 162, 235, 0.6)';
  * The background color of the chart (Menu)
  */
 export const DASHBOARD_MENU_BACKGROUNDCOLOR = 'rgba(255, 99, 132, 0.6)';
+/**
+ * Constant used in the Dashboard component
+ * The background color of the chart (Menu)
+ */
+export const DASHBOARD_MENU2_BACKGROUNDCOLOR = 'rgba(153, 102, 255, 0.6)';
 
 /**
  * Constant used in the Chart component
