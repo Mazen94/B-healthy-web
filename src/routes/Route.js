@@ -330,6 +330,7 @@ function Route() {
             )
           }
         />
+        <PrivateRoute component={NotFound} />
       </BrowserRouter>
     </Fragment>
   );

@@ -25,7 +25,9 @@ export default function NotActivate() {
       <Typography className={classes.typoghraphy} align="center">
         Votre compte n'est pas activé
       </Typography>
-      <Button onClick={handleExitToAppIcon}> Deconnecter</Button>
+      <Button style={{ color: 'white' }} onClick={handleExitToAppIcon}>
+        Deconnecter
+      </Button>
     </div>
   );
 }
