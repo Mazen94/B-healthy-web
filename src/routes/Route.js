@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react';
+import { BrowserRouter, useHistory } from 'react-router-dom';
 import { CheckConnection } from '../components/CheckConnection/CheckConnection';
 import { PrivateRoute } from '../components/PrivateRoute/PrivateRoute'; //
 import AddPatient from '../pages/AddPatient/AddPatient';
@@ -25,8 +25,10 @@ import ForgotPassword from '../pages/ForgotPassword/ForgotPassword';
 import FoodJournal from '../pages/FoodJournal/FoodJournal';
 import * as paths from './path';
 import Meeting from '../pages/Meeting/Meeting';
+import NotActivate from '../pages/NotActivate/NotActivate';
 
 function Route() {
+  const isActivate = localStorage.getItem('status') === '1';
   return (
     <Fragment>
       <BrowserRouter>
@@ -38,89 +40,125 @@ function Route() {
           path={paths.PATH_RESET_PASSWORD}
           component={ForgotPassword}
         />
+        <PrivateRoute
+          exact
+          path={`${paths.PATH_NOT_ACTIVATE}`}
+          component={NotActivate}
+        />
+        <PrivateRoute
+          exact
+          path={paths.PATH_DASHBOARD}
+          component={() => (isActivate ? <Dashboard /> : <NotActivate />)}
+        />
         {/* Components PrivateRoute */}
-        <PrivateRoute exact path={paths.PATH_DASHBOARD} component={Dashboard} />
-        <PrivateRoute exact path={paths.PATH_MEETING} component={Meeting} />
+        <PrivateRoute
+          exact
+          path={paths.PATH_MEETING}
+          component={() => (isActivate ? <Meeting /> : <NotActivate />)}
+        />
         {/* Route Patient */}
         <PrivateRoute
           exact
           path={`${paths.PATH_PATIENTS}${paths.PAGE}`}
-          component={Patients}
+          component={() => (isActivate ? <Patients /> : <NotActivate />)}
         />
-        <PrivateRoute exact path={paths.PATH_PATIENT} component={AddPatient} />
+        <PrivateRoute
+          exact
+          path={paths.PATH_PATIENT}
+          component={() => (isActivate ? <AddPatient /> : <NotActivate />)}
+        />
         <PrivateRoute
           exact
           path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_CONSULTATION}`}
-          component={Consultation}
+          component={() => (isActivate ? <Consultation /> : <NotActivate />)}
         />
         <PrivateRoute
+          exact
           path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_STATISCALS}`}
-          component={StatiscalsPatient}
+          component={() =>
+            isActivate ? <StatiscalsPatient /> : <NotActivate />
+          }
         />
         <PrivateRoute
+          exact
           path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_JOURNAL}`}
-          component={FoodJournal}
+          component={() => (isActivate ? <FoodJournal /> : <NotActivate />)}
         />
         {/* Route get  all  recommendation */}
         <PrivateRoute
           exact
           path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATIONS}`}
-          component={Recommendation}
+          component={() => (isActivate ? <Recommendation /> : <NotActivate />)}
         />
-        {/* Route add new  recommendation */}
         <PrivateRoute
           exact
           path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATION}`}
-          component={AddRecommendations}
+          component={() =>
+            isActivate ? <AddRecommendations /> : <NotActivate />
+          }
         />
-        {/* Route add menu to a recommendation */}
         <PrivateRoute
           exact
           path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATION}${paths.ID_RECOMMENDATION}`}
-          component={AddMenuToRecommendations}
+          component={() =>
+            isActivate ? <AddMenuToRecommendations /> : <NotActivate />
+          }
         />
         {/* Route update recommendation */}
+
         <PrivateRoute
           exact
           path={`${paths.PATH_PATIENT}${paths.ID}${paths.PATH_RECOMMENDATIONS}${paths.ID_RECOMMENDATION}`}
-          component={UpdateRecommendations}
+          component={() =>
+            isActivate ? <UpdateRecommendations /> : <NotActivate />
+          }
         />
         {/* Route Update Nutritionist */}
-        <PrivateRoute exact path={paths.PATH_PROFIL} component={Profil} />
+        <PrivateRoute
+          exact
+          path={paths.PATH_PROFIL}
+          component={() => (isActivate ? <Profil /> : <NotActivate />)}
+        />
+
         {/* Route Ingredient */}
         <PrivateRoute
           exact
           path={`${paths.PATH_INGREDIENTS}${paths.PAGE}`}
-          component={Ingredients}
+          component={() => (isActivate ? <Ingredients /> : <NotActivate />)}
         />
         <PrivateRoute
           exact
           path={paths.PATH_INGREDIENT}
-          component={AddIngredient}
+          component={() => (isActivate ? <AddIngredient /> : <NotActivate />)}
         />
         <PrivateRoute
           exact
           path={`${paths.PATH_INGREDIENT}${paths.ID}`}
-          component={UpdateIngredient}
+          component={() =>
+            isActivate ? <UpdateIngredient /> : <NotActivate />
+          }
         />
-        {/* Route Menu */}
-        {/* Route to add ingredient to a Menu */}
         <PrivateRoute
           exact
           path={`${paths.PATH_MENU}${paths.ID_MENU}${paths.PATH_INGREDIENTS}`}
-          component={AddIngredientToMenu}
+          component={() =>
+            isActivate ? <AddIngredientToMenu /> : <NotActivate />
+          }
         />
-        {/* Route to get all menus per page */}
         <PrivateRoute
           exact
           path={`${paths.PATH_MENUS}${paths.PAGE}`}
-          component={Menus}
+          component={() => (isActivate ? <Menus /> : <NotActivate />)}
         />
-        <PrivateRoute exact path={paths.PATH_MENU} component={AddMenu} />
+        <PrivateRoute
+          exact
+          path={paths.PATH_MENU}
+          component={() => (isActivate ? <AddMenu /> : <NotActivate />)}
+        />
         <PrivateRoute
           exact
           path={`${paths.PATH_MENU}${paths.ID}`}
-          component={UpdateMenu}
+          component={() => (isActivate ? <UpdateMenu /> : <NotActivate />)}
         />
       </BrowserRouter>
     </Fragment>

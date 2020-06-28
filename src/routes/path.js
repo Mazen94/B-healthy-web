@@ -19,3 +19,4 @@ export const ID = '/:id';
 export const ID_RECOMMENDATION = '/:idRecommendation';
 export const ID_MENU = '/:menuId';
 export const PAGE = '/:page';
+export const PATH_NOT_ACTIVATE = '/notActivate';

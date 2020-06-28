@@ -39,6 +39,7 @@ export default function MenuBar(props) {
    */
   const handleExitToAppIcon = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('status');
     history.push(PATH_LOGIN);
   };
   /**

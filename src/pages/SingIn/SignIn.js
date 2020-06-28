@@ -61,8 +61,15 @@ export default function SignIn() {
       (error, response) => {
         if (response) {
           setDisabled(false);
-          localStorage.setItem('token', response.data.token);
-          history.push(paths.PATH_DASHBOARD);
+          console.log(response.data.data);
+          localStorage.setItem('token', response.data.data.token);
+          localStorage.setItem('status', response.data.data.status);
+          if (response.data.data.status === 0)
+            history.push(paths.PATH_NOT_ACTIVATE);
+          else history.push(paths.PATH_DASHBOARD);
+
+          //
+          //history.push(paths.PATH_DASHBOARD);
         } else {
           setFlag(true);
           setDisabled(false);
