@@ -7,7 +7,9 @@ import { IsAdminContext } from './shared/context/IsAdminContext';
 
 function App() {
   const [open, setOpen] = useState(false);
-  const [isActivate, setIsActivate] = useState(false);
+  const [isActivate, setIsActivate] = useState(
+    localStorage.getItem('status') === '1'
+  );
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('admin') === '0');
   return (
     <div className="App">
