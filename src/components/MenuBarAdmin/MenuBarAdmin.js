@@ -12,8 +12,8 @@ import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import ListItems from '../../components/ListItems/ListItems';
-import { PATH_LOGIN } from '../../routes/path';
+import ListItemsAdmin from '../../components/ListItemsAdmin/ListItemsAdmin';
+import { PATH_ADMIN } from '../../routes/path';
 import { useStyles } from './styles';
 import { AppBarContext } from '../../shared/context/AppBarContext';
 import {
@@ -21,16 +21,8 @@ import {
   SECONDARY_COLOR,
 } from '../../shared/constants/constants';
 
-export default function MenuBar(props) {
-  const {
-    title,
-    dashboardProps,
-    patientProps,
-    ingredientsProps,
-    menusProps,
-    profilProps,
-    meetingProps,
-  } = props;
+export default function MenuBarAdmin(props) {
+  const { title, dashboardProps, nutritonistProps } = props;
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   const classes = useStyles(); //add styles to variable classes
   const { open, setOpen } = useContext(AppBarContext);
@@ -41,7 +33,7 @@ export default function MenuBar(props) {
     localStorage.removeItem('token');
     localStorage.removeItem('status');
     localStorage.removeItem('admin');
-    history.push(PATH_LOGIN);
+    history.push(PATH_ADMIN);
   };
   /**
    * Arrow function to open the AppBar
@@ -99,13 +91,9 @@ export default function MenuBar(props) {
         <Divider />
         <List>
           {/* Component listItems */}
-          <ListItems
+          <ListItemsAdmin
             dashboardProps={dashboardProps}
-            patientProps={patientProps}
-            ingredientsProps={ingredientsProps}
-            menusProps={menusProps}
-            profilProps={profilProps}
-            meetingProps={meetingProps}
+            nutritonistProps={nutritonistProps}
           />
         </List>
         <Divider />

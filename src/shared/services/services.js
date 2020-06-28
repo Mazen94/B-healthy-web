@@ -26,6 +26,7 @@ export async function axiosService(endPoint, method, headers, data, callback) {
     const response = await Axios(config);
     callback(undefined, response);
   } catch (error) {
+    console.log(error);
     if (error.response.data.message === UNAUTHENTICATED) {
       localStorage.removeItem('token');
       const customHistory = createBrowserHistory();

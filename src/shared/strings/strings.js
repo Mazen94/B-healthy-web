@@ -74,6 +74,7 @@ export const FOOD_JOURNAL = 'Journal Alimentaire';
 export const STATISCALS = 'Statistiques';
 export const CONSULTATION = ' Consultation';
 export const PATIENTS = 'Patients';
+export const NUTRITIONISTS = 'Nutritionnistes';
 export const DASHBOARD = 'Dashboard';
 export const PROFIL = 'Profil';
 export const PATIENT_PLACEHOLDER = 'Chercher un patient';

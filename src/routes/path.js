@@ -1,3 +1,4 @@
+export const PATH_NUTRITIONIST = '';
 export const PATH_LOGIN = '/';
 export const PATH_REGISTER = '/register';
 export const PATH_RESET_PASSWORD = '/resetPassword';
@@ -20,3 +21,6 @@ export const ID_RECOMMENDATION = '/:idRecommendation';
 export const ID_MENU = '/:menuId';
 export const PAGE = '/:page';
 export const PATH_NOT_ACTIVATE = '/notActivate';
+export const PATH_ADMIN = '/admin';
+export const PATH_DASHBOARD_ADMIN = `${PATH_ADMIN}${PATH_DASHBOARD}`;
+export const PATH_NUTIRITONISTS = '/nutritionists';

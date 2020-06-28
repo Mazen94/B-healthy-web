@@ -1,27 +1,26 @@
+import { CircularProgress } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Alert from '@material-ui/lab/Alert';
 import React, { useState } from 'react';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
-import Copyright from '../../components/Copyright/Copyright';
-import { axiosService } from '../../shared/services/services';
-import { ENDPOINT_LOGIN } from '../../shared/constants/endpoint';
-import * as strings from '../../shared/strings/strings';
-import * as constants from '../../shared/constants/constants';
-import * as validations from '../../shared/constants/validation';
 import * as paths from '../../routes/path';
+import * as constants from '../../shared/constants/constants';
+import {
+  ENDPOINT_LOGIN,
+  ENDPOINT_LOGIN_ADMIN,
+} from '../../shared/constants/endpoint';
+import * as validations from '../../shared/constants/validation';
+import { axiosService } from '../../shared/services/services';
+import * as strings from '../../shared/strings/strings';
 import { useStyles } from './styles';
-import { CircularProgress } from '@material-ui/core';
 
-export default function SignIn() {
+export default function SignInAdmin() {
   const classes = useStyles(); //add styles to variable classes
   const history = useHistory(); //useHistory hook gives you access to the history instance that you may use to navigate.
   /**
@@ -54,7 +53,7 @@ export default function SignIn() {
     e.preventDefault();
     const user = { email: email, password: password };
     axiosService(
-      ENDPOINT_LOGIN,
+      ENDPOINT_LOGIN_ADMIN,
       constants.POST,
       false,
       user,
@@ -62,12 +61,10 @@ export default function SignIn() {
         if (response) {
           setDisabled(false);
           console.log(response.data.data);
-          localStorage.setItem('token', response.data.data.token);
-          localStorage.setItem('status', response.data.data.status);
-          localStorage.setItem('admin', '1');
-          if (localStorage.getItem('status') === '0')
-            history.push(paths.PATH_NOT_ACTIVATE);
-          else history.push(paths.PATH_DASHBOARD);
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('admin', '0');
+
+          history.push(paths.PATH_DASHBOARD_ADMIN);
 
           //
           //history.push(paths.PATH_DASHBOARD);
@@ -82,8 +79,16 @@ export default function SignIn() {
   return (
     <Grid container className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -140,27 +145,6 @@ export default function SignIn() {
               )}
               {strings.LOGIN}
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link
-                  href={paths.PATH_RESET_PASSWORD}
-                  variant={constants.VARAINT_BODY_TWO}
-                >
-                  {strings.FORGOT_PASSWORD}
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link
-                  href={paths.PATH_REGISTER}
-                  variant={constants.VARAINT_BODY_TWO}
-                >
-                  {strings.DONT_HAVE_ACCOUNT}
-                </Link>
-              </Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
           </ValidatorForm>
         </div>
       </Grid>
