@@ -95,7 +95,7 @@ export default function TrasfertMenus() {
    */
   function PostMenuWithIngredientToRecommendation(id) {
     axiosService(
-      `${endPoints.ENDPOINT_PATIENTS}${params.id}/${endPoints.ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/${endPoints.ENDPOINT_MENUS}`,
+      `${endPoints.ENDPOINT_PATIENTS}${params.id}/${endPoints.ENDPOINT_RECOMMENDATIONS}${params.idRecommendation}/menus`,
       POST,
       true,
       { id: id },

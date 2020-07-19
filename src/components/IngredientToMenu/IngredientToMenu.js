@@ -66,7 +66,7 @@ export default function IngredientToMenu() {
     };
 
     axiosService(
-      `${endPoints.ENDPOINT_MEALS}${menuId}/${endPoints.ENDPOINT_INGREDIENTS}`,
+      `${endPoints.ENDPOINT_MEALS}${menuId}/ingredients`,
       constants.POST,
       true,
       ingredient,

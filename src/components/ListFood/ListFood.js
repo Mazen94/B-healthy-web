@@ -37,11 +37,12 @@ export default function ListFood({ handleToggle }) {
     //Prepare cancel request
     let mounted = true;
     axiosService(
-      `${endpoint.ENDPOINT_PATIENTS}${params.id}/${endpoint.ENDPOINT_RECOMMENDATIONS}${endpoint.ENDPOINT_MENUS}`,
+      `${endpoint.ENDPOINT_PATIENTS}${params.id}/${endpoint.ENDPOINT_RECOMMENDATIONS}menus`,
       constants.GET,
       true,
       null,
       (error, response) => {
+        console.log(response.data.data);
         if (response) {
           if (mounted) {
             let menus = response.data.data.filter((menu) =>
@@ -65,7 +66,7 @@ export default function ListFood({ handleToggle }) {
   const handleClickButton = async (menu) => {
     handleToggle(true);
     axiosService(
-      `${endpoint.ENDPOINT_PATIENTS}${params.id}/${endpoint.ENDPOINT_RECOMMENDATIONS}${endpoint.ENDPOINT_MENUS}${menu.id}`,
+      `${endpoint.ENDPOINT_PATIENTS}${params.id}/${endpoint.ENDPOINT_RECOMMENDATIONS}menus/${menu.id}`,
       constants.GET,
       true,
       null,

@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import IngredientForm from '../../components/IngredientForm/IngredientForm';
 import MenuBar from '../../components/MenuBar/MenuBar';
 import { PATH_INGREDIENTS } from '../../routes/path';
@@ -22,7 +22,7 @@ export default function UpdateIngredient(props) {
   const [flag, setFlag] = useState(false); //to display the loadings when the user validate the fields
   const [openSkeleton, setOpenSkeleton] = useState(true); //to open and close the Skeleton
   const [data, setData] = useState([]);
-
+  const params = useParams();
   /**
    * arrow function to navigate the user to the addIngredient Component page
    */
@@ -45,7 +45,7 @@ export default function UpdateIngredient(props) {
     let mounted = true;
 
     axiosService(
-      `${ENDPOINT_INGREDIENTS}${props.match.params.id}`,
+      `${ENDPOINT_INGREDIENTS}${params.id}`,
       GET,
       true,
       null,
@@ -62,7 +62,7 @@ export default function UpdateIngredient(props) {
     return () => {
       mounted = false;
     };
-  }, [props.match.params.id]);
+  }, [params.id]);
 
   /**
    * Function to render
@@ -85,7 +85,7 @@ export default function UpdateIngredient(props) {
                 changeFlag={changeFlag}
                 data={data}
                 method={PUT}
-                endPoint={`${ENDPOINT_INGREDIENTS}${props.match.params.id}`}
+                endPoint={`${ENDPOINT_INGREDIENTS}${params.id}`}
                 message={UPDATE_INDREDIENT}
               />
               {/* Spinner (Loading) when the user clicks on the validate button */}
